@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -43,23 +42,21 @@ public class InsuranceSchemeController {
     }
 
     @Operation(summary = "Add new Scheme")
-    @PostMapping(value = {"/{planId}"}, consumes = {"multipart/form-data"})
+    @PostMapping("/{planId}")
     public ResponseEntity<SchemeDto> createNewScheme(@PathVariable(name = "planId") Long planId,
-                                                     @Valid @RequestBody RequestSchemeDto schemeDto,
-                                                     @RequestParam(name = "file", required = false) MultipartFile file) {
+                                                     @Valid @RequestBody RequestSchemeDto schemeDto) {
         logger.info("Creating new scheme");
-        SchemeDto newScheme = schemeService.createScheme(schemeDto, file, planId);
+        SchemeDto newScheme = schemeService.createScheme(schemeDto, planId);
 
         return new ResponseEntity<>(newScheme, HttpStatus.OK);
     }
 
     @Operation(summary = "Update existing scheme")
-    @PutMapping(value = {"/{planId}"}, consumes = {"multipart/form-data"})
+    @PutMapping("/{planId}")
     public ResponseEntity<SchemeDto> updateScheme(@PathVariable(name = "planId") Long planId,
-                                                  @Valid @RequestBody RequestSchemeDto schemeDto,
-                                                  @RequestParam(name = "file", required = false) MultipartFile file) {
+                                                  @Valid @RequestBody RequestSchemeDto schemeDto) {
         logger.info("Updating existing scheme");
-        SchemeDto updatedScheme = schemeService.updateScheme(schemeDto, file, planId);
+        SchemeDto updatedScheme = schemeService.updateScheme(schemeDto, planId);
 
         return new ResponseEntity<>(updatedScheme, HttpStatus.OK);
     }
@@ -69,7 +66,7 @@ public class InsuranceSchemeController {
     public ResponseEntity<Object> deleteScheme(@PathVariable(name = "planId") Long planId,
                                                @PathVariable(name = "id") Long id) {
         logger.info("Deleting existing scheme");
-        String message = schemeService.deleteScheme(planId,id);
+        String message = schemeService.deleteScheme(planId, id);
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
@@ -79,7 +76,7 @@ public class InsuranceSchemeController {
     public ResponseEntity<Object> activateScheme(@PathVariable(name = "planId") Long planId,
                                                  @PathVariable(name = "id") Long id) {
         logger.info("Activating existing scheme");
-        String message = schemeService.activateScheme(planId,id);
+        String message = schemeService.activateScheme(planId, id);
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

@@ -47,7 +47,7 @@ public class SchemeDetails {
 
 	@PositiveOrZero(message = "Minimum investment time must be a non-negative number")
 	@Column(nullable = false)
-	private int minInvestmentTime;
+	private Integer minInvestmentTime;
 
 	@PositiveOrZero(message = "Maximum investment time must be a non-negative number")
 	@Column(nullable = false)
@@ -55,7 +55,7 @@ public class SchemeDetails {
 
 	@PositiveOrZero(message = "Minimum age must be a non-negative number")
 	@Column(nullable = false)
-	private int minAge;
+	private Integer minAge;
 
 	@PositiveOrZero(message = "Maximum age must be a non-negative number")
 	@Column(name = "maxage")

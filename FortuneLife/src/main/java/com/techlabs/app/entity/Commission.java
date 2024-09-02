@@ -30,7 +30,7 @@ public class Commission {
 	private Long id;
 
 	@Column(nullable = false)
-	private String commisionType;
+	private String commissionType;
 
 	@Column(nullable = false)
 	private LocalDateTime issueDate=LocalDateTime.now();

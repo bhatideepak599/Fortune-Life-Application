@@ -14,7 +14,6 @@ import com.techlabs.app.repository.SchemeDocumentRepository;
 import com.techlabs.app.repository.SchemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,6 +39,9 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 
     @Autowired
     private SchemeDetailsRepository detailsRepository;
+
+    @Autowired
+    private FileService fileService;
 
 
     @Override
@@ -77,7 +79,7 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 
 
     @Override
-    public SchemeDto createScheme(RequestSchemeDto schemeDto, MultipartFile file, Long planId) {
+    public SchemeDto createScheme(RequestSchemeDto schemeDto, Long planId) {
         InsurancePlan insurancePlan = planRepository.findById(planId)
                 .orElseThrow(() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
 
@@ -116,12 +118,15 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
         insuranceScheme.setSchemeDetails(savedDetails);
         InsuranceScheme savedScheme = schemeRepository.save(insuranceScheme);
 
+        insurancePlan.getSchemes().add(savedScheme);
+        planRepository.save(insurancePlan);
+
 
         return schemeMapper.entityToDto(savedScheme);
     }
 
     @Override
-    public SchemeDto updateScheme(RequestSchemeDto schemeDto, MultipartFile file, Long planId) {
+    public SchemeDto updateScheme(RequestSchemeDto schemeDto, Long planId) {
         InsurancePlan insurancePlan = planRepository.findById(planId)
                 .orElseThrow(() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
 

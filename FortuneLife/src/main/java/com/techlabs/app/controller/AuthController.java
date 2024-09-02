@@ -3,6 +3,7 @@ package com.techlabs.app.controller;
 import com.techlabs.app.dto.JWTAuthResponse;
 import com.techlabs.app.dto.LoginDto;
 import com.techlabs.app.dto.RegisterDto;
+import com.techlabs.app.exception.UserRelatedException;
 import com.techlabs.app.service.AuthService;
 import com.techlabs.app.service.OtpService;
 
@@ -26,21 +27,24 @@ public class AuthController {
     private OtpService otpService;
     private AuthService authService;
     private final LogoutHandler logoutHandler;
-    
-  
 
-	public AuthController(OtpService otpService, AuthService authService, LogoutHandler logoutHandler) {
-		super();
-		this.otpService = otpService;
-		this.authService = authService;
-		this.logoutHandler = logoutHandler;
-	}
 
-	@Operation(summary = "User Login")
+    public AuthController(OtpService otpService, AuthService authService, LogoutHandler logoutHandler) {
+        super();
+        this.otpService = otpService;
+        this.authService = authService;
+        this.logoutHandler = logoutHandler;
+    }
+
+    @Operation(summary = "User Login")
     @PostMapping(value = {"/login"})
     public ResponseEntity<JWTAuthResponse> login(@Valid @RequestBody LoginDto loginDto) {
-        JWTAuthResponse jwtAuthResponse = authService.login(loginDto);
-        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
+        String role = loginDto.getRole().toUpperCase();
+
+        if (role.equals("ADMIN") || role.equals("EMPLOYEE") || role.equals("CUSTOMER") || role.equals("AGENT")) {
+            JWTAuthResponse jwtAuthResponse = authService.login(loginDto);
+            return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
+        } else throw new UserRelatedException("Invalid Role!. Login With Proper Role.");
     }
 
     @Operation(summary = "User Registration")
@@ -52,24 +56,25 @@ public class AuthController {
 
         return ResponseEntity.ok(response);
     }
-    
+
     @Operation(summary = "User Logout")
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-    	 
+
         logoutHandler.logout(request, response, authentication);
         return new ResponseEntity<>("Successfully logged out", HttpStatus.OK);
-       
+
     }
-    
+
     @Operation(summary = "Send OTP")
     @GetMapping("/send-otp")
     public String sendOtp(@RequestParam String phoneNumber) {
         String otp = otpService.generateOtp(phoneNumber);
         otpService.sendOtp(phoneNumber, otp);
-        
+
         return "OTP has been sent to your phone number.";
-    }  
+    }
+
     @Operation(summary = "Verify OTP")
     @PostMapping("/verify-otp")
     public String verifyOtp(@RequestParam String phoneNumber, @RequestParam String otpProvided) {

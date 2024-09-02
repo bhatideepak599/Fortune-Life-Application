@@ -14,7 +14,7 @@ import lombok.*;
 public class FileItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotBlank(message = "Name of File cannot be empty")
     private String name;

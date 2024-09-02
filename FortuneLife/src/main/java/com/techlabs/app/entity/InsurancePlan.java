@@ -1,5 +1,6 @@
 package com.techlabs.app.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -21,16 +22,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class InsurancePlan {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable = false)
-	@NotEmpty
-	private String planName;
+    @Column(nullable = false)
+    @NotEmpty
+    private String planName;
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	private List<InsuranceScheme> schemes;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<InsuranceScheme> schemes = new ArrayList<>();
 
-	private Boolean active = true;
+    private Boolean active = true;
 }

@@ -11,9 +11,9 @@ public interface InsuranceSchemeService {
 
     SchemeDto getSchemeByPlanId(Long planId, Long id);
 
-    SchemeDto createScheme(RequestSchemeDto schemeDto, MultipartFile file, Long planId);
+    SchemeDto createScheme(RequestSchemeDto schemeDto, Long planId);
 
-    SchemeDto updateScheme(RequestSchemeDto schemeDto, MultipartFile file, Long planId);
+    SchemeDto updateScheme(RequestSchemeDto schemeDto, Long planId);
 
     String deleteScheme(Long planId, Long id);
 

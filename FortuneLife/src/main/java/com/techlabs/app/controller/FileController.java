@@ -20,7 +20,7 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @PostMapping("/upload")
+    @PostMapping(value = {"/upload"}, consumes = {"multipart/form-data"})
     public ResponseEntity<FileItem> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         FileItem fileItem = fileService.saveFileAndReturnItem(file);
         return new ResponseEntity<>(fileItem, HttpStatus.CREATED);

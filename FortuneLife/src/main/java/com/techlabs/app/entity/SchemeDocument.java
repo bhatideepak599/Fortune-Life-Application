@@ -21,7 +21,7 @@ public class SchemeDocument {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
 	@NotBlank
+	@Column(nullable = false)
 	private String documentName;
 }
