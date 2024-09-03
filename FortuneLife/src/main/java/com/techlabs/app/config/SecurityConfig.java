@@ -56,6 +56,8 @@ public class SecurityConfig {
 				
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/Excel-Report/download").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/pdf-Report/download").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/Excel-Report/download").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/pdf-Report/download").hasRole("ADMIN")
 
 				// Admin Endpoints
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/admin").hasRole("ADMIN")

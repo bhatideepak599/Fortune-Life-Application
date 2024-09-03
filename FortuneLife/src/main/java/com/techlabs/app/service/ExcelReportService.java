@@ -6,7 +6,9 @@ import org.springframework.core.io.ByteArrayResource;
 
 public interface ExcelReportService {
 
-	ByteArrayResource createExcelFile() throws IOException;
+	ByteArrayResource downloadExcelFileForCustomer() throws IOException;
+
+	ByteArrayResource downloadExcelFileForAgent() throws IOException;
 
 
 }

@@ -18,23 +18,29 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.VerticalAlignment;
 import com.techlabs.app.entity.Address;
+import com.techlabs.app.entity.Agent;
+import com.techlabs.app.entity.Commission;
 import com.techlabs.app.entity.Customer;
 import com.techlabs.app.entity.InsurancePolicy;
 import com.techlabs.app.entity.User;
+import com.techlabs.app.exception.AgentRelatedException;
 import com.techlabs.app.exception.CustomerRelatedException;
+import com.techlabs.app.repository.AgentRepository;
 import com.techlabs.app.repository.CustomerRepository;
 
 @Service
 public class PdfReportServiceImpl implements PdfReportService {
 	private final CustomerRepository customerRepository;
-
-	public PdfReportServiceImpl(CustomerRepository customerRepository) {
+	private final AgentRepository agentRepository;
+	
+	public PdfReportServiceImpl(CustomerRepository customerRepository, AgentRepository agentRepository) {
 		super();
 		this.customerRepository = customerRepository;
+		this.agentRepository = agentRepository;
 	}
 
 	@Override
-	public byte[] generateCustomerPdf() throws IOException {
+	public byte[] downloadPdfFileForCustomer() throws IOException {
 		List<Customer> customers = customerRepository.findAll();
 		if (customers == null) {
 			throw new CustomerRelatedException("No Customers Available");
@@ -111,6 +117,86 @@ public class PdfReportServiceImpl implements PdfReportService {
 
 			table.addCell(new Cell().add(
 					new Paragraph(policyDetails.toString()).setFont(font).setVerticalAlignment(VerticalAlignment.TOP)));
+		}
+
+		document.add(table);
+		document.close();
+
+		return baos.toByteArray();
+	}
+
+	@Override
+	public byte[] downloadPdfFileForAgent() throws IOException {
+		List<Agent> agents = agentRepository.findAll();
+		if (agents == null) {
+			throw new AgentRelatedException("No Agent Available");
+		}
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PdfWriter writer = new PdfWriter(baos);
+		PdfDocument pdfDoc = new PdfDocument(writer);
+		Document document = new Document(pdfDoc);
+
+		// Load the font
+		PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+
+		// Add title
+		document.add(new Paragraph("Customer Report").setBold().setFontSize(18).setFont(font));
+
+		// Create a table with 2 columns
+		Table table = new Table(2);
+
+		// Add headers
+		table.addCell(new Cell().add(new Paragraph("Agent Details").setFont(font))
+				.setBackgroundColor(new DeviceRgb(220, 220, 220)));
+		table.addCell(new Cell().add(new Paragraph("Commission Details").setFont(font))
+				.setBackgroundColor(new DeviceRgb(220, 220, 220)));
+
+		// Add customer data to the table
+		for (Agent agent : agents) {
+			// Customer ID, Active Status, Verified Status
+			StringBuilder agentDetails = new StringBuilder();
+			agentDetails.append("Agent ID: ").append(agent.getId()).append("\n").append("Status : ")
+					.append(agent.getActive()?"Active":"InActive").append("\n").append("Verification: ")
+					.append(agent.getVerified()?"Approved":"Pending")
+					
+					.append("\n");
+
+			// User and Address Details
+			User user = agent.getUser();
+			Address address = user.getAddress();
+			StringBuilder userDetails = new StringBuilder();
+			userDetails.append(("Username: ")).append(user.getUsername()).append("\n").append("First Name: ")
+					.append(user.getFirstName()).append("\n").append("Last Name: ").append(user.getLastName())
+					.append("\n").append("Email: ").append(user.getEmail()).append("\n").append("Gender: ")
+					.append(user.getGender()).append("\n").append("Mobile Number: ").append(user.getMobileNumber())
+					.append("\n");
+
+			StringBuilder addressDetails = new StringBuilder();
+			addressDetails.append("Address: ").append(address.getHouseNumber()).append(", ")
+					.append(address.getApartment()).append(", ").append(address.getCity()).append(", ")
+					.append(address.getState()).append(", ").append(address.getPinCode()).append("\n");
+
+			// Combine user and address details
+			StringBuilder userAndAddressDetails = new StringBuilder();
+			userAndAddressDetails.append(userDetails.toString()).append(addressDetails.toString());
+
+			// Add customer details to the first column
+			table.addCell(
+					new Cell().add(new Paragraph(agentDetails.toString() + "\n\n" + userAndAddressDetails.toString())
+							.setFont(font).setVerticalAlignment(VerticalAlignment.TOP)));
+
+			StringBuilder commissionDetails = new StringBuilder();
+			for (Commission commision : agent.getCommissions()) {
+				commissionDetails.append("Commision ID: ").append(commision.getId()).append("\n").append("Commision Type: ")
+						.append(commision.getCommissionType()).append("\n").append("Date : ")
+						.append(commision.getIssueDate().toString()).append("\n").append("Amount : ")
+						.append(commision.getAmount()).append("\n")
+						.append("\n\n");
+			}
+
+			table.addCell(new Cell().add(
+					new Paragraph(commissionDetails.toString()).setFont(font).setVerticalAlignment(VerticalAlignment.TOP)));
 		}
 
 		document.add(table);
