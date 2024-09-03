@@ -80,6 +80,8 @@ public class InsuranceSchemeController {
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+    
+    
 
 
 }

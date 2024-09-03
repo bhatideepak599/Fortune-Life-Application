@@ -13,9 +13,11 @@ import com.techlabs.app.enums.TokenType;
 @ToString
 public class Token {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+
 
     @Column(unique = true)
     public String token;

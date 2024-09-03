@@ -1,7 +1,5 @@
 package com.techlabs.app.entity;
 
-import com.techlabs.app.enums.DocumentStatus;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +24,7 @@ public class SubmittedDocument {
     
     @Column(nullable = false)
     @NotBlank
-    private String documentName=DocumentStatus.PENDING.name();
+    private String documentName;
     
     @Column(nullable = false)
     @NotBlank

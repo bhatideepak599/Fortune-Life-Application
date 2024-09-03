@@ -120,8 +120,7 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 
         insurancePlan.getSchemes().add(savedScheme);
         planRepository.save(insurancePlan);
-
-
+        
         return schemeMapper.entityToDto(savedScheme);
     }
 

@@ -61,22 +61,22 @@ public class InsurancePolicy {
 
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "schemeId")
-	private InsuranceScheme insuranceScheme;
+	private InsuranceScheme insuranceScheme;// scheme name
 
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "agentId")
-	private Agent agent;
+	private Agent agent; //agent
 
 	@OneToMany(cascade = { CascadeType.ALL })
-	private List<Nominee> nominees;
+	private List<Nominee> nominees; //
 
 	@OneToMany(cascade = { CascadeType.ALL })
-	private List<Payment> payments;
+	private List<Payment> payments; //
 
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "claimId")
-	private Claim claims;
+	private Claim claims; //
 
 	@OneToMany(cascade = { CascadeType.ALL })
-	private Set<SubmittedDocument> submittedDocuments = new HashSet<>();
+	private Set<SubmittedDocument> submittedDocuments = new HashSet<>();//
 }

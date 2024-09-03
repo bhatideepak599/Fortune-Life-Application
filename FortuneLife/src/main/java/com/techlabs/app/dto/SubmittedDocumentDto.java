@@ -6,22 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SchemeDto {
-    
+public class SubmittedDocumentDto {
 	private Long id;
-
-    @NotBlank
-    private String SchemeName;
-
-    private SchemeDetailsDto schemeDetails;
-
-    private List<InsurancePolicyResponseDto> policies;
-
-    private Boolean active;
+	private String documentName;
+	@NotBlank
+	private String documentStatus;
+	
+	@NotBlank
+	private String documentImage;
 }

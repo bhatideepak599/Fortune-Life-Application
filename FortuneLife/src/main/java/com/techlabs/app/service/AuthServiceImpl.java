@@ -59,6 +59,7 @@ public class AuthServiceImpl implements AuthService {
         this.tokenRepository = tokenRepository;
     }
 
+
     @Override
     public JWTAuthResponse login(LoginDto loginDto) {
         User user = userRepository
@@ -69,6 +70,8 @@ public class AuthServiceImpl implements AuthService {
         if (!user.getActive()) {
             throw new UserRelatedException("User is not active");
         }
+
+
 
         if (loginDto.getRole().equalsIgnoreCase("ADMIN")) {
             Admin admin = adminRepository.findByUserDetails(user).orElseThrow(() -> new AdminRelatedException(
@@ -214,4 +217,5 @@ public class AuthServiceImpl implements AuthService {
         return token;
 
     }
+
 }

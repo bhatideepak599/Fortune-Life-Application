@@ -39,6 +39,7 @@ public class AuthController {
     @Operation(summary = "User Login")
     @PostMapping(value = {"/login"})
     public ResponseEntity<JWTAuthResponse> login(@Valid @RequestBody LoginDto loginDto) {
+
         String role = loginDto.getRole().toUpperCase();
 
         if (role.equals("ADMIN") || role.equals("EMPLOYEE") || role.equals("CUSTOMER") || role.equals("AGENT")) {
@@ -46,6 +47,8 @@ public class AuthController {
             return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
         } else throw new UserRelatedException("Invalid Role!. Login With Proper Role.");
     }
+
+
 
     @Operation(summary = "User Registration")
     @PostMapping(value = {"/register"})

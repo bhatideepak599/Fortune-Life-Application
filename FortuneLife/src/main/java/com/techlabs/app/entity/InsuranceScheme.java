@@ -37,7 +37,6 @@ public class InsuranceScheme {
 
 	    @OneToMany(cascade = {CascadeType.ALL})
 	    private List<InsurancePolicy> policies;
-	    
-	    
+	   
 	    private Boolean active=true;
 }
