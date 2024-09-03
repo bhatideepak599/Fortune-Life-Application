@@ -47,24 +47,27 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .cors(withDefaults())  // Apply CORS configuration
-                .authorizeHttpRequests(authorize -> authorize
-                        // Swagger UI and API docs
-                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**",
-                                "/swagger-ui.html", "/webjars/**")
-                        .permitAll()
-
-                        // Authentication endpoints
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/auth/signin").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/auth/signup").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/auth/logout").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/auth/verify-otp").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/fortuneLife/auth/send-otp").permitAll()
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(authorize -> authorize
+				// Swagger UI and API docs
+				.requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**",
+						"/swagger-ui.html", "/webjars/**")
+				.permitAll()
+				
+				// Authentication endpoints
+				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/login").permitAll()
+				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/signin").permitAll()
+				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/register").permitAll()
+				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/signup").permitAll()
+				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/logout").permitAll()
+				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/verify-otp").permitAll()
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/auth/send-otp").permitAll()
+				
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/Excel-Report/download").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/pdf-Report/download").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/Excel-Report/download").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/pdf-Report/download").hasRole("ADMIN")
 
                         // Admin Endpoints
                         .requestMatchers(HttpMethod.POST, "/fortuneLife/admin").hasRole("ADMIN")
