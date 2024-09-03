@@ -20,5 +20,6 @@ public interface CustomerService {
 	String activateCustomer(Long id);
 
 	String deleteCustomerById(Long id);
+
 	
 }

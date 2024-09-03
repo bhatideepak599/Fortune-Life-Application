@@ -1,9 +1,8 @@
 package com.techlabs.app.controller;
-
+import org.springframework.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +32,7 @@ public class CustomerController {
 	private CustomerService customerService;
 	@Autowired
 	private InsurancePolicyService insurancePolicyService;
+
 	@Operation(summary = "Add A New Customer ")
 	@PostMapping
 	public ResponseEntity<CustomerDto> addCustomer(@Valid @RequestBody UserDto userDto,
@@ -97,21 +97,24 @@ public class CustomerController {
 	@PostMapping("/{customerId}/Insurance-Scheme/{schemeId}/policy")
 	public ResponseEntity<InsurancePolicyResponseDto> addNewPolicy(@PathVariable(name = "customerId") Long customerId,
 			@PathVariable(name = "schemeId") Long schemeId, @Valid @RequestBody InsurancePolicyDto insurancePolicyDto) {
-		
-		 logger.info("New Policy For The Customer ");
-		 InsurancePolicyResponseDto addedPolicy=insurancePolicyService.addNewPolicy(customerId,schemeId,insurancePolicyDto);
-		 return new ResponseEntity<>(addedPolicy, HttpStatus.OK);
-	}
-	
-	@Operation(summary = "Add New Policy Under A Scheme By Agent To Customer")
-	@PostMapping("/{customerId}/Insurance-Scheme/{schemeId}/agent/{agentId}/policy")
-	public ResponseEntity<InsurancePolicyResponseDto> addNewPolicyByAgentForCustomer(@PathVariable(name = "customerId") Long customerId,
-			@PathVariable(name = "schemeId") Long schemeId, @PathVariable(name = "agentId") Long agentId,
-			@Valid @RequestBody InsurancePolicyDto insurancePolicyDto) {
-		
-		 logger.info("New Policy For The Customer ");
-		 InsurancePolicyResponseDto addedPolicy=insurancePolicyService.addNewPolicyByAgentForCustomer(customerId,schemeId,agentId,insurancePolicyDto);
-		 return new ResponseEntity<>(addedPolicy, HttpStatus.OK);
+
+		logger.info("New Policy For The Customer ");
+		InsurancePolicyResponseDto addedPolicy = insurancePolicyService.addNewPolicy(customerId, schemeId,
+				insurancePolicyDto);
+		return new ResponseEntity<>(addedPolicy, HttpStatus.OK);
 	}
 
+	@Operation(summary = "Add New Policy Under A Scheme By Agent To Customer")
+	@PostMapping("/{customerId}/Insurance-Scheme/{schemeId}/agent/{agentId}/policy")
+	public ResponseEntity<InsurancePolicyResponseDto> addNewPolicyByAgentForCustomer(
+			@PathVariable(name = "customerId") Long customerId, @PathVariable(name = "schemeId") Long schemeId,
+			@PathVariable(name = "agentId") Long agentId, @Valid @RequestBody InsurancePolicyDto insurancePolicyDto) {
+
+		logger.info("New Policy For The Customer ");
+		InsurancePolicyResponseDto addedPolicy = insurancePolicyService.addNewPolicyByAgentForCustomer(customerId,
+				schemeId, agentId, insurancePolicyDto);
+		return new ResponseEntity<>(addedPolicy, HttpStatus.OK);
+	}
+
+	
 }

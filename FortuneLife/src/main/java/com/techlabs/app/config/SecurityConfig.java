@@ -44,7 +44,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**",
 						"/swagger-ui.html", "/webjars/**")
 				.permitAll()
-
+				
 				// Authentication endpoints
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/login").permitAll()
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/signin").permitAll()
@@ -53,6 +53,9 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/logout").permitAll()
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/verify-otp").permitAll()
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/auth/send-otp").permitAll()
+				
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/Excel-Report/download").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/pdf-Report/download").hasRole("ADMIN")
 
 				// Admin Endpoints
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/admin").hasRole("ADMIN")
@@ -86,9 +89,13 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/{id}")
 				.hasAnyRole("ADMIN", "EMPLOYEE", "CUSTOMER")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/download-pdf").hasRole("ADMIN")
+				
 				.requestMatchers(HttpMethod.POST,
 						"/fortuneLife/customer/{customerId}/Insurance-Scheme/{schemeId}/agent/{agentId}/policy")
 				.hasAnyRole("ADMIN", "EMPLOYEE","AGENT")
+				
+				
 
 				// Any other request must be authenticated
 				.anyRequest().authenticated())

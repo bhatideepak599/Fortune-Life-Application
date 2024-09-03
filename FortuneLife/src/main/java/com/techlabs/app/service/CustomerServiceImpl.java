@@ -1,26 +1,38 @@
 package com.techlabs.app.service;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import com.techlabs.app.dto.CustomerDto;
+import com.techlabs.app.dto.InsurancePolicyResponseDto;
 import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.entity.Address;
 import com.techlabs.app.entity.Customer;
+import com.techlabs.app.entity.InsurancePolicy;
 import com.techlabs.app.entity.Role;
 import com.techlabs.app.entity.User;
 import com.techlabs.app.exception.APIException;
 import com.techlabs.app.exception.AdminRelatedException;
 import com.techlabs.app.exception.CustomerRelatedException;
 import com.techlabs.app.mapper.CustomerMapper;
+import com.techlabs.app.mapper.InsurancePolicyMapper;
 import com.techlabs.app.mapper.UserMapper;
 import com.techlabs.app.repository.AddressRepository;
 import com.techlabs.app.repository.CustomerRepository;
@@ -39,6 +51,9 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerMapper customerMapper;
 	private AddressRepository addressRepository;
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private InsurancePolicyMapper insurancePolicyMapper;
 
 	public CustomerServiceImpl(CustomerRepository customerRepository, UserRepository userRepository,
 			RoleRepository roleRepository, UserMapper userMapper, CustomerMapper customerMapper,
@@ -93,10 +108,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public PageResponse<CustomerDto> getAllCustomers(Long id, String userName, String name, String mobileNumber,
-			String email, Boolean active,Boolean verified ,int page, int size) {
+			String email, Boolean active, Boolean verified, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Customer> customers = customerRepository.findByIdAndUserNameAndNameAndMobileNumberAndEmailAndActive(id,
-				userName, name, mobileNumber, email, active,verified, pageable);
+				userName, name, mobileNumber, email, active, verified, pageable);
 		if (customers.getContent().isEmpty()) {
 
 			throw new CustomerRelatedException(" No Customers  Found! ");
@@ -111,6 +126,12 @@ public class CustomerServiceImpl implements CustomerService {
 			customerDto.setId(userDetails.getId());
 			customerDto.setActive(customer.getActive());
 			customerDto.setUserDto(userMapper.entityToDto(userDetails));
+			if (customer.getPolicies() != null) {
+				List<InsurancePolicyResponseDto> allPolicies = new ArrayList<>();
+				customer.getPolicies().forEach((policy) -> allPolicies.add(insurancePolicyMapper.entityToDto(policy)));
+				customerDto.setPolicies(allPolicies);
+
+			}
 			response.add(customerDto);
 		}
 
@@ -156,7 +177,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 		User userForUpdate = userMapper.dtoToEntity(userDto);
 		userForUpdate.setId(userDto.getId());
-		
+
 		userForUpdate.setRoles(user.get().getRoles());
 		userForUpdate.setPassword(user.get().getPassword());
 		Address address = userForUpdate.getAddress();
@@ -204,4 +225,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return "Customer Deleted SuccessFully";
 	}
 
+	
+
+	
 }
