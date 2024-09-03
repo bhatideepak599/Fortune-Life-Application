@@ -81,6 +81,7 @@ public class AdminController {
 		String activatedMessage =adminService.activateAdmin(id);
 		return new ResponseEntity<>(activatedMessage, HttpStatus.OK);
 	}
+
 	@Operation(summary = "Delete Admin By Id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteAdminById(@PathVariable("id") Long id) {

@@ -18,6 +18,16 @@ import java.util.Map;
 public class GlobalExceptionHandler extends RuntimeException {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleException(FortuneLifeException e) {
+        logger.error(e.getMessage());
+        ErrorResponse error = new ErrorResponse();
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(e.getMessage());
+        error.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(CustomerRelatedException e) {
