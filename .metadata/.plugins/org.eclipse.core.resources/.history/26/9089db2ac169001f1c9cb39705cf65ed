@@ -1,0 +1,35 @@
+package com.techlabs.app.mapper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.techlabs.app.dto.InsurancePolicyResponseDto;
+import com.techlabs.app.entity.InsurancePolicy;
+import com.techlabs.app.entity.Nominee;
+
+public class InsurancePolicyMapper {
+	
+	public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
+		InsurancePolicyResponseDto response=new InsurancePolicyResponseDto();
+		response.setAgentName(policy.getAgent().getUser().getFirstName());
+		response.setId(policy.getId());
+		response.setIssueDate(policy.getIssueDate());
+		response.setMaturityDate(policy.getMaturityDate());
+		response.setPolicyStatus(policy.getPolicyStatus());
+		response.setPremiumAmount(policy.getPremiumAmount());
+		response.setPremiumType(policy.getPremiumType());
+		response.setSumAssured(policy.getSumAssured());
+		response.setSchemeName(policy.getInsuranceScheme().getSchemeName());
+		
+		List<String> nominies=new ArrayList<>();
+		
+		for(Nominee n:policy.getNominees()) {
+			String nameAndRelation=n.getNomineeName()+"Relation "+n.getRelationStatus();
+			nominies.add(nameAndRelation);
+		}
+		response.setNomineeNameAndRelation(nominies);
+		
+		
+		return response;
+	}
+}

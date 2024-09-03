@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.twilio.exception.ApiException"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.exception.UserRelatedException"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.dto.InsurancePolicyDto"/>
+    <fullyQualifiedTypeName name="jakarta.validation.constraints.NotNull"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.service.InsurancePolicyService"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.repository.CustomerRepository"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.repository.InsurancePolicyRepository"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.exception.CustomerRelatedException"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.entity.Customer"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.entity.InsuranceScheme"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.exception.SchemeRelatedException"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.enums.DocumentStatus"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="org.aspectj.weaver.patterns.HasThisTypePatternTriedToSneakInSomeGenericOrParameterizedTypePatternMatchingStuffAnywhereVisitor"/>
+    <fullyQualifiedTypeName name="lombok.Data"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.entity.Nominee"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.entity.SubmittedDocument"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.dto.SubmittedDocumentDto"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.mapper.InsurancePolicyMapper"/>
+    <fullyQualifiedTypeName name="org.hibernate.annotations.Comment"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.repository.AgentRepository"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.entity.Agent"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.exception.AgentRelatedException"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.entity.InsurancePolicy"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.techlabs.app.dto.InsurancePolicyResponseDto"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+</qualifiedTypeNameHistroy>

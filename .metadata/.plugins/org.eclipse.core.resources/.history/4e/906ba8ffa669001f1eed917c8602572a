@@ -1,0 +1,5 @@
+package com.techlabs.app.controller;
+
+public class InsurancePolicyController {
+
+}

@@ -1,0 +1,72 @@
+package com.techlabs.app.service;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.techlabs.app.dto.InsurancePolicyDto;
+import com.techlabs.app.dto.InsurancePolicyResponseDto;
+import com.techlabs.app.entity.Customer;
+import com.techlabs.app.entity.InsurancePolicy;
+import com.techlabs.app.entity.InsuranceScheme;
+import com.techlabs.app.entity.Nominee;
+import com.techlabs.app.enums.PolicyStatus;
+import com.techlabs.app.exception.CustomerRelatedException;
+import com.techlabs.app.exception.SchemeRelatedException;
+import com.techlabs.app.repository.CustomerRepository;
+import com.techlabs.app.repository.InsurancePolicyRepository;
+import com.techlabs.app.repository.NomineeRepository;
+import com.techlabs.app.repository.SchemeRepository;
+
+@Service
+public class InsurancePolicyServiceImpl implements InsurancePolicyService{
+	 private SchemeRepository schemeRepository;
+	 private CustomerRepository customerRepository;
+	 private InsurancePolicyRepository insurancePolicyRepository;
+	 private NomineeRepository nomineeRepository;
+	 
+	public InsurancePolicyServiceImpl(SchemeRepository schemeRepository, CustomerRepository customerRepository,
+			InsurancePolicyRepository insurancePolicyRepository) {
+		super();
+		this.schemeRepository = schemeRepository;
+		this.customerRepository = customerRepository;
+		this.insurancePolicyRepository = insurancePolicyRepository;
+	}
+
+	@Override
+	public InsurancePolicyResponseDto addNewPolicy(Long customerId, Long schemeId,InsurancePolicyDto insurancePolicyDto) {
+		Customer customer=customerRepository.findById(customerId)
+				.orElseThrow(()-> new CustomerRelatedException("No Customer Found With Customer Id: "+customerId));
+		if(customer.getActive()==false)
+			new CustomerRelatedException("No Customer Found With Customer Id: "+customerId);
+		
+		InsuranceScheme insuranceScheme=schemeRepository.findById(schemeId)
+				.orElseThrow(()-> new SchemeRelatedException("No Scheme Found With Scheme Id: "+schemeId));
+		if(insuranceScheme.getActive()==false) {
+			new SchemeRelatedException("Scheme Is Not Active Now ");
+		}
+		InsurancePolicy insurancePolicy=new InsurancePolicy();
+		
+		insurancePolicy.setIssueDate(LocalDate.now());
+		insurancePolicy.setMaturityDate(LocalDate.now().plusYears(insurancePolicyDto.getTime()));
+		insurancePolicy.setInsuranceScheme(insuranceScheme);
+		insurancePolicy.setPremiumAmount(insurancePolicyDto.getPremiumAmount());
+		insurancePolicy.setPremiumType(insurancePolicyDto.getPremiumType());
+		insurancePolicy.setSumAssured(insurancePolicyDto.getSumAssured());
+		insurancePolicy.setPolicyStatus( PolicyStatus.ACTIVE.name());
+		
+		Nominee nominee=new Nominee();
+		nominee.setNomineeName(insurancePolicyDto.getNomineeName());
+		nominee.setRelationStatus(insurancePolicyDto.getRelationStatusWithNominee());
+		
+		nominee=nomineeRepository.save(nominee);
+		
+		
+		
+		
+		return null;
+	}
+
+}

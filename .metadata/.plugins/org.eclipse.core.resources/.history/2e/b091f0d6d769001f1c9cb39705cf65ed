@@ -1,0 +1,25 @@
+package com.techlabs.app.service;
+
+import com.techlabs.app.dto.RequestSchemeDto;
+import com.techlabs.app.dto.SchemeDto;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
+public interface InsuranceSchemeService {
+    List<SchemeDto> getAllSchemesByPlanId(Long planId);
+
+    SchemeDto getSchemeByPlanId(Long planId, Long id);
+
+    SchemeDto createScheme(RequestSchemeDto schemeDto, Long planId);
+
+<<<<<<< HEAD
+    SchemeDto updateScheme(RequestSchemeDto schemeDto,  Long planId);
+=======
+    SchemeDto updateScheme(RequestSchemeDto schemeDto, Long planId);
+>>>>>>> cbcdb3304986bc41099df56c5642ee5913180e78
+
+    String deleteScheme(Long planId, Long id);
+
+    String activateScheme(Long planId, Long id);
+}

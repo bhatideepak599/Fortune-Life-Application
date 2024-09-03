@@ -1,0 +1,18 @@
+package com.techlabs.app.mapper;
+
+import com.techlabs.app.dto.InsurancePolicyResponseDto;
+import com.techlabs.app.entity.InsurancePolicy;
+
+public class InsurancePolicyMapper {
+	
+	public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
+		InsurancePolicyResponseDto response=new InsurancePolicyResponseDto();
+		response.setAgentName(policy.getAgent().getUser().getFirstName());
+		response.setId(policy.getId());
+		response.setIssueDate(policy.getIssueDate());
+		response.setMaturityDate(policy.getMaturityDate());
+		response.setNomineeName(policy);
+		
+		return response;
+	}
+}

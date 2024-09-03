@@ -1,0 +1,14 @@
+package com.techlabs.app.mapper;
+
+import com.techlabs.app.dto.InsurancePolicyResponseDto;
+import com.techlabs.app.entity.InsurancePolicy;
+
+public class InsurancePolicyMapper {
+	
+	public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
+		InsurancePolicyResponseDto insurancePolicyResponseDto=new InsurancePolicyResponseDto();
+		
+		
+		return insurancePolicyResponseDto;
+	}
+}

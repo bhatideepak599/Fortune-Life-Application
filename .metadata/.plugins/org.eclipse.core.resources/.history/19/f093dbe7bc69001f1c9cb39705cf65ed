@@ -1,0 +1,5 @@
+package com.techlabs.app.mapper;
+
+public class InsurancePolicyMapper {
+
+}

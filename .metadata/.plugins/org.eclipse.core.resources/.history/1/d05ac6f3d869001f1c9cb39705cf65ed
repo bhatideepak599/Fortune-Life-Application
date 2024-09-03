@@ -1,0 +1,47 @@
+package com.techlabs.app.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+<<<<<<< HEAD
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+=======
+>>>>>>> cbcdb3304986bc41099df56c5642ee5913180e78
+
+import com.techlabs.app.enums.TokenType;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Token {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Long id;
+
+   
+    @Column(unique = true)
+    public String token;
+
+    @Enumerated(EnumType.STRING)
+    public TokenType tokenType = TokenType.BEARER;
+
+    public Boolean revoked;
+
+    public Boolean expired;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+}

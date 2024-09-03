@@ -1,0 +1,27 @@
+package com.techlabs.app.dto;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.techlabs.app.enums.PolicyStatus;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+
+public class InsurancePolicyDto {
+	@NotBlank
+	private String premiumType;
+
+	
+	@PositiveOrZero(message = "Amount Should be Greater than Zero")
+	private Double sumAssured;
+	private Integer time;
+	
+	@PositiveOrZero(message = "Amount Should be Greater than Zero")
+	private Double premiumAmount;
+	
+	private List<NomineeDto> nomineesDto;
+
+	private PaymentDto paymentDto;
+	
+	private Set<SubmittedDocumentDto> submittedDocumentsDto = new HashSet<>();
+}
