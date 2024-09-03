@@ -60,7 +60,7 @@ public class StateController {
     public ResponseEntity<Object> deleteState(@PathVariable(name = "id") Long id) {
         logger.info("Delete ");
         String message = stateService.deleteState(id);
-        return ResponseEntity.ok(message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @Operation(summary = "Activate State by ID")
