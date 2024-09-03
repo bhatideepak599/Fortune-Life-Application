@@ -11,7 +11,7 @@ import java.util.Set;
 public class SchemeDocumentMapper {
     public SchemeDocument dtoToEntity(SchemeDocumentDto schemeDocumentDto) {
         SchemeDocument schemeDocument = new SchemeDocument();
-        schemeDocument.setDocumentName(schemeDocument.getDocumentName());
+        schemeDocument.setDocumentName(schemeDocumentDto.getDocumentName());
 
         return schemeDocument;
     }

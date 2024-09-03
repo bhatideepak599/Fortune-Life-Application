@@ -1,52 +1,32 @@
 package com.techlabs.app.dto;
-
-import java.time.LocalDate;
-
-import com.techlabs.app.enums.PolicyStatus;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class InsurancePolicyDto {
-	
-	private Long id;
-
-	
-	private LocalDate issueDate = LocalDate.now();
-
-	
-	private LocalDate maturityDate;
-
-	
 	@NotBlank
 	private String premiumType;
-
-	
 	@PositiveOrZero(message = "Amount Should be Greater than Zero")
 	private Double sumAssured;
-
+	@NotNull
+	private Integer time;
 	
 	@PositiveOrZero(message = "Amount Should be Greater than Zero")
 	private Double premiumAmount;
-
 	
-	private String policyStatus = PolicyStatus.PENDING.name();
-
+	private String nomineeName;
+	private String relationStatusWithNominee;
 	
-//	private InsuranceScheme insuranceScheme;
-//
-//	
-//	private Agent agent;
-//
-//	
-//	private List<Nominee> nominees;
-//
-//	
-//	private List<Payment> payments;
-//
-//	
-//	private Claim claims;
-//
-//	
-//	private Set<SubmittedDocument> submittedDocuments = new HashSet<>();
+	private Set<SubmittedDocumentDto> submittedDocumentsDto = new HashSet<>();
 }

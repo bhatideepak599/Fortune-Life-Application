@@ -13,6 +13,8 @@ import com.techlabs.app.exception.EmployeeRelatedExcetption;
 import com.techlabs.app.exception.UserRelatedException;
 import com.techlabs.app.repository.*;
 import com.techlabs.app.security.JwtTokenProvider;
+import com.twilio.exception.ApiException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +66,6 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public JWTAuthResponse login(LoginDto loginDto) {
-
 		User user = userRepository
 				.findUserByUsernameOrEmail(loginDto.getUsernameOrEmail(), loginDto.getUsernameOrEmail())
 				.orElseThrow(() -> new UserRelatedException(
@@ -212,12 +213,15 @@ public class AuthServiceImpl implements AuthService {
 		if (user.getToken() != null) {
 			token.setId(user.getToken().getId());
 		}
+		
 		token.setToken(jwtToken);
 		token.setUser(user);
 		token.setRevoked(false);
 		token.setExpired(false);
 		token.setTokenType(TokenType.BEARER);
 		tokenRepository.save(token);
+//		user.setToken(token);
+//		userRepository.save(user);
 
 		return token;
 

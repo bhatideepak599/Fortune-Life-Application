@@ -17,38 +17,35 @@ import java.util.UUID;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Value("${project.file}")
-    private String path;
+	@Value("${project.file}")
+	private String path;
 
-    @Autowired
-    private FileRepository fileRepository;
+	@Autowired
+	private FileRepository fileRepository;
 
-    @Override
-    public FileItem saveFileAndReturnItem(MultipartFile file) throws IOException {
-        String name = storeFile(file);
+	@Override
+	public FileItem saveFileAndReturnItem(MultipartFile file) throws IOException {
+		String name = storeFile(file);
 
-        FileItem fileItem = FileItem.builder()
-                .name(name)
-                .type(file.getContentType())
-                .location(path + File.separator + name)
-                .build();
+		FileItem fileItem = FileItem.builder().name(name).type(file.getContentType())
+				.location(path + File.separator + name).build();
 
-        return fileRepository.save(fileItem);
-    }
+		return fileRepository.save(fileItem);
+	}
 
-    private String storeFile(MultipartFile file) throws IOException {
-        String name = UUID.randomUUID() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        String fullPath = path + File.separator + name;
+	private String storeFile(MultipartFile file) throws IOException {
+		String name = UUID.randomUUID()
+				+ file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+		String fullPath = path + File.separator + name;
 
-        Files.copy(file.getInputStream(), Paths.get(fullPath));
+		Files.copy(file.getInputStream(), Paths.get(fullPath));
 
-        return name;
-    }
+		return name;
+	}
 
-    @Override
-    public FileItem getFileByUUIDName(String name) {
-        return fileRepository.findByName(name)
-                .orElseThrow(() -> new FileRelatedException("File with UUID name: " + name + " not found"));
-    }
+	@Override
+	public FileItem getFileByUUIDName(String name) {
+		return fileRepository.findByName(name)
+				.orElseThrow(() -> new FileRelatedException("File with UUID name: " + name + " not found"));
+	}
 }
-

@@ -61,8 +61,8 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.DELETE, "/fortuneLife/admin/{id}").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/admin").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/admin/{id}").hasRole("ADMIN")
-				
-				//Employee Endpoints
+
+				// Employee Endpoints
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/employee").hasAnyRole("ADMIN", "EMPLOYEE")
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/employee").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/employee/activate/{id}").hasRole("ADMIN")
@@ -70,16 +70,15 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/employee").hasAnyRole("ADMIN", "EMPLOYEE")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/employee/{id}").hasAnyRole("ADMIN", "EMPLOYEE")
 
-				//Agent Endpoints
+				// Agent Endpoints
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/agent").hasAnyRole("ADMIN", "EMPLOYEE")
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/agent").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/activate/{id}").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/fortuneLife/agent/{id}").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent").hasAnyRole("ADMIN", "EMPLOYEE")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/{id}").hasAnyRole("ADMIN", "EMPLOYEE")
-				
-				
-				//Customer Endpoints
+
+				// Customer Endpoints
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE")
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE")
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/customer/activate/{id}").hasAnyRole("ADMIN", "EMPLOYEE")
@@ -87,6 +86,9 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/{id}")
 				.hasAnyRole("ADMIN", "EMPLOYEE", "CUSTOMER")
+				.requestMatchers(HttpMethod.POST,
+						"/fortuneLife/customer/{customerId}/Insurance-Scheme/{schemeId}/agent/{agentId}/policy")
+				.hasAnyRole("ADMIN", "EMPLOYEE","AGENT")
 
 				// Any other request must be authenticated
 				.anyRequest().authenticated())

@@ -42,6 +42,7 @@ public class OtpService {
     }
 
     public boolean validateOtp(String phoneNumber, String otpProvided) {
+    	
         String originalOtp = otpStorage.get(phoneNumber);
         Long expiryTime = otpExpiry.get(phoneNumber);
 
@@ -53,7 +54,7 @@ public class OtpService {
             }
 
             if (originalOtp.equals(otpProvided)) {
-                otpStorage.remove(phoneNumber); // OTP is used, remove it
+                otpStorage.remove(phoneNumber); 
                 otpExpiry.remove(phoneNumber);
                 return true;
             }

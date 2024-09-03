@@ -1,6 +1,8 @@
 package com.techlabs.app.mapper;
 
+import com.techlabs.app.dto.InsurancePolicyResponseDto;
 import com.techlabs.app.dto.SchemeDto;
+import com.techlabs.app.entity.InsurancePolicy;
 import com.techlabs.app.entity.InsuranceScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,8 @@ public class SchemeMapper {
 
     @Autowired
     private SchemeDetailsMapper schemeDetailsMapper;
+    @Autowired
+    private InsurancePolicyMapper insurancePolicyMapper;
 
     public InsuranceScheme dtoToEntity(SchemeDto schemeDto) {
         InsuranceScheme insuranceScheme = new InsuranceScheme();
@@ -29,6 +33,14 @@ public class SchemeMapper {
         schemeDto.setActive(insuranceScheme.getActive());
         schemeDto.setSchemeName(insuranceScheme.getSchemeName());
         schemeDto.setSchemeDetails(schemeDetailsMapper.entityToDto(insuranceScheme.getSchemeDetails()));
+        
+        
+        List<InsurancePolicyResponseDto> policiesDto=new ArrayList<>();
+        for(InsurancePolicy policy:insuranceScheme.getPolicies()) {
+        	InsurancePolicyResponseDto policyDto = insurancePolicyMapper.entityToDto(policy);
+        	policiesDto.add(policyDto);
+        }
+        schemeDto.setPolicies(policiesDto);
 
         return schemeDto;
     }

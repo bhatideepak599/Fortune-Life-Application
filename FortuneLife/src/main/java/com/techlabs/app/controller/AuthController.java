@@ -3,6 +3,7 @@ package com.techlabs.app.controller;
 import com.techlabs.app.dto.JWTAuthResponse;
 import com.techlabs.app.dto.LoginDto;
 import com.techlabs.app.dto.RegisterDto;
+import com.techlabs.app.exception.UserRelatedException;
 import com.techlabs.app.service.AuthService;
 import com.techlabs.app.service.OtpService;
 
@@ -39,9 +40,15 @@ public class AuthController {
 	@Operation(summary = "User Login")
     @PostMapping(value = {"/login"})
     public ResponseEntity<JWTAuthResponse> login(@Valid @RequestBody LoginDto loginDto) {
-        JWTAuthResponse jwtAuthResponse = authService.login(loginDto);
-        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
-    }
+		String role1=loginDto.getRole().toUpperCase();
+		
+		if(role1.equals("ADMIN") || role1.equals("EMPLOYEE") || role1.equals("CUSTOMER") || role1.equals("AGENT") ) {
+			 JWTAuthResponse jwtAuthResponse = authService.login(loginDto);
+		        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
+		}
+		else throw new UserRelatedException("Invalid Role!. Login With Proper Role.");
+
+	}
 
     @Operation(summary = "User Registration")
     @PostMapping(value = {"/register"})
