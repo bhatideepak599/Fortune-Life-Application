@@ -32,7 +32,7 @@ public class StateController {
     @Operation(summary = "Get State by ID")
     @GetMapping("/{id}")
     public ResponseEntity<StateDto> getStateById(@PathVariable(name = "id") Long id) {
-        logger.info("Fetching state by ID :{}",id);
+        logger.info("Fetching state by ID :{}", id);
         StateDto stateDto = stateService.getStateById(id);
 
         return new ResponseEntity<>(stateDto, HttpStatus.OK);
@@ -67,6 +67,6 @@ public class StateController {
     @PutMapping("/activate/{id}")
     public ResponseEntity<Object> activateState(@PathVariable(name = "id") Long id) {
         String message = stateService.activateState(id);
-        return ResponseEntity.ok(message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }
