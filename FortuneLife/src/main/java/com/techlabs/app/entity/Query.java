@@ -31,11 +31,14 @@ public class Query {
 
 	@NotEmpty(message = "Message is required")
 	@Column(nullable = false)
-	private String message;
+	private String question;
 
+	private String answer;
+
+	@NotBlank
 	private String queryResponse=ResponseStatus.PENDING.name();
 
-	private Boolean resolved = false;
+	private Boolean active = true;
 
 	@NotBlank
 	@Email
