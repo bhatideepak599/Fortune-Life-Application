@@ -18,7 +18,7 @@ public class InsurancePolicyDto {
 	@NotBlank
 	private String premiumType;
 	@PositiveOrZero(message = "Amount Should be Greater than Zero")
-	private Double sumAssured;
+	private Double policyAmount;
 	@NotNull
 	private Integer time;
 	

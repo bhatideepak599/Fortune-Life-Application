@@ -78,6 +78,10 @@ public class ExcelReportServiceImpl implements ExcelReportService {
 					if (cnt > 1) {
 						row = sheet.createRow(rowNum++);
 						policyColumn = 12;
+						 Row previousRow = sheet.getRow(rowNum - 1);
+				            for (int i = 0; i < 12; i++) {
+				                row.createCell(i).setCellValue(previousRow.getCell(i).getStringCellValue());
+				            }
 					}
 					cnt++;
 					row.createCell(policyColumn++).setCellValue(policy.getId());

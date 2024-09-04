@@ -5358,3 +5358,2797 @@ Caused by: java.lang.Error: Unresolved compilation problem:
 2024-09-04 13:48:23 [Thread-181] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-09-04 13:48:23 [Thread-181] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-46 - Shutdown initiated...
 2024-09-04 13:48:23 [Thread-181] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-46 - Shutdown completed.
+2024-09-04 13:48:23 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 13:48:23 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 13:48:23 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 13:48:24 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 43 ms. Found 20 JPA repository interfaces.
+2024-09-04 13:48:24 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 13:48:24 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 13:48:24 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 13:48:24 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 13:48:24 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 13:48:24 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 481 ms
+2024-09-04 13:48:24 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 13:48:24 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 13:48:24 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 13:48:24 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-47 - Starting...
+2024-09-04 13:48:24 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-47 - Added connection com.mysql.cj.jdbc.ConnectionImpl@35ac29ad
+2024-09-04 13:48:24 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-47 - Start completed.
+2024-09-04 13:48:24 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 13:48:24 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 13:48:25 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 13:48:25 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 13:48:25 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 13:48:25 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 13:48:25 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 13:48:25 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.725 seconds (process running for 7883.283)
+2024-09-04 13:48:25 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 14:02:06 [HikariPool-47 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-47 - Thread starvation or clock leap detected (housekeeper delta=2m42s295ms947µs300ns).
+2024-09-04 14:44:20 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2024-09-04 14:44:20 [Thread-185] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:44:20 [Thread-185] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:44:20 [Thread-185] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-47 - Shutdown initiated...
+2024-09-04 14:44:20 [Thread-185] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-47 - Shutdown completed.
+2024-09-04 14:44:20 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 14:44:20 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 14:44:21 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 14:44:21 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 47 ms. Found 20 JPA repository interfaces.
+2024-09-04 14:44:21 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 14:44:21 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:44:21 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 14:44:21 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 14:44:21 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 14:44:21 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1162 ms
+2024-09-04 14:44:21 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 14:44:21 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 14:44:21 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 14:44:21 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-48 - Starting...
+2024-09-04 14:44:21 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-48 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6359b63
+2024-09-04 14:44:21 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-48 - Start completed.
+2024-09-04 14:44:22 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 14:44:22 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:44:22 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 14:44:22 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 14:44:23 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 14:44:23 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:44:23 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 14:44:23 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 2.807 seconds (process running for 11241.148)
+2024-09-04 14:44:23 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 14:45:03 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (0 additions, 0 deletions, 2 modifications)
+2024-09-04 14:45:03 [Thread-189] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:45:03 [Thread-189] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:45:03 [Thread-189] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-48 - Shutdown initiated...
+2024-09-04 14:45:03 [Thread-189] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-48 - Shutdown completed.
+2024-09-04 14:45:03 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 14:45:03 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 14:45:04 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 14:45:04 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 57 ms. Found 21 JPA repository interfaces.
+2024-09-04 14:45:04 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 14:45:04 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:45:04 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 14:45:04 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 14:45:04 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 14:45:04 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 455 ms
+2024-09-04 14:45:04 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 14:45:04 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 14:45:04 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 14:45:04 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-49 - Starting...
+2024-09-04 14:45:04 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-49 - Added connection com.mysql.cj.jdbc.ConnectionImpl@891493c
+2024-09-04 14:45:04 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-49 - Start completed.
+2024-09-04 14:45:04 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 14:45:05 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:45:05 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 14:45:05 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 14:45:05 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 14:45:05 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:45:05 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 14:45:05 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.65 seconds (process running for 11283.45)
+2024-09-04 14:45:05 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 14:45:12 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 14:45:12 [Thread-193] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:45:12 [Thread-193] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:45:12 [Thread-193] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-49 - Shutdown initiated...
+2024-09-04 14:45:12 [Thread-193] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-49 - Shutdown completed.
+2024-09-04 14:45:12 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 14:45:12 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 14:45:12 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 14:45:12 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 62 ms. Found 21 JPA repository interfaces.
+2024-09-04 14:45:13 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 14:45:13 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:45:13 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 14:45:13 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 14:45:13 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 14:45:13 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 476 ms
+2024-09-04 14:45:13 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 14:45:13 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 14:45:13 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 14:45:13 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-50 - Starting...
+2024-09-04 14:45:13 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-50 - Added connection com.mysql.cj.jdbc.ConnectionImpl@18bb1994
+2024-09-04 14:45:13 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-50 - Start completed.
+2024-09-04 14:45:13 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 14:45:13 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:45:13 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 14:45:14 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 14:45:14 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 14:45:14 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:45:14 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 14:45:14 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.797 seconds (process running for 11292.252)
+2024-09-04 14:45:14 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 14:46:04 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 14:46:04 [Thread-197] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:46:04 [Thread-197] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:46:04 [Thread-197] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-50 - Shutdown initiated...
+2024-09-04 14:46:04 [Thread-197] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-50 - Shutdown completed.
+2024-09-04 14:46:04 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 14:46:04 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 14:46:04 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 14:46:04 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 21 JPA repository interfaces.
+2024-09-04 14:46:04 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 14:46:04 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:46:04 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 14:46:04 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 14:46:04 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 14:46:04 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 414 ms
+2024-09-04 14:46:04 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 14:46:04 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 14:46:05 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 14:46:05 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-51 - Starting...
+2024-09-04 14:46:05 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-51 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7b6747a3
+2024-09-04 14:46:05 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-51 - Start completed.
+2024-09-04 14:46:05 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 14:46:05 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:46:05 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 14:46:06 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 14:46:06 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 14:46:06 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:46:06 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 14:46:06 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.663 seconds (process running for 11344.076)
+2024-09-04 14:46:06 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 14:49:39 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 14:49:39 [Thread-201] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:49:39 [Thread-201] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:49:39 [Thread-201] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-51 - Shutdown initiated...
+2024-09-04 14:49:39 [Thread-201] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-51 - Shutdown completed.
+2024-09-04 14:49:40 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 14:49:40 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 14:49:40 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 14:49:40 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35 ms. Found 21 JPA repository interfaces.
+2024-09-04 14:49:40 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 14:49:40 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:49:40 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 14:49:40 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 14:49:40 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 14:49:40 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 459 ms
+2024-09-04 14:49:40 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 14:49:40 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 14:49:40 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 14:49:40 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-52 - Starting...
+2024-09-04 14:49:40 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-52 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46bffc7f
+2024-09-04 14:49:40 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-52 - Start completed.
+2024-09-04 14:49:41 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 14:49:41 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 14:49:41 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 14:49:41 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 14:49:41 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 14:49:41 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 14:49:41 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 14:49:41 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.635 seconds (process running for 11559.65)
+2024-09-04 14:49:41 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 15:38:56 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 15:38:56 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 15:38:56 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 85 ms
+2024-09-04 15:38:56 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token=?
+2024-09-04 15:38:56 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkZWVwYWsxMjMiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcyNTQzMDExMywiZXhwIjoxNzI2MDM0OTEzfQ.BMVeQN1tj2hW6Auq4HBXcmjn_3m9uZUY21u15vnSR546tk2qqraEQA81yM9O2Mmp]
+2024-09-04 15:38:56 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 15:38:56 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 15:38:56 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username 
+    from
+        User u1_0 
+    where
+        u1_0.username=?
+2024-09-04 15:38:56 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [deepak123]
+2024-09-04 15:38:56 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        u1_0.username 
+    from
+        Token t1_0 
+    join
+        User u1_0 
+            on u1_0.id=t1_0.user_id 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    where
+        t1_0.user_id=?
+2024-09-04 15:38:56 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 15:38:56 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.active,
+        c1_0.userId,
+        c1_0.verified 
+    from
+        Customer c1_0
+2024-09-04 15:38:56 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 15:38:56 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 15:38:56 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.Customer_id,
+        p1_1.id,
+        a1_0.id,
+        a1_0.active,
+        a1_0.totalCommission,
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username,
+        a1_0.verified,
+        c1_0.id,
+        a3_0.id,
+        a3_0.active,
+        a3_0.totalCommission,
+        a3_0.UserId,
+        a3_0.verified,
+        c1_0.bankAccountNumber,
+        c1_0.bankName,
+        c1_0.branchName,
+        c1_0.claimAmount,
+        c1_0.claimStatus,
+        c1_0.date,
+        c1_0.ifscCode,
+        p2_0.id,
+        p2_0.agentId,
+        p2_0.claimId,
+        p2_0.schemeId,
+        p2_0.issueDate,
+        p2_0.maturityDate,
+        p2_0.policyStatus,
+        p2_0.premiumAmount,
+        p2_0.premiumType,
+        p2_0.sumAssured,
+        is2_0.id,
+        is2_0.active,
+        sd1_0.id,
+        sd1_0.description,
+        sd1_0.installmentCommissionRatio,
+        sd1_0.maxage,
+        sd1_0.maxAmount,
+        sd1_0.maxInvestmentTime,
+        sd1_0.minAge,
+        sd1_0.minAmount,
+        sd1_0.minInvestmentTime,
+        sd1_0.profitRatio,
+        sd1_0.registrationCommissionRatio,
+        sd1_0.schemeImage,
+        is2_0.schemeName,
+        p1_1.issueDate,
+        p1_1.maturityDate,
+        p1_1.policyStatus,
+        p1_1.premiumAmount,
+        p1_1.premiumType,
+        p1_1.sumAssured 
+    from
+        Customer_policies p1_0 
+    join
+        InsurancePolicy p1_1 
+            on p1_1.id=p1_0.policies_id 
+    left join
+        Agent a1_0 
+            on a1_0.id=p1_1.agentId 
+    left join
+        User u1_0 
+            on u1_0.id=a1_0.UserId 
+    left join
+        Claim c1_0 
+            on c1_0.id=p1_1.claimId 
+    left join
+        Agent a3_0 
+            on a3_0.id=c1_0.agentId 
+    left join
+        InsurancePolicy p2_0 
+            on p2_0.id=c1_0.policyId 
+    left join
+        InsuranceScheme is2_0 
+            on is2_0.id=p1_1.schemeId 
+    left join
+        SchemeDetails sd1_0 
+            on sd1_0.id=is2_0.schemeDetailsId 
+    where
+        p1_0.Customer_id=?
+2024-09-04 15:38:56 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 15:38:56 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        n1_0.InsurancePolicy_id,
+        n1_1.id,
+        n1_1.nomineeName,
+        n1_1.relationStatus 
+    from
+        InsurancePolicy_nominees n1_0 
+    join
+        Nominee n1_1 
+            on n1_1.id=n1_0.nominees_id 
+    where
+        n1_0.InsurancePolicy_id=?
+2024-09-04 15:38:56 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2024-09-04 15:38:56 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        n1_0.InsurancePolicy_id,
+        n1_1.id,
+        n1_1.nomineeName,
+        n1_1.relationStatus 
+    from
+        InsurancePolicy_nominees n1_0 
+    join
+        Nominee n1_1 
+            on n1_1.id=n1_0.nominees_id 
+    where
+        n1_0.InsurancePolicy_id=?
+2024-09-04 15:38:56 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2024-09-04 15:39:47 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token=?
+2024-09-04 15:39:47 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkZWVwYWsxMjMiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcyNTQzMDExMywiZXhwIjoxNzI2MDM0OTEzfQ.BMVeQN1tj2hW6Auq4HBXcmjn_3m9uZUY21u15vnSR546tk2qqraEQA81yM9O2Mmp]
+2024-09-04 15:39:47 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 15:39:47 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 15:39:47 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username 
+    from
+        User u1_0 
+    where
+        u1_0.username=?
+2024-09-04 15:39:47 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [deepak123]
+2024-09-04 15:39:47 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        u1_0.username 
+    from
+        Token t1_0 
+    join
+        User u1_0 
+            on u1_0.id=t1_0.user_id 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    where
+        t1_0.user_id=?
+2024-09-04 15:39:47 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 15:39:47 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.active,
+        c1_0.userId,
+        c1_0.verified 
+    from
+        Customer c1_0
+2024-09-04 15:39:47 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 15:39:47 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 15:39:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.Customer_id,
+        p1_1.id,
+        a1_0.id,
+        a1_0.active,
+        a1_0.totalCommission,
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username,
+        a1_0.verified,
+        c1_0.id,
+        a3_0.id,
+        a3_0.active,
+        a3_0.totalCommission,
+        a3_0.UserId,
+        a3_0.verified,
+        c1_0.bankAccountNumber,
+        c1_0.bankName,
+        c1_0.branchName,
+        c1_0.claimAmount,
+        c1_0.claimStatus,
+        c1_0.date,
+        c1_0.ifscCode,
+        p2_0.id,
+        p2_0.agentId,
+        p2_0.claimId,
+        p2_0.schemeId,
+        p2_0.issueDate,
+        p2_0.maturityDate,
+        p2_0.policyStatus,
+        p2_0.premiumAmount,
+        p2_0.premiumType,
+        p2_0.sumAssured,
+        is2_0.id,
+        is2_0.active,
+        sd1_0.id,
+        sd1_0.description,
+        sd1_0.installmentCommissionRatio,
+        sd1_0.maxage,
+        sd1_0.maxAmount,
+        sd1_0.maxInvestmentTime,
+        sd1_0.minAge,
+        sd1_0.minAmount,
+        sd1_0.minInvestmentTime,
+        sd1_0.profitRatio,
+        sd1_0.registrationCommissionRatio,
+        sd1_0.schemeImage,
+        is2_0.schemeName,
+        p1_1.issueDate,
+        p1_1.maturityDate,
+        p1_1.policyStatus,
+        p1_1.premiumAmount,
+        p1_1.premiumType,
+        p1_1.sumAssured 
+    from
+        Customer_policies p1_0 
+    join
+        InsurancePolicy p1_1 
+            on p1_1.id=p1_0.policies_id 
+    left join
+        Agent a1_0 
+            on a1_0.id=p1_1.agentId 
+    left join
+        User u1_0 
+            on u1_0.id=a1_0.UserId 
+    left join
+        Claim c1_0 
+            on c1_0.id=p1_1.claimId 
+    left join
+        Agent a3_0 
+            on a3_0.id=c1_0.agentId 
+    left join
+        InsurancePolicy p2_0 
+            on p2_0.id=c1_0.policyId 
+    left join
+        InsuranceScheme is2_0 
+            on is2_0.id=p1_1.schemeId 
+    left join
+        SchemeDetails sd1_0 
+            on sd1_0.id=is2_0.schemeDetailsId 
+    where
+        p1_0.Customer_id=?
+2024-09-04 15:39:48 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 16:27:30 [HikariPool-52 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-52 - Thread starvation or clock leap detected (housekeeper delta=24m48s661ms541µs300ns).
+2024-09-04 16:31:55 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:31:55 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:31:55 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:31:55 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:31:55 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:31:55 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:31:55 [http-nio-8082-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:31:55 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:31:57 [http-nio-8082-exec-1] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 2215 ms
+2024-09-04 16:37:11 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (0 additions, 0 deletions, 2 modifications)
+2024-09-04 16:37:11 [Thread-205] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:37:11 [Thread-205] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:37:11 [Thread-205] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-52 - Shutdown initiated...
+2024-09-04 16:37:11 [Thread-205] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-52 - Shutdown completed.
+2024-09-04 16:37:11 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 16:37:11 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 16:37:12 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 16:37:12 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 75 ms. Found 21 JPA repository interfaces.
+2024-09-04 16:37:12 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 16:37:12 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:37:12 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 16:37:12 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 16:37:12 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 16:37:12 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 824 ms
+2024-09-04 16:37:12 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 16:37:12 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 16:37:12 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 16:37:12 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-53 - Starting...
+2024-09-04 16:37:12 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-53 - Added connection com.mysql.cj.jdbc.ConnectionImpl@59a3c8c0
+2024-09-04 16:37:12 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-53 - Start completed.
+2024-09-04 16:37:13 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 16:37:13 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:37:14 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 16:37:14 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 16:37:14 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 16:37:14 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:37:14 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 16:37:14 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 3.054 seconds (process running for 18012.738)
+2024-09-04 16:37:14 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 16:41:53 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 16:41:53 [Thread-209] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:41:53 [Thread-209] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:41:53 [Thread-209] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-53 - Shutdown initiated...
+2024-09-04 16:41:53 [Thread-209] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-53 - Shutdown completed.
+2024-09-04 16:41:53 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 16:41:53 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 16:41:53 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 16:41:53 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 53 ms. Found 21 JPA repository interfaces.
+2024-09-04 16:41:54 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 16:41:54 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:41:54 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 16:41:54 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 16:41:54 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 16:41:54 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 496 ms
+2024-09-04 16:41:54 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 16:41:54 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 16:41:54 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 16:41:54 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-54 - Starting...
+2024-09-04 16:41:54 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-54 - Added connection com.mysql.cj.jdbc.ConnectionImpl@636497ce
+2024-09-04 16:41:54 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-54 - Start completed.
+2024-09-04 16:41:54 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 16:41:54 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:41:54 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 16:41:55 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 16:41:55 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 16:41:55 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:41:55 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 16:41:55 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.719 seconds (process running for 18293.174)
+2024-09-04 16:41:55 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 16:43:36 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 16:43:36 [Thread-213] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:43:36 [Thread-213] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:43:36 [Thread-213] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-54 - Shutdown initiated...
+2024-09-04 16:43:36 [Thread-213] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-54 - Shutdown completed.
+2024-09-04 16:43:36 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 16:43:36 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 16:43:36 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 16:43:36 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 48 ms. Found 21 JPA repository interfaces.
+2024-09-04 16:43:36 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 16:43:36 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:43:36 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 16:43:36 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 16:43:36 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 16:43:36 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 402 ms
+2024-09-04 16:43:36 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 16:43:36 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 16:43:36 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 16:43:36 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-55 - Starting...
+2024-09-04 16:43:36 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-55 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4410fc88
+2024-09-04 16:43:36 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-55 - Start completed.
+2024-09-04 16:43:37 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 16:43:37 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:43:37 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 16:43:37 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 16:43:37 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 16:43:37 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:43:37 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 16:43:37 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.505 seconds (process running for 18395.674)
+2024-09-04 16:43:37 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 16:45:38 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (0 additions, 0 deletions, 2 modifications)
+2024-09-04 16:45:38 [Thread-217] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:45:38 [Thread-217] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:45:38 [Thread-217] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-55 - Shutdown initiated...
+2024-09-04 16:45:38 [Thread-217] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-55 - Shutdown completed.
+2024-09-04 16:45:38 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 16:45:38 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 16:45:38 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 16:45:38 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 60 ms. Found 21 JPA repository interfaces.
+2024-09-04 16:45:39 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 16:45:39 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:45:39 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 16:45:39 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 16:45:39 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 16:45:39 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 484 ms
+2024-09-04 16:45:39 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 16:45:39 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 16:45:39 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 16:45:39 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-56 - Starting...
+2024-09-04 16:45:39 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-56 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7e68422
+2024-09-04 16:45:39 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-56 - Start completed.
+2024-09-04 16:45:39 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 16:45:39 [restartedMain] DEBUG org.hibernate.SQL - 
+    alter table Claim 
+       add column remarks varchar(255)
+2024-09-04 16:45:40 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:45:40 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 16:45:40 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 16:45:40 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 16:45:40 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:45:40 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 16:45:40 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.894 seconds (process running for 18518.419)
+2024-09-04 16:45:40 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 16:47:31 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2024-09-04 16:47:31 [Thread-221] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:47:31 [Thread-221] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:47:31 [Thread-221] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-56 - Shutdown initiated...
+2024-09-04 16:47:31 [Thread-221] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-56 - Shutdown completed.
+2024-09-04 16:47:31 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 16:47:31 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 16:47:32 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 16:47:32 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 49 ms. Found 21 JPA repository interfaces.
+2024-09-04 16:47:32 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 16:47:32 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:47:32 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 16:47:32 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 16:47:32 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 16:47:32 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 380 ms
+2024-09-04 16:47:32 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 16:47:32 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 16:47:32 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 16:47:32 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-57 - Starting...
+2024-09-04 16:47:32 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-57 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4de4b290
+2024-09-04 16:47:32 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-57 - Start completed.
+2024-09-04 16:47:32 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 16:47:32 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:47:32 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 16:47:33 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 16:47:33 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 16:47:33 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:47:33 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 16:47:33 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.365 seconds (process running for 18631.202)
+2024-09-04 16:47:33 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 16:48:01 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 16:48:01 [Thread-225] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:48:01 [Thread-225] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:48:01 [Thread-225] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-57 - Shutdown initiated...
+2024-09-04 16:48:01 [Thread-225] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-57 - Shutdown completed.
+2024-09-04 16:48:01 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 14160 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 16:48:01 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 16:48:02 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 16:48:02 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 42 ms. Found 21 JPA repository interfaces.
+2024-09-04 16:48:02 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 16:48:02 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:48:02 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 16:48:02 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 16:48:02 [restartedMain] INFO  o.a.c.c.C.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 16:48:02 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 312 ms
+2024-09-04 16:48:02 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 16:48:02 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 16:48:02 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 16:48:02 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-58 - Starting...
+2024-09-04 16:48:02 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-58 - Added connection com.mysql.cj.jdbc.ConnectionImpl@60c48e85
+2024-09-04 16:48:02 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-58 - Start completed.
+2024-09-04 16:48:02 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 16:48:02 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:48:02 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 16:48:03 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 16:48:03 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 16:48:03 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:48:03 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 16:48:03 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.259 seconds (process running for 18661.078)
+2024-09-04 16:48:03 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 16:58:24 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-09-04 16:58:24 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 16064 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 16:58:24 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 16:58:24 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-09-04 16:58:24 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-09-04 16:58:26 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 16:58:26 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 176 ms. Found 21 JPA repository interfaces.
+2024-09-04 16:58:27 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 16:58:27 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:58:27 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 16:58:27 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 16:58:27 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 16:58:27 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3051 ms
+2024-09-04 16:58:27 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 16:58:28 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-09-04 16:58:28 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 16:58:28 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 16:58:28 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-09-04 16:58:29 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@66a95494
+2024-09-04 16:58:29 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-09-04 16:58:30 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 16:58:31 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 16:58:31 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-09-04 16:58:33 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 16:58:33 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 16:58:34 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 16:58:34 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 16:58:34 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 16:58:34 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 10.517 seconds (process running for 11.277)
+2024-09-04 16:58:48 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 16:58:48 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 16:58:48 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-09-04 16:58:48 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:48 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:48 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:48 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:48 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:49 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:49 [http-nio-8082-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:49 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:49 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:49 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:49 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:49 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:49 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:50 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:50 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:50 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token is null
+2024-09-04 16:58:51 [http-nio-8082-exec-10] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 1814 ms
+2024-09-04 16:58:51 [http-nio-8082-exec-10] ERROR c.t.a.e.GlobalExceptionHandler - ServletOutputStream failed to write: java.io.IOException: An established connection was aborted by the software in your host machine
+2024-09-04 16:58:51 [http-nio-8082-exec-10] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.context.request.async.AsyncRequestNotUsableException: ServletOutputStream failed to write: java.io.IOException: An established connection was aborted by the software in your host machine]
+2024-09-04 16:59:10 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token=?
+2024-09-04 16:59:10 [http-nio-8082-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkZWVwYWsxMjMiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcyNTQzMDExMywiZXhwIjoxNzI2MDM0OTEzfQ.BMVeQN1tj2hW6Auq4HBXcmjn_3m9uZUY21u15vnSR546tk2qqraEQA81yM9O2Mmp]
+2024-09-04 16:59:10 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 16:59:10 [http-nio-8082-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 16:59:10 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username 
+    from
+        User u1_0 
+    where
+        u1_0.username=?
+2024-09-04 16:59:10 [http-nio-8082-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [deepak123]
+2024-09-04 16:59:10 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        u1_0.username 
+    from
+        Token t1_0 
+    join
+        User u1_0 
+            on u1_0.id=t1_0.user_id 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    where
+        t1_0.user_id=?
+2024-09-04 16:59:10 [http-nio-8082-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 16:59:10 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.active,
+        c1_0.userId,
+        c1_0.verified 
+    from
+        Customer c1_0
+2024-09-04 16:59:10 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 16:59:10 [http-nio-8082-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 16:59:11 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.Customer_id,
+        p1_1.id,
+        a1_0.id,
+        a1_0.active,
+        a1_0.totalCommission,
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username,
+        a1_0.verified,
+        c1_0.id,
+        a3_0.id,
+        a3_0.active,
+        a3_0.totalCommission,
+        a3_0.UserId,
+        a3_0.verified,
+        c1_0.bankAccountNumber,
+        c1_0.bankName,
+        c1_0.branchName,
+        c1_0.claimAmount,
+        c1_0.claimStatus,
+        c1_0.date,
+        c1_0.ifscCode,
+        p2_0.id,
+        p2_0.agentId,
+        p2_0.claimId,
+        p2_0.schemeId,
+        p2_0.issueDate,
+        p2_0.maturityDate,
+        p2_0.policyStatus,
+        p2_0.premiumAmount,
+        p2_0.premiumType,
+        p2_0.sumAssured,
+        c1_0.remarks,
+        is2_0.id,
+        is2_0.active,
+        sd1_0.id,
+        sd1_0.description,
+        sd1_0.installmentCommissionRatio,
+        sd1_0.maxage,
+        sd1_0.maxAmount,
+        sd1_0.maxInvestmentTime,
+        sd1_0.minAge,
+        sd1_0.minAmount,
+        sd1_0.minInvestmentTime,
+        sd1_0.profitRatio,
+        sd1_0.registrationCommissionRatio,
+        sd1_0.schemeImage,
+        is2_0.schemeName,
+        p1_1.issueDate,
+        p1_1.maturityDate,
+        p1_1.policyStatus,
+        p1_1.premiumAmount,
+        p1_1.premiumType,
+        p1_1.sumAssured 
+    from
+        Customer_policies p1_0 
+    join
+        InsurancePolicy p1_1 
+            on p1_1.id=p1_0.policies_id 
+    left join
+        Agent a1_0 
+            on a1_0.id=p1_1.agentId 
+    left join
+        User u1_0 
+            on u1_0.id=a1_0.UserId 
+    left join
+        Claim c1_0 
+            on c1_0.id=p1_1.claimId 
+    left join
+        Agent a3_0 
+            on a3_0.id=c1_0.agentId 
+    left join
+        InsurancePolicy p2_0 
+            on p2_0.id=c1_0.policyId 
+    left join
+        InsuranceScheme is2_0 
+            on is2_0.id=p1_1.schemeId 
+    left join
+        SchemeDetails sd1_0 
+            on sd1_0.id=is2_0.schemeDetailsId 
+    where
+        p1_0.Customer_id=?
+2024-09-04 16:59:11 [http-nio-8082-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 16:59:11 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        n1_0.InsurancePolicy_id,
+        n1_1.id,
+        n1_1.nomineeName,
+        n1_1.relationStatus 
+    from
+        InsurancePolicy_nominees n1_0 
+    join
+        Nominee n1_1 
+            on n1_1.id=n1_0.nominees_id 
+    where
+        n1_0.InsurancePolicy_id=?
+2024-09-04 16:59:11 [http-nio-8082-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2024-09-04 16:59:11 [http-nio-8082-exec-3] ERROR c.t.a.e.GlobalExceptionHandler - Cannot get a STRING value from a NUMERIC cell
+2024-09-04 16:59:11 [http-nio-8082-exec-3] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: Cannot get a STRING value from a NUMERIC cell]
+2024-09-04 17:00:34 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 17:00:34 [Thread-6] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:00:34 [Thread-6] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 17:00:34 [Thread-6] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-09-04 17:00:34 [Thread-6] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-09-04 17:00:34 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 16064 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 17:00:34 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 17:00:34 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 17:00:34 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 69 ms. Found 21 JPA repository interfaces.
+2024-09-04 17:00:34 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 17:00:34 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:00:34 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 17:00:34 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 17:00:34 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 17:00:34 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 628 ms
+2024-09-04 17:00:34 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 17:00:34 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 17:00:34 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 17:00:34 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2024-09-04 17:00:34 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@25c044f0
+2024-09-04 17:00:34 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2024-09-04 17:00:35 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 17:00:35 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 17:00:35 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 17:00:36 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 17:00:36 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 17:00:36 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:00:36 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 17:00:36 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 2.197 seconds (process running for 133.137)
+2024-09-04 17:00:36 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 17:00:39 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 17:00:39 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 17:00:39 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2024-09-04 17:00:39 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token=?
+2024-09-04 17:00:39 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkZWVwYWsxMjMiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcyNTQzMDExMywiZXhwIjoxNzI2MDM0OTEzfQ.BMVeQN1tj2hW6Auq4HBXcmjn_3m9uZUY21u15vnSR546tk2qqraEQA81yM9O2Mmp]
+2024-09-04 17:00:39 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 17:00:39 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 17:00:39 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username 
+    from
+        User u1_0 
+    where
+        u1_0.username=?
+2024-09-04 17:00:39 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [deepak123]
+2024-09-04 17:00:39 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        u1_0.username 
+    from
+        Token t1_0 
+    join
+        User u1_0 
+            on u1_0.id=t1_0.user_id 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    where
+        t1_0.user_id=?
+2024-09-04 17:00:39 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 17:00:39 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.active,
+        c1_0.userId,
+        c1_0.verified 
+    from
+        Customer c1_0
+2024-09-04 17:00:39 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 17:00:39 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 17:00:39 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.Customer_id,
+        p1_1.id,
+        a1_0.id,
+        a1_0.active,
+        a1_0.totalCommission,
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username,
+        a1_0.verified,
+        c1_0.id,
+        a3_0.id,
+        a3_0.active,
+        a3_0.totalCommission,
+        a3_0.UserId,
+        a3_0.verified,
+        c1_0.bankAccountNumber,
+        c1_0.bankName,
+        c1_0.branchName,
+        c1_0.claimAmount,
+        c1_0.claimStatus,
+        c1_0.date,
+        c1_0.ifscCode,
+        p2_0.id,
+        p2_0.agentId,
+        p2_0.claimId,
+        p2_0.schemeId,
+        p2_0.issueDate,
+        p2_0.maturityDate,
+        p2_0.policyStatus,
+        p2_0.premiumAmount,
+        p2_0.premiumType,
+        p2_0.sumAssured,
+        c1_0.remarks,
+        is2_0.id,
+        is2_0.active,
+        sd1_0.id,
+        sd1_0.description,
+        sd1_0.installmentCommissionRatio,
+        sd1_0.maxage,
+        sd1_0.maxAmount,
+        sd1_0.maxInvestmentTime,
+        sd1_0.minAge,
+        sd1_0.minAmount,
+        sd1_0.minInvestmentTime,
+        sd1_0.profitRatio,
+        sd1_0.registrationCommissionRatio,
+        sd1_0.schemeImage,
+        is2_0.schemeName,
+        p1_1.issueDate,
+        p1_1.maturityDate,
+        p1_1.policyStatus,
+        p1_1.premiumAmount,
+        p1_1.premiumType,
+        p1_1.sumAssured 
+    from
+        Customer_policies p1_0 
+    join
+        InsurancePolicy p1_1 
+            on p1_1.id=p1_0.policies_id 
+    left join
+        Agent a1_0 
+            on a1_0.id=p1_1.agentId 
+    left join
+        User u1_0 
+            on u1_0.id=a1_0.UserId 
+    left join
+        Claim c1_0 
+            on c1_0.id=p1_1.claimId 
+    left join
+        Agent a3_0 
+            on a3_0.id=c1_0.agentId 
+    left join
+        InsurancePolicy p2_0 
+            on p2_0.id=c1_0.policyId 
+    left join
+        InsuranceScheme is2_0 
+            on is2_0.id=p1_1.schemeId 
+    left join
+        SchemeDetails sd1_0 
+            on sd1_0.id=is2_0.schemeDetailsId 
+    where
+        p1_0.Customer_id=?
+2024-09-04 17:00:39 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 17:00:39 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        n1_0.InsurancePolicy_id,
+        n1_1.id,
+        n1_1.nomineeName,
+        n1_1.relationStatus 
+    from
+        InsurancePolicy_nominees n1_0 
+    join
+        Nominee n1_1 
+            on n1_1.id=n1_0.nominees_id 
+    where
+        n1_0.InsurancePolicy_id=?
+2024-09-04 17:00:39 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2024-09-04 17:00:39 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        n1_0.InsurancePolicy_id,
+        n1_1.id,
+        n1_1.nomineeName,
+        n1_1.relationStatus 
+    from
+        InsurancePolicy_nominees n1_0 
+    join
+        Nominee n1_1 
+            on n1_1.id=n1_0.nominees_id 
+    where
+        n1_0.InsurancePolicy_id=?
+2024-09-04 17:00:39 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2024-09-04 17:03:07 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 17:03:07 [Thread-8] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:03:07 [Thread-8] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 17:03:07 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2024-09-04 17:03:07 [Thread-8] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2024-09-04 17:03:07 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 16064 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 17:03:07 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 17:03:07 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 17:03:07 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 87 ms. Found 21 JPA repository interfaces.
+2024-09-04 17:03:07 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 17:03:07 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:03:07 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 17:03:07 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 17:03:07 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 17:03:07 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 590 ms
+2024-09-04 17:03:07 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 17:03:07 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 17:03:07 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 17:03:07 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+2024-09-04 17:03:07 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@33e5bd26
+2024-09-04 17:03:07 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+2024-09-04 17:03:08 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 17:03:08 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 17:03:08 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 17:03:09 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 17:03:09 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 17:03:09 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:03:09 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 17:03:09 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.972 seconds (process running for 285.907)
+2024-09-04 17:03:09 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 17:03:09 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 17:03:09 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 17:03:09 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-04 17:03:09 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token=?
+2024-09-04 17:03:09 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkZWVwYWsxMjMiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcyNTQzMDExMywiZXhwIjoxNzI2MDM0OTEzfQ.BMVeQN1tj2hW6Auq4HBXcmjn_3m9uZUY21u15vnSR546tk2qqraEQA81yM9O2Mmp]
+2024-09-04 17:03:10 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 17:03:10 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 17:03:10 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username 
+    from
+        User u1_0 
+    where
+        u1_0.username=?
+2024-09-04 17:03:10 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [deepak123]
+2024-09-04 17:03:10 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        u1_0.username 
+    from
+        Token t1_0 
+    join
+        User u1_0 
+            on u1_0.id=t1_0.user_id 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    where
+        t1_0.user_id=?
+2024-09-04 17:03:10 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 17:03:10 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.active,
+        c1_0.userId,
+        c1_0.verified 
+    from
+        Customer c1_0
+2024-09-04 17:03:10 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 17:03:10 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 17:03:10 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.Customer_id,
+        p1_1.id,
+        a1_0.id,
+        a1_0.active,
+        a1_0.totalCommission,
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username,
+        a1_0.verified,
+        c1_0.id,
+        a3_0.id,
+        a3_0.active,
+        a3_0.totalCommission,
+        a3_0.UserId,
+        a3_0.verified,
+        c1_0.bankAccountNumber,
+        c1_0.bankName,
+        c1_0.branchName,
+        c1_0.claimAmount,
+        c1_0.claimStatus,
+        c1_0.date,
+        c1_0.ifscCode,
+        p2_0.id,
+        p2_0.agentId,
+        p2_0.claimId,
+        p2_0.schemeId,
+        p2_0.issueDate,
+        p2_0.maturityDate,
+        p2_0.policyStatus,
+        p2_0.premiumAmount,
+        p2_0.premiumType,
+        p2_0.sumAssured,
+        c1_0.remarks,
+        is2_0.id,
+        is2_0.active,
+        sd1_0.id,
+        sd1_0.description,
+        sd1_0.installmentCommissionRatio,
+        sd1_0.maxage,
+        sd1_0.maxAmount,
+        sd1_0.maxInvestmentTime,
+        sd1_0.minAge,
+        sd1_0.minAmount,
+        sd1_0.minInvestmentTime,
+        sd1_0.profitRatio,
+        sd1_0.registrationCommissionRatio,
+        sd1_0.schemeImage,
+        is2_0.schemeName,
+        p1_1.issueDate,
+        p1_1.maturityDate,
+        p1_1.policyStatus,
+        p1_1.premiumAmount,
+        p1_1.premiumType,
+        p1_1.sumAssured 
+    from
+        Customer_policies p1_0 
+    join
+        InsurancePolicy p1_1 
+            on p1_1.id=p1_0.policies_id 
+    left join
+        Agent a1_0 
+            on a1_0.id=p1_1.agentId 
+    left join
+        User u1_0 
+            on u1_0.id=a1_0.UserId 
+    left join
+        Claim c1_0 
+            on c1_0.id=p1_1.claimId 
+    left join
+        Agent a3_0 
+            on a3_0.id=c1_0.agentId 
+    left join
+        InsurancePolicy p2_0 
+            on p2_0.id=c1_0.policyId 
+    left join
+        InsuranceScheme is2_0 
+            on is2_0.id=p1_1.schemeId 
+    left join
+        SchemeDetails sd1_0 
+            on sd1_0.id=is2_0.schemeDetailsId 
+    where
+        p1_0.Customer_id=?
+2024-09-04 17:03:10 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 17:03:10 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        n1_0.InsurancePolicy_id,
+        n1_1.id,
+        n1_1.nomineeName,
+        n1_1.relationStatus 
+    from
+        InsurancePolicy_nominees n1_0 
+    join
+        Nominee n1_1 
+            on n1_1.id=n1_0.nominees_id 
+    where
+        n1_0.InsurancePolicy_id=?
+2024-09-04 17:03:10 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2024-09-04 17:03:10 [http-nio-8082-exec-1] ERROR c.t.a.e.GlobalExceptionHandler - Cannot get a STRING value from a NUMERIC cell
+2024-09-04 17:03:10 [http-nio-8082-exec-1] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: Cannot get a STRING value from a NUMERIC cell]
+2024-09-04 17:06:35 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 17:06:35 [Thread-12] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:06:35 [Thread-12] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 17:06:35 [Thread-12] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2024-09-04 17:06:35 [Thread-12] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown completed.
+2024-09-04 17:06:35 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 16064 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 17:06:35 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 17:06:36 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 17:06:36 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 47 ms. Found 21 JPA repository interfaces.
+2024-09-04 17:06:36 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 17:06:36 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:06:36 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 17:06:36 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 17:06:36 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 17:06:36 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 649 ms
+2024-09-04 17:06:36 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 17:06:36 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 17:06:36 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 17:06:36 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
+2024-09-04 17:06:36 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@66529011
+2024-09-04 17:06:36 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
+2024-09-04 17:06:36 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 17:06:36 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 17:06:36 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 17:06:37 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 17:06:37 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 17:06:37 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:06:37 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 17:06:37 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.718 seconds (process running for 493.992)
+2024-09-04 17:06:37 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-09-04 17:06:45 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 17:06:45 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 17:06:45 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-04 17:06:45 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token=?
+2024-09-04 17:06:45 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkZWVwYWsxMjMiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcyNTQzMDExMywiZXhwIjoxNzI2MDM0OTEzfQ.BMVeQN1tj2hW6Auq4HBXcmjn_3m9uZUY21u15vnSR546tk2qqraEQA81yM9O2Mmp]
+2024-09-04 17:06:45 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 17:06:45 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 17:06:45 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username 
+    from
+        User u1_0 
+    where
+        u1_0.username=?
+2024-09-04 17:06:45 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [deepak123]
+2024-09-04 17:06:45 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        u1_0.username 
+    from
+        Token t1_0 
+    join
+        User u1_0 
+            on u1_0.id=t1_0.user_id 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    where
+        t1_0.user_id=?
+2024-09-04 17:06:45 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 17:06:45 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.active,
+        c1_0.userId,
+        c1_0.verified 
+    from
+        Customer c1_0
+2024-09-04 17:06:45 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 17:06:45 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 17:06:45 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.Customer_id,
+        p1_1.id,
+        a1_0.id,
+        a1_0.active,
+        a1_0.totalCommission,
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username,
+        a1_0.verified,
+        c1_0.id,
+        a3_0.id,
+        a3_0.active,
+        a3_0.totalCommission,
+        a3_0.UserId,
+        a3_0.verified,
+        c1_0.bankAccountNumber,
+        c1_0.bankName,
+        c1_0.branchName,
+        c1_0.claimAmount,
+        c1_0.claimStatus,
+        c1_0.date,
+        c1_0.ifscCode,
+        p2_0.id,
+        p2_0.agentId,
+        p2_0.claimId,
+        p2_0.schemeId,
+        p2_0.issueDate,
+        p2_0.maturityDate,
+        p2_0.policyStatus,
+        p2_0.premiumAmount,
+        p2_0.premiumType,
+        p2_0.sumAssured,
+        c1_0.remarks,
+        is2_0.id,
+        is2_0.active,
+        sd1_0.id,
+        sd1_0.description,
+        sd1_0.installmentCommissionRatio,
+        sd1_0.maxage,
+        sd1_0.maxAmount,
+        sd1_0.maxInvestmentTime,
+        sd1_0.minAge,
+        sd1_0.minAmount,
+        sd1_0.minInvestmentTime,
+        sd1_0.profitRatio,
+        sd1_0.registrationCommissionRatio,
+        sd1_0.schemeImage,
+        is2_0.schemeName,
+        p1_1.issueDate,
+        p1_1.maturityDate,
+        p1_1.policyStatus,
+        p1_1.premiumAmount,
+        p1_1.premiumType,
+        p1_1.sumAssured 
+    from
+        Customer_policies p1_0 
+    join
+        InsurancePolicy p1_1 
+            on p1_1.id=p1_0.policies_id 
+    left join
+        Agent a1_0 
+            on a1_0.id=p1_1.agentId 
+    left join
+        User u1_0 
+            on u1_0.id=a1_0.UserId 
+    left join
+        Claim c1_0 
+            on c1_0.id=p1_1.claimId 
+    left join
+        Agent a3_0 
+            on a3_0.id=c1_0.agentId 
+    left join
+        InsurancePolicy p2_0 
+            on p2_0.id=c1_0.policyId 
+    left join
+        InsuranceScheme is2_0 
+            on is2_0.id=p1_1.schemeId 
+    left join
+        SchemeDetails sd1_0 
+            on sd1_0.id=is2_0.schemeDetailsId 
+    where
+        p1_0.Customer_id=?
+2024-09-04 17:06:45 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 17:06:45 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        n1_0.InsurancePolicy_id,
+        n1_1.id,
+        n1_1.nomineeName,
+        n1_1.relationStatus 
+    from
+        InsurancePolicy_nominees n1_0 
+    join
+        Nominee n1_1 
+            on n1_1.id=n1_0.nominees_id 
+    where
+        n1_0.InsurancePolicy_id=?
+2024-09-04 17:06:45 [http-nio-8082-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2024-09-04 17:06:45 [http-nio-8082-exec-1] ERROR c.t.a.e.GlobalExceptionHandler - Cannot get a STRING value from a NUMERIC cell
+2024-09-04 17:06:45 [http-nio-8082-exec-1] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: Cannot get a STRING value from a NUMERIC cell]
+2024-09-04 17:06:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id 
+    from
+        Token t1_0 
+    where
+        t1_0.token=?
+2024-09-04 17:06:48 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkZWVwYWsxMjMiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTcyNTQzMDExMywiZXhwIjoxNzI2MDM0OTEzfQ.BMVeQN1tj2hW6Auq4HBXcmjn_3m9uZUY21u15vnSR546tk2qqraEQA81yM9O2Mmp]
+2024-09-04 17:06:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 17:06:48 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 17:06:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username 
+    from
+        User u1_0 
+    where
+        u1_0.username=?
+2024-09-04 17:06:48 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [deepak123]
+2024-09-04 17:06:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        u1_0.username 
+    from
+        Token t1_0 
+    join
+        User u1_0 
+            on u1_0.id=t1_0.user_id 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    where
+        t1_0.user_id=?
+2024-09-04 17:06:48 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [9]
+2024-09-04 17:06:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.active,
+        c1_0.userId,
+        c1_0.verified 
+    from
+        Customer c1_0
+2024-09-04 17:06:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.active,
+        a1_0.id,
+        a1_0.apartment,
+        a1_0.city,
+        a1_0.houseNumber,
+        a1_0.pinCode,
+        a1_0.state,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        r1_0.user_id,
+        r1_1.roleId,
+        r1_1.roleName,
+        t1_0.id,
+        t1_0.expired,
+        t1_0.revoked,
+        t1_0.token,
+        t1_0.tokenType,
+        t1_0.user_id,
+        u1_0.username 
+    from
+        User u1_0 
+    left join
+        Address a1_0 
+            on a1_0.id=u1_0.addressId 
+    left join
+        users_roles r1_0 
+            on u1_0.id=r1_0.user_id 
+    left join
+        Role r1_1 
+            on r1_1.roleId=r1_0.role_id 
+    left join
+        Token t1_0 
+            on u1_0.id=t1_0.user_id 
+    where
+        u1_0.id=?
+2024-09-04 17:06:48 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 17:06:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.Customer_id,
+        p1_1.id,
+        a1_0.id,
+        a1_0.active,
+        a1_0.totalCommission,
+        u1_0.id,
+        u1_0.active,
+        u1_0.addressId,
+        u1_0.dateOfBirth,
+        u1_0.email,
+        u1_0.firstName,
+        u1_0.gender,
+        u1_0.lastName,
+        u1_0.mobileNumber,
+        u1_0.password,
+        u1_0.username,
+        a1_0.verified,
+        c1_0.id,
+        a3_0.id,
+        a3_0.active,
+        a3_0.totalCommission,
+        a3_0.UserId,
+        a3_0.verified,
+        c1_0.bankAccountNumber,
+        c1_0.bankName,
+        c1_0.branchName,
+        c1_0.claimAmount,
+        c1_0.claimStatus,
+        c1_0.date,
+        c1_0.ifscCode,
+        p2_0.id,
+        p2_0.agentId,
+        p2_0.claimId,
+        p2_0.schemeId,
+        p2_0.issueDate,
+        p2_0.maturityDate,
+        p2_0.policyStatus,
+        p2_0.premiumAmount,
+        p2_0.premiumType,
+        p2_0.sumAssured,
+        c1_0.remarks,
+        is2_0.id,
+        is2_0.active,
+        sd1_0.id,
+        sd1_0.description,
+        sd1_0.installmentCommissionRatio,
+        sd1_0.maxage,
+        sd1_0.maxAmount,
+        sd1_0.maxInvestmentTime,
+        sd1_0.minAge,
+        sd1_0.minAmount,
+        sd1_0.minInvestmentTime,
+        sd1_0.profitRatio,
+        sd1_0.registrationCommissionRatio,
+        sd1_0.schemeImage,
+        is2_0.schemeName,
+        p1_1.issueDate,
+        p1_1.maturityDate,
+        p1_1.policyStatus,
+        p1_1.premiumAmount,
+        p1_1.premiumType,
+        p1_1.sumAssured 
+    from
+        Customer_policies p1_0 
+    join
+        InsurancePolicy p1_1 
+            on p1_1.id=p1_0.policies_id 
+    left join
+        Agent a1_0 
+            on a1_0.id=p1_1.agentId 
+    left join
+        User u1_0 
+            on u1_0.id=a1_0.UserId 
+    left join
+        Claim c1_0 
+            on c1_0.id=p1_1.claimId 
+    left join
+        Agent a3_0 
+            on a3_0.id=c1_0.agentId 
+    left join
+        InsurancePolicy p2_0 
+            on p2_0.id=c1_0.policyId 
+    left join
+        InsuranceScheme is2_0 
+            on is2_0.id=p1_1.schemeId 
+    left join
+        SchemeDetails sd1_0 
+            on sd1_0.id=is2_0.schemeDetailsId 
+    where
+        p1_0.Customer_id=?
+2024-09-04 17:06:48 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [4]
+2024-09-04 17:06:48 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        n1_0.InsurancePolicy_id,
+        n1_1.id,
+        n1_1.nomineeName,
+        n1_1.relationStatus 
+    from
+        InsurancePolicy_nominees n1_0 
+    join
+        Nominee n1_1 
+            on n1_1.id=n1_0.nominees_id 
+    where
+        n1_0.InsurancePolicy_id=?
+2024-09-04 17:06:48 [http-nio-8082-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2024-09-04 17:06:48 [http-nio-8082-exec-2] ERROR c.t.a.e.GlobalExceptionHandler - Cannot get a STRING value from a NUMERIC cell
+2024-09-04 17:06:48 [http-nio-8082-exec-2] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: Cannot get a STRING value from a NUMERIC cell]
+2024-09-04 17:07:11 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-09-04 17:07:11 [Thread-16] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:07:11 [Thread-16] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 17:07:11 [Thread-16] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown initiated...
+2024-09-04 17:07:11 [Thread-16] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown completed.
+2024-09-04 17:07:12 [restartedMain] INFO  com.techlabs.app.Application - Starting Application using Java 21.0.3 with PID 16064 (D:\FortuneLife\FortuneLife\target\classes started by bhati in D:\FortuneLife\FortuneLife)
+2024-09-04 17:07:12 [restartedMain] INFO  com.techlabs.app.Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 17:07:12 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 17:07:12 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 58 ms. Found 21 JPA repository interfaces.
+2024-09-04 17:07:12 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2024-09-04 17:07:12 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:07:12 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-04 17:07:12 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-04 17:07:12 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 17:07:12 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 464 ms
+2024-09-04 17:07:12 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 17:07:12 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 17:07:12 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 17:07:12 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Starting...
+2024-09-04 17:07:12 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@75619b71
+2024-09-04 17:07:12 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Start completed.
+2024-09-04 17:07:12 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 17:07:13 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 17:07:13 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2024-09-04 17:07:13 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 17:07:13 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-09-04 17:07:13 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2024-09-04 17:07:13 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2024-09-04 17:07:13 [restartedMain] INFO  com.techlabs.app.Application - Started Application in 1.535 seconds (process running for 530.292)
+2024-09-04 17:07:13 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged

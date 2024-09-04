@@ -1,6 +1,7 @@
 package com.techlabs.app.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,11 +13,13 @@ import com.techlabs.app.dto.InsurancePolicyDto;
 import com.techlabs.app.dto.InsurancePolicyResponseDto;
 import com.techlabs.app.dto.SubmittedDocumentDto;
 import com.techlabs.app.entity.Agent;
+import com.techlabs.app.entity.Commission;
 import com.techlabs.app.entity.Customer;
 import com.techlabs.app.entity.InsurancePolicy;
 import com.techlabs.app.entity.InsuranceScheme;
 import com.techlabs.app.entity.Nominee;
 import com.techlabs.app.entity.SubmittedDocument;
+import com.techlabs.app.enums.CommissionType;
 import com.techlabs.app.enums.DocumentStatus;
 import com.techlabs.app.enums.PolicyStatus;
 import com.techlabs.app.exception.AgentRelatedException;
@@ -24,6 +27,7 @@ import com.techlabs.app.exception.CustomerRelatedException;
 import com.techlabs.app.exception.SchemeRelatedException;
 import com.techlabs.app.mapper.InsurancePolicyMapper;
 import com.techlabs.app.repository.AgentRepository;
+import com.techlabs.app.repository.CommissionRepository;
 import com.techlabs.app.repository.CustomerRepository;
 import com.techlabs.app.repository.InsurancePolicyRepository;
 import com.techlabs.app.repository.NomineeRepository;
@@ -39,13 +43,13 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 	private SubmittedDocumentRepository documentRepository;
 	private InsurancePolicyMapper insurancePolicyMapper;
 	private AgentRepository agentRepository;
-
+	private CommissionRepository commissionRepository;
 
 
 	public InsurancePolicyServiceImpl(SchemeRepository schemeRepository, CustomerRepository customerRepository,
 			InsurancePolicyRepository insurancePolicyRepository, NomineeRepository nomineeRepository,
 			SubmittedDocumentRepository documentRepository, InsurancePolicyMapper insurancePolicyMapper,
-			AgentRepository agentRepository) {
+			AgentRepository agentRepository,CommissionRepository commissionRepository) {
 		super();
 		this.schemeRepository = schemeRepository;
 		this.customerRepository = customerRepository;
@@ -54,6 +58,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 		this.documentRepository = documentRepository;
 		this.insurancePolicyMapper = insurancePolicyMapper;
 		this.agentRepository = agentRepository;
+		this.commissionRepository=commissionRepository;
 	}
 
 	@Override
@@ -101,10 +106,27 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 		if (!insuranceScheme.getActive()) {
             throw new SchemeRelatedException("Scheme Is Not Active Now ");
 		}
-
+		
 		InsurancePolicy insurancePolicy = getEntity(insuranceScheme,insurancePolicyDto);
 		insurancePolicy.setAgent(agent);
 		insurancePolicy = insurancePolicyRepository.save(insurancePolicy);
+		
+		Double registrationCommission=insuranceScheme.getSchemeDetails().getRegistrationCommissionRatio();
+		
+		Commission commission=new Commission();
+		Double commissionAmount=registrationCommission;
+		commission.setAmount(commissionAmount);
+		commission.setCommissionType(CommissionType.REGISTRATION.name());
+		commission.setIssueDate(LocalDateTime.now());
+		
+		agent.setTotalCommission(commissionAmount+agent.getTotalCommission());
+		commission.setAgent(agent);
+		commission=commissionRepository.save(commission);
+		
+		List<Commission> commissions = agent.getCommissions();
+		commissions.add(commission);
+		agent.setCommissions(commissions);
+		agentRepository.save(agent);
 		
 		List<InsurancePolicy> insuranceSchemeAllPolicies = insuranceScheme.getPolicies();
 		insuranceSchemeAllPolicies.add(insurancePolicy);
@@ -122,14 +144,16 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
 	
 		InsurancePolicy insurancePolicy = new InsurancePolicy();
-		
+		Double sumAssured=100+insuranceScheme.getSchemeDetails().getProfitRatio();
+		sumAssured= insurancePolicyDto.getPolicyAmount()*0.01*sumAssured;
 		
 		insurancePolicy.setIssueDate(LocalDate.now());
 		insurancePolicy.setMaturityDate(LocalDate.now().plusYears(insurancePolicyDto.getTime()));
 		insurancePolicy.setInsuranceScheme(insuranceScheme);
 		insurancePolicy.setPremiumAmount(insurancePolicyDto.getPremiumAmount());
 		insurancePolicy.setPremiumType(insurancePolicyDto.getPremiumType());
-		insurancePolicy.setSumAssured(insurancePolicyDto.getSumAssured());
+		
+		insurancePolicy.setSumAssured(sumAssured);
 		insurancePolicy.setPolicyStatus(PolicyStatus.ACTIVE.name());
 		insurancePolicy.setPayments(new ArrayList<>());
 

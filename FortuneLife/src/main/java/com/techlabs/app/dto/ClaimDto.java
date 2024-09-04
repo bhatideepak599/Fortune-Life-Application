@@ -15,7 +15,8 @@ public class ClaimDto {
 
 	@NotBlank
 	private String branchName;
-
+	
+	private String remarks;
 	@NotBlank
 	private String bankAccountNumber;
 	@NotBlank

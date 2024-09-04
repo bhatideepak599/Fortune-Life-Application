@@ -59,6 +59,7 @@ public class Claim {
 	private LocalDateTime date=LocalDateTime.now();
 
 	private String claimStatus=ClaimStatus.PENDING.name();
+	private String remarks;
 
 	@OneToOne
 	@JoinColumn(name = "policyId")

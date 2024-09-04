@@ -78,7 +78,7 @@ public class ClaimServiceImpl implements ClaimService {
 	}
 
 	@Override
-	public String approveOrRejectClaim(Long id, String operation ){
+	public String approveOrRejectClaim(Long id, String operation ,String message){
 		Claim claim=claimRepository.findById(id)
 				.orElseThrow(()->new FortuneLifeException("No Claim found!"));
 		if(claim.getClaimStatus().equals("APPROVED"))
@@ -86,10 +86,12 @@ public class ClaimServiceImpl implements ClaimService {
 		
 		if(operation.equals("REJECT")) {
 			claim.setClaimStatus("REJECT");
+			claim.setRemarks(message);
 			claimRepository.save(claim);
 			return "Claim Rejected";
 		}
 		claim.setClaimStatus("APPROVED");
+		claim.setRemarks(message);
 		claimRepository.save(claim);
 		return "Claim Approved";
 		

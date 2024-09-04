@@ -11,6 +11,6 @@ public interface ClaimService {
 
 	PageResponse<ClaimDto> getAllClaims(Long id, String bankAccountNumber,String claimStatus,int page, int size);
 
-	String approveOrRejectClaim(Long id,String operation);
+	String approveOrRejectClaim(Long id,String operation,String message);
 
 }

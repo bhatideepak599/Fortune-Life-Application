@@ -54,9 +54,9 @@ public class ClaimController {
 	@Operation(summary = "Approve Or Reject A Claim")
 	@PutMapping("/approve/{claimId}")
 	public ResponseEntity<String> approveOrRejectClaim(@PathVariable("claimId") Long claimId,
-			@RequestParam String operation) {
+			@RequestParam String operation,@RequestParam String message) {
 		logger.info("Approving Or Rejecting A claim");
-		String activatedMessage = claimService.approveOrRejectClaim(claimId,operation);
+		String activatedMessage = claimService.approveOrRejectClaim(claimId,operation,message);
 		return new ResponseEntity<>(activatedMessage, HttpStatus.OK);
 	}
 }
