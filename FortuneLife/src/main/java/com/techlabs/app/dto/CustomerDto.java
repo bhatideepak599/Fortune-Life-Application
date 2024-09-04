@@ -1,4 +1,6 @@
 package com.techlabs.app.dto;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,6 @@ public class CustomerDto {
 	private Boolean active;
 	private Boolean verified;
 	private UserDto userDto;
-	//private List<InsurancePolicyDto> policies;
+	private List<InsurancePolicyResponseDto> policies;
 
 }

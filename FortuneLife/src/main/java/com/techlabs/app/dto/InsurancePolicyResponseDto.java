@@ -19,7 +19,7 @@ public class InsurancePolicyResponseDto {
 	private String policyStatus ;
 	private String schemeName;
 	private String agentName; 
-	
+	private Long agentId;
 	private List<String> nomineeNameAndRelation;
 	private Set<SubmittedDocumentDto> submittedDocumentsDto = new HashSet<>();
 }

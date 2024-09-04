@@ -1,9 +1,12 @@
 package com.techlabs.app.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.techlabs.app.dto.CustomerDto;
+import com.techlabs.app.dto.InsurancePolicyResponseDto;
 import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.entity.Customer;
 import com.techlabs.app.entity.User;
@@ -12,7 +15,8 @@ import com.techlabs.app.entity.User;
 public class CustomerMapper {
 	@Autowired
 	private UserMapper userMapper;
-
+	@Autowired
+	private InsurancePolicyMapper insurancePolicyMapper;
 
 	public Customer getCustomer(User user) {
 		Customer customer = new Customer();
@@ -29,6 +33,11 @@ public class CustomerMapper {
 		customerDto.setActive(customer.getActive());
 		customerDto.setUserDto(userDto);
 		customerDto.setVerified(customer.getVerified());
+		
+		List<InsurancePolicyResponseDto> allPolicies=new ArrayList<>();
+		
+		customer.getPolicies().forEach((policy)->allPolicies.add(insurancePolicyMapper.entityToDto(policy)) );
+		customerDto.setPolicies(allPolicies);
 
 		return customerDto;
 	}

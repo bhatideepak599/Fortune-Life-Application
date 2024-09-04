@@ -18,8 +18,11 @@ public class InsurancePolicyMapper {
 
 	public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
 		InsurancePolicyResponseDto response = new InsurancePolicyResponseDto();
-		if (policy.getAgent() != null)
+		if (policy.getAgent() != null) {
 			response.setAgentName(policy.getAgent().getUser().getFirstName());
+			response.setAgentId(policy.getAgent().getUser().getId());
+		}
+			
 		response.setId(policy.getId());
 		response.setIssueDate(policy.getIssueDate());
 		response.setMaturityDate(policy.getMaturityDate());

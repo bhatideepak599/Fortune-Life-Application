@@ -105,12 +105,7 @@ public class CustomerServiceImpl implements CustomerService {
 		List<Customer> allCustomers = customers.getContent();
 		List<CustomerDto> response = new ArrayList<>();
 		for (Customer customer : allCustomers) {
-			User userDetails = customer.getUser();
-
-			CustomerDto customerDto = new CustomerDto();
-			customerDto.setId(userDetails.getId());
-			customerDto.setActive(customer.getActive());
-			customerDto.setUserDto(userMapper.entityToDto(userDetails));
+			CustomerDto customerDto = customerMapper.entityToDto(customer);
 			response.add(customerDto);
 		}
 
