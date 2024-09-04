@@ -103,7 +103,7 @@ public class CustomerController {
 		 return new ResponseEntity<>(addedPolicy, HttpStatus.OK);
 	}
 	
-	@Operation(summary = "Add New Policy Under A Scheme By Agent To Customer")
+	@Operation(summary = "Buy New Policy Under A Scheme By Agent To Customer")
 	@PostMapping("/{customerId}/Insurance-Scheme/{schemeId}/agent/{agentId}/policy")
 	public ResponseEntity<InsurancePolicyResponseDto> addNewPolicyByAgentForCustomer(@PathVariable(name = "customerId") Long customerId,
 			@PathVariable(name = "schemeId") Long schemeId, @PathVariable(name = "agentId") Long agentId,

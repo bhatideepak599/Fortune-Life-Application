@@ -126,7 +126,7 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new CustomerRelatedException("No Customer Found for Id " + id);
 
 		Optional<User> user = userRepository.findById(id);
-		if (user.isEmpty() || user.get().getActive() == false) {
+		if (user.isEmpty() || !user.get().getActive()) {
 			throw new AdminRelatedException("No Customer Found for Id: " + id);
 		}
 
@@ -141,11 +141,11 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerDto updateCustomer(@Valid UserDto userDto) {
 		Optional<Customer> customerById = customerRepository.findById(userDto.getId());
 
-		if (customerById.isEmpty() || customerById.get().getActive() == false) {
+		if (customerById.isEmpty() || !customerById.get().getActive()) {
 			throw new CustomerRelatedException("No Customer Found for Id " + userDto.getId());
 		}
 		Optional<User> user = userRepository.findById(userDto.getId());
-		if (user.isEmpty() || user.get().getActive() == false) {
+		if (user.isEmpty() || !user.get().getActive()) {
 			throw new CustomerRelatedException("No Customer Found for Id " + userDto.getId());
 		}
 
@@ -195,7 +195,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public String deleteCustomerById(Long id) {
 		Optional<Customer> customer = customerRepository.findById(id);
-		if (customer.isEmpty() || customer.get().getActive() == false) {
+		if (customer.isEmpty() || !customer.get().getActive()) {
 			throw new CustomerRelatedException("No Customer Found for Id " + id);
 		}
 		Customer custimerToDelete = customer.get();

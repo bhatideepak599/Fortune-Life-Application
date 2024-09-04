@@ -1,6 +1,7 @@
 package com.techlabs.app.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,7 +72,7 @@ public class InsurancePolicy {
 	private List<Nominee> nominees; //
 
 	@OneToMany(cascade = { CascadeType.ALL })
-	private List<Payment> payments; //
+	private List<Payment> payments = new ArrayList<>(); //
 
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "claimId")

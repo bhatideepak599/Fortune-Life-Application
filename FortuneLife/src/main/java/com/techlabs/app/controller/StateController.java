@@ -25,6 +25,7 @@ public class StateController {
     @GetMapping
     public ResponseEntity<List<StateDto>> getAllStates() {
         logger.info("Fetching all states");
+
         List<StateDto> stateDtoList = stateService.getAllStates();
         return new ResponseEntity<>(stateDtoList, HttpStatus.OK);
     }
@@ -33,8 +34,8 @@ public class StateController {
     @GetMapping("/{id}")
     public ResponseEntity<StateDto> getStateById(@PathVariable(name = "id") Long id) {
         logger.info("Fetching state by ID :{}", id);
-        StateDto stateDto = stateService.getStateById(id);
 
+        StateDto stateDto = stateService.getStateById(id);
         return new ResponseEntity<>(stateDto, HttpStatus.OK);
     }
 
@@ -42,8 +43,8 @@ public class StateController {
     @PostMapping
     public ResponseEntity<StateDto> addNewState(@Valid @RequestBody StateDto stateDto) {
         logger.info("Adding new State");
-        StateDto newState = stateService.addNewState(stateDto);
 
+        StateDto newState = stateService.addNewState(stateDto);
         return new ResponseEntity<>(newState, HttpStatus.OK);
     }
 
@@ -51,6 +52,7 @@ public class StateController {
     @PutMapping
     public ResponseEntity<StateDto> updateEistingState(@Valid @RequestBody StateDto stateDto) {
         logger.info("Updating existing state");
+
         StateDto updatedState = stateService.updateState(stateDto);
         return new ResponseEntity<>(updatedState, HttpStatus.OK);
     }
@@ -58,7 +60,8 @@ public class StateController {
     @Operation(summary = "Delete existing state by ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteState(@PathVariable(name = "id") Long id) {
-        logger.info("Delete ");
+        logger.info("Delete state with ID : {}", id);
+
         String message = stateService.deleteState(id);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
@@ -66,6 +69,8 @@ public class StateController {
     @Operation(summary = "Activate State by ID")
     @PutMapping("/activate/{id}")
     public ResponseEntity<Object> activateState(@PathVariable(name = "id") Long id) {
+        logger.info("Activate city with ID : {}", id);
+
         String message = stateService.activateState(id);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

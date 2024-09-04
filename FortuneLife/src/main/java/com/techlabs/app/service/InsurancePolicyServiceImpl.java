@@ -61,13 +61,13 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 			InsurancePolicyDto insurancePolicyDto) {
 		Customer customer = customerRepository.findById(customerId)
 				.orElseThrow(() -> new CustomerRelatedException("No Customer Found With Customer Id: " + customerId));
-		if (customer.getActive() == false)
-			new CustomerRelatedException("No Customer Found With Customer Id: " + customerId);
+		if (!customer.getActive())
+            throw new CustomerRelatedException("No Customer Found With Customer Id: " + customerId);
 		
 		InsuranceScheme insuranceScheme = schemeRepository.findById(schemeId)
 				.orElseThrow(() -> new SchemeRelatedException("No Scheme Found With Scheme Id: " + schemeId));
-		if (insuranceScheme.getActive() == false) {
-			new SchemeRelatedException("Scheme Is Not Active Now ");
+		if (!insuranceScheme.getActive()) {
+            throw new SchemeRelatedException("Scheme Is Not Active Now ");
 		}
 
 		InsurancePolicy insurancePolicy = getEntity(insuranceScheme,insurancePolicyDto);
@@ -93,13 +93,13 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 			
 		Customer customer = customerRepository.findById(customerId)
 				.orElseThrow(() -> new CustomerRelatedException("No Customer Found With Customer Id: " + customerId));
-		if (customer.getActive() == false)
-			new CustomerRelatedException("No Customer Found With Customer Id: " + customerId);
+		if (!customer.getActive())
+            throw new CustomerRelatedException("No Customer Found With Customer Id: " + customerId);
 		
 		InsuranceScheme insuranceScheme = schemeRepository.findById(schemeId)
 				.orElseThrow(() -> new SchemeRelatedException("No Scheme Found With Scheme Id: " + schemeId));
-		if (insuranceScheme.getActive() == false) {
-			new SchemeRelatedException("Scheme Is Not Active Now ");
+		if (!insuranceScheme.getActive()) {
+            throw new SchemeRelatedException("Scheme Is Not Active Now ");
 		}
 
 		InsurancePolicy insurancePolicy = getEntity(insuranceScheme,insurancePolicyDto);
