@@ -230,4 +230,32 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 
         return "Insurance scheme with ID" + id + " activated successfully";
     }
+
+    @Override
+    public SchemeDto updateCommission(Long planId, Long id, Double installmentRatio, Double registrationAmount, Double profitRatio) {
+        InsurancePlan insurancePlan = planRepository.findById(planId)
+                .orElseThrow(() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+
+        if (!insurancePlan.getActive()) {
+            throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+        }
+
+        InsuranceScheme insuranceScheme =
+                schemeRepository.findById(id).orElseThrow(() -> new SchemeRelatedException(
+                        "Insurance Scheme with ID : " + id + " cannot be found"));
+
+        if (insuranceScheme.getActive()) {
+            throw new SchemeRelatedException(
+                    "Insurance Scheme with ID : " + id + " is already active");
+        }
+
+        SchemeDetails schemeDetails = insuranceScheme.getSchemeDetails();
+        schemeDetails.setProfitRatio(profitRatio);
+        schemeDetails.setRegistrationCommissionRatio(registrationAmount);
+        schemeDetails.setInstallmentCommissionRatio(installmentRatio);
+
+        detailsRepository.save(schemeDetails);
+
+        return schemeMapper.entityToDto(insuranceScheme);
+    }
 }

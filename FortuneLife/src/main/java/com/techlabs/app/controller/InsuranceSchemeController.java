@@ -4,6 +4,7 @@ import com.techlabs.app.dto.RequestSchemeDto;
 import com.techlabs.app.dto.SchemeDto;
 import com.techlabs.app.service.InsuranceSchemeService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Path;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class InsuranceSchemeController {
     }
 
     @Operation(summary = "Activate existing scheme")
-    @PutMapping("/activate//{planId}/{id}")
+    @PutMapping("/activate/{planId}/{id}")
     public ResponseEntity<Object> activateScheme(@PathVariable(name = "planId") Long planId,
                                                  @PathVariable(name = "id") Long id) {
         logger.info("Activating existing scheme");
@@ -80,7 +81,18 @@ public class InsuranceSchemeController {
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
-    
+
+    @Operation(summary = "Update commission")
+    @PutMapping("/update-commission/{planId}/{id}")
+    public ResponseEntity<SchemeDto> updateCommission(@PathVariable(name = "planId")Long planId,
+                                                      @PathVariable(name = "id")Long id,
+                                                      @RequestParam(name = "installmentRatio")Double installmentRatio,
+                                                      @RequestParam(name = "registrationAmount")Double registrationAmount,
+                                                      @RequestParam(name = "profitRatio")Double profitRatio){
+        SchemeDto schemeDto = schemeService.updateCommission(planId,id,installmentRatio,registrationAmount,profitRatio);
+
+        return new ResponseEntity<>(schemeDto,HttpStatus.OK);
+    }
     
 
 

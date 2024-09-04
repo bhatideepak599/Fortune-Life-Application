@@ -4,9 +4,10 @@ const API_BASE_URL = `http://localhost:8080`;
 
 const NGROK_URL = `null`;
 
-export const createPaymentIntent = async ({ paymentMethodId, paymentType, amount, tax, totalPayment }) => {
+export const createPaymentIntent = async ({ policyId, paymentMethodId, paymentType, amount, tax, totalPayment }) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/fortuneLife/payments/charge`, {
+      policyId,
       paymentMethodId,
       paymentType,
       amount,

@@ -5,17 +5,17 @@ import com.stripe.model.PaymentIntent;
 import com.techlabs.app.dto.PaymentDto;
 import com.techlabs.app.entity.Payment;
 import com.techlabs.app.enums.PaymentStatus;
-import com.techlabs.app.enums.PaymentType;
-import com.techlabs.app.service.StripePaymentService;
 import com.techlabs.app.repository.PaymentRepository;
-
+import com.techlabs.app.service.StripePaymentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,46 +31,29 @@ public class PaymentController {
 
     @PostMapping("/charge")
     public ResponseEntity<Object> chargeCard(@Valid @RequestBody PaymentDto paymentDto) {
-        // Map PaymentDto to Payment entity
         Payment payment = new Payment();
-
-        if (paymentDto.getPaymentType().equalsIgnoreCase("debit")) {
-            payment.setPaymentType(PaymentType.DEBIT_CARD.name());
-        } else {
-            payment.setPaymentType(PaymentType.CREDIT_CARD.name());
-        }
-
-        payment.setAmount(paymentDto.getAmount());
-        payment.setTax(paymentDto.getTax());
-        payment.setTotalPayment(paymentDto.getTotalPayment());
-        payment.setPaymentDate(LocalDateTime.now());
-
         try {
-            // Process the payment using Stripe
-            PaymentIntent paymentIntent = paymentService.createPaymentIntent(paymentDto);
 
-            // If successful, set payment status to PAID and save to database
-            payment.setPaymentStatus(PaymentStatus.PAID.name());
-            paymentRepository.save(payment);
+            PaymentIntent paymentIntent = paymentService.createPaymentIntent(paymentDto,payment);
 
-            // Prepare response with PaymentIntent details
             Map<String, Object> response = new HashMap<>();
             response.put("clientSecret", paymentIntent.getClientSecret());
             response.put("id", paymentIntent.getId());
             response.put("status", paymentIntent.getStatus());
 
-            return ResponseEntity.ok(response);
-        } catch (StripeException e) {
-            // If an error occurs, set payment status to UNPAID and save to database
-            payment.setPaymentStatus(PaymentStatus.UNPAID.name());
+            payment.setPaymentStatus(PaymentStatus.PAID.name());
             paymentRepository.save(payment);
 
-            // Return error details
+            return ResponseEntity.ok(response);
+
+        } catch (StripeException e) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
+
+            payment.setPaymentStatus(PaymentStatus.UNPAID.name());
+            paymentRepository.save(payment);
 
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
     }
-
 }
