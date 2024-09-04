@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import "./Payment.css";
-import { createPaymentIntent } from "../services/CustomerService";
+import { createPaymentIntent } from "../../services/CustomerService";
 
 const stripePromise = loadStripe("pk_test_51Puzcj2MY7JIifoyC6FTDIlzNncUaOmYkXtV5lKLTh7kkHhQe37YMWF9pbndceIKKYws4IQqwyWTIzYhZkgZ393v00oozKhdhP");
 
@@ -12,9 +12,10 @@ const CheckoutForm = () => {
 
   const [paymentData, setPaymentData] = useState({
     paymentType: "credit",
-    amount: 1000.0,
-    tax: 100.0,
-    totalPayment: 1100.0,
+    amount: 2000.0,
+    policyId: 3,
+    tax: 90.0,
+    totalPayment: 2090.0,
   });
 
   const handleSubmit = async (event) => {
@@ -43,6 +44,7 @@ const CheckoutForm = () => {
 
       // Create PaymentIntent on the server
       const paymentIntentResponse = await createPaymentIntent({
+        policyId: paymentData.policyId,
         paymentMethodId: paymentMethod.id,
         paymentType: paymentData.paymentType,
         amount: paymentData.amount,

@@ -53,7 +53,7 @@ public class AgentServiceImpl implements AgentService {
 	@Override
 	public AgentDto addAgent(@Valid AgentDto agentDto, String role) {
 		if (!role.equalsIgnoreCase("ROLE_AGENT")) {
-			throw new APIException(HttpStatus.BAD_REQUEST, "Role Should Be Employee Only!.");
+			throw new APIException(HttpStatus.BAD_REQUEST, "Role Should Be Agent Only!.");
 		}
 		if (userRepository.existsByUsername(agentDto.getUserDto().getUsername()))
 			throw new APIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
