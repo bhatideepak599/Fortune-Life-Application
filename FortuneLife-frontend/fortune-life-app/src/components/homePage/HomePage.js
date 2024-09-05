@@ -1,6 +1,7 @@
 import React from "react";
 import "./HomePage.css";
-import { Dropdown } from "react-bootstrap";
+import { Container,Dropdown, Row, Col, Button, Navbar } from 'react-bootstrap';
+import { Icon } from '@iconify/react';
 const HomePage = () => {
   return (
     <div>

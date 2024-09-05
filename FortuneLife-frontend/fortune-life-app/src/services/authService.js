@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_BASE_URL = "http://localhost:8080/fortuneLife/auth";
+const API_BASE_URL = "http://localhost:8082/fortuneLife/auth";
 
 export const loginAuth = async (username, password, role) => {
     console.log(username+" "+password+" "+role+"=====================");
@@ -13,6 +13,7 @@ export const loginAuth = async (username, password, role) => {
     
     const expirationTime = new Date().getTime() + 30 * 60 * 1000;
     localStorage.setItem("authToken", response.data.accessToken);
+    localStorage.setItem("role", response.data.role);
     localStorage.setItem("expirationTime", expirationTime);
   
     return response.data;
