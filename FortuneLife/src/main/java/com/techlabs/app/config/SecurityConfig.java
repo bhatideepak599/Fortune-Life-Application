@@ -61,6 +61,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/login").permitAll()
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/signin").permitAll()
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/register").permitAll()
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/auth/user").permitAll()
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/signup").permitAll()
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/logout").permitAll()
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/verify-otp").permitAll()

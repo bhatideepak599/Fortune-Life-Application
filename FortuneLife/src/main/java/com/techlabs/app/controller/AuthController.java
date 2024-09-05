@@ -68,6 +68,12 @@ public class AuthController {
         return new ResponseEntity<>("Successfully logged out", HttpStatus.OK);
 
     }
+    
+    @GetMapping("/user")
+    public boolean validateUserToken(@RequestParam String token,@RequestParam String role) {
+    	 role = "ROLE_" + role.toUpperCase();
+        return authService.validateUserToken(token,role);
+    }
 
     @Operation(summary = "Send OTP")
     @GetMapping("/send-otp")

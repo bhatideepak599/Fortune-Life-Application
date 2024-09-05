@@ -1,15 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, Row, Col, Image, Button } from 'react-bootstrap';
-import profileImage from "./profile.jpg"; // Adjust the path as necessary
+import profileImage from "../../images/profile.jpg" // Adjust the path as necessary
 import Sidebar from './adminFunctionComponents/Sidebar';
 import MainContent from './adminFunctionComponents/MainContent';
+import { logout, verifyUser } from '../../services/authService';
+import { errorToast, successToast, warnToast } from '../../utils/Toast';
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const [activeItem, setActiveItem] = useState('Manage City/State');
-
+  const navigate = useNavigate();
+  const accessToken=localStorage.getItem("accessToken")
+  useEffect(() => {
+    
+     if (!accessToken || !verifyUser(accessToken,"admin") ) {
+      warnToast("Unauthorized Access! Login First");
+      navigate("/");
+    }
+  }, [accessToken, navigate]);
   const handleChange = (item) => {
     setActiveItem(item);
   };
+  const handleLogout=()=>{
+    try{
+        const response=logout();
+        console.log("response"+response);
+        
+        if(response){
+            successToast("Logged Out Successfully.");
+        }
+        else warnToast("Login First!");
+        navigate('/')
+    }catch(error){
+        errorToast(error.response?.data?.message );
+    }
+  }
+
 
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f3f4f6, #222b38)' }}>
@@ -38,7 +64,7 @@ const AdminDashboard = () => {
           </Navbar.Brand>
           <Nav className="ml-auto">
             {/* Logout Button on the right */}
-            <Button variant="outline-light" href="#logout">
+            <Button variant="outline-light" onClick={handleLogout}>
               Logout
             </Button>
           </Nav>
