@@ -45,7 +45,7 @@ public class AdminController {
 	}
 
 	@Operation(summary = "Get All Admins based on Search Criteria")
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<PageResponse<AdminDto>> getAllAdmins(@RequestParam(required = false) Long id,
 			@RequestParam(required = false) String userName, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String mobileNumber, @RequestParam(required = false) String email,

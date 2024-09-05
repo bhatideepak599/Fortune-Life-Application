@@ -79,7 +79,7 @@ public class QueryServiceImpl implements QueryService {
         }
 
         Query answeredQuery = queryMapper.dtoToEntity(queryDto);
-        if(answeredQuery.getAnswer().isEmpty()){
+        if (answeredQuery.getAnswer().isEmpty()) {
             answeredQuery.setQueryResponse(ResponseStatus.PENDING.name());
         }
         Query updatedQuery = queryRepository.save(answeredQuery);
@@ -115,5 +115,16 @@ public class QueryServiceImpl implements QueryService {
         queryRepository.save(query);
 
         return "Query with ID : " + id + " is activated successfully";
+    }
+
+    @Override
+    public List<QueryDto> getAllQueriesByCustomerMail(String customerEmail) {
+        List<Query> queries = queryRepository.findAllByEmail(customerEmail);
+
+        if (queries.isEmpty()) {
+            throw new FortuneLifeException("There are no queries found for customer with mail ID : " + customerEmail);
+        }
+
+        return queryMapper.getDtoList(queries);
     }
 }

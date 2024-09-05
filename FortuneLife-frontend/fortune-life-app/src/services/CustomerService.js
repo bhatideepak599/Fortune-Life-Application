@@ -15,9 +15,33 @@ export const createPaymentIntent = async ({ policyId, paymentMethodId, paymentTy
       totalPayment,
     });
     console.log(response.data);
-    return response.data; // Return the response data directly
+    return response.data;
   } catch (error) {
     console.error("Error creating payment intent:", error);
-    return { error: error.message }; // Handle error case if necessary
+    return { error: error.message };
   }
 };
+
+export const getCustomerById = async ({ id }) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/customer/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const buyNewPolicy = async({customerId, schemeId})=>{
+  try{
+const response = await axios.post(`${API_BASE_URL}/fortuneLife/customer/${customerId}/Insurance-Scheme/${schemeId}/policy`,{
+  
+})
+  }catch(error){
+    throw error;
+  }
+}

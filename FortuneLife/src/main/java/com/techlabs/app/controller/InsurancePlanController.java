@@ -71,8 +71,8 @@ public class InsurancePlanController {
     @PutMapping("/activate/{id}")
     public ResponseEntity<Object> activateInsurancePlanById(@PathVariable(name = "id") Long id) {
         logger.info("Activating Insurance Plan by ID : {}", id);
-        String mesaage = planService.activatePlan(id);
+        String message = planService.activatePlan(id);
 
-        return ResponseEntity.ok(mesaage);
+        return ResponseEntity.ok(message);
     }
 }
