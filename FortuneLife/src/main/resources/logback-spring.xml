@@ -1,35 +1,35 @@
-<!--<configuration>-->
+<configuration>
 
-<!--    &lt;!&ndash; Console Appender &ndash;&gt;-->
-<!--    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">-->
-<!--        <encoder>-->
-<!--            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
-<!--        </encoder>-->
-<!--    </appender>-->
+    <!-- Console Appender -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
 
-<!--    &lt;!&ndash; File Appender &ndash;&gt;-->
-<!--    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-<!--        <file>FortuneLife/logs/application.log</file>-->
-<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-<!--            &lt;!&ndash; Roll daily &ndash;&gt;-->
-<!--            <fileNamePattern>FortuneLife/logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>-->
-<!--            &lt;!&ndash; Keep 30 days worth of logs &ndash;&gt;-->
-<!--            <maxHistory>30</maxHistory>-->
-<!--        </rollingPolicy>-->
-<!--        <encoder>-->
-<!--            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
-<!--        </encoder>-->
-<!--    </appender>-->
+    <!-- File Appender -->
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>FortuneLife/logs/application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Roll daily -->
+            <fileNamePattern>FortuneLife/logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Keep 30 days worth of logs -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
 
-<!--    &lt;!&ndash; Root Logger &ndash;&gt;-->
-<!--    <root level="INFO">-->
-<!--        <appender-ref ref="console"/>-->
-<!--        <appender-ref ref="fileAppender"/>-->
-<!--    </root>-->
+    <!-- Root Logger -->
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="fileAppender"/>
+    </root>
 
-<!--    &lt;!&ndash; Exclude Hibernate SQL logs &ndash;&gt;-->
-<!--    <logger name="org.hibernate.SQL" level="OFF"/>-->
-<!--    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="OFF"/>-->
-<!--    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="OFF"/>-->
+    <!-- Exclude Hibernate SQL logs -->
+    <logger name="org.hibernate.SQL" level="OFF"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="OFF"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="OFF"/>
 
-<!--</configuration>-->
+</configuration>
