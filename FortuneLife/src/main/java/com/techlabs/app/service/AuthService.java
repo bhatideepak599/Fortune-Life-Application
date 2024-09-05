@@ -8,4 +8,5 @@ public interface AuthService {
     JWTAuthResponse login(LoginDto loginDto);
 
     String register(RegisterDto registerDto, String role);
+    Boolean validateUserToken(String token, String forrole);
 }
