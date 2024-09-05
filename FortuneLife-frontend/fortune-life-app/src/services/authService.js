@@ -98,11 +98,11 @@ export const updateAdminDetails = async (formData) => {
   try {
     const response = await axios.put(
       `${API_BASE_URL}/fortuneLife/admin`,
-      formData, // Passing formData as the request body
+      formData, 
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json', // Setting the Content-Type to application/json
+          'Content-Type': 'application/json', 
         },
       }
     );

@@ -33,6 +33,7 @@ public class CustomerController {
 	private CustomerService customerService;
 	@Autowired
 	private InsurancePolicyService insurancePolicyService;
+
 	@Operation(summary = "Add A New Customer ")
 	@PostMapping
 	public ResponseEntity<CustomerDto> addCustomer(@Valid @RequestBody UserDto userDto,
@@ -45,7 +46,7 @@ public class CustomerController {
 	}
 
 	@Operation(summary = "Get All Customer based on Search Criteria")
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<PageResponse<CustomerDto>> getAllCustomers(@RequestParam(required = false) Long id,
 			@RequestParam(required = false) String userName, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String mobileNumber, @RequestParam(required = false) String email,
@@ -70,7 +71,7 @@ public class CustomerController {
 	@Operation(summary = "Update A  Customer")
 	@PutMapping
 	public ResponseEntity<CustomerDto> updateCustomer(@Valid @RequestBody UserDto userDto) {
-		logger.info("Updating A Custome");
+		logger.info("Updating A Customer");
 		CustomerDto customerDto = customerService.updateCustomer(userDto);
 		return new ResponseEntity<>(customerDto, HttpStatus.OK);
 	}

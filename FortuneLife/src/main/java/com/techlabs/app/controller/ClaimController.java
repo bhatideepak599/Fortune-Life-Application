@@ -39,7 +39,7 @@ public class ClaimController {
 		return new ResponseEntity<>(claim, HttpStatus.OK);
 	}
 	@Operation(summary = "All Pending Claims For Approval")
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<PageResponse<ClaimDto>> getAllClaims(@RequestParam(required = false) Long id,
 			@RequestParam(required = false) String bankAccountNumber,
 			@RequestParam(required = false) String claimStatus,
@@ -52,11 +52,11 @@ public class ClaimController {
 	}
 	
 	@Operation(summary = "Approve Or Reject A Claim")
-	@PutMapping("/approve/{claimId}")
-	public ResponseEntity<String> approveOrRejectClaim(@PathVariable("claimId") Long claimId,
+	@PutMapping("/approve/{id}")
+	public ResponseEntity<String> approveOrRejectClaim(@PathVariable("id") Long id,
 			@RequestParam String operation,@RequestParam String message) {
 		logger.info("Approving Or Rejecting A claim");
-		String activatedMessage = claimService.approveOrRejectClaim(claimId,operation,message);
+		String activatedMessage = claimService.approveOrRejectClaim(id,operation,message);
 		return new ResponseEntity<>(activatedMessage, HttpStatus.OK);
 	}
 }

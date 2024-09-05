@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/fortuneLife/query")
 public class QueryController {
@@ -21,7 +23,7 @@ public class QueryController {
     private QueryService queryService;
 
     @Operation(summary = "Get All Queries")
-    @GetMapping("/search")
+    @GetMapping
     public ResponseEntity<PageResponse<QueryDto>> getAllQueries(
             @RequestParam(name = "id", required = false) Long id,
             @RequestParam(name = "title", required = false) String title,
@@ -82,5 +84,14 @@ public class QueryController {
         String message = queryService.activateQuery(id);
 
         return ResponseEntity.ok(message);
+    }
+
+    @Operation(summary = "GEt all queries by customer mail ID")
+    @GetMapping("/{customerEmail}")
+    public ResponseEntity<List<QueryDto>> getAllQueriesOfParticularCustomer(@PathVariable(name = "customerEmail") String customerEmail) {
+        logger.info("Fetching all queries of customer with mail : {}", customerEmail);
+        List<QueryDto> queries = queryService.getAllQueriesByCustomerMail(customerEmail);
+
+        return new ResponseEntity<>(queries, HttpStatus.OK);
     }
 }
