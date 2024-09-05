@@ -3,13 +3,16 @@ import { Navbar, Nav, Container, Row, Col, Image, Button } from 'react-bootstrap
 import profileImage from "../../images/profile.jpg" // Adjust the path as necessary
 import Sidebar from './adminFunctionComponents/Sidebar';
 import MainContent from './adminFunctionComponents/MainContent';
-import { logout, verifyUser } from '../../services/authService';
+import { getAdmin, logout, verifyUser } from '../../services/authService';
 import { errorToast, successToast, warnToast } from '../../utils/Toast';
 import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const [activeItem, setActiveItem] = useState('Manage City/State');
+  const [adminDetails,setAdminDetails]=useState(null);
+  const [name,setName]=useState("");
   const navigate = useNavigate();
+  const [profileModal,setProfileModal]=useState(false);
   const accessToken=localStorage.getItem("accessToken")
   useEffect(() => {
     
@@ -17,7 +20,25 @@ const AdminDashboard = () => {
       warnToast("Unauthorized Access! Login First");
       navigate("/");
     }
-  }, [accessToken, navigate]);
+    
+         fetchAdmin();
+
+  }, [accessToken, navigate,name]);
+
+  const fetchAdmin=async()=>{
+    try{
+        const response=await getAdmin();
+        //console.log("admin->"+ response.data.getId());
+        setAdminDetails(response.data);
+        setName(response.data.user.firstName);
+       
+        
+
+    }catch(error){
+        errorToast(error.response?.data?.message);
+    }
+  }
+
   const handleChange = (item) => {
     setActiveItem(item);
   };
@@ -36,6 +57,10 @@ const AdminDashboard = () => {
     }
   }
 
+  const handleProfile=()=>{
+    navigate('/admin-profile', { state: { adminDetails } });
+    //setProfileModal(true);
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f3f4f6, #222b38)' }}>
@@ -46,10 +71,10 @@ const AdminDashboard = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
 
-          <Nav.Link href="#profile" className="text-light d-flex align-items-center">
+          <Nav.Link  onClick={handleProfile} className="text-light d-flex align-items-center">
                 Profile
               </Nav.Link>
-            <Nav.Link href="#profile" className="d-flex align-items-center" style={{ marginLeft: '0px' }}>
+            <Nav.Link onClick={handleProfile} className="d-flex align-items-center" style={{ marginLeft: '0px' }}>
              
               <Image
                 src={profileImage}  // Replace with the actual image URL
@@ -60,7 +85,7 @@ const AdminDashboard = () => {
            
           </Nav>
           <Navbar.Brand className="mx-auto" href="#home">
-            Admin Dashboard
+            Welcome {name}
           </Navbar.Brand>
           <Nav className="ml-auto">
             {/* Logout Button on the right */}
@@ -84,6 +109,17 @@ const AdminDashboard = () => {
           </Col>
         </Row>
       </Container>
+      {/* <Modal
+          title="Profile Details"
+          isOpen={profileModal}
+          onClose={() => setProfileModal(false)}
+        >
+          <AdminProfile adminDetails={adminDetails}
+            onClose={() => setProfileModal(false)}
+            setModeloff={profileModal}
+          />
+        </Modal> */}
+       {/* {profileModal && <AdminProfile adminDetails={adminDetails}/>} */}
     </div>
   );
 };

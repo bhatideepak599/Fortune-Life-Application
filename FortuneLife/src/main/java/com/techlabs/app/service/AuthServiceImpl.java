@@ -13,6 +13,9 @@ import com.techlabs.app.exception.EmployeeRelatedExcetption;
 import com.techlabs.app.exception.UserRelatedException;
 import com.techlabs.app.repository.*;
 import com.techlabs.app.security.JwtTokenProvider;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -217,7 +220,9 @@ public class AuthServiceImpl implements AuthService {
 	}
 
     @Override
-	public Boolean validateUserToken(String token, String forrole) {
+	public Boolean validateUserToken(HttpServletRequest request, String forrole) {
+    	final String authHeader = request.getHeader("Authorization");
+		final String token=authHeader.substring(7);
 		Token tokenObject = tokenRepository.findByToken(token).get();
 		if (tokenObject == null || tokenObject.getExpired() || tokenObject.getRevoked())
 			return false;

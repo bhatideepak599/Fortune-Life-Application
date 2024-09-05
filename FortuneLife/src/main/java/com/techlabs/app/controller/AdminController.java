@@ -22,6 +22,7 @@ import com.techlabs.app.service.AdminService;
 import com.techlabs.app.util.PageResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -65,7 +66,13 @@ public class AdminController {
 		AdminDto admin =adminService.getAdminById(id);
 		return new ResponseEntity<>(admin, HttpStatus.OK);
 	}
-	
+	@Operation(summary = "Fetch Logged Admin By Token")
+	@GetMapping("/logged")
+	public ResponseEntity<AdminDto> getAdminByToken(HttpServletRequest request) {
+		logger.info("Fetching An Admin");
+		AdminDto admin =adminService.getAdminByToken(request);
+		return new ResponseEntity<>(admin, HttpStatus.OK);
+	}
 	@Operation(summary = "Update An  Admin")
 	@PutMapping
 	public ResponseEntity<AdminDto> updateAdmin(@Valid @RequestBody UserDto userDto) {

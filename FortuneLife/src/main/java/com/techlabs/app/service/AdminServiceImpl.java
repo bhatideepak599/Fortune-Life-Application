@@ -27,7 +27,10 @@ import com.techlabs.app.repository.AddressRepository;
 import com.techlabs.app.repository.AdminRepository;
 import com.techlabs.app.repository.RoleRepository;
 import com.techlabs.app.repository.UserRepository;
+import com.techlabs.app.security.JwtTokenProvider;
 import com.techlabs.app.util.PageResponse;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -37,17 +40,21 @@ public class AdminServiceImpl implements AdminService {
 	private RoleRepository roleRepository;
 	private UserMapper userMapper;
 	private AddressRepository addressRepository;
-	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+	
 	private PasswordEncoder passwordEncoder;
 
 	public AdminServiceImpl(AdminRepository adminRepository, UserRepository userRepository,
-			RoleRepository roleRepository, UserMapper userMapper, AddressRepository addressRepository) {
+			RoleRepository roleRepository, UserMapper userMapper, AddressRepository addressRepository,
+			JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
 		super();
 		this.adminRepository = adminRepository;
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.userMapper = userMapper;
 		this.addressRepository = addressRepository;
+		this.jwtTokenProvider = jwtTokenProvider;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -129,23 +136,32 @@ public class AdminServiceImpl implements AdminService {
 			throw new AdminRelatedException("No Admin Found for Id " + userDto.getId());
 		}
 
-		Optional<Address> addressById = addressRepository.findById(userDto.getAddressDto().getId());
-		if (addressById.isEmpty()) {
-			throw new AdminRelatedException("No Address Found for Address Id " + userDto.getAddressDto().getId());
-		}
+//		Optional<Address> addressById = addressRepository.findById(userDto.getAddressDto().getId());
+//		if (addressById.isEmpty()) {
+//			throw new AdminRelatedException("No Address Found for Address Id " + userDto.getAddressDto().getId());
+//		}
 		// System.out.println(userDto);
 		User userForUpdate = userMapper.dtoToEntity(userDto);
+		userForUpdate.setToken(user.get().getToken());
 		userForUpdate.setId(userDto.getId());
 		userForUpdate.setRoles(user.get().getRoles());
 		userForUpdate.setPassword(user.get().getPassword());
 		Address address = userForUpdate.getAddress();
-		address.setId(userDto.getAddressDto().getId());
+		if(userDto.getAddressDto()!=null && user.get().getAddress()==null) {
+			address=addressRepository.save(address);
+		}
+		else{
+			address.setId(user.get().getAddress().getId());
+			addressRepository.save(address);
+		}
+		
 
 		// Debugging: Log before saving
 		// System.out.println("Saving Address: " + address);
-		addressRepository.save(address);
+		
 
 		// System.out.println("Saving User: " + userForUpdate);
+		
 		userForUpdate = userRepository.save(userForUpdate);
 
 		AdminDto adminDto = new AdminDto();
@@ -202,8 +218,30 @@ public class AdminServiceImpl implements AdminService {
 		UserDto userDto = userMapper.entityToDto(user.get());
 		AdminDto adminDto = new AdminDto();
 		adminDto.setId(userDto.getId());
+		adminDto.setActive(admin.get().getActive());
 		adminDto.setUser(userDto);
 		return adminDto;
+	}
+
+	@Override
+	public AdminDto getAdminByToken(HttpServletRequest request) {
+		final String authHeader = request.getHeader("Authorization");
+		final String token=authHeader.substring(7);
+		String username = jwtTokenProvider.getUsername(token);
+		User user = userRepository.findUserByUsernameOrEmail(username, username)
+				.orElseThrow(()->  new AdminRelatedException("No Admin Found!."));
+		Admin admin=adminRepository.findById(user.getId())
+				.orElseThrow(()->new AdminRelatedException("No Admin Found!."));
+		if(admin.getActive()==false )
+			throw new AdminRelatedException("No Admin Found!.");
+		
+		UserDto userDto = userMapper.entityToDto(user);
+		AdminDto adminDto = new AdminDto();
+		adminDto.setId(userDto.getId());
+		adminDto.setActive(admin.getActive());
+		adminDto.setUser(userDto);
+		return adminDto;
+		
 	}
 
 }

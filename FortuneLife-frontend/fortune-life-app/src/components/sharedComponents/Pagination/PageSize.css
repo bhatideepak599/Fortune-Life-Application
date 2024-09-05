@@ -1,0 +1,18 @@
+.page-size-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.page-size-label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.size {
+  margin-left: 4px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

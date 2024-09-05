@@ -71,6 +71,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/pdf-Report/download").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/Excel-Report/download").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/pdf-Report/download").hasRole("ADMIN")
+				
 
 				// Admin Endpoints
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/admin").hasRole("ADMIN")
@@ -78,6 +79,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/admin/activate/{id}").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/fortuneLife/admin/{id}").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/admin").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/admin/logged").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/admin/{id}").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/claim").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/claim/approve/{id}").hasRole("ADMIN")

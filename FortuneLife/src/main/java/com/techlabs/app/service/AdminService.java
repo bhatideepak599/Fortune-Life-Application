@@ -4,6 +4,7 @@ import com.techlabs.app.dto.AdminDto;
 import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.util.PageResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 
@@ -21,5 +22,7 @@ public interface AdminService {
 	String activateAdmin(Long id);
 
 	AdminDto getAdminById(Long id);
+
+	AdminDto getAdminByToken(HttpServletRequest request);
 
 }

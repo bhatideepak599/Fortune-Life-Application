@@ -70,9 +70,9 @@ public class AuthController {
     }
     
     @GetMapping("/user")
-    public boolean validateUserToken(@RequestParam String token,@RequestParam String role) {
+    public boolean validateUserToken(@RequestParam String role,HttpServletRequest request) {
     	 role = "ROLE_" + role.toUpperCase();
-        return authService.validateUserToken(token,role);
+        return authService.validateUserToken(request,role);
     }
 
     @Operation(summary = "Send OTP")

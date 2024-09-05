@@ -1,0 +1,50 @@
+ .pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-left: 30%;
+  } 
+  
+  
+  .pagination {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .page-item {
+    margin: 0 5px;
+  }
+  
+  .page-item button {
+    border: none;
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .page-item.disabled button {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .page-item.active button {
+    background-color: #0056b3;
+  }
+/*   
+  .size-select {
+    margin-left: auto;
+    min-width: 80px; /* Adjust width as needed 
+    padding: 5px;
+    font-size: 0.875rem; /* Smaller font size 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+  } */
+  /* .size {
+    width: 20px; /* Reduced size of the page size dropdown 
+    margin-right: 10px;
+  } */

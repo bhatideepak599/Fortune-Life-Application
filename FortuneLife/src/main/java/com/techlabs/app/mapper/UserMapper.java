@@ -11,29 +11,27 @@ import com.techlabs.app.enums.Gender;
 
 @Component
 public class UserMapper {
-	
+
 	@Autowired
 	private AddressMapper addressMapper;
 
 	public User dtoToEntity(UserDto userDto) {
 		User user = new User();
-		
+
 		user.setFirstName(userDto.getFirstName());
 		user.setLastName(userDto.getLastName());
 		user.setDateOfBirth(userDto.getDateOfBirth());
 		user.setEmail(userDto.getEmail());
 		user.setMobileNumber(userDto.getMobileNumber());
 		user.setUsername(userDto.getUsername());
-		if(userDto.getGender().equalsIgnoreCase("male")) {
+		if (userDto.getGender().equalsIgnoreCase("male")) {
 			user.setGender(Gender.MALE.name());
-		}
-		else if(userDto.getGender().equalsIgnoreCase("female")) {
+		} else if (userDto.getGender().equalsIgnoreCase("female")) {
 			user.setGender(Gender.FEMALE.name());
-		}
-		else {
+		} else {
 			user.setGender(Gender.OTHERS.name());
 		}
-		
+
 		Address address = addressMapper.dtoToEntity(userDto.getAddressDto());
 		user.setAddress(address);
 		return user;
@@ -51,9 +49,11 @@ public class UserMapper {
 		userDto.setUsername(user.getUsername());
 		userDto.setActive(user.getActive());
 		userDto.setPassword("Not Available");
+		if (user.getAddress() != null) {
+			AddressDto addressDto = addressMapper.entityToDto(user.getAddress());
+			userDto.setAddressDto(addressDto);
+		}
 
-		AddressDto addressDto = addressMapper.entityToDto(user.getAddress());
-		userDto.setAddressDto(addressDto);
 		return userDto;
 	}
 

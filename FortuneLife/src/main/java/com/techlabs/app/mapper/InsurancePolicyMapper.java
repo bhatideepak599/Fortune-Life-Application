@@ -35,7 +35,7 @@ public class InsurancePolicyMapper {
 		List<String> nominies = new ArrayList<>();
 
 		for (Nominee n : policy.getNominees()) {
-			String nameAndRelation = n.getNomineeName() + "Relation " + n.getRelationStatus();
+			String nameAndRelation = "Name:"+n.getNomineeName() + ", Relation:" + n.getRelationStatus();
 			nominies.add(nameAndRelation);
 		}
 		response.setNomineeNameAndRelation(nominies);
