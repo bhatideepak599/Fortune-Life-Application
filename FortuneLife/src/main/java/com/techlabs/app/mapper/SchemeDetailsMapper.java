@@ -26,7 +26,7 @@ public class SchemeDetailsMapper {
         schemeDetails.setMinAge(schemeDetailsDto.getMinAge());
         schemeDetails.setMaxAge(schemeDetailsDto.getMaxAge());
         schemeDetails.setProfitRatio(schemeDetailsDto.getProfitRatio());
-        schemeDetails.setRegistrationCommissionRatio(schemeDetailsDto.getRegistrationCommissionRatio());
+        schemeDetails.setRegistrationCommissionRatio(schemeDetailsDto.getRegistrationCommissionAmount());
         schemeDetails.setInstallmentCommissionRatio(schemeDetailsDto.getInstallmentCommissionRatio());
         schemeDetails.setDocuments(schemeDocumentMapper.getEntityList(schemeDetailsDto.getDocuments()));
 
@@ -45,8 +45,8 @@ public class SchemeDetailsMapper {
         schemeDetailsDto.setMinAge(schemeDetails.getMinAge());
         schemeDetailsDto.setMaxAge(schemeDetails.getMaxAge());
         schemeDetailsDto.setProfitRatio(schemeDetails.getProfitRatio());
-        schemeDetailsDto.setRegistrationCommissionRatio(null);
-        schemeDetailsDto.setInstallmentCommissionRatio(null);
+        schemeDetailsDto.setRegistrationCommissionAmount(schemeDetails.getRegistrationCommissionRatio());
+        schemeDetailsDto.setInstallmentCommissionRatio(schemeDetails.getInstallmentCommissionRatio());
         schemeDetailsDto.setDocuments(schemeDocumentMapper.getDtoList(schemeDetails.getDocuments()));
 
         return schemeDetailsDto;

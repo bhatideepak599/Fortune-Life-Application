@@ -49,7 +49,7 @@ public class CityServiceImpl implements CityService {
             throw new FortuneLifeException("State with ID : " + stateId + " is not active");
         }
 
-        City city = cityRepository.findByStateIdAndId(stateId, id)
+        City city = cityRepository.findByStateIdAndPincode(stateId, id)
                 .orElseThrow(() -> new FortuneLifeException("City with ID : " + id + " is not present in state with ID : " + stateId));
 
         return cityMapper.entityToDto(city);
@@ -83,7 +83,7 @@ public class CityServiceImpl implements CityService {
         }
 
         City city = cityMapper.dtoToEntity(cityDto);
-        city.setId(cityDto.getId());
+        city.setPincode(cityDto.getId());
         City updatedCity = cityRepository.save(city);
 
         return cityMapper.entityToDto(updatedCity);
@@ -98,7 +98,7 @@ public class CityServiceImpl implements CityService {
             throw new FortuneLifeException("State with ID : " + stateId + " is not active");
         }
 
-        City city = cityRepository.findByStateIdAndId(stateId, id)
+        City city = cityRepository.findByStateIdAndPincode(stateId, id)
                 .orElseThrow(() -> new FortuneLifeException("City with ID : " + id + " is not present in state with ID : " + stateId));
 
         if (!city.getActive()) {
@@ -120,7 +120,7 @@ public class CityServiceImpl implements CityService {
             throw new FortuneLifeException("State with ID : " + stateId + " is not active");
         }
 
-        City city = cityRepository.findByStateIdAndId(stateId, id)
+        City city = cityRepository.findByStateIdAndPincode(stateId, id)
                 .orElseThrow(() -> new FortuneLifeException("City with ID : " + id + " is not present in state with ID : " + stateId));
 
         if (city.getActive()) {

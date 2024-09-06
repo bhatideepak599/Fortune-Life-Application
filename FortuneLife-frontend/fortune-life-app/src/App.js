@@ -6,17 +6,19 @@ import LoginForm from "./components/authComponents/loginComponents/LoginForm";
 import { ToastContainer } from "react-toastify";
 import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 import AdminProfile from "./components/adminDashboard/adminFunctionComponents/adminprofile/AdminProfile";
+import AllSchemes from "./components/adminDashboard/adminFunctionComponents/commissionSettings/allSchemes/AllSchemes";
 
 function App() {
   return (
     <>
       <ToastContainer />
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
-        <Route exact path="/login" element={<LoginForm />} />
-        <Route exact path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route exact path="/admin-profile" element={<AdminProfile />}/>
-        <Route exact path="/policy-payment" element={<Payment />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-profile" element={<AdminProfile />} />
+        <Route path="/policy-payment" element={<Payment />} />
+        <Route path="/all-schemes/:id" element={<AllSchemes />} />
       </Routes>
     </>
   );

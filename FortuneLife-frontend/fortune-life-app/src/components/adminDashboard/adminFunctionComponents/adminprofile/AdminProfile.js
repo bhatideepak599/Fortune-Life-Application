@@ -9,24 +9,29 @@ import {
   Col,
   Nav,
 } from "react-bootstrap";
-import { logout, updateAdminDetails, verifyUser } from "../../../../services/authService";
+import {
+  logout,
+  updateAdminDetails,
+  verifyUser,
+} from "../../../../services/authService";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 
 const AdminProfile = () => {
   const location = useLocation();
-  const admin=location.state?.adminDetails || {};
-  const [adminDetails ,setAdminDetails]= useState(admin)
- 
+  const admin = location.state?.adminDetails || {};
+  const [adminDetails, setAdminDetails] = useState(admin);
+
   const navigate = useNavigate();
 
   const accessToken = localStorage.getItem("accessToken");
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    id: adminDetails.user?.id || "", username: adminDetails.user?.username || "",
+    id: adminDetails.user?.id || "",
+    username: adminDetails.user?.username || "",
     firstName: adminDetails.user?.firstName || "",
     lastName: adminDetails.user?.lastName || "",
     gender: adminDetails.user?.gender || "",
-    email: adminDetails.user?.email || "", 
+    email: adminDetails.user?.email || "",
     dateOfBirth: adminDetails.user?.dateOfBirth || "",
     mobileNumber: adminDetails.user?.mobileNumber || "",
     addressDto: {
@@ -43,50 +48,50 @@ const AdminProfile = () => {
     if (!accessToken || !verifyUser(accessToken, "admin")) {
       navigate("/admin-dashboard");
     }
-  }, [accessToken, navigate,admin]);
+  }, [accessToken, navigate, admin]);
 
-  const handleSaveChanges =async () => {
-   try{
-    const response=await updateAdminDetails(formData)
-    if (response && response.data) {
-      // Merge old and new data
-      setAdminDetails((prevState) => ({
-        ...prevState,
-        user: {
-          ...prevState.user,
-          ...response.data,
-          addressDto: {
-            ...prevState.user.addressDto,
-            ...response.data.addressDto,
+  const handleSaveChanges = async () => {
+    try {
+      const response = await updateAdminDetails(formData);
+      if (response && response.data) {
+        // Merge old and new data
+        setAdminDetails((prevState) => ({
+          ...prevState,
+          user: {
+            ...prevState.user,
+            ...response.data,
+            addressDto: {
+              ...prevState.user.addressDto,
+              ...response.data.addressDto,
+            },
           },
-        },
-      }));
-    setIsEditing(false);
-   }}catch(error){
-    errorToast(error.response?.data?.message)
-   }
-    
-  };
- const handleLogout=()=>{
-    try{
-        const response=logout();
-        console.log("response"+response);
-        
-        if(response){
-            successToast("Logged Out Successfully.");
-        }
-        else warnToast("Login First!");
-        navigate('/')
-    }catch(error){
-        errorToast(error.response?.data?.message );
+        }));
+        successToast("Updated Successfully.");
+        setIsEditing(false);
+      }
+    } catch (error) {
+      errorToast(error.response?.data?.message);
     }
-  }
+  };
+  const handleLogout = () => {
+    try {
+      const response = logout();
+      console.log("response" + response);
+
+      if (response) {
+        successToast("Logged Out Successfully.");
+      } else warnToast("Login First!");
+      navigate("/");
+    } catch (error) {
+      errorToast(error.response?.data?.message);
+    }
+  };
   const handleDiscardChanges = () => {
     setFormData({
       firstName: adminDetails.user?.firstName || "",
       lastName: adminDetails.user?.lastName || "",
       gender: adminDetails.user?.gender || "",
-       dateOfBirth: adminDetails.user?.dateOfBirth || "",
+      dateOfBirth: adminDetails.user?.dateOfBirth || "",
       mobileNumber: adminDetails.user?.mobileNumber || "",
       addressDto: {
         houseNumber: adminDetails.user?.addressDto?.houseNumber || "",
@@ -105,13 +110,12 @@ const AdminProfile = () => {
   };
 
   const handleBack = () => {
-    navigate('/admin-dashboard');
+    navigate("/admin-dashboard");
   };
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-  
+
     if (name.startsWith("addressDto.")) {
       const addressField = name.split(".")[1];
       setFormData((prevData) => ({
@@ -138,15 +142,21 @@ const AdminProfile = () => {
     >
       <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
         <Container>
+          <Nav.Link
+            href="/admin-dashboard"
+            className="text-light d-flex align-items-center"
+          >
+            Home
+          </Nav.Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Navbar.Brand className="mx-auto" href="#home">
               Your Profile Details
             </Navbar.Brand>
             <Nav className="ml-auto">
-            <Button variant="outline-light" onClick={handleLogout}>
-              Logout
-            </Button>
+              <Button variant="outline-light" onClick={handleLogout}>
+                Logout
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -223,7 +233,6 @@ const AdminProfile = () => {
                     type="text"
                     name="gender"
                     defaultValue={formData.gender}
-                   
                     readOnly
                   />
                 </Form.Group>

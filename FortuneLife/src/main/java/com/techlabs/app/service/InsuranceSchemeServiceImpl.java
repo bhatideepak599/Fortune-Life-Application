@@ -53,7 +53,7 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
             throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
         }
 
-        List<InsuranceScheme> schemes = planRepository.findSchemesById(planId);
+        List<InsuranceScheme> schemes =insurancePlan.getSchemes();
         if (schemes.isEmpty()) {
             throw new SchemeRelatedException("Insurance schemes cannot be found");
         }
@@ -244,9 +244,9 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
                 schemeRepository.findById(id).orElseThrow(() -> new SchemeRelatedException(
                         "Insurance Scheme with ID : " + id + " cannot be found"));
 
-        if (insuranceScheme.getActive()) {
+        if (!insuranceScheme.getActive()) {
             throw new SchemeRelatedException(
-                    "Insurance Scheme with ID : " + id + " is already active");
+                    "Insurance Scheme with ID : " + id + " is not active");
         }
 
         SchemeDetails schemeDetails = insuranceScheme.getSchemeDetails();

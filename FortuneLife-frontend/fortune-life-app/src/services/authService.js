@@ -2,7 +2,7 @@ import axios from "axios";
 const API_BASE_URL = "http://localhost:8082";
 
 export const loginAuth = async (username, password, role) => {
-  // console.log(username+" "+password+" "+role+"=====================");
+
 
   try {
     const response = await axios.post(
@@ -26,33 +26,39 @@ export const loginAuth = async (username, password, role) => {
 };
 
 export const logout = async () => {
-  const accessToken = localStorage.getItem("accessToken");
-  if (accessToken == null) {
+  const accessToken = localStorage.getItem('accessToken');
+  if (!accessToken) {
     return null;
   }
+
   try {
     const response = await axios.post(
       `${API_BASE_URL}/fortuneLife/auth/logout`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       }
     );
-    if (response.data) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("role");
-      localStorage.removeItem("expirationTime");
-      return response;
+
+    if (response.status === 200) {
+      // Clear localStorage
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('role');
+      localStorage.removeItem('expirationTime');
+      return response.data;
     }
   } catch (error) {
+ 
     throw error;
   }
 };
 
+
 export const getAdmin = async () => {
   const accessToken = localStorage.getItem("accessToken");
- // console.log("admin->");
+
   if (accessToken == null) {
     return null;
   }
@@ -65,7 +71,7 @@ export const getAdmin = async () => {
         },
       }
     );
-    console.log("admin->"+ response.data.user.firstName);
+   
     if (response) return response;
   } catch (error) {
     throw error;

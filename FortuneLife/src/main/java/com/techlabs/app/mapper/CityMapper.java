@@ -11,7 +11,7 @@ import java.util.Set;
 public class CityMapper {
     public CityDto entityToDto(City city) {
         CityDto cityDto = new CityDto();
-        cityDto.setId(city.getId());
+        cityDto.setId(city.getPincode());
         cityDto.setName(city.getName());
         cityDto.setActive(city.getActive());
         return cityDto;

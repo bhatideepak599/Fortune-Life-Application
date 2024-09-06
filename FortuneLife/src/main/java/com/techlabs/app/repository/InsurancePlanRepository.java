@@ -14,8 +14,6 @@ import java.util.Optional;
 public interface InsurancePlanRepository extends JpaRepository<InsurancePlan, Long> {
     Optional<InsurancePlan> findByPlanName(String planName);
 
-    List<InsuranceScheme> findSchemesById(Long planId);
-
     @Query("SELECT s FROM InsurancePlan p JOIN p.schemes s WHERE p.id = :planId AND s.id = :schemeId")
     Optional<InsuranceScheme> findSchemeByPlanIdAndSchemeId(@Param("planId") Long planId, @Param("schemeId") Long schemeId);
 }

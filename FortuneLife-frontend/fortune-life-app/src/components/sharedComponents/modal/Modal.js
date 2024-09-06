@@ -1,5 +1,6 @@
 import React from 'react';
-import './Modal.css'; 
+import './Modal.css';
+
 const Modal = ({ title, children, isOpen, onClose }) => {
   if (!isOpen) return null;
 
@@ -10,7 +11,9 @@ const Modal = ({ title, children, isOpen, onClose }) => {
           <h5 className="modal-title">{title}</h5>
           <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
         </div>
-        <div className="modal-body">{children}</div>
+        <div className="modal-body">
+          {children}
+        </div>
         <div className="modal-footer">
           <button type="button" className="btn btn-secondary" onClick={onClose}>
             Close

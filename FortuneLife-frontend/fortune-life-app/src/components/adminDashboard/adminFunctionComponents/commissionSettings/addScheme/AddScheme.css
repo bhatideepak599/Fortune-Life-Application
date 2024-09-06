@@ -1,0 +1,12 @@
+.custom-select-dropdown {
+    font-weight: normal;
+    appearance: none;
+    background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="%23000" stroke-width=".6" d="M2 0L0 2h4z"/></svg>') no-repeat right 0.75rem center/8px 10px;
+    padding-right: 1.5rem;
+  }
+  
+  .custom-select-dropdown option[value=""] {
+    font-weight: bold;
+    color: #000;
+  }
+  

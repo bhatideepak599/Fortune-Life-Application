@@ -11,5 +11,5 @@ import java.util.Set;
 public interface CityRepository extends JpaRepository<City, Long> {
     Set<City> findAllByStateId(Long stateId);
 
-    Optional<City> findByStateIdAndId(Long stateId, Long id);
+    Optional<City> findByStateIdAndPincode(Long stateId, Long id);
 }

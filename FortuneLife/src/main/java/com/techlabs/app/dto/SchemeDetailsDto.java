@@ -45,7 +45,7 @@ public class SchemeDetailsDto {
     private Double profitRatio;
 
     @PositiveOrZero(message = "Registration commission ratio must be a non-negative number")
-    private Double registrationCommissionRatio;
+    private Double registrationCommissionAmount;
 
     @PositiveOrZero(message = "Installment commission ratio must be a non-negative number")
     private Double installmentCommissionRatio;

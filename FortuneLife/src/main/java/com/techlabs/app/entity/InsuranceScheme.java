@@ -1,6 +1,8 @@
 package com.techlabs.app.entity;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -9,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
@@ -34,9 +38,17 @@ public class InsuranceScheme {
 	    @OneToOne(cascade = {CascadeType.ALL})
 	    @JoinColumn(name = "schemeDetailsId")
 	    private SchemeDetails schemeDetails;
-
+	    
+	    private Boolean active=true;
 	    @OneToMany(cascade = {CascadeType.ALL})
 	    private List<InsurancePolicy> policies;
 	   
-	    private Boolean active=true;
+	    @ManyToMany(cascade = {CascadeType.ALL})
+	    @JoinTable(
+	        name = "scheme_state",
+	        joinColumns = @JoinColumn(name = "scheme_id"),
+	        inverseJoinColumns = @JoinColumn(name = "state_id")
+	    )
+	    private Set<State> states = new HashSet<>();
+	    
 }
