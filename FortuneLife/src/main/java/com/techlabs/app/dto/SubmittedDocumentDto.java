@@ -12,8 +12,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SubmittedDocumentDto {
 	private Long id;
-	private String documentName;
+
 	@NotBlank
+	private String documentName;
+
 	private String documentStatus;
 	
 	@NotBlank

@@ -38,6 +38,7 @@ public class ClaimController {
 
 		return new ResponseEntity<>(claim, HttpStatus.OK);
 	}
+
 	@Operation(summary = "All Pending Claims For Approval")
 	@GetMapping
 	public ResponseEntity<PageResponse<ClaimDto>> getAllClaims(@RequestParam(required = false) Long id,

@@ -13,7 +13,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 public class SwaggerConfig {
 
     @Bean
-     OpenAPI customOpenAPI() {
+    OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("API Documentation")
                         .description("API documentation for the application"))

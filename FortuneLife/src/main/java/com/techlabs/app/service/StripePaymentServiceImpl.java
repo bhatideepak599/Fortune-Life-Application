@@ -75,9 +75,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
             Commission savedCommission = commissionRepository.save(commission);
             commissions.add(savedCommission);
 
-            double totalCommission = commissions.stream()
-                    .mapToDouble(tempCommission -> tempCommission.getAmount()).sum();
-
+            double totalCommission = agent.getTotalCommission() + commissionAmount;
             agent.setTotalCommission(totalCommission);
 
             agentRepository.save(agent);

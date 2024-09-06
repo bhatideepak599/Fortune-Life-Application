@@ -36,149 +36,150 @@ import com.techlabs.app.repository.SubmittedDocumentRepository;
 
 @Service
 public class InsurancePolicyServiceImpl implements InsurancePolicyService {
-	private SchemeRepository schemeRepository;
-	private CustomerRepository customerRepository;
-	private InsurancePolicyRepository insurancePolicyRepository;
-	private NomineeRepository nomineeRepository;
-	private SubmittedDocumentRepository documentRepository;
-	private InsurancePolicyMapper insurancePolicyMapper;
-	private AgentRepository agentRepository;
-	private CommissionRepository commissionRepository;
+    private SchemeRepository schemeRepository;
+    private CustomerRepository customerRepository;
+    private InsurancePolicyRepository insurancePolicyRepository;
+    private NomineeRepository nomineeRepository;
+    private SubmittedDocumentRepository documentRepository;
+    private InsurancePolicyMapper insurancePolicyMapper;
+    private AgentRepository agentRepository;
+    private CommissionRepository commissionRepository;
 
 
-	public InsurancePolicyServiceImpl(SchemeRepository schemeRepository, CustomerRepository customerRepository,
-			InsurancePolicyRepository insurancePolicyRepository, NomineeRepository nomineeRepository,
-			SubmittedDocumentRepository documentRepository, InsurancePolicyMapper insurancePolicyMapper,
-			AgentRepository agentRepository,CommissionRepository commissionRepository) {
-		super();
-		this.schemeRepository = schemeRepository;
-		this.customerRepository = customerRepository;
-		this.insurancePolicyRepository = insurancePolicyRepository;
-		this.nomineeRepository = nomineeRepository;
-		this.documentRepository = documentRepository;
-		this.insurancePolicyMapper = insurancePolicyMapper;
-		this.agentRepository = agentRepository;
-		this.commissionRepository=commissionRepository;
-	}
+    public InsurancePolicyServiceImpl(SchemeRepository schemeRepository, CustomerRepository customerRepository,
+                                      InsurancePolicyRepository insurancePolicyRepository, NomineeRepository nomineeRepository,
+                                      SubmittedDocumentRepository documentRepository, InsurancePolicyMapper insurancePolicyMapper,
+                                      AgentRepository agentRepository, CommissionRepository commissionRepository) {
+        super();
+        this.schemeRepository = schemeRepository;
+        this.customerRepository = customerRepository;
+        this.insurancePolicyRepository = insurancePolicyRepository;
+        this.nomineeRepository = nomineeRepository;
+        this.documentRepository = documentRepository;
+        this.insurancePolicyMapper = insurancePolicyMapper;
+        this.agentRepository = agentRepository;
+        this.commissionRepository = commissionRepository;
+    }
 
-	@Override
-	public InsurancePolicyResponseDto addNewPolicy(Long customerId, Long schemeId,
-			InsurancePolicyDto insurancePolicyDto) {
-		Customer customer = customerRepository.findById(customerId)
-				.orElseThrow(() -> new CustomerRelatedException("No Customer Found With Customer Id: " + customerId));
-		if (!customer.getActive())
+    @Override
+    public InsurancePolicyResponseDto addNewPolicy(Long customerId, Long schemeId,
+                                                   InsurancePolicyDto insurancePolicyDto) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerRelatedException("No Customer Found With Customer Id: " + customerId));
+        if (!customer.getActive())
             throw new CustomerRelatedException("No Customer Found With Customer Id: " + customerId);
-		
-		InsuranceScheme insuranceScheme = schemeRepository.findById(schemeId)
-				.orElseThrow(() -> new SchemeRelatedException("No Scheme Found With Scheme Id: " + schemeId));
-		if (!insuranceScheme.getActive()) {
+
+        InsuranceScheme insuranceScheme = schemeRepository.findById(schemeId)
+                .orElseThrow(() -> new SchemeRelatedException("No Scheme Found With Scheme Id: " + schemeId));
+        if (!insuranceScheme.getActive()) {
             throw new SchemeRelatedException("Scheme Is Not Active Now ");
-		}
+        }
 
-		InsurancePolicy insurancePolicy = getEntity(insuranceScheme,insurancePolicyDto);
-		insurancePolicy = insurancePolicyRepository.save(insurancePolicy);
-		
-		List<InsurancePolicy> insuranceSchemeAllPolicies = insuranceScheme.getPolicies();
-		insuranceSchemeAllPolicies.add(insurancePolicy);
-		schemeRepository.save(insuranceScheme);
+        InsurancePolicy insurancePolicy = getEntity(insuranceScheme, insurancePolicyDto);
+        insurancePolicy = insurancePolicyRepository.save(insurancePolicy);
 
-		List<InsurancePolicy> policies = customer.getPolicies();
-		policies.add(insurancePolicy);
-		customer.setPolicies(policies);
-		customer = customerRepository.save(customer);
+        List<InsurancePolicy> insuranceSchemeAllPolicies = insuranceScheme.getPolicies();
+        insuranceSchemeAllPolicies.add(insurancePolicy);
+        schemeRepository.save(insuranceScheme);
 
-		return insurancePolicyMapper.entityToDto(insurancePolicy);
-	}
+        List<InsurancePolicy> policies = customer.getPolicies();
+        policies.add(insurancePolicy);
+        customer.setPolicies(policies);
+        customer = customerRepository.save(customer);
 
-	@Override
-	public InsurancePolicyResponseDto addNewPolicyByAgentForCustomer(Long customerId, Long schemeId, Long agentId,
-			InsurancePolicyDto insurancePolicyDto) {
-		Agent agent=agentRepository.findById(agentId)
-				.orElseThrow(()->new AgentRelatedException("No Agent Found with Agent Id:"+agentId));
-			
-		Customer customer = customerRepository.findById(customerId)
-				.orElseThrow(() -> new CustomerRelatedException("No Customer Found With Customer Id: " + customerId));
-		if (!customer.getActive())
+        return insurancePolicyMapper.entityToDto(insurancePolicy);
+    }
+
+    @Override
+    public InsurancePolicyResponseDto addNewPolicyByAgentForCustomer(Long customerId, Long schemeId, Long agentId,
+                                                                     InsurancePolicyDto insurancePolicyDto) {
+        Agent agent = agentRepository.findById(agentId)
+                .orElseThrow(() -> new AgentRelatedException("No Agent Found with Agent Id:" + agentId));
+
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerRelatedException("No Customer Found With Customer Id: " + customerId));
+        if (!customer.getActive())
             throw new CustomerRelatedException("No Customer Found With Customer Id: " + customerId);
-		
-		InsuranceScheme insuranceScheme = schemeRepository.findById(schemeId)
-				.orElseThrow(() -> new SchemeRelatedException("No Scheme Found With Scheme Id: " + schemeId));
-		if (!insuranceScheme.getActive()) {
+
+        InsuranceScheme insuranceScheme = schemeRepository.findById(schemeId)
+                .orElseThrow(() -> new SchemeRelatedException("No Scheme Found With Scheme Id: " + schemeId));
+        if (!insuranceScheme.getActive()) {
             throw new SchemeRelatedException("Scheme Is Not Active Now ");
-		}
-		
-		InsurancePolicy insurancePolicy = getEntity(insuranceScheme,insurancePolicyDto);
-		insurancePolicy.setAgent(agent);
-		insurancePolicy = insurancePolicyRepository.save(insurancePolicy);
-		
-		Double registrationCommission=insuranceScheme.getSchemeDetails().getRegistrationCommissionRatio();
-		
-		Commission commission=new Commission();
-		Double commissionAmount=registrationCommission;
-		commission.setAmount(commissionAmount);
-		commission.setCommissionType(CommissionType.REGISTRATION.name());
-		commission.setIssueDate(LocalDateTime.now());
-		
-		agent.setTotalCommission(commissionAmount+agent.getTotalCommission());
-		commission.setAgent(agent);
-		commission=commissionRepository.save(commission);
-		
-		List<Commission> commissions = agent.getCommissions();
-		commissions.add(commission);
-		agent.setCommissions(commissions);
-		agentRepository.save(agent);
-		
-		List<InsurancePolicy> insuranceSchemeAllPolicies = insuranceScheme.getPolicies();
-		insuranceSchemeAllPolicies.add(insurancePolicy);
-		schemeRepository.save(insuranceScheme);
+        }
 
-		List<InsurancePolicy> policies = customer.getPolicies();
-		policies.add(insurancePolicy);
-		customer.setPolicies(policies);
-		customer = customerRepository.save(customer);
+        InsurancePolicy insurancePolicy = getEntity(insuranceScheme, insurancePolicyDto);
+        insurancePolicy.setAgent(agent);
+        insurancePolicy = insurancePolicyRepository.save(insurancePolicy);
 
-		return insurancePolicyMapper.entityToDto(insurancePolicy);
-	}
+        Double registrationCommission = insuranceScheme.getSchemeDetails().getRegistrationCommissionRatio();
 
-	private InsurancePolicy getEntity( InsuranceScheme insuranceScheme, InsurancePolicyDto insurancePolicyDto) {
+        Commission commission = new Commission();
+        Double commissionAmount = registrationCommission;
+        commission.setAmount(commissionAmount);
+        commission.setCommissionType(CommissionType.REGISTRATION.name());
+        commission.setIssueDate(LocalDateTime.now());
 
-	
-		InsurancePolicy insurancePolicy = new InsurancePolicy();
-		Double sumAssured=100+insuranceScheme.getSchemeDetails().getProfitRatio();
-		sumAssured= insurancePolicyDto.getPolicyAmount()*0.01*sumAssured;
-		
-		insurancePolicy.setIssueDate(LocalDate.now());
-		insurancePolicy.setMaturityDate(LocalDate.now().plusYears(insurancePolicyDto.getTime()));
-		insurancePolicy.setInsuranceScheme(insuranceScheme);
-		insurancePolicy.setPremiumAmount(insurancePolicyDto.getPremiumAmount());
-		insurancePolicy.setPremiumType(insurancePolicyDto.getPremiumType());
-		
-		insurancePolicy.setSumAssured(sumAssured);
-		insurancePolicy.setPolicyStatus(PolicyStatus.ACTIVE.name());
-		insurancePolicy.setPayments(new ArrayList<>());
+        agent.setTotalCommission(commissionAmount + agent.getTotalCommission());
+        commission.setAgent(agent);
+        commission = commissionRepository.save(commission);
 
-		Set<SubmittedDocument> documents = new HashSet<>();
+        List<Commission> commissions = agent.getCommissions();
+        commissions.add(commission);
+        agent.setCommissions(commissions);
+        agentRepository.save(agent);
 
-		for (SubmittedDocumentDto dto : insurancePolicyDto.getSubmittedDocumentsDto()) {
-			SubmittedDocument submittedDocument = new SubmittedDocument();
-			submittedDocument.setDocumentImage(dto.getDocumentImage());
-			submittedDocument.setDocumentName(dto.getDocumentName());
-			submittedDocument.setDocumentStatus(DocumentStatus.PENDING.name());
+        List<InsurancePolicy> insuranceSchemeAllPolicies = insuranceScheme.getPolicies();
+        insuranceSchemeAllPolicies.add(insurancePolicy);
+        schemeRepository.save(insuranceScheme);
 
-			submittedDocument = documentRepository.save(submittedDocument);
-			documents.add(submittedDocument);
-		}
+        List<InsurancePolicy> policies = customer.getPolicies();
+        policies.add(insurancePolicy);
+        customer.setPolicies(policies);
+        customer = customerRepository.save(customer);
 
-		Nominee nominee = new Nominee();
-		nominee.setNomineeName(insurancePolicyDto.getNomineeName());
-		nominee.setRelationStatus(insurancePolicyDto.getRelationStatusWithNominee());
+        return insurancePolicyMapper.entityToDto(insurancePolicy);
+    }
 
-		nominee = nomineeRepository.save(nominee);
+    private InsurancePolicy getEntity(InsuranceScheme insuranceScheme, InsurancePolicyDto insurancePolicyDto) {
 
-		List<Nominee> nominees = new ArrayList<>();
-		nominees.add(nominee);
-		insurancePolicy.setNominees(nominees);
-		insurancePolicy.setSubmittedDocuments(documents);
-		return insurancePolicy;
-	}
+
+        InsurancePolicy insurancePolicy = new InsurancePolicy();
+        Double sumAssured = 100 + insuranceScheme.getSchemeDetails().getProfitRatio();
+        sumAssured = insurancePolicyDto.getPolicyAmount() * 0.01 * sumAssured;
+        sumAssured *= insurancePolicyDto.getTime();
+
+        insurancePolicy.setIssueDate(LocalDate.now());
+        insurancePolicy.setMaturityDate(LocalDate.now().plusYears(insurancePolicyDto.getTime()));
+        insurancePolicy.setInsuranceScheme(insuranceScheme);
+        insurancePolicy.setPremiumAmount(insurancePolicyDto.getPremiumAmount());
+        insurancePolicy.setPremiumType(insurancePolicyDto.getPremiumType());
+
+        insurancePolicy.setSumAssured(sumAssured);
+        insurancePolicy.setPolicyStatus(PolicyStatus.ACTIVE.name());
+        insurancePolicy.setPayments(new ArrayList<>());
+
+        Set<SubmittedDocument> documents = new HashSet<>();
+
+        for (SubmittedDocumentDto dto : insurancePolicyDto.getSubmittedDocumentsDto()) {
+            SubmittedDocument submittedDocument = new SubmittedDocument();
+            submittedDocument.setDocumentImage(dto.getDocumentImage());
+            submittedDocument.setDocumentName(dto.getDocumentName());
+            submittedDocument.setDocumentStatus(DocumentStatus.PENDING.name());
+
+            submittedDocument = documentRepository.save(submittedDocument);
+            documents.add(submittedDocument);
+        }
+
+        Nominee nominee = new Nominee();
+        nominee.setNomineeName(insurancePolicyDto.getNomineeName());
+        nominee.setRelationStatus(insurancePolicyDto.getRelationStatusWithNominee());
+
+        nominee = nomineeRepository.save(nominee);
+
+        List<Nominee> nominees = new ArrayList<>();
+        nominees.add(nominee);
+        insurancePolicy.setNominees(nominees);
+        insurancePolicy.setSubmittedDocuments(documents);
+        return insurancePolicy;
+    }
 }

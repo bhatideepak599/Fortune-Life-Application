@@ -1,19 +1,10 @@
 package com.techlabs.app.dto;
 
-import java.time.LocalDate;
-import java.util.Set;
-
-import com.techlabs.app.entity.Address;
-import com.techlabs.app.entity.Role;
-
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -26,13 +17,14 @@ public class UserDto {
 	private String username;
 
 	private String password;
+
 	@NotBlank
 	private String firstName;
 	
 	private String gender;
-	
 	private Boolean active;
 	private String lastName;
+
 	@NotBlank
 	private String mobileNumber;
 

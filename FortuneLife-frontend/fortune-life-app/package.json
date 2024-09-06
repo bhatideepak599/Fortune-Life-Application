@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@iconify/react": "^5.0.2",
+    "@remixicon/react": "^4.2.0",
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.4.0",
     "@testing-library/jest-dom": "^5.17.0",
