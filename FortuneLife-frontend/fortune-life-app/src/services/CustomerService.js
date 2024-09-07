@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_BASE_URL = `http://localhost:8082`;
-const token = `Bearer ${localStorage.getItem("authToken")}`;
+const token = `Bearer ${localStorage.getItem("accessToken")}`;
 
 export const createPaymentIntent = async ({ policyId, paymentMethodId, paymentType, amount, tax, totalPayment }) => {
   try {

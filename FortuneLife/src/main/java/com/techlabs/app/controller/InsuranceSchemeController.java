@@ -84,16 +84,25 @@ public class InsuranceSchemeController {
 
     @Operation(summary = "Update commission")
     @PutMapping("/update-commission/{planId}/{id}")
-    public ResponseEntity<SchemeDto> updateCommission(@PathVariable(name = "planId")Long planId,
-                                                      @PathVariable(name = "id")Long id,
-                                                      @RequestParam(name = "installmentRatio")Double installmentRatio,
-                                                      @RequestParam(name = "registrationAmount")Double registrationAmount,
-                                                      @RequestParam(name = "profitRatio")Double profitRatio){
-        SchemeDto schemeDto = schemeService.updateCommission(planId,id,installmentRatio,registrationAmount,profitRatio);
+    public ResponseEntity<SchemeDto> updateCommission(@PathVariable(name = "planId") Long planId,
+                                                      @PathVariable(name = "id") Long id,
+                                                      @RequestParam(name = "installmentRatio") Double installmentRatio,
+                                                      @RequestParam(name = "registrationAmount") Double registrationAmount,
+                                                      @RequestParam(name = "profitRatio") Double profitRatio) {
+        SchemeDto schemeDto = schemeService.updateCommission(planId, id, installmentRatio, registrationAmount, profitRatio);
 
-        return new ResponseEntity<>(schemeDto,HttpStatus.OK);
+        return new ResponseEntity<>(schemeDto, HttpStatus.OK);
     }
-    
+
+    @Operation(summary = "Change Scheme Image")
+    @PutMapping("/update-scheme-image/{planId}/{id}")
+    public ResponseEntity<SchemeDto> updateSchemeImage(@RequestParam(name = "schemeImage") String schemeImage,
+                                                       @PathVariable(name = "planId") Long planId,
+                                                       @PathVariable(name = "id") Long id) {
+        SchemeDto schemeDto = schemeService.updateSchemeImage(planId, id, schemeImage);
+
+        return new ResponseEntity<>(schemeDto, HttpStatus.OK);
+    }
 
 
 }

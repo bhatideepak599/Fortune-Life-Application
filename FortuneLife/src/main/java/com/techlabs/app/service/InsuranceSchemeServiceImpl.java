@@ -53,7 +53,7 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
             throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
         }
 
-        List<InsuranceScheme> schemes =insurancePlan.getSchemes();
+        List<InsuranceScheme> schemes = insurancePlan.getSchemes();
         if (schemes.isEmpty()) {
             throw new SchemeRelatedException("Insurance schemes cannot be found");
         }
@@ -257,5 +257,26 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
         detailsRepository.save(schemeDetails);
 
         return schemeMapper.entityToDto(insuranceScheme);
+    }
+
+    @Override
+    public SchemeDto updateSchemeImage(Long planId, Long id, String schemeImage) {
+        InsurancePlan insurancePlan = planRepository.findById(planId)
+                .orElseThrow(() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+
+        if (!insurancePlan.getActive()) {
+            throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+        }
+
+        InsuranceScheme insuranceScheme =
+                schemeRepository.findById(id).orElseThrow(() -> new SchemeRelatedException(
+                        "Insurance Scheme with ID : " + id + " cannot be found"));
+
+        SchemeDetails schemeDetails = insuranceScheme.getSchemeDetails();
+        schemeDetails.setSchemeImage(schemeImage);
+        detailsRepository.save(schemeDetails);
+
+        return schemeMapper.entityToDto(insuranceScheme);
+
     }
 }

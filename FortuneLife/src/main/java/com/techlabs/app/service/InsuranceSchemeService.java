@@ -23,4 +23,6 @@ public interface InsuranceSchemeService {
     String activateScheme(Long planId, Long id);
 
     SchemeDto updateCommission(Long planId, Long id, Double installmentRatio, Double registrationAmount, Double profitRatio);
+
+    SchemeDto updateSchemeImage(Long planId, Long id, String schemeImage);
 }

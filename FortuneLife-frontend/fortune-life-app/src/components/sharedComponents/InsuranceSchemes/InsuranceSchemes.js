@@ -3,12 +3,14 @@ import Navbar from "../../customerDashBoard/LandingPage/Navbar/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { errorToast } from "../../../utils/Toast";
 import { getSchemesByPlanId } from "../../../services/commonService";
+import { fetchFile } from "../../../services/fileServices"; // Import the fetchFile function
 import "./InsuranceSchemes.css";
 import Footer from "../../customerDashBoard/LandingPage/Footer/Footer";
 
 const InsuranceSchemes = () => {
   const { id } = useParams();
   const [schemes, setSchemes] = useState([]);
+  const [schemeImages, setSchemeImages] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +18,14 @@ const InsuranceSchemes = () => {
       try {
         const response = await getSchemesByPlanId(id);
         setSchemes(response);
+
+        const images = {};
+        for (const scheme of response) {
+          const name = scheme.schemeDetails.schemeImage;
+          const imageUrl = await fetchFile(name);
+          images[scheme.id] = imageUrl;
+        }
+        setSchemeImages(images);
       } catch (error) {
         errorToast(error);
       }
@@ -39,11 +49,9 @@ const InsuranceSchemes = () => {
 
           {schemes.map((scheme, index) => (
             <div key={scheme.id} className={`mt-5 popular-wrapper ${index % 2 === 0 ? "left" : "right"}`}>
-              <figure className="popular-banner">
-                <img src={`${scheme.schemeDetails.schemeImage}`} alt={scheme.schemeName} style={{ width: "80%" }} />
-              </figure>
+              <figure className="popular-banner">{schemeImages[scheme.id] ? <img src={schemeImages[scheme.id]} alt={scheme.schemeName} style={{ width: "80%" }} /> : <p>Loading image...</p>}</figure>
 
-              <div className="popular-content">
+              <div className="popular-content p-4 border border-2 rounded-3">
                 <p className="popular-content-subtitle">
                   <ion-icon name="sparkles"></ion-icon>
                   <span>
@@ -55,21 +63,25 @@ const InsuranceSchemes = () => {
                   Build <strong>specially</strong> for <strong>your</strong> health <strong>and loved ones</strong>
                 </h3>
 
-                <p className="popular-content-text">{scheme.schemeDetails.description}</p>
 
                 <ul className="popular-list">
                   <li className="popular-list-item">
-                    <ion-icon name="layers-outline"></ion-icon>
+                    <ion-icon name="chatbubble-ellipses-sharp"></ion-icon>
+                    <p className="popular-content-text">{scheme.schemeDetails.description}</p>
+                  </li>
+
+                  <li className="popular-list-item">
+                    <ion-icon name="remove-circle-sharp"></ion-icon>
                     <p>Min Amount: {scheme.schemeDetails.minAmount}</p>
                   </li>
                   <li className="popular-list-item">
-                    <ion-icon name="megaphone-outline"></ion-icon>
+                    <ion-icon name="add-circle-sharp"></ion-icon>
                     <p>Max Amount: {scheme.schemeDetails.maxAmount}</p>
                   </li>
                 </ul>
 
                 <div className="btn-group">
-                  <button className="btn btn-primary" onClick={() => handleViewDetails(scheme.id)}>
+                  <button className="btn btn-primary d-grid" onClick={() => handleViewDetails(scheme.id)}>
                     View Details
                   </button>
                 </div>
