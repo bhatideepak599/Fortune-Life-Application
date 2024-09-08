@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.techlabs.app.enums.PremiumType;
+import com.techlabs.app.exception.FortuneLifeException;
 import org.springframework.stereotype.Service;
 
 import com.techlabs.app.dto.InsurancePolicyDto;
@@ -145,18 +147,21 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
         InsurancePolicy insurancePolicy = new InsurancePolicy();
 
-        double p = insurancePolicyDto.getPolicyAmount();
-        double t = insurancePolicyDto.getTime();
-        double r = insuranceScheme.getSchemeDetails().getProfitRatio();
-        double interest = (p * t * r) / 100;
-        double sumAssured = p + interest;
-
+        Double sumAssured = 100 + insuranceScheme.getSchemeDetails().getProfitRatio();
+        sumAssured = insurancePolicyDto.getPolicyAmount() * 0.01 * sumAssured;
 
         insurancePolicy.setIssueDate(LocalDate.now());
         insurancePolicy.setMaturityDate(LocalDate.now().plusYears(insurancePolicyDto.getTime()));
         insurancePolicy.setInsuranceScheme(insuranceScheme);
         insurancePolicy.setPremiumAmount(insurancePolicyDto.getPremiumAmount());
-        insurancePolicy.setPremiumType(insurancePolicyDto.getPremiumType());
+
+        switch (insurancePolicyDto.getPremiumType()) {
+            case "12" -> insurancePolicy.setPremiumType(PremiumType.YEARLY.name());
+            case "6" -> insurancePolicy.setPremiumType(PremiumType.HALF_YEARLY.name());
+            case "3" -> insurancePolicy.setPremiumType(PremiumType.QUARTERLY.name());
+            case "1" -> insurancePolicy.setPremiumType(PremiumType.MONTHLY.name());
+            default -> throw new FortuneLifeException("Choose correct Premium Type");
+        }
 
         insurancePolicy.setSumAssured(sumAssured);
         insurancePolicy.setPolicyStatus(PolicyStatus.ACTIVE.name());
