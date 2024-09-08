@@ -9,7 +9,6 @@ const Sidebar = ({ activeItem, onItemClick }) => {
     "Manage Tax and Insurance setting",
     "Add Employee and Agent",
     "Manage Insurance Plans & Schemes",
-    "Commission settings",
     "Withdrawal approval",
   ];
 
@@ -27,7 +26,7 @@ const Sidebar = ({ activeItem, onItemClick }) => {
   const handleReportsClick = () => setOpenReports(!openReports);
 
   return (
-    <div style={{ padding: '20px', borderRadius: '10px', backgroundColor: '#fff' }}>
+    <div style={{ padding: '20px', borderRadius: '10px', backgroundColor: '#fff', height: '90vh', overflow: 'auto' }}>
       <h5 className="text-dark">Admin Actions</h5>
       <ListGroup variant="flush">
         {actions.map((item, index) => (
@@ -49,7 +48,7 @@ const Sidebar = ({ activeItem, onItemClick }) => {
         </ListGroup.Item>
         
         <Collapse in={openReports}>
-          <div>
+          <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
             {reports.map((item, index) => (
               <ListGroup.Item
                 key={index}

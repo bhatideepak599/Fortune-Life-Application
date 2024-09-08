@@ -4,7 +4,7 @@ import { addNewPlan } from "../../../../../services/schemeService";
 import { errorToast, successToast } from "../../../../../utils/Toast";
 import { useNavigate } from "react-router-dom";
 
-function AddPlan({ onClose }) {
+function AddPlan({ change , setChange,onClose }) {
   const [planName, setPlanName] = useState("");
   const [active, setActive] = useState(true);
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ function AddPlan({ onClose }) {
       const response = await addNewPlan(newPlan);
      if(response){
         successToast("New Plan Added")
+        setChange(!change)
         onClose();
         
      }

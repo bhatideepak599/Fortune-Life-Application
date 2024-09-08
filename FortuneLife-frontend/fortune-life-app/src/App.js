@@ -10,6 +10,7 @@ import AllSchemes from "./components/adminDashboard/adminFunctionComponents/comm
 import CustomerHome from "./components/customerDashBoard/CustomerHome/CustomerHome";
 import InsuranceSchemes from "./components/sharedComponents/InsuranceSchemes/InsuranceSchemes";
 import InsuranceSchemeDetails from "./components/sharedComponents/InsuranceSchemes/InsuranceSchemeDetails";
+import ViewAndUpdateScheme from "./components/adminDashboard/adminFunctionComponents/commissionSettings/viewAndUpdateScheme/ViewAndUpdateScheme";
 
 function App() {
   return (
@@ -24,8 +25,21 @@ function App() {
         <Route path="/all-schemes/:id" element={<AllSchemes />} />
         <Route exact path="/customer-dashboard" element={<CustomerHome />} />
         <Route exact path="/policy-payment" element={<Payment />} />
-        <Route exact path="/fortuneLife/plan/:id" element={<InsuranceSchemes />} />
-        <Route exact path="/fortuneLife/plan/:id/scheme-details/:id" element={<InsuranceSchemeDetails />} />
+        <Route
+          exact
+          path="/view-update-scheme/:planId"
+          element={<ViewAndUpdateScheme />}
+        />
+        <Route
+          exact
+          path="/fortuneLife/plan/:id"
+          element={<InsuranceSchemes />}
+        />
+        <Route
+          exact
+          path="/fortuneLife/plan/:id/scheme-details/:id"
+          element={<InsuranceSchemeDetails />}
+        />
       </Routes>
     </>
   );

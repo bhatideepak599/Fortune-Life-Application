@@ -1,44 +1,57 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col, Image } from "react-bootstrap";
 import "./AddScheme.css";
-import { errorToast, warnToast } from "../../../../../utils/Toast";
+import {
+  errorToast,
+  successToast,
+  warnToast,
+} from "../../../../../utils/Toast";
 import { uploadFile } from "../../../../../services/fileServices";
 import { addNewSchemeUnderAPlan } from "../../../../../services/schemeService";
+import { useNavigate } from "react-router-dom";
 
-const AddScheme = ({ id }) => {
+const AddScheme = ({ id, change, setChange, onClose }) => {
   const formData = new FormData();
   const [schemeName, setSchemeName] = useState("");
   const [active, setActive] = useState(true);
   const [schemeImage, setSchemeImage] = useState("");
   const [description, setDescription] = useState("");
-  const [minAmount, setMinAmount] = useState(0);
-  const [maxAmount, setMaxAmount] = useState(0);
-  const [minInvestmentTime, setMinInvestmentTime] = useState(0);
-  const [maxInvestmentTime, setMaxInvestmentTime] = useState(0);
-  const [minAge, setMinAge] = useState(0);
-  const [maxAge, setMaxAge] = useState(0);
-  const [profitRatio, setProfitRatio] = useState(0);
-  const [registrationCommissionRatio, setRegistrationCommissionRatio] =
-    useState(0);
-  const [installmentCommissionRatio, setInstallmentCommissionRatio] =
-    useState(0);
+  const [minAmount, setMinAmount] = useState();
+  const [maxAmount, setMaxAmount] = useState();
+  const [minInvestmentTime, setMinInvestmentTime] = useState();
+  const [maxInvestmentTime, setMaxInvestmentTime] = useState();
+  const [minAge, setMinAge] = useState();
+  const [maxAge, setMaxAge] = useState();
+  const [profitRatio, setProfitRatio] = useState();
+  const navigate = useNavigate();
 
-  const handleImageUpload = async(e) => {
-    const file = e.target.files[0];
-    if (file) {
-      formData.append("file", file);
-        const fileLocation=await uploadFile(formData);
-        setSchemeImage(fileLocation.data.name);
-    }
-  };
+  const [registrationCommissionRatio, setRegistrationCommissionRatio] =
+    useState();
+  const [installmentCommissionRatio, setInstallmentCommissionRatio] =
+    useState();
+    const handleImageUpload = async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+    
+        const fileLocation = await uploadFile(formData);
+    
+        if (fileLocation && fileLocation.data) {
+          setSchemeImage(fileLocation.data.name);
+        } else {
+          console.error("File upload failed or no data received.");
+        }
+      }
+    };
+    
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await uploadFile(formData);
-     
+
       const newScheme = {
-        
         schemeName,
         active,
         schemeDetailsId: 0,
@@ -59,7 +72,6 @@ const AddScheme = ({ id }) => {
       warnToast(error.response?.data?.message);
     }
     const newScheme = {
-      
       schemeName,
       active,
       schemeDetailsId: 0,
@@ -76,12 +88,19 @@ const AddScheme = ({ id }) => {
       installmentCommissionRatio,
       documents,
     };
-   
-    try{
-        const response=addNewSchemeUnderAPlan( id,newScheme)
-    }catch(error){
-        errorToast(error.response?.data?.message)
+
+    try {
+      const response = addNewSchemeUnderAPlan(id, newScheme);
+      if (response) {
+        successToast("Scheme Added Successfully.");
+       
+
+        onClose();
+      }
+    } catch (error) {
+      errorToast(error.response?.data?.message);
     }
+    setChange(!change);
   };
   const [documents, setDocuments] = useState([]);
 
@@ -107,11 +126,14 @@ const AddScheme = ({ id }) => {
   const handleAddDocument = () => {
     setDocuments([...documents, { documentName: "" }]);
   };
+  const getAvailableOptions = (index) => {
+    const selectedDocuments = documents
+      .map((doc, i) => (i === index ? null : doc.documentName))
+      .filter((doc) => doc);
 
-  const getAvailableOptions = () => {
-    const selectedDocuments = documents.map((doc) => doc.documentName);
     return availableDocuments.filter((doc) => !selectedDocuments.includes(doc));
   };
+
   return (
     <Container>
       <h2>Add New Scheme</h2>
@@ -151,6 +173,7 @@ const AddScheme = ({ id }) => {
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
+            required
           />
           {schemeImage && (
             <div className="mt-3">
@@ -166,6 +189,7 @@ const AddScheme = ({ id }) => {
             rows={3}
             placeholder="Enter scheme description"
             value={description}
+            required
             onChange={(e) => setDescription(e.target.value)}
           />
         </Form.Group>
@@ -178,6 +202,7 @@ const AddScheme = ({ id }) => {
                 type="number"
                 placeholder="Enter minimum amount"
                 value={minAmount}
+                required
                 onChange={(e) => setMinAmount(Number(e.target.value))}
               />
             </Form.Group>
@@ -190,6 +215,7 @@ const AddScheme = ({ id }) => {
                 type="number"
                 placeholder="Enter maximum amount"
                 value={maxAmount}
+                required
                 onChange={(e) => setMaxAmount(Number(e.target.value))}
               />
             </Form.Group>
@@ -204,6 +230,7 @@ const AddScheme = ({ id }) => {
                 type="number"
                 placeholder="Enter minimum investment time"
                 value={minInvestmentTime}
+                required
                 onChange={(e) => setMinInvestmentTime(Number(e.target.value))}
               />
             </Form.Group>
@@ -216,6 +243,7 @@ const AddScheme = ({ id }) => {
                 type="number"
                 placeholder="Enter maximum investment time"
                 value={maxInvestmentTime}
+                required
                 onChange={(e) => setMaxInvestmentTime(Number(e.target.value))}
               />
             </Form.Group>
@@ -230,6 +258,7 @@ const AddScheme = ({ id }) => {
                 type="number"
                 placeholder="Enter minimum age"
                 value={minAge}
+                required
                 onChange={(e) => setMinAge(Number(e.target.value))}
               />
             </Form.Group>
@@ -242,6 +271,7 @@ const AddScheme = ({ id }) => {
                 type="number"
                 placeholder="Enter maximum age"
                 value={maxAge}
+                required
                 onChange={(e) => setMaxAge(Number(e.target.value))}
               />
             </Form.Group>
@@ -256,6 +286,7 @@ const AddScheme = ({ id }) => {
                 type="number"
                 placeholder="Enter profit ratio"
                 value={profitRatio}
+                required
                 onChange={(e) => setProfitRatio(Number(e.target.value))}
               />
             </Form.Group>
@@ -269,6 +300,7 @@ const AddScheme = ({ id }) => {
                 step="500"
                 placeholder="Enter Registration Commission Amount"
                 value={registrationCommissionRatio}
+                required
                 onChange={(e) =>
                   setRegistrationCommissionRatio(Number(e.target.value))
                 }
@@ -283,6 +315,7 @@ const AddScheme = ({ id }) => {
             type="number"
             placeholder="Enter installment commission ratio"
             value={installmentCommissionRatio}
+            required
             onChange={(e) =>
               setInstallmentCommissionRatio(Number(e.target.value))
             }
@@ -304,7 +337,7 @@ const AddScheme = ({ id }) => {
                   <option value="" disabled>
                     Select
                   </option>
-                  {getAvailableOptions().map((docName, idx) => (
+                  {getAvailableOptions(index).map((docName, idx) => (
                     <option key={idx} value={docName}>
                       {docName}
                     </option>

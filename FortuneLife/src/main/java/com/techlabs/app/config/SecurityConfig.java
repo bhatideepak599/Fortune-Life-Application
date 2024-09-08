@@ -88,7 +88,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/claim/approve/{id}").hasRole("ADMIN")
 
                         // Employee Endpoints
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/employee").hasAnyRole("ADMIN", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.POST, "/fortuneLife/employee/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/employee").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/employee/activate/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/fortuneLife/employee/{id}").hasRole("ADMIN")
@@ -96,7 +96,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/employee/{id}").hasAnyRole("ADMIN", "EMPLOYEE")
 
                         // Agent Endpoints
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/agent").hasAnyRole("ADMIN", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.POST, "/fortuneLife/agent/**").hasAnyRole("ADMIN", "EMPLOYEE")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/activate/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/fortuneLife/agent/{id}").hasRole("ADMIN")

@@ -109,7 +109,7 @@ const AdminDashboard = () => {
                 position: "fixed",
                 top: "51px",
                 left: 0,
-                width: "20%",
+                width: "22%",
                 height: "70vh",
               }}
             >
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
           {/* Main Content */}
           <Col
             md={{ span: 9, offset: 3 }}
-            style={{ padding: "20px", marginLeft: "20%" }}
+            style={{ padding: "20px", marginLeft: "22%" }}
           >
             <MainContent activeItem={activeItem} setActiveItem={setActiveItem} />
           </Col>

@@ -146,6 +146,7 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
         insuranceScheme.setSchemeName(schemeDto.getSchemeName());
 
         SchemeDetails schemeDetails = insuranceScheme.getSchemeDetails();
+        System.out.println(schemeDto.getSchemeImage()+"=========================================================================================");
         schemeDetails.setSchemeImage(schemeDto.getSchemeImage());
         schemeDetails.setDescription(schemeDto.getDescription());
         schemeDetails.setMinAmount(schemeDto.getMinAmount());

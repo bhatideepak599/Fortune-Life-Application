@@ -65,9 +65,10 @@ public class AgentServiceImpl implements AgentService {
 
 		User user = agent.getUser();
 		user.setPassword(passwordEncoder.encode(agentDto.getUserDto().getPassword()));
-
-		Address address = addressRepository.save(user.getAddress());
-		user.setAddress(address);
+		if (user.getAddress() != null) {
+			Address address = addressRepository.save(user.getAddress());
+			user.setAddress(address);
+		}
 		user.setActive(true);
 
 		Optional<Role> byName = roleRepository.findByRoleName("ROLE_AGENT");
@@ -82,6 +83,7 @@ public class AgentServiceImpl implements AgentService {
 		agent.setId(user.getId());
 		agent.setUser(user);
 		agent.setVerified(false);
+		if(agentDto.getVerified()) agent.setVerified(true);
 		agent = agentRepository.save(agent);
 		return agentMapper.entityToDto(agent);
 	}
@@ -91,7 +93,7 @@ public class AgentServiceImpl implements AgentService {
 			Boolean active, Boolean verified, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Agent> agents = agentRepository.findByIdAndUserNameAndNameAndMobileNumberAndEmailAndActive(id, userName,
-				name, mobileNumber, email, active,verified, pageable);
+				name, mobileNumber, email, active, verified, pageable);
 		if (agents.getContent().isEmpty()) {
 
 			throw new AgentRelatedException(" No Agents  Found! ");

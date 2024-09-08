@@ -1,6 +1,7 @@
 import React from "react";
 import CustomerReport from "./customerReport/CustomerReport";
 import CommissionSettings from "./commissionSettings/CommissionSettings";
+import AddEmployeeOrAgent from "./addEmployeeOrAgent/AddEmployeeOrAgent";
 // Import other components here
 // import AgentReport from './AgentReport';
 // import InsurancePlanMaster from './InsurancePlanMaster';
@@ -12,13 +13,10 @@ const MainContent = ({ activeItem }) => {
     switch (activeItem) {
       case "Customer report":
         return <CustomerReport />;
-      case "Commission settings":
-        return <CommissionSettings  />;
-      // Add cases for other components here
       case "Manage Insurance Plans & Schemes":
         return <CommissionSettings />;
-      // case 'Insurance plan master':
-      //   return <InsurancePlanMaster />;
+      case 'Add Employee and Agent':
+        return <AddEmployeeOrAgent />;
       // case 'Withdrawal approval':
       //   return <WithdrawalApproval />;
       // case 'Transaction report':

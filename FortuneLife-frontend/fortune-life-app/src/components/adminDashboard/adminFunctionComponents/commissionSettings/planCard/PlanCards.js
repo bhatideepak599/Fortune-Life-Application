@@ -6,13 +6,44 @@ import Col from "react-bootstrap/Col";
 import { useEffect, useState } from "react";
 import AddPlan from "../addPlan/AddPlan";
 import Modal from "../../../../sharedComponents/modal/Modal";
+import {
+  activatePlan,
+  deleteAPlan,
+} from "../../../../../services/schemeService";
+import {
+  errorToast,
+  successToast,
+  warnToast,
+} from "../../../../../utils/Toast";
 
+export const PlanCards = ({ plans, change, setChange, handleClick }) => {
+  const [addPlanModal, setAddPlanModal] = useState(false);
 
-export const PlanCards = ({ plans, handleClick }) => {
-  const [addPlanModal,setAddPlanModal]=useState(false)
-  const handleAddPlan=()=>{
+  const handleAddPlan = () => {
     setAddPlanModal(true);
-  }
+  };
+  const handleActivate = async (id) => {
+    try {
+      const response = await activatePlan(id);
+      if (response) {
+        successToast("Plan Activated.");
+        setChange(!change);
+      }
+    } catch (error) {
+      errorToast(error);
+    }
+  };
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteAPlan(id);
+      if (response) {
+        warnToast("Plan Deleted.");
+        setChange(!change);
+      }
+    } catch (error) {
+      errorToast(error);
+    }
+  };
   return (
     <Container>
       <Row>
@@ -26,40 +57,57 @@ export const PlanCards = ({ plans, handleClick }) => {
                   <strong>Status : </strong>
                   {plan.active ? "Active" : "In Active"}
                 </Card.Text>
-                <Button variant="primary" onClick={() => handleClick(plan.id)}>
-                  Manage Schemes
+                <Button
+                  variant="secondary"
+                  className="me-2"
+                  onClick={() => handleClick(plan.id)}
+                >
+                  Schemes
                 </Button>
+                {plan.active ? (
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(plan.id)}
+                  >
+                    Delete
+                  </Button>
+                ) : (
+                  <Button
+                    variant="warning"
+                    onClick={() => handleActivate(plan.id)}
+                  >
+                    Activate
+                  </Button>
+                )}
               </Card.Body>
             </Card>
           </Col>
-        ))} <Col md={4} sm={6} xs={12} className="mb-4">
-        <Card style={{ width: "100%", border: "2px dashed #007bff" }}>
-          <Card.Body >
-          <Card.Title>Add New Plan </Card.Title>
-                <Card.Text>Plan Id:{}</Card.Text>
-                <Card.Text>
-                  <strong>Click here</strong>
-                  {/* {plan.active ? "Active" : "In Active"} */}
-                </Card.Text>
-            <Button variant="success" onClick={handleAddPlan}>
-              + Add New Plan
-            </Button>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
-    <Modal
-          
-          isOpen={addPlanModal}
+        ))}{" "}
+        <Col md={4} sm={6} xs={12} className="mb-4">
+          <Card style={{ width: "100%", border: "2px dashed #007bff" }}>
+            <Card.Body>
+              <Card.Title>Add New Plan </Card.Title>
+              <Card.Text>Plan Id:{}</Card.Text>
+              <Card.Text>
+                <strong>Click here</strong>
+                {/* {plan.active ? "Active" : "In Active"} */}
+              </Card.Text>
+              <Button variant="success" onClick={handleAddPlan}>
+                + Add New Plan
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <Modal isOpen={addPlanModal} onClose={() => setAddPlanModal(false)}>
+        <AddPlan
+        change={change}
+        setChange={setChange}
+          scheme={addPlanModal}
           onClose={() => setAddPlanModal(false)}
-        >
-          <AddPlan
-            scheme={addPlanModal}
-            onClose={() => setAddPlanModal(false)}
-            setModeloff={setAddPlanModal}
-           
-          />
-        </Modal> 
+          setModeloff={setAddPlanModal}
+        />
+      </Modal>
     </Container>
   );
 };

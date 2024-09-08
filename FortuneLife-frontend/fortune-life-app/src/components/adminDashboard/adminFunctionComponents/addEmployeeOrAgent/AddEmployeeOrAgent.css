@@ -1,0 +1,15 @@
+/* AddEmployeeOrAgent.css */
+.form-control-sm {
+    font-size: 0.875rem; /* Smaller text size for placeholders */
+    padding: 0.5rem;
+  }
+  
+  .min-vh-100 {
+    min-height: 100vh; /* Full height for vertical centering */
+    
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  }
+  

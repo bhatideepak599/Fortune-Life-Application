@@ -31,9 +31,10 @@ public class UserMapper {
 		} else {
 			user.setGender(Gender.OTHERS.name());
 		}
-
+		if(userDto.getAddressDto()!=null) {
 		Address address = addressMapper.dtoToEntity(userDto.getAddressDto());
 		user.setAddress(address);
+	}
 		return user;
 	}
 

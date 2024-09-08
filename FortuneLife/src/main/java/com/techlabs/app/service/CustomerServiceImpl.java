@@ -125,7 +125,7 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new AdminRelatedException("No Customer Found for Id: " + id);
 		}
 
-		Customer customer = new Customer();
+		Customer customer = customerById.get();
 		customer.setId(id);
 		customer.setUser(user.get());
 		return customerMapper.entityToDto(customer);

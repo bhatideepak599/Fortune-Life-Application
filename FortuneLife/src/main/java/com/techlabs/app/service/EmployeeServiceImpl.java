@@ -65,9 +65,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = employeeMapper.dtoToEntity(employeeDto);
 		User user = employee.getUser();
 		user.setPassword(passwordEncoder.encode(employeeDto.getUserDto().getPassword()));
-
-		Address address = addressRepository.save(user.getAddress());
-		user.setAddress(address);
+		if(user.getAddress()!=null) {
+			Address address = addressRepository.save(user.getAddress());
+			user.setAddress(address);
+		}
+		
 		user.setActive(true);
 
 		Optional<Role> byName = roleRepository.findByRoleName("ROLE_CUSTOMER");

@@ -7,10 +7,11 @@ import { Button, Card, Col } from "react-bootstrap";
 
 const CommissionSettings = ({setActiveItem}) => {
   const [plans, setPlans] = useState([]);
+  const [change,setChange]=useState(true)
   const navigate = useNavigate();
   useEffect(() => {
     fetchPlans();
-  }, [navigate]);
+  }, [navigate,change]);
 
   const fetchPlans = async () => {
     try {
@@ -36,7 +37,7 @@ const CommissionSettings = ({setActiveItem}) => {
     >
       <h1 className="text-center mb-4">All Plans</h1>
 
-      <PlanCards plans={plans} handleClick={handleClick} setActiveItem={setActiveItem} />
+      <PlanCards plans={plans} change={change} setChange={setChange} handleClick={handleClick} setActiveItem={setActiveItem} />
       
     </div>
   );

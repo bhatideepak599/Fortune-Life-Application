@@ -22,10 +22,10 @@ export const uploadFile = async (formData) => {
 export const fetchFile = async (name) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/file/view/${name}`, {
-      responseType: "blob", // Ensure the response is treated as a binary file (blob)
+      responseType: "blob", 
     });
 
-    // Convert the blob to an object URL if you need to display or download the file
+   
     const url = window.URL.createObjectURL(new Blob([response.data]));
     if (url == null) {
       return;

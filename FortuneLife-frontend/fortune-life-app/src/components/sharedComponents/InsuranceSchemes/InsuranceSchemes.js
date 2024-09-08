@@ -35,7 +35,7 @@ const InsuranceSchemes = () => {
   }, [id, navigate]);
 
   const handleViewDetails = (schemeId) => {
-    console.log("Scheme ID:", schemeId);
+    //console.log("Scheme ID:", schemeId);
     navigate(`scheme-details/${schemeId}`);
   };
 

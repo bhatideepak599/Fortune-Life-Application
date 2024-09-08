@@ -115,3 +115,18 @@ export const getLoggedInCustomer = async () => {
     throw error;
   }
 };
+
+export const getAllCustomers = async (searchParams) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/customer`, {
+      headers: {
+        Authorization: token,
+      }
+    });
+  console.log(response.data);
+
+    return response.data.content;
+  } catch (error) {
+    throw error;
+  }
+};

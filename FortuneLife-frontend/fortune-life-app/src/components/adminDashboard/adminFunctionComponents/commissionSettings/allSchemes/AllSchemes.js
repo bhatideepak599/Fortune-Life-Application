@@ -6,8 +6,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Navbar, Nav } from "react-bootstrap";
-import { errorToast, successToast } from "../../../../../utils/Toast";
-import { getAllSchemesOfUnderAPlan } from "../../../../../services/schemeService";
+import { errorToast, successToast, warnToast } from "../../../../../utils/Toast";
+import { activateScheme, deleteASchemeUnderAPlan, getAllSchemesOfUnderAPlan } from "../../../../../services/schemeService";
 import Modal from "../../../../sharedComponents/modal/Modal";
 import ManageCommission from "./manageCommission/ManageCommission";
 import { logout } from "../../../../../services/authService";
@@ -19,10 +19,14 @@ const AllSchemes = () => {
   const [schemeForUpdate, setSchemeForUpdate] = useState("");
   const [schemes, setSchemes] = useState([]);
   const [commissionModal, setCommissionModal] = useState(false);
-  const [addSchemeModal, setAddSchemeModal]=useState(false);
+  const [addSchemeModal, setAddSchemeModal] = useState(false);
+  const [change, setChange] =useState(true);
+    useState(false);
   useEffect(() => {
     fetchAllSchemes();
-  }, [commissionModal]);
+  }, [commissionModal, navigate,schemeForUpdate,change]);
+
+ 
 
   const fetchAllSchemes = async () => {
     try {
@@ -32,11 +36,16 @@ const AllSchemes = () => {
       errorToast(error.response?.data?.message || "An error occurred");
     }
   };
-  const handleAddScheme=()=>{
+  const handleAddScheme = () => {
     setAddSchemeModal(true);
-  }
+  };
   const handleHome = () => {
     navigate("/admin-dashboard");
+  };
+  const handleLogout = () => {
+    logout();
+    successToast("Logged Out.");
+    navigate("/");
   };
   const handleClick = (schemeId) => {
     // Handle the scheme ID click event here
@@ -46,11 +55,42 @@ const AllSchemes = () => {
     setSchemeForUpdate(scheme);
     setCommissionModal(true);
   };
-  const handleLogout = () => {
-    logout();
-    successToast("Logged Out.");
-    navigate("/");
+  
+ 
+  const handleView = (scheme) => {
+    //console.log("scheme"+scheme.schemeId);
+    
+    navigate(`/view-update-scheme/${id}`, { state: { scheme } });
+   
   };
+  const handleDelete=async(scheme)=>{
+    try{
+      const response=await deleteASchemeUnderAPlan(id,scheme.id);
+      if(response){
+        warnToast("Scheme Deleted.")
+        setSchemeForUpdate((prev) => ({
+          ...prev,
+          active: false
+        }));
+      }
+    } catch (error) {
+      errorToast(error.response?.data?.message || "An error occurred");
+    }
+  }
+  const handleActivate =async(scheme)=>{
+    try{
+      const response=await activateScheme(id,scheme.id);
+      if(response){
+        successToast("Scheme Activated.")
+        setSchemeForUpdate((prev) => ({
+          ...prev,
+          active: true
+        }));
+      }
+    } catch (error) {
+      errorToast(error.response?.data?.message || "An error occurred");
+    }
+  }
   return (
     <>
       <Navbar
@@ -70,15 +110,6 @@ const AllSchemes = () => {
           >
             Home
           </Button>
-
-          {/* Home Link on the left */}
-          {/* <Nav>
-            <Nav.Link href="#home" className="text-light">
-              Home
-            </Nav.Link>
-          </Nav> */}
-
-          {/* All Schemes centered */}
           <Navbar.Brand className="mx-auto text-center" href="#schemes">
             All Schemes
           </Navbar.Brand>
@@ -128,15 +159,9 @@ const AllSchemes = () => {
                   <div className="d-flex justify-content-start gap-2 mt-1">
                     <Button
                       variant="info"
-                      onClick={() => handleClick(scheme.id)}
+                      onClick={() => handleView(scheme)}
                     >
-                      Details
-                    </Button>
-                    <Button
-                      variant="success"
-                      onClick={() => handleClick(scheme.id)}
-                    >
-                      Update
+                      View
                     </Button>
                     <Button
                       variant="secondary"
@@ -144,6 +169,19 @@ const AllSchemes = () => {
                     >
                       Commission
                     </Button>
+                   {scheme.active ? <Button
+                      variant="danger"
+                      onClick={() => handleDelete(scheme)}
+                    >
+                      Delete
+                    </Button> :
+                    <Button
+                    variant="success"
+                    onClick={() => handleActivate(scheme)}
+                  >
+                    Activate
+                  </Button>
+                    }
                   </div>
                 </Col>
               ))
@@ -156,25 +194,24 @@ const AllSchemes = () => {
             {/* Add Scheme Card */}
             <Col md={4} sm={6} xs={12} className="mb-4">
               <Card style={{ width: "90%", border: "2px dashed #007bff" }}>
-                <Card.Body >
-                <Card.Title>  Add New </Card.Title>
-                <Card.Text>
-                        <strong>Scheme </strong>
-                      </Card.Text>
-                      <Card.Text>
-                        <strong>Under this Plan </strong>
-                      </Card.Text>
-                      <Card.Text>
-                        <strong>Click here</strong>
-                      </Card.Text>
-                
+                <Card.Body>
+                  <Card.Title> Add New </Card.Title>
+                  <Card.Text>
+                    <strong>Scheme </strong>
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Under this Plan </strong>
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Click here</strong>
+                  </Card.Text>
                 </Card.Body>
               </Card>
               <div className="d-flex justify-content-center gap-2 mt-1">
-              <Button variant="success" onClick={handleAddScheme}>
-                    +Add Scheme
-                  </Button>
-                  </div>
+                <Button variant="success" onClick={handleAddScheme}>
+                  +Add Scheme
+                </Button>
+              </div>
             </Col>
           </Row>
         </Container>
@@ -190,17 +227,19 @@ const AllSchemes = () => {
           />
         </Modal>
         <Modal
-          title="Add New Scheme"
+          //title="Add New Scheme"
           isOpen={addSchemeModal}
           onClose={() => setAddSchemeModal(false)}
         >
           <AddScheme
             id={id}
-            scheme={schemeForUpdate}
+            change={change}
+            setChange={setChange}
             onClose={() => setAddSchemeModal(false)}
             setModeloff={setAddSchemeModal}
           />
         </Modal>
+       
       </div>
     </>
   );
