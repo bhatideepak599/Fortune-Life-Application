@@ -56,6 +56,15 @@ public class ExcelReportServiceImpl implements ExcelReportService {
 				Row row = sheet.createRow(rowNum++);
 
 				User user = customer.getUser();
+				if(user.getAddress()==null) {
+					Address address=new Address();
+					address.setApartment("N/A");
+					address.setCity("N/A");
+					address.setHouseNumber("N/A");
+					address.setState("N/A");
+					user.setAddress(address);
+					
+				}
 				Address address = user.getAddress();
 
 				row.createCell(0).setCellValue(customer.getId());
@@ -65,7 +74,7 @@ public class ExcelReportServiceImpl implements ExcelReportService {
 				row.createCell(4).setCellValue(user.getEmail());
 				row.createCell(5).setCellValue(user.getGender());
 				row.createCell(6).setCellValue(user.getMobileNumber());
-
+				if(address.getHouseNumber()==null) address.setHouseNumber("N/A");
 				row.createCell(7).setCellValue(address.getHouseNumber());
 				row.createCell(8).setCellValue(address.getApartment());
 				row.createCell(9).setCellValue(address.getCity());
@@ -141,6 +150,15 @@ public class ExcelReportServiceImpl implements ExcelReportService {
 				Row row = sheet.createRow(rowNum++);
 
 				User user = agent.getUser();
+				if(user.getAddress()==null) {
+					Address address=new Address();
+					address.setApartment("N/A");
+					address.setCity("N/A");
+					address.setHouseNumber("N/A");
+					address.setState("N/A");
+					user.setAddress(address);
+					
+				}
 				Address address = user.getAddress();
 
 				row.createCell(0).setCellValue(agent.getId());
@@ -152,7 +170,7 @@ public class ExcelReportServiceImpl implements ExcelReportService {
 				row.createCell(6).setCellValue(user.getEmail());
 				row.createCell(7).setCellValue(user.getGender());
 				row.createCell(8).setCellValue(user.getMobileNumber());
-
+				
 				row.createCell(9).setCellValue(address.getHouseNumber());
 				row.createCell(10).setCellValue(address.getApartment());
 				row.createCell(11).setCellValue(address.getCity());

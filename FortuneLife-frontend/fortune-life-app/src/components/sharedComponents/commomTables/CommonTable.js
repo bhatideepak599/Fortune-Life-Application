@@ -42,8 +42,8 @@ const CommonTable = ({ data, actions }) => {
                   <>
                     {actions.update && (
                       <button
-                        className="btn btn-primary"
-                        onClick={() => actions.update(row)}
+                        className="btn btn-success me-2"
+                        onClick={() => actions.update(row[primaryKey])}
                       >
                         Update
                       </button>
@@ -76,8 +76,8 @@ const CommonTable = ({ data, actions }) => {
                 ) : (
                   actions.activate && (
                     <button
-                      className="btn btn-success"
-                      onClick={() => actions.activate(row)}
+                      className="btn btn-secondary"
+                      onClick={() => actions.activate(row[primaryKey])}
                     >
                       Activate
                     </button>

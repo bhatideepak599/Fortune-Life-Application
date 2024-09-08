@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Modal from "../modal/Modal";
+
 import { getLoggedInUser } from "../../../services/authService";
 import { uploadFile } from "../../../services/fileServices";
 import "./InsurancePolicy.css";
 import { errorToast } from "../../../utils/Toast";
 import { getSchemeByPlanId } from "../../../services/commonService";
+import Modal from "../../../utils/Modals/Modal";
 
 const InsurancePolicy = ({ documentNames, onClose }) => {
   const { planId, schemeId } = useParams();

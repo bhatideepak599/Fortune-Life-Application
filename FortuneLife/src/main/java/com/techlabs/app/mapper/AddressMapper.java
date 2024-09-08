@@ -23,7 +23,9 @@ public class AddressMapper {
 		AddressDto addressDto=new AddressDto();
 		addressDto.setId(address.getId());
 		addressDto.setCity(address.getCity());
+		if(address.getApartment()!=null)
 		addressDto.setApartment(address.getApartment());
+		if(address.getHouseNumber()!=null)
 		addressDto.setHouseNumber(address.getHouseNumber());
 		addressDto.setPinCode(address.getPinCode());
 		addressDto.setState(address.getState());

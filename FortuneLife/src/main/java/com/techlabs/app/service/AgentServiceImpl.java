@@ -83,7 +83,8 @@ public class AgentServiceImpl implements AgentService {
 		agent.setId(user.getId());
 		agent.setUser(user);
 		agent.setVerified(false);
-		if(agentDto.getVerified()) agent.setVerified(true);
+		if (agentDto.getVerified())
+			agent.setVerified(true);
 		agent = agentRepository.save(agent);
 		return agentMapper.entityToDto(agent);
 	}
@@ -123,7 +124,8 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
-	public AgentDto updateAgent(@Valid AgentDto agentDto) {
+	public AgentDto updateAgent(AgentDto agentDto) {
+		// System.out.println("agentDto->"+agentDto+"===========================================================================================================");
 		Agent agent = agentRepository.findById(agentDto.getId())
 				.orElseThrow(() -> new AgentRelatedException("No Agent Found With Agent ID:" + agentDto.getId()));
 
@@ -132,13 +134,19 @@ public class AgentServiceImpl implements AgentService {
 
 		User user = userMapper.dtoToEntity(agentDto.getUserDto());
 		Address address = user.getAddress();
+		address.setId(agentDto.getUserDto().getAddressDto().getId());
 		address = addressRepository.save(address);
 		user.setAddress(address);
 		user.setPassword(passwordEncoder.encode(agent.getUser().getPassword()));
-		user.setId(agent.getUser().getId());
+		user.setId(agentDto.getUserDto().getId());
 		user = userRepository.save(user);
 
 		agent.setUser(user);
+		agent.setId(agentDto.getId());
+	
+			agent.setActive(true);
+		
+			agent.setVerified(true);
 		agent = agentRepository.save(agent);
 
 		return agentMapper.entityToDto(agent);

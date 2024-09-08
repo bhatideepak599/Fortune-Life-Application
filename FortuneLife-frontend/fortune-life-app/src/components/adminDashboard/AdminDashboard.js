@@ -19,7 +19,8 @@ const AdminDashboard = () => {
   const [activeItem, setActiveItem] = useState("Manage City/State");
   const [adminDetails, setAdminDetails] = useState(null);
   const [name, setName] = useState("");
-  const [profileModal, setProfileModal] = useState(false);
+  
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
 
@@ -44,6 +45,9 @@ const AdminDashboard = () => {
   };
 
   const handleChange = (item) => {
+    if(item=='Manage Tax and Scheme Deductions'){
+      setShow(true)
+    }
     setActiveItem(item);
   };
 
@@ -61,7 +65,8 @@ const AdminDashboard = () => {
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #f3f4f6, #222b38)",
+        background: "linear-gradient(135deg, #f3f4f6, #dcdbe1)"
+
       }}
     >
       {/* Navbar */}
@@ -121,7 +126,7 @@ const AdminDashboard = () => {
             md={{ span: 9, offset: 3 }}
             style={{ padding: "20px", marginLeft: "22%" }}
           >
-            <MainContent activeItem={activeItem} setActiveItem={setActiveItem} />
+            <MainContent activeItem={activeItem} show={show} setShow={setShow} setActiveItem={setActiveItem} />
           </Col>
         </Row>
       </Container>

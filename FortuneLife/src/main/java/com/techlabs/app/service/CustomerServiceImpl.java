@@ -163,8 +163,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 		userForUpdate = userRepository.save(userForUpdate);
 
-		Customer customer = new Customer();
-		customer.setId(userForUpdate.getId());
+		Customer customer =customerById.get();
+		//customer.setId(userForUpdate.getId());
 		customer.setUser(userForUpdate);
 		customer.setVerified(customerById.get().getVerified());
 		return customerMapper.entityToDto(customer);

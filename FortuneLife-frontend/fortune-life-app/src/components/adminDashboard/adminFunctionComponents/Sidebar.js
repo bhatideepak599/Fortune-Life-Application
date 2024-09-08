@@ -6,7 +6,7 @@ const Sidebar = ({ activeItem, onItemClick }) => {
 
   const actions = [
     "Manage City/State",
-    "Manage Tax and Insurance setting",
+    "Manage Tax and Scheme Deductions",
     "Add Employee and Agent",
     "Manage Insurance Plans & Schemes",
     "Withdrawal approval",

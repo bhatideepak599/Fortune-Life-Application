@@ -3,7 +3,14 @@ import axios from "axios";
 const API_BASE_URL = `http://localhost:8082`;
 const token = `Bearer ${localStorage.getItem("accessToken")}`;
 
-export const createPaymentIntent = async ({ policyId, paymentMethodId, paymentType, amount, tax, totalPayment }) => {
+export const createPaymentIntent = async ({
+  policyId,
+  paymentMethodId,
+  paymentType,
+  amount,
+  tax,
+  totalPayment,
+}) => {
   try {
     const response = await axios.post(
       `${API_BASE_URL}/fortuneLife/payments/charge`,
@@ -31,11 +38,14 @@ export const createPaymentIntent = async ({ policyId, paymentMethodId, paymentTy
 
 export const getCustomerById = async ({ id }) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/fortuneLife/customer/${id}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await axios.get(
+      `${API_BASE_URL}/fortuneLife/customer/${id}`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
@@ -43,7 +53,17 @@ export const getCustomerById = async ({ id }) => {
   }
 };
 
-export const buyNewPolicy = async ({ customerId, schemeId, premiumAmount, policyAmount, time, premiumType, nomineeName, relationStatusWithNominee, submittedDocumentsDto }) => {
+export const buyNewPolicy = async ({
+  customerId,
+  schemeId,
+  premiumAmount,
+  policyAmount,
+  time,
+  premiumType,
+  nomineeName,
+  relationStatusWithNominee,
+  submittedDocumentsDto,
+}) => {
   try {
     const response = await axios.post(
       `${API_BASE_URL}/fortuneLife/customer/${customerId}/Insurance-Scheme/${schemeId}/policy`,
@@ -101,17 +121,64 @@ export const updateCustomer = async ({ userDto, addressDto }) => {
     throw error;
   }
 };
+export const updateCustomerByAdmin = async (customer) => {
+  const accessToken=localStorage.getItem("accessToken")
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/fortuneLife/customer`,
+      customer,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 export const getAllCustomers = async (searchParams) => {
+  //console.log(token + "================================");
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/customer`, {
+    
       headers: {
         Authorization: token,
       }
     });
-  console.log(response.data);
+    console.log(response.data);
 
-    return response.data.content;
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const deleteCustomer = async (id) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/fortuneLife/customer/${id}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const activateCustomer = async (id) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/fortuneLife/customer/activate/${id}`,{},{
+      headers: {
+        Authorization: token,
+      },
+    });
+    console.log(response.data);
+
+    return response.data;
   } catch (error) {
     throw error;
   }

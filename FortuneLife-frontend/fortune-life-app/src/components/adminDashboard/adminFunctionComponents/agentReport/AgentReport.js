@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { activateCustomer, deleteCustomer, getAllCustomers } from "../../../../services/CustomerService";
 import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
-import UpdateCustomer from "./updateCustomer/UpdateCustomer";
 import Modal from "../../../sharedComponents/modal/Modal";
 import {Dropdown } from "react-bootstrap";
 import { FaDownload } from 'react-icons/fa';
-import { getCustomersExcelReport, getCustomersPdfReport } from "../../../../services/reportsService";
+import { getAgentsExcelReport, getAgentsPdfReport } from "../../../../services/reportsService";
+import { activateAgent, deleteAgent, getAllAgents } from "../../../../services/agentService";
+import UpdateAgent from "./updateAgent/UpdateAgent";
 
-const CustomerReport = () => {
+const AgentReport = () => {
   const [id, setId] = useState();
   const [userName, setUserName] = useState();
   const [name, setName] = useState();
@@ -20,10 +20,10 @@ const CustomerReport = () => {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
-  const [customers, setCustomers] = useState([]);
-  const [customerToUpdate, setCustomerToUpdate] = useState(null);
-  const [updateCustomerModal, setUpdateCustomerModal] = useState(false);
-  const [customersList, setCustomersList] = useState([]);
+  const [agents, setAgents] = useState([]);
+  const [agentToUpdate, setAgentToUpdate] = useState(null);
+  const [updateAgentModal, setUpdateAgentModal] = useState(false);
+  const [agentsList, setAgentsList] = useState([]);
   const [flag, setFlag] = useState(false);
   const [format, setFormat] = useState("pdf");
   const [searchParams, setSearchParams] = useState({
@@ -39,13 +39,15 @@ const CustomerReport = () => {
   });
 
   useEffect(() => {
-    fetchCustomers();
+    fetchAgents();
   }, [searchParams, flag]);
 
-  const fetchCustomers = async () => {
+  const fetchAgents = async () => {
+   
+    
     try {
-      const response = await getAllCustomers();
-      setCustomersList(response.content); // Set the response content to customersList
+      const response = await getAllAgents();
+      setAgentsList(response.content); // Set the response content to AgentsList
       setTotalPages(response.totalPages);
 
       const keys = [
@@ -64,14 +66,14 @@ const CustomerReport = () => {
       });
 
       console.log("Sanitized Data:", newSanitizedData);
-      setCustomers(newSanitizedData);
+      setAgents(newSanitizedData);
     } catch (error) {
       errorToast(error.response?.data?.message);
     }
   };
 
-  const getCustomerByIdFromList = (id) => {
-    return customersList.find((customer) => customer.id === id);
+  const getAgentByIdFromList = (id) => {
+    return agentsList.find((agent) => agent.id === id);
   };
 
   const handleSearch = () => {
@@ -89,16 +91,16 @@ const CustomerReport = () => {
   };
 
   const handleUpdateClick = (id) => {
-    const customer = getCustomerByIdFromList(id);
-    setCustomerToUpdate(customer);
-    setUpdateCustomerModal(true);
+    const agent = getAgentByIdFromList(id);
+    setAgentToUpdate(agent);
+    setUpdateAgentModal(true);
   };
 
   const handleDeleteClick = async (id) => {
     try{
-      const response=await deleteCustomer(id);
+      const response=await deleteAgent(id);
       if(response){
-        warnToast("Customer Deleted.")
+        warnToast("Agent Deleted.")
         setFlag(!flag)
       }
     }catch(error){
@@ -108,9 +110,9 @@ const CustomerReport = () => {
 
   const handleActivateClick =async (id) => {
     try{
-      const response=await activateCustomer(id);
+      const response=await activateAgent(id);
       if(response){
-        successToast("Customer Activated.")
+        successToast("Agent Activated.")
         setFlag(!flag)
       }
     }catch(error){
@@ -129,19 +131,19 @@ const CustomerReport = () => {
       let fileName;
   
       if (format === "pdf") {
-        response = await getCustomersPdfReport();
+        response = await getAgentsPdfReport();
         if (!response || !response.data) {
           throw new Error("Failed to fetch PDF data");
         }
         blob = new Blob([response.data], { type: "application/pdf" });
-        fileName = "customers_report.pdf";
+        fileName = "Agents_report.pdf";
       } else {
-        response = await getCustomersExcelReport();
+        response = await getAgentsExcelReport();
         if (!response || !response.data) {
           throw new Error("Failed to fetch Excel data");
         }
         blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-        fileName = "customers_report.xlsx";
+        fileName = "Agents_report.xlsx";
       }
   
       
@@ -194,21 +196,21 @@ const CustomerReport = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">Customers List</h2>
-      <CommonTable data={customers} actions={actions} />
+      <h2 className="text-center mb-4">Agents List</h2>
+      <CommonTable data={agents} actions={actions} />
       <Modal
-        isOpen={updateCustomerModal}
-        onClose={() => setUpdateCustomerModal(false)}
+        isOpen={updateAgentModal}
+        onClose={() => setUpdateAgentModal(false)}
       >
-        <UpdateCustomer
-          customer={customerToUpdate}
+        <UpdateAgent
+          agent={agentToUpdate}
           flag={flag}
           setFlag={setFlag}
-          onClose={() => setUpdateCustomerModal(false)}
+          onClose={() => setUpdateAgentModal(false)}
         />
       </Modal>
     </div>
   );
 };
 
-export default CustomerReport;
+export default AgentReport;

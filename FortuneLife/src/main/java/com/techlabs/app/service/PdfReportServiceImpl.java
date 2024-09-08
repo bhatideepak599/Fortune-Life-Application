@@ -76,7 +76,17 @@ public class PdfReportServiceImpl implements PdfReportService {
 
 			// User and Address Details
 			User user = customer.getUser();
+			if(user.getAddress()==null) {
+				Address address=new Address();
+				address.setApartment("N/A");
+				address.setCity("N/A");
+				address.setHouseNumber("N/A");
+				address.setState("N/A");
+				user.setAddress(address);
+				
+			}
 			Address address = user.getAddress();
+			
 			StringBuilder userDetails = new StringBuilder();
 			userDetails.append("Username: ").append(user.getUsername()).append("\n").append("First Name: ")
 					.append(user.getFirstName()).append("\n").append("Last Name: ").append(user.getLastName())
@@ -85,6 +95,7 @@ public class PdfReportServiceImpl implements PdfReportService {
 					.append("\n");
 
 			StringBuilder addressDetails = new StringBuilder();
+			if(address.getHouseNumber()==null) address.setHouseNumber("N/A");
 			addressDetails.append("Address: ").append(address.getHouseNumber()).append(", ")
 					.append(address.getApartment()).append(", ").append(address.getCity()).append(", ")
 					.append(address.getState()).append(", ").append(address.getPinCode()).append("\n");
@@ -164,7 +175,17 @@ public class PdfReportServiceImpl implements PdfReportService {
 
 			// User and Address Details
 			User user = agent.getUser();
+			if(user.getAddress()==null) {
+				Address address=new Address();
+				address.setApartment("N/A");
+				address.setCity("N/A");
+				address.setHouseNumber("N/A");
+				address.setState("N/A");
+				user.setAddress(address);
+				
+			}
 			Address address = user.getAddress();
+			
 			StringBuilder userDetails = new StringBuilder();
 			userDetails.append(("Username: ")).append(user.getUsername()).append("\n").append("First Name: ")
 					.append(user.getFirstName()).append("\n").append("Last Name: ").append(user.getLastName())

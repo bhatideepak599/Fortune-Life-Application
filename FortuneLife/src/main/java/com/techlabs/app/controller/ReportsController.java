@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/reports")
+@RequestMapping("/fortuneLife/reports")
 public class ReportsController {
 
     private final ExcelReportService excelReportService;

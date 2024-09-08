@@ -13,7 +13,7 @@ public interface AgentService {
 
 	AgentDto getAgentById(Long id);
 
-	AgentDto updateAgent(@Valid AgentDto agentDto);
+	AgentDto updateAgent( AgentDto agentDto);
 
 	String activateAgent(Long id);
 

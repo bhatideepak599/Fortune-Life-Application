@@ -1,23 +1,90 @@
-import React from "react";
-import "./Modal.css";
+import React, { useState, useRef, useEffect } from "react";
+import styled from "styled-components";
 
-const Modal = ({ title, children, isOpen, onClose }) => {
-  if (!isOpen) return null;
+const ModalContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+`;
+
+const ModalContent = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%; /* Increased horizontal width */
+  max-width: 800px; /* Set a max-width */
+  max-height: 80%;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+`;
+
+const ModalHeader = styled.h2`
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CloseButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px; /* Increased font size */
+  color: #666;
+`;
+
+const Modal = ({ title, isOpen, onClose, children }) => {
+  const [isClosing, setIsClosing] = useState(false);
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setIsClosing(true);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+    }, 200); // Adjust the animation duration as needed
+  };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title">{title}</h5>
-          <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
-        </div>
-        <div className="modal-body">{children}</div>
-        <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" onClick={onClose}>
-            Close
-          </button>
-        </div>
-      </div>
+    <div>
+      {isOpen && (
+        <ModalContainer>
+          <ModalContent ref={modalRef}>
+            <ModalHeader>
+              {title}
+              <CloseButton onClick={handleClose}>&times;</CloseButton>
+            </ModalHeader>
+            {children}
+            <div className="text-end mt-5">
+              <button className="btn btn-secondary btn-lg" onClick={handleClose}>
+                Close
+              </button>
+            </div>
+          </ModalContent>
+        </ModalContainer>
+      )}
     </div>
   );
 };

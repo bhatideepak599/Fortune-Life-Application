@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/fortuneLife/agent")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AgentController {
 	 private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 	 @Autowired
@@ -65,9 +67,10 @@ public class AgentController {
 
 		@Operation(summary = "Update An  Agent")
 		@PutMapping
-		public ResponseEntity<AgentDto> updateAgent(@Valid AgentDto AgentDto) {
+		public ResponseEntity<AgentDto> updateAgent(@RequestBody AgentDto agentDto) {
+			System.out.println("agentDto->"+agentDto+"===========================================================================================================");
 			logger.info("Updating An Agent");
-			AgentDto updatedAgentDto = agentService.updateAgent(AgentDto);
+			AgentDto updatedAgentDto = agentService.updateAgent(agentDto);
 			return new ResponseEntity<>(updatedAgentDto, HttpStatus.OK);
 		}
 
