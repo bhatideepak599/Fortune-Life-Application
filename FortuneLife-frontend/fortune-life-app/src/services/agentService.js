@@ -50,12 +50,25 @@ export const updateAgentByAdmin = async (agentDto) => {
   }
 };
 
-export const getAllAgents = async (searchParams) => {
+export const getAllAgents = async (pageSize,
+  pageNumber,
+  searchParams) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/agent`, {
       headers: {
         Authorization: accessToken, // Add the correct authorization format
       },
+      params:{
+        id: searchParams.id!=""?searchParams.id:null, 
+        userName: searchParams.username!=""?searchParams.username:null, 
+        name: searchParams.name!=""?searchParams.name:null, 
+        mobileNumber: searchParams.mobileNumber!=""?searchParams.mobileNumber:null, 
+        email: searchParams.email!=""?searchParams.email:null,
+        active: searchParams.active!=""?searchParams.active:null, 
+        verified: searchParams.verified!=""?searchParams.verified:null, 
+        page: pageNumber,
+        size: pageSize
+      }
    
     });
 

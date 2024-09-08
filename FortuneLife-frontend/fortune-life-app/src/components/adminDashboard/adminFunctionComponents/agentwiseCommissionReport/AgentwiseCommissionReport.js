@@ -1,31 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { activateCustomer, deleteCustomer, getAllCustomers } from "../../../../services/CustomerService";
 import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
-import UpdateCustomer from "./updateCustomer/UpdateCustomer";
-import Modal from "../../../sharedComponents/modal/Modal";
 import {Dropdown } from "react-bootstrap";
 import { FaDownload } from 'react-icons/fa';
-import { getCustomersExcelReport, getCustomersPdfReport } from "../../../../services/reportsService";
-import { useLocation, useNavigate } from "react-router-dom";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
+import { getAgentsExcelReport, getAgentsPdfReport } from "../../../../services/reportsService";
 import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
+import Pagination from "../../../sharedComponents/Pagination/Pagination";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getAllAgents } from "../../../../services/agentService";
 
-const CustomerReport = () => {
-  const navigate = useNavigate();
+const AgentwiseCommissionReport = () => {
   const location = useLocation();
-  const [id, setId] = useState();
-  const [userName, setUserName] = useState();
-  const [name, setName] = useState();
-  const [mobileNumber, setMobileNumber] = useState();
-  const [email, setEmail] = useState();
-  const [active, setActive] = useState();
-  const [verified, setVerified] = useState();
-  const [customers, setCustomers] = useState([]);
-  const [customerToUpdate, setCustomerToUpdate] = useState(null);
-  const [updateCustomerModal, setUpdateCustomerModal] = useState(false);
-  const [customersList, setCustomersList] = useState([]);
+  const navigate=useNavigate()
+  const [agents, setAgents] = useState([]);
+  const [agentToUpdate, setAgentToUpdate] = useState(null);
+  const [updateAgentModal, setUpdateAgentModal] = useState(false);
+  const [agentsList, setAgentsList] = useState([]);
   const [flag, setFlag] = useState(false);
   const [format, setFormat] = useState("pdf");
   const [searchType, setSearchType] = useState("");
@@ -66,18 +57,19 @@ const CustomerReport = () => {
       setSearchParams(initialSearchParams);
   
   },[])
+
   useEffect(() => {
-    fetchCustomers(
-     );
-    
+    fetchAgents();
   }, [pageSize, pageNumber, flag]);
 
-  const fetchCustomers = async () => {
+  const fetchAgents = async () => {
+   
+    
     try {
-      const response = await getAllCustomers( pageSize,
+      const response = await getAllAgents(pageSize,
         pageNumber,
         searchParams);
-      setCustomersList(response.content); // Set the response content to customersList
+      setAgentsList(response.content); // Set the response content to AgentsList
       setTotalPages(response.totalPages);
 
       const keys = [
@@ -86,8 +78,9 @@ const CustomerReport = () => {
         "userDto.lastName",
         "userDto.mobileNumber",
         "active",
-        "userDto.email",
-        "userDto.username",
+        "totalTransactions",
+        "totalCommission",
+       
       ];
 
       const newSanitizedData = sanitizedData({
@@ -95,8 +88,8 @@ const CustomerReport = () => {
         keysTobeSelected: keys,
       });
 
-     // console.log("Sanitized Data:", newSanitizedData);
-      setCustomers(newSanitizedData);
+      //console.log("Sanitized Data:", newSanitizedData);
+      setAgents(newSanitizedData);
       setTotalPages(response.totalPages);
       const queryParams = new URLSearchParams();
       queryParams.set("pageSize", pageSize);
@@ -111,80 +104,15 @@ const CustomerReport = () => {
       errorToast(error.response?.data?.message);
     }
   };
-  const handleSearchTypeChange = (type) => {
-    setSearchType(type);
-    setSearchParams((prevParams) => ({ ...prevParams, [type]: "" }));
+
+  const getAgentByIdFromList = (id) => {
+    return agentsList.find((agent) => agent.id === id);
   };
+
   const handleSearch = () => {
-    setCustomers([])
+    setAgents([])
     setPageNumber(0); 
-    fetchCustomers();
-  };
-
-  const handleReset = () => {
-    setSearchParams({
-      id: "",
-      userName: "",
-      name: "",
-      mobileNumber: "",
-      email: "",
-      active: "",
-      verified: ""
-    });
-    setSearchType("");
-    setPageNumber(0);
-    setPageSize(5);
-
-    fetchCustomers();
-  };
-
-  const pageObject = {
-    pageSize,
-    pageNumber,
-    setPageNumber,
-    setPageSize,
-    totalPages,
-  };
-  const handleSearchChange = (e) => {
-    setSearchParams({
-      ...searchParams,
-      [e.target.name]: e.target.value
-    });
-  };
-  const getCustomerByIdFromList = (id) => {
-    return customersList.find((customer) => customer.id === id);
-  };
-
-
-
-  const handleUpdateClick = (id) => {
-    const customer = getCustomerByIdFromList(id);
-    setCustomerToUpdate(customer);
-    setUpdateCustomerModal(true);
-  };
-
-  const handleDeleteClick = async (id) => {
-    try{
-      const response=await deleteCustomer(id);
-      if(response){
-        warnToast("Customer Deleted.")
-        setFlag(!flag)
-      }
-    }catch(error){
-      errorToast(error.response?.data?.message)
-    }
-  };
-
-  const handleActivateClick =async (id) => {
-    try{
-      const response=await activateCustomer(id);
-      if(response){
-        successToast("Customer Activated.")
-        setFlag(!flag)
-      }
-    }catch(error){
-      errorToast(error.response?.data?.message)
-    }
+    fetchAgents();
   };
 
   const handleFormatChange = (eventKey) => {
@@ -198,19 +126,19 @@ const CustomerReport = () => {
       let fileName;
   
       if (format === "pdf") {
-        response = await getCustomersPdfReport();
+        response = await getAgentsPdfReport();
         if (!response || !response.data) {
           throw new Error("Failed to fetch PDF data");
         }
         blob = new Blob([response.data], { type: "application/pdf" });
-        fileName = "customers_report.pdf";
+        fileName = "Agents_report.pdf";
       } else {
-        response = await getCustomersExcelReport();
+        response = await getAgentsExcelReport();
         if (!response || !response.data) {
           throw new Error("Failed to fetch Excel data");
         }
         blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-        fileName = "customers_report.xlsx";
+        fileName = "Agents_report.xlsx";
       }
   
       
@@ -236,12 +164,41 @@ const CustomerReport = () => {
   };
   
   
-  
-  const actions = {
-    activate: handleActivateClick,
-    delete: handleDeleteClick,
-    update: handleUpdateClick,
+  const handleSearchTypeChange = (type) => {
+    setSearchType(type);
+    setSearchParams((prevParams) => ({ ...prevParams, [type]: "" }));
   };
+  const handleReset = () => {
+    setSearchParams({
+      id: "",
+      userName: "",
+      name: "",
+      mobileNumber: "",
+      email: "",
+      active: "",
+      verified: ""
+    });
+    setSearchType("");
+    setPageNumber(0);
+    setPageSize(5);
+
+    fetchAgents();
+  };
+
+  const pageObject = {
+    pageSize,
+    pageNumber,
+    setPageNumber,
+    setPageSize,
+    totalPages,
+  };
+  const handleSearchChange = (e) => {
+    setSearchParams({
+      ...searchParams,
+      [e.target.name]: e.target.value
+    });
+  };
+ 
 
   return (
     <div>
@@ -263,7 +220,7 @@ const CustomerReport = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">Customers List</h2>
+      <h2 className="text-center mb-4">Agents List</h2>
       <SearchComponent
        searchType={searchType}
        searchParams={searchParams}
@@ -272,27 +229,16 @@ const CustomerReport = () => {
        handleSearch={handleSearch}
        handleReset={handleReset}
       />
-      <CommonTable data={customers} actions={actions} />
+      <CommonTable data={agents}  />
       <div className="table-footer">
         <Pagination
           pager={pageObject}
           onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
         />
       </div>
-      
-      <Modal
-        isOpen={updateCustomerModal}
-        onClose={() => setUpdateCustomerModal(false)}
-      >
-        <UpdateCustomer
-          customer={customerToUpdate}
-          flag={flag}
-          setFlag={setFlag}
-          onClose={() => setUpdateCustomerModal(false)}
-        />
-      </Modal>
+    
     </div>
   );
 };
 
-export default CustomerReport;
+export default AgentwiseCommissionReport;

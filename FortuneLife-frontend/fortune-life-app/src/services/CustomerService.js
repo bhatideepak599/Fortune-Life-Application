@@ -105,13 +105,27 @@ export const updateCustomerByAdmin = async (customer) => {
     throw error;
   }
 };
-export const getAllCustomers = async (searchParams) => {
-  //console.log(token + "================================");
+export const getAllCustomers = async ( pageSize,
+  pageNumber,
+  searchParams) => {
+  //console.log(searchParams + "================================");
+  
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/customer`, {
       headers: {
         Authorization: token,
       },
+      params:{
+        id: searchParams.id!=""?searchParams.id:null, 
+        userName: searchParams.username!=""?searchParams.username:null, 
+        name: searchParams.name!=""?searchParams.name:null, 
+        mobileNumber: searchParams.mobileNumber!=""?searchParams.mobileNumber:null, 
+        email: searchParams.email!=""?searchParams.email:null,
+        active: searchParams.active!=""?searchParams.active:null, 
+        verified: searchParams.verified!=""?searchParams.verified:null, 
+        page: pageNumber,
+        size: pageSize
+      }
     });
     console.log(response.data);
 
@@ -120,6 +134,7 @@ export const getAllCustomers = async (searchParams) => {
     throw error;
   }
 };
+
 export const deleteCustomer = async (id) => {
   try {
     const response = await axios.delete(`${API_BASE_URL}/fortuneLife/customer/${id}`, {

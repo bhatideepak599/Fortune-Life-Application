@@ -9,5 +9,6 @@ public class AgentDto {
 	private Boolean active;
 	private Boolean verified;
 	private Double totalCommission = 0.0;
+	private int totalTransactions ;
 	private UserDto userDto;
 }

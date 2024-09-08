@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class PaymentDto {
+	private String policyHolderName;
     private String paymentMethodId;
     private Long policyId;
     private String paymentType;

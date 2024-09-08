@@ -114,5 +114,5 @@ public class CustomerController {
 		 InsurancePolicyResponseDto addedPolicy=insurancePolicyService.addNewPolicyByAgentForCustomer(customerId,schemeId,agentId,insurancePolicyDto);
 		 return new ResponseEntity<>(addedPolicy, HttpStatus.OK);
 	}
-
+	
 }

@@ -41,4 +41,7 @@ public class Agent {
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Claim> claims;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agent")
+    private List<Withdrawal> withdrawals;
 }

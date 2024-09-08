@@ -13,26 +13,45 @@ import Sidebar from "./adminFunctionComponents/Sidebar";
 import MainContent from "./adminFunctionComponents/MainContent";
 import { getAdmin, logout, verifyUser } from "../../services/authService";
 import { errorToast, successToast, warnToast } from "../../utils/Toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [activeItem, setActiveItem] = useState("Manage City/State");
   const [adminDetails, setAdminDetails] = useState(null);
   const [name, setName] = useState("");
-  
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const accessToken = localStorage.getItem("accessToken");
 
-  useEffect(() => {
+  const validateAdmin = () => {
     if (!accessToken || !verifyUser(accessToken, "admin")) {
       warnToast("Unauthorized Access! Login First");
       navigate("/");
-      return;
+      return false;
     }
+    return true;
+  };
 
+  useEffect(() => {
+    if (!validateAdmin()) return;
+
+    // Fetch the admin details
     fetchAdmin();
-  }, [accessToken, navigate]);
+
+    // Retrieve the active item from localStorage or query parameters
+    const savedActiveItem = localStorage.getItem("activeItem");
+    const queryParams = new URLSearchParams(location.search);
+    const initialActiveItem = queryParams.get("activeItem");
+
+    // Set the active item state, preferring query parameter if available
+    setActiveItem(initialActiveItem || savedActiveItem || "Manage City/State");
+  }, [accessToken, navigate, location.search]);
+
+  useEffect(() => {
+    // Save the active item to localStorage whenever it changes
+    localStorage.setItem("activeItem", activeItem);
+  }, [activeItem]);
 
   const fetchAdmin = async () => {
     try {
@@ -45,8 +64,12 @@ const AdminDashboard = () => {
   };
 
   const handleChange = (item) => {
-    if(item=='Manage Tax and Scheme Deductions'){
-      setShow(true)
+    if (!validateAdmin()) return;
+
+    if (item === 'Manage Tax and Scheme Deductions') {
+      setShow(true);
+    } else {
+      setShow(false);
     }
     setActiveItem(item);
   };
@@ -66,7 +89,6 @@ const AdminDashboard = () => {
       style={{
         minHeight: "100vh",
         background: "linear-gradient(135deg, #f3f4f6, #dcdbe1)"
-
       }}
     >
       {/* Navbar */}
@@ -126,7 +148,9 @@ const AdminDashboard = () => {
             md={{ span: 9, offset: 3 }}
             style={{ padding: "20px", marginLeft: "22%" }}
           >
-            <MainContent activeItem={activeItem} show={show} setShow={setShow} setActiveItem={setActiveItem} />
+            {validateAdmin() && (
+              <MainContent activeItem={activeItem} show={show} setShow={setShow} setActiveItem={setActiveItem} />
+            )}
           </Col>
         </Row>
       </Container>

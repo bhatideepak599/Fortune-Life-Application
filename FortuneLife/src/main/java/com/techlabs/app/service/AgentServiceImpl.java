@@ -85,6 +85,7 @@ public class AgentServiceImpl implements AgentService {
 		agent.setVerified(false);
 		if (agentDto.getVerified())
 			agent.setVerified(true);
+		agent.setWithdrawals(new ArrayList<>());
 		agent = agentRepository.save(agent);
 		return agentMapper.entityToDto(agent);
 	}
@@ -104,6 +105,7 @@ public class AgentServiceImpl implements AgentService {
 		List<AgentDto> response = new ArrayList<>();
 		for (Agent agent : allAgents) {
 			AgentDto agentDto = agentMapper.entityToDto(agent);
+			agentDto.setTotalTransactions(agent.getCommissions().size());
 			response.add(agentDto);
 		}
 
