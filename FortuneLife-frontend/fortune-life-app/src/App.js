@@ -24,8 +24,8 @@ function App() {
         <Route path="/all-schemes/:id" element={<AllSchemes />} />
         <Route exact path="/customer-dashboard" element={<CustomerHome />} />
         <Route exact path="/policy-payment" element={<Payment />} />
-        <Route exact path="/fortuneLife/plan/:id" element={<InsuranceSchemes />} />
-        <Route exact path="/fortuneLife/plan/:id/scheme-details/:id" element={<InsuranceSchemeDetails />} />
+        <Route exact path="/fortuneLife/plan/:planId" element={<InsuranceSchemes />} />
+        <Route exact path="/fortuneLife/plan/:planId/scheme-details/:schemeId" element={<InsuranceSchemeDetails />} />
       </Routes>
     </>
   );

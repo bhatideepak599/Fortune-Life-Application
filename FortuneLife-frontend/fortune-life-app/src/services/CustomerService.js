@@ -102,16 +102,4 @@ export const updateCustomer = async ({ userDto, addressDto }) => {
   }
 };
 
-export const getLoggedInCustomer = async () => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/fortuneLife/loggedCustomer`, {
-      headers: {
-        Authorization: token,
-      },
-    });
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};

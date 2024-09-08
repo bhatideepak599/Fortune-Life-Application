@@ -2,6 +2,7 @@ package com.techlabs.app.service;
 
 import com.techlabs.app.dto.AdminDto;
 import com.techlabs.app.dto.UserDto;
+import com.techlabs.app.entity.GlobalTax;
 import com.techlabs.app.util.PageResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,4 +26,7 @@ public interface AdminService {
 
 	AdminDto getAdminByToken(HttpServletRequest request);
 
+    GlobalTax setTax(Double taxRate, Double deductionRate);
+
+	GlobalTax getTax();
 }

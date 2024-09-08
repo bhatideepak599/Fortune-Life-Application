@@ -11,7 +11,7 @@ const Main = () => {
     <>
       <main>
         <article>
-          <section className="home" id="home">
+          <section className="home pt-5" id="home">
             <div className="container">
               <div className="home-content">
                 <h1 className="h1 home-title">FORTUNE LIFE</h1>

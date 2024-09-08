@@ -3,6 +3,7 @@ package com.techlabs.app.controller;
 import com.techlabs.app.dto.JWTAuthResponse;
 import com.techlabs.app.dto.LoginDto;
 import com.techlabs.app.dto.RegisterDto;
+import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.exception.UserRelatedException;
 import com.techlabs.app.service.AuthService;
 import com.techlabs.app.service.OtpService;
@@ -94,5 +95,14 @@ public class AuthController {
             return "Invalid or expired OTP. Please try again.";
         }
     }
+
+    @Operation(summary = "Get Logged user")
+    @GetMapping("/loggedUser")
+    public ResponseEntity<UserDto> getLoggedUser(HttpServletRequest request){
+        UserDto userDto = authService.getLoggedUser(request);
+
+        return new ResponseEntity<>(userDto,HttpStatus.OK);
+    }
+
 
 }
