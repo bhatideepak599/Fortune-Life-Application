@@ -144,9 +144,13 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
 
         InsurancePolicy insurancePolicy = new InsurancePolicy();
-        Double sumAssured = 100 + insuranceScheme.getSchemeDetails().getProfitRatio();
-        sumAssured = insurancePolicyDto.getPolicyAmount() * 0.01 * sumAssured;
-        sumAssured *= insurancePolicyDto.getTime();
+
+        double p = insurancePolicyDto.getPolicyAmount();
+        double t = insurancePolicyDto.getTime();
+        double r = insuranceScheme.getSchemeDetails().getProfitRatio();
+        double interest = (p * t * r) / 100;
+        double sumAssured = p + interest;
+
 
         insurancePolicy.setIssueDate(LocalDate.now());
         insurancePolicy.setMaturityDate(LocalDate.now().plusYears(insurancePolicyDto.getTime()));

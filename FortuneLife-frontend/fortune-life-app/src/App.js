@@ -40,6 +40,8 @@ function App() {
           path="/fortuneLife/plan/:id/scheme-details/:id"
           element={<InsuranceSchemeDetails />}
         />
+        <Route exact path="/fortuneLife/plan/:planId" element={<InsuranceSchemes />} />
+        <Route exact path="/fortuneLife/plan/:planId/scheme-details/:schemeId" element={<InsuranceSchemeDetails />} />
       </Routes>
     </>
   );

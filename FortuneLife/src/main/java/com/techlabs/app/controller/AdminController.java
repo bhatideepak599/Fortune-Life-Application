@@ -1,5 +1,6 @@
 package com.techlabs.app.controller;
 
+import com.techlabs.app.entity.GlobalTax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,25 @@ public class AdminController {
 		String message = adminService.deleteAdminById(id);
 
 		return new ResponseEntity<>(message, HttpStatus.OK);
+	}
+
+	@Operation(summary = "Tax setting")
+	@PostMapping("/set-tax")
+	public ResponseEntity<GlobalTax> setTax(@RequestParam(name = "taxRate")Double taxRate,
+											@RequestParam(name = "deductionRate")Double deductionRate){
+		logger.info("Setting Tax");
+		GlobalTax globalTax = adminService.setTax(taxRate,deductionRate);
+
+		return new ResponseEntity<>(globalTax,HttpStatus.OK);
+	}
+
+	@Operation(summary = "Get Tax")
+	@GetMapping("/get-tax")
+	public ResponseEntity<GlobalTax> getTax(){
+		logger.info("Getting tax");
+		GlobalTax globalTax = adminService.getTax();
+
+		return new ResponseEntity<>(globalTax, HttpStatus.OK);
 	}
 
 }

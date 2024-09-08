@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.techlabs.app.entity.*;
+import com.techlabs.app.exception.FortuneLifeException;
+import com.techlabs.app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,17 +19,9 @@ import org.springframework.stereotype.Service;
 
 import com.techlabs.app.dto.AdminDto;
 import com.techlabs.app.dto.UserDto;
-import com.techlabs.app.entity.Address;
-import com.techlabs.app.entity.Admin;
-import com.techlabs.app.entity.Role;
-import com.techlabs.app.entity.User;
 import com.techlabs.app.exception.APIException;
 import com.techlabs.app.exception.AdminRelatedException;
 import com.techlabs.app.mapper.UserMapper;
-import com.techlabs.app.repository.AddressRepository;
-import com.techlabs.app.repository.AdminRepository;
-import com.techlabs.app.repository.RoleRepository;
-import com.techlabs.app.repository.UserRepository;
 import com.techlabs.app.security.JwtTokenProvider;
 import com.techlabs.app.util.PageResponse;
 
@@ -35,213 +30,240 @@ import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-	private AdminRepository adminRepository;
-	private UserRepository userRepository;
-	private RoleRepository roleRepository;
-	private UserMapper userMapper;
-	private AddressRepository addressRepository;
-	private JwtTokenProvider jwtTokenProvider;
-	
-	private PasswordEncoder passwordEncoder;
+    @Autowired
+    private GlobalTaxRepository globalTaxRepository;
 
-	public AdminServiceImpl(AdminRepository adminRepository, UserRepository userRepository,
-			RoleRepository roleRepository, UserMapper userMapper, AddressRepository addressRepository,
-			JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
-		super();
-		this.adminRepository = adminRepository;
-		this.userRepository = userRepository;
-		this.roleRepository = roleRepository;
-		this.userMapper = userMapper;
-		this.addressRepository = addressRepository;
-		this.jwtTokenProvider = jwtTokenProvider;
-		this.passwordEncoder = passwordEncoder;
-	}
+    private AdminRepository adminRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private UserMapper userMapper;
+    private AddressRepository addressRepository;
+    private JwtTokenProvider jwtTokenProvider;
 
-	@Override
-	public AdminDto addAdmin(UserDto userDto, String role) {
+    private PasswordEncoder passwordEncoder;
 
-		if (userRepository.existsByUsername(userDto.getUsername()))
-			throw new APIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
+    public AdminServiceImpl(AdminRepository adminRepository, UserRepository userRepository,
+                            RoleRepository roleRepository, UserMapper userMapper, AddressRepository addressRepository,
+                            JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
+        super();
+        this.adminRepository = adminRepository;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.userMapper = userMapper;
+        this.addressRepository = addressRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-		User user = userMapper.dtoToEntity(userDto);
-		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+    @Override
+    public AdminDto addAdmin(UserDto userDto, String role) {
 
-		Address address = addressRepository.save(user.getAddress());
-		user.setAddress(address);
-		user.setActive(true);
+        if (userRepository.existsByUsername(userDto.getUsername()))
+            throw new APIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
 
-		Optional<Role> byName = roleRepository.findByRoleName(role);
-		if (byName.isEmpty()) {
-			throw new RuntimeException("ROLE NOT FOUND ");
-		}
-		Set<Role> roles = new HashSet<>();
-		roles.add(byName.get());
-		user.setRoles(roles);
+        User user = userMapper.dtoToEntity(userDto);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-		User savedUser = userRepository.save(user);
+        Address address = addressRepository.save(user.getAddress());
+        user.setAddress(address);
+        user.setActive(true);
 
-		Admin admin = new Admin();
-		admin.setUserDetails(savedUser);
-		admin.setId(savedUser.getId());
-		admin.setActive(true);
+        Optional<Role> byName = roleRepository.findByRoleName(role);
+        if (byName.isEmpty()) {
+            throw new RuntimeException("ROLE NOT FOUND ");
+        }
+        Set<Role> roles = new HashSet<>();
+        roles.add(byName.get());
+        user.setRoles(roles);
 
-		Admin savedAdmin = adminRepository.save(admin);
-		AdminDto adminDto = new AdminDto();
-		adminDto.setId(savedAdmin.getId());
-		adminDto.setActive(savedAdmin.getActive());
+        User savedUser = userRepository.save(user);
 
-		UserDto savedUserDto = userMapper.entityToDto(savedUser);
-		adminDto.setUser(savedUserDto);
+        Admin admin = new Admin();
+        admin.setUserDetails(savedUser);
+        admin.setId(savedUser.getId());
+        admin.setActive(true);
 
-		return adminDto;
+        Admin savedAdmin = adminRepository.save(admin);
+        AdminDto adminDto = new AdminDto();
+        adminDto.setId(savedAdmin.getId());
+        adminDto.setActive(savedAdmin.getActive());
 
-	}
+        UserDto savedUserDto = userMapper.entityToDto(savedUser);
+        adminDto.setUser(savedUserDto);
 
-	@Override
-	public PageResponse<AdminDto> getAllAdmins(Long id, String userName, String name, String mobileNumber, String email,
-			Boolean active, int page, int size) {
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Admin> admins = adminRepository.findByIdAndUserNameAndNameAndMobileNumberAndEmailAndActive(id, userName,
-				name, mobileNumber, email, active, pageable);
-		if (admins.getContent().isEmpty()) {
+        return adminDto;
 
-			throw new AdminRelatedException(" No Admin  Found ");
-		}
+    }
 
-		List<Admin> allAdmins = admins.getContent();
-		List<AdminDto> response = new ArrayList<>();
-		for (Admin admin : allAdmins) {
-			User userDetails = admin.getUserDetails();
+    @Override
+    public PageResponse<AdminDto> getAllAdmins(Long id, String userName, String name, String mobileNumber, String email,
+                                               Boolean active, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Admin> admins = adminRepository.findByIdAndUserNameAndNameAndMobileNumberAndEmailAndActive(id, userName,
+                name, mobileNumber, email, active, pageable);
+        if (admins.getContent().isEmpty()) {
 
-			AdminDto adminDto = new AdminDto();
-			adminDto.setId(admin.getId());
-			adminDto.setActive(admin.getActive());
-			adminDto.setUser(userMapper.entityToDto(userDetails));
-			response.add(adminDto);
-		}
+            throw new AdminRelatedException(" No Admin  Found ");
+        }
 
-		return new PageResponse<>(response, admins.getNumber(), admins.getNumberOfElements(), admins.getTotalElements(),
-				admins.getTotalPages(), admins.isLast());
-	}
+        List<Admin> allAdmins = admins.getContent();
+        List<AdminDto> response = new ArrayList<>();
+        for (Admin admin : allAdmins) {
+            User userDetails = admin.getUserDetails();
 
-	@Override
-	public AdminDto updateAdmin(UserDto userDto) {
+            AdminDto adminDto = new AdminDto();
+            adminDto.setId(admin.getId());
+            adminDto.setActive(admin.getActive());
+            adminDto.setUser(userMapper.entityToDto(userDetails));
+            response.add(adminDto);
+        }
 
-		Optional<Admin> admin = adminRepository.findById(userDto.getId());
-		if (admin.isEmpty() || admin.get().getActive() == false) {
-			throw new AdminRelatedException("No Admin Found for Id " + userDto.getId());
-		}
-		Optional<User> user = userRepository.findById(userDto.getId());
-		if (user.isEmpty() || user.get().getActive() == false) {
-			throw new AdminRelatedException("No Admin Found for Id " + userDto.getId());
-		}
+        return new PageResponse<>(response, admins.getNumber(), admins.getNumberOfElements(), admins.getTotalElements(),
+                admins.getTotalPages(), admins.isLast());
+    }
+
+    @Override
+    public AdminDto updateAdmin(UserDto userDto) {
+
+        Optional<Admin> admin = adminRepository.findById(userDto.getId());
+        if (admin.isEmpty() || admin.get().getActive() == false) {
+            throw new AdminRelatedException("No Admin Found for Id " + userDto.getId());
+        }
+        Optional<User> user = userRepository.findById(userDto.getId());
+        if (user.isEmpty() || user.get().getActive() == false) {
+            throw new AdminRelatedException("No Admin Found for Id " + userDto.getId());
+        }
 
 //		Optional<Address> addressById = addressRepository.findById(userDto.getAddressDto().getId());
 //		if (addressById.isEmpty()) {
 //			throw new AdminRelatedException("No Address Found for Address Id " + userDto.getAddressDto().getId());
 //		}
-		// System.out.println(userDto);
-		User userForUpdate = userMapper.dtoToEntity(userDto);
-		userForUpdate.setToken(user.get().getToken());
-		userForUpdate.setId(userDto.getId());
-		userForUpdate.setRoles(user.get().getRoles());
-		userForUpdate.setPassword(user.get().getPassword());
-		Address address = userForUpdate.getAddress();
-		if(userDto.getAddressDto()!=null && user.get().getAddress()==null) {
-			address=addressRepository.save(address);
-		}
-		else{
-			address.setId(user.get().getAddress().getId());
-			addressRepository.save(address);
-		}
-		
+        // System.out.println(userDto);
+        User userForUpdate = userMapper.dtoToEntity(userDto);
+        userForUpdate.setToken(user.get().getToken());
+        userForUpdate.setId(userDto.getId());
+        userForUpdate.setRoles(user.get().getRoles());
+        userForUpdate.setPassword(user.get().getPassword());
+        Address address = userForUpdate.getAddress();
+        if (userDto.getAddressDto() != null && user.get().getAddress() == null) {
+            address = addressRepository.save(address);
+        } else {
+            address.setId(user.get().getAddress().getId());
+            addressRepository.save(address);
+        }
 
-		// Debugging: Log before saving
-		// System.out.println("Saving Address: " + address);
-		
 
-		// System.out.println("Saving User: " + userForUpdate);
-		
-		userForUpdate = userRepository.save(userForUpdate);
+        // Debugging: Log before saving
+        // System.out.println("Saving Address: " + address);
 
-		AdminDto adminDto = new AdminDto();
-		adminDto.setId(userDto.getId());
-		adminDto.setActive(true);
-		UserDto savedUserDto = userMapper.entityToDto(userForUpdate);
-		adminDto.setUser(savedUserDto);
 
-		return adminDto;
-	}
+        // System.out.println("Saving User: " + userForUpdate);
 
-	@Override
-	public String deleteAdminById(Long id) {
-		Optional<Admin> admin = adminRepository.findById(id);
-		if (admin.isEmpty() || admin.get().getActive() == false) {
-			throw new AdminRelatedException("No Admin Found for Id " + id);
-		}
+        userForUpdate = userRepository.save(userForUpdate);
 
-		Admin adminToDelete = admin.get();
-		adminToDelete.setActive(false);
-		adminRepository.save(adminToDelete);
+        AdminDto adminDto = new AdminDto();
+        adminDto.setId(userDto.getId());
+        adminDto.setActive(true);
+        UserDto savedUserDto = userMapper.entityToDto(userForUpdate);
+        adminDto.setUser(savedUserDto);
 
-		return "Admin Deleted SuccessFully";
-	}
+        return adminDto;
+    }
 
-	@Override
-	public String activateAdmin(Long id) {
-		Optional<Admin> admin = adminRepository.findById(id);
-		if (admin.isEmpty()) {
-			throw new AdminRelatedException("No Admin Found for Id " + id);
-		}
-		if (admin.get().getActive()) {
-			throw new AdminRelatedException(" Admin Is Already In Active State ");
-		}
+    @Override
+    public String deleteAdminById(Long id) {
+        Optional<Admin> admin = adminRepository.findById(id);
+        if (admin.isEmpty() || admin.get().getActive() == false) {
+            throw new AdminRelatedException("No Admin Found for Id " + id);
+        }
 
-		Admin adminToActivate = admin.get();
-		adminToActivate.setActive(true);
-		adminRepository.save(adminToActivate);
+        Admin adminToDelete = admin.get();
+        adminToDelete.setActive(false);
+        adminRepository.save(adminToDelete);
 
-		return "Admin Activated SuccessFully";
+        return "Admin Deleted SuccessFully";
+    }
 
-	}
+    @Override
+    public String activateAdmin(Long id) {
+        Optional<Admin> admin = adminRepository.findById(id);
+        if (admin.isEmpty()) {
+            throw new AdminRelatedException("No Admin Found for Id " + id);
+        }
+        if (admin.get().getActive()) {
+            throw new AdminRelatedException(" Admin Is Already In Active State ");
+        }
 
-	@Override
-	public AdminDto getAdminById(Long id) {
-		Optional<Admin> admin = adminRepository.findById(id);
-		if (admin.isEmpty() || admin.get().getActive() == false) {
-			throw new AdminRelatedException("No Admin Found for Id " + id);
-		}
-		Optional<User> user = userRepository.findById(id);
-		if (user.isEmpty() || user.get().getActive() == false) {
-			throw new AdminRelatedException("No Admin Found for Id " + id);
-		}
-		UserDto userDto = userMapper.entityToDto(user.get());
-		AdminDto adminDto = new AdminDto();
-		adminDto.setId(userDto.getId());
-		adminDto.setActive(admin.get().getActive());
-		adminDto.setUser(userDto);
-		return adminDto;
-	}
+        Admin adminToActivate = admin.get();
+        adminToActivate.setActive(true);
+        adminRepository.save(adminToActivate);
 
-	@Override
-	public AdminDto getAdminByToken(HttpServletRequest request) {
-		final String authHeader = request.getHeader("Authorization");
-		final String token=authHeader.substring(7);
-		String username = jwtTokenProvider.getUsername(token);
-		User user = userRepository.findUserByUsernameOrEmail(username, username)
-				.orElseThrow(()->  new AdminRelatedException("No Admin Found!."));
-		Admin admin=adminRepository.findById(user.getId())
-				.orElseThrow(()->new AdminRelatedException("No Admin Found!."));
-		if(admin.getActive()==false )
-			throw new AdminRelatedException("No Admin Found!.");
-		
-		UserDto userDto = userMapper.entityToDto(user);
-		AdminDto adminDto = new AdminDto();
-		adminDto.setId(userDto.getId());
-		adminDto.setActive(admin.getActive());
-		adminDto.setUser(userDto);
-		return adminDto;
-		
-	}
+        return "Admin Activated SuccessFully";
 
+    }
+
+    @Override
+    public AdminDto getAdminById(Long id) {
+        Optional<Admin> admin = adminRepository.findById(id);
+        if (admin.isEmpty() || admin.get().getActive() == false) {
+            throw new AdminRelatedException("No Admin Found for Id " + id);
+        }
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty() || user.get().getActive() == false) {
+            throw new AdminRelatedException("No Admin Found for Id " + id);
+        }
+        UserDto userDto = userMapper.entityToDto(user.get());
+        AdminDto adminDto = new AdminDto();
+        adminDto.setId(userDto.getId());
+        adminDto.setActive(admin.get().getActive());
+        adminDto.setUser(userDto);
+        return adminDto;
+    }
+
+    @Override
+    public AdminDto getAdminByToken(HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        final String token = authHeader.substring(7);
+        String username = jwtTokenProvider.getUsername(token);
+        User user = userRepository.findUserByUsernameOrEmail(username, username)
+                .orElseThrow(() -> new AdminRelatedException("No Admin Found!."));
+        Admin admin = adminRepository.findById(user.getId())
+                .orElseThrow(() -> new AdminRelatedException("No Admin Found!."));
+        if (!admin.getActive())
+            throw new AdminRelatedException("No Admin Found!.");
+
+        UserDto userDto = userMapper.entityToDto(user);
+        AdminDto adminDto = new AdminDto();
+        adminDto.setId(userDto.getId());
+        adminDto.setActive(admin.getActive());
+        adminDto.setUser(userDto);
+        return adminDto;
+
+    }
+
+    @Override
+    public GlobalTax setTax(Double taxRate, Double deductionRate) {
+        Optional<GlobalTax> existingTax = globalTaxRepository.findById(1L);
+
+        if (existingTax.isPresent()) {
+            GlobalTax existing = existingTax.get();
+            existing.setTaxRate(taxRate);
+            existing.setDeductionRate(deductionRate);
+            return globalTaxRepository.save(existing);
+        } else {
+            GlobalTax newTax = new GlobalTax();
+            newTax.setId(1L);
+            newTax.setTaxRate(taxRate);
+            newTax.setDeductionRate(deductionRate);
+            return globalTaxRepository.save(newTax);
+        }
+    }
+
+    @Override
+    public GlobalTax getTax() {
+        GlobalTax globalTax = globalTaxRepository.findById(1L)
+                .orElseThrow(()-> new FortuneLifeException("Tax didn't exist please set tax"));
+
+        return globalTax;
+    }
 }

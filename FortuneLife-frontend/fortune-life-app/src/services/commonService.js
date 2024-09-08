@@ -13,11 +13,21 @@ export const getAllInsurancePlans = async () => {
   }
 };
 
-export const getSchemesByPlanId = async (id) => {
+export const getSchemesByPlanId = async (planId) => {
   try {
-    const reponse = await axios.get(`${API_BASE_URL}/fortuneLife/scheme/${id}`);
+    const reponse = await axios.get(`${API_BASE_URL}/fortuneLife/scheme/${planId}`);
 
     return reponse.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getSchemeByPlanId = async (planId, schemeId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/scheme/${planId}/${schemeId}`);
+
+    return response.data;
   } catch (error) {
     throw error;
   }
