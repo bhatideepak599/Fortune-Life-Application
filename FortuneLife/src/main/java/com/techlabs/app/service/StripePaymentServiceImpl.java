@@ -8,6 +8,7 @@ import com.techlabs.app.entity.*;
 import com.techlabs.app.enums.CommissionType;
 import com.techlabs.app.enums.PaymentType;
 import com.techlabs.app.exception.FortuneLifeException;
+import com.techlabs.app.mapper.PaymentMapper;
 import com.techlabs.app.repository.AgentRepository;
 import com.techlabs.app.repository.CommissionRepository;
 import com.techlabs.app.repository.InsurancePolicyRepository;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class StripePaymentServiceImpl implements StripePaymentService {
@@ -29,12 +31,18 @@ public class StripePaymentServiceImpl implements StripePaymentService {
 
     @Autowired
     private InsurancePolicyRepository policyRepository;
+
     @Autowired
     private PaymentRepository paymentRepository;
+
     @Autowired
     private CommissionRepository commissionRepository;
+
     @Autowired
     private AgentRepository agentRepository;
+
+    @Autowired
+    private PaymentMapper paymentMapper;
 
     @Override
     public PaymentIntent createPaymentIntent(PaymentDto paymentDto, Payment payment) throws StripeException {
@@ -59,6 +67,8 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         payment.setTax(paymentDto.getTax());
         payment.setTotalPayment(paymentDto.getTotalPayment());
         payment.setPaymentDate(LocalDateTime.now());
+        double totalAmountPaidTillDate = paymentDto.getAmount() + policy.getPaidPolicyAmountTillDate();
+        policy.setPaidPolicyAmountTillDate(totalAmountPaidTillDate);
         policy.getPayments().add(payment);
 
         InsuranceScheme insuranceScheme = policyRepository.findInsuranceSchemeByPolicyId(policy.getId());
@@ -84,4 +94,16 @@ public class StripePaymentServiceImpl implements StripePaymentService {
 
         return PaymentIntent.create(params);
     }
+
+    @Override
+    public List<PaymentDto> getPaymentsByPolicyId(Long policyId) {
+        InsurancePolicy policy = policyRepository.findById(policyId)
+                .orElseThrow(() -> new FortuneLifeException("No Policy Found With ID: " + policyId));
+
+        List<Payment> payments = policy.getPayments();
+        return payments.stream()
+                .map(paymentMapper::entityToDto)
+                .collect(Collectors.toList());
+    }
+
 }

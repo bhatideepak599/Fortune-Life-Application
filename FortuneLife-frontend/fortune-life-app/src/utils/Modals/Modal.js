@@ -18,8 +18,9 @@ const ModalContent = styled.div`
   background-color: white;
   border-radius: 10px;
   padding: 20px;
-  width: 80%; /* Increased horizontal width */
-  max-width: 800px; /* Set a max-width */
+  width: ${({ width }) => width || "80%"};
+  height: ${({ height }) => height || "auto"};
+  max-width: 800px;
   max-height: 80%;
   overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -39,11 +40,11 @@ const CloseButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 24px; /* Increased font size */
+  font-size: 24px;
   color: #666;
 `;
 
-const Modal = ({ title, isOpen, onClose, children }) => {
+const Modal = ({ title, isOpen, onClose, children, width, height }) => {
   const [isClosing, setIsClosing] = useState(false);
   const modalRef = useRef(null);
 
@@ -71,14 +72,14 @@ const Modal = ({ title, isOpen, onClose, children }) => {
     <div>
       {isOpen && (
         <ModalContainer>
-          <ModalContent ref={modalRef}>
+          <ModalContent ref={modalRef} width={width} height={height}>
             <ModalHeader>
               {title}
               <CloseButton onClick={handleClose}>&times;</CloseButton>
             </ModalHeader>
             {children}
             <div className="text-end mt-5">
-              <button className="btn btn-secondary btn-lg" onClick={handleClose}>
+              <button className="btn btn-secondary btn-md" onClick={handleClose}>
                 Close
               </button>
             </div>

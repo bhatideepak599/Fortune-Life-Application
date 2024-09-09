@@ -22,10 +22,18 @@ const Navbar = () => {
       };
       fetchInsurancePlans();
     }
-  }, [showDropDown]);
+  }, [showDropDown, navigate]);
 
   const handleDropdownClick = () => {
     setShowDropDown((prev) => !prev);
+  };
+
+  const handleSignOut = () => {
+    try {
+      localStorage.clear();
+    } catch (error) {
+      errorToast(error);
+    }
   };
 
   return (
@@ -102,7 +110,7 @@ const Navbar = () => {
                 </li>
                 <hr className="dropdown-divider" />
                 <li>
-                  <a className="dropdown-item" href="/">
+                  <a className="dropdown-item" href="/" onClick={handleSignOut}>
                     Sign out
                   </a>
                 </li>

@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../HomePageNavbar/HomePageNavbar.css";
 import logoImg from "../../../images/fortunelife.png";
-import Dropdown from "react-bootstrap/Dropdown";
+import { getAllInsurancePlans } from "../../../services/commonService";
+import { errorToast } from "../../../utils/Toast";
+import { useNavigate } from "react-router-dom";
 
 const HomePageNavbar = () => {
+  const navigate = useNavigate();
+  const [insurancePlans, setInsurancePlans] = useState([]);
+  const [showDropDown, setShowDropDown] = useState(false);
+
+  useEffect(() => {
+    if (showDropDown) {
+      const fetchInsurancePlans = async () => {
+        try {
+          const response = await getAllInsurancePlans();
+          setInsurancePlans(response);
+        } catch (error) {
+          errorToast(error);
+        }
+      };
+      fetchInsurancePlans();
+    }
+  }, [showDropDown, navigate]);
+
+  const handleDropdownClick = () => {
+    setShowDropDown((prev) => !prev);
+  };
+
   return (
     <>
       <header className="p-3 mb-3">
@@ -21,9 +45,26 @@ const HomePageNavbar = () => {
               </li>
 
               <li className="ms-4 position-relative">
-                <button className="fs-5 mt-2 dropdown-toggle" type="button">
+                <button className="fs-5 mt-2 dropdown-toggle" type="button" aria-expanded={showDropDown} onClick={handleDropdownClick}>
                   Popular Insurance Plans
                 </button>
+                {showDropDown && (
+                  <ul className="dropdown-menu show position-absolute start-0 mt-2">
+                    {insurancePlans.length > 0 ? (
+                      insurancePlans
+                        .filter((plan) => plan.active)
+                        .map((plan, index) => (
+                          <li key={index}>
+                            <a className="dropdown-item" href={`/fortuneLife/plan/${plan.id}`}>
+                              {plan.planName}
+                            </a>
+                          </li>
+                        ))
+                    ) : (
+                      <li className="dropdown-item">No plans available</li>
+                    )}
+                  </ul>
+                )}
               </li>
 
               <li className="ms-4">
@@ -68,7 +109,7 @@ const HomePageNavbar = () => {
                   </li>
                 </ul>
               </div>
-              <a href="#" className="header-action-link">
+              <a href="/" className="header-action-link">
                 Register
               </a>
             </div>

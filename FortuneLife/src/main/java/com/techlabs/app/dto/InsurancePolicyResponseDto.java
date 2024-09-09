@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.techlabs.app.entity.Payment;
 import lombok.Data;
 
 @Data
@@ -16,10 +17,13 @@ public class InsurancePolicyResponseDto {
 	private String premiumType;
 	private Double sumAssured;
 	private Double premiumAmount;
-	private String policyStatus ;
+	private String policyStatus;
 	private String schemeName;
-	private String agentName; 
+	private String agentName;
 	private Long agentId;
+	private List<PaymentDto> paymentList;
+	private Double totalPolicyAmount;
+	private Double totalAmountPaidTillDate;
 	private List<String> nomineeNameAndRelation;
 	private Set<SubmittedDocumentDto> submittedDocumentsDto = new HashSet<>();
 }

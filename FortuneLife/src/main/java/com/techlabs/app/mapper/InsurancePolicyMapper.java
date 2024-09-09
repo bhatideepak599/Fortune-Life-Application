@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.techlabs.app.dto.InsurancePolicyResponseDto;
@@ -16,44 +17,50 @@ import com.techlabs.app.entity.SubmittedDocument;
 @Component
 public class InsurancePolicyMapper {
 
-	public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
-		InsurancePolicyResponseDto response = new InsurancePolicyResponseDto();
-		if (policy.getAgent() != null) {
-			response.setAgentName(policy.getAgent().getUser().getFirstName());
-			response.setAgentId(policy.getAgent().getUser().getId());
-		}
-			
-		response.setId(policy.getId());
-		response.setIssueDate(policy.getIssueDate());
-		response.setMaturityDate(policy.getMaturityDate());
-		response.setPolicyStatus(policy.getPolicyStatus());
-		response.setPremiumAmount(policy.getPremiumAmount());
-		response.setPremiumType(policy.getPremiumType());
-		response.setSumAssured(policy.getSumAssured());
-		response.setSchemeName(policy.getInsuranceScheme().getSchemeName());
+    @Autowired
+    private PaymentMapper paymentMapper;
 
-		List<String> nominies = new ArrayList<>();
+    public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
+        InsurancePolicyResponseDto response = new InsurancePolicyResponseDto();
+        if (policy.getAgent() != null) {
+            response.setAgentName(policy.getAgent().getUser().getFirstName());
+            response.setAgentId(policy.getAgent().getUser().getId());
+        }
 
-		for (Nominee n : policy.getNominees()) {
-			String nameAndRelation = "Name:"+n.getNomineeName() + ", Relation:" + n.getRelationStatus();
-			nominies.add(nameAndRelation);
-		}
-		response.setNomineeNameAndRelation(nominies);
+        response.setId(policy.getId());
+        response.setIssueDate(policy.getIssueDate());
+        response.setMaturityDate(policy.getMaturityDate());
+        response.setPolicyStatus(policy.getPolicyStatus());
+        response.setPremiumAmount(policy.getPremiumAmount());
+        response.setPremiumType(policy.getPremiumType());
+        response.setSumAssured(policy.getSumAssured());
+        response.setSchemeName(policy.getInsuranceScheme().getSchemeName());
+        response.setPaymentList(paymentMapper.getDtoList(policy.getPayments()));
+        response.setTotalPolicyAmount(policy.getTotalPolicyAmount());
+        response.setTotalAmountPaidTillDate(policy.getPaidPolicyAmountTillDate());
 
-		Set<SubmittedDocumentDto> documents = new HashSet<>();
+        List<String> nominies = new ArrayList<>();
 
-		for (SubmittedDocument document : policy.getSubmittedDocuments()) {
+        for (Nominee n : policy.getNominees()) {
+            String nameAndRelation = "Name: " + n.getNomineeName() + ", Relation:" + n.getRelationStatus();
+            nominies.add(nameAndRelation);
+        }
+        response.setNomineeNameAndRelation(nominies);
 
-			SubmittedDocumentDto documentDto = new SubmittedDocumentDto();
+        Set<SubmittedDocumentDto> documents = new HashSet<>();
 
-			documentDto.setDocumentImage(document.getDocumentImage());
-			documentDto.setDocumentName(document.getDocumentName());
-			documentDto.setDocumentStatus(document.getDocumentStatus());
-			documentDto.setId(document.getId());
-			documents.add(documentDto);
-		}
-		response.setSubmittedDocumentsDto(documents);
+        for (SubmittedDocument document : policy.getSubmittedDocuments()) {
 
-		return response;
-	}
+            SubmittedDocumentDto documentDto = new SubmittedDocumentDto();
+
+            documentDto.setDocumentImage(document.getDocumentImage());
+            documentDto.setDocumentName(document.getDocumentName());
+            documentDto.setDocumentStatus(document.getDocumentStatus());
+            documentDto.setId(document.getId());
+            documents.add(documentDto);
+        }
+        response.setSubmittedDocumentsDto(documents);
+
+        return response;
+    }
 }

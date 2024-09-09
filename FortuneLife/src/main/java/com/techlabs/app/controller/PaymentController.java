@@ -7,21 +7,23 @@ import com.techlabs.app.entity.Payment;
 import com.techlabs.app.enums.PaymentStatus;
 import com.techlabs.app.repository.PaymentRepository;
 import com.techlabs.app.service.StripePaymentService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/fortuneLife/payments")
 public class PaymentController {
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
     @Autowired
     private StripePaymentService paymentService;
@@ -56,4 +58,13 @@ public class PaymentController {
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "Get All Payments By Policy ID")
+    @GetMapping("/policies/{policyId}")
+    public ResponseEntity<List<PaymentDto>> getPaymentsByPolicyId(@PathVariable Long policyId) {
+        logger.info("Fetching all payments for policy with ID: {}", policyId);
+        List<PaymentDto> paymentDtos = paymentService.getPaymentsByPolicyId(policyId);
+        return new ResponseEntity<>(paymentDtos, HttpStatus.OK);
+    }
+
 }

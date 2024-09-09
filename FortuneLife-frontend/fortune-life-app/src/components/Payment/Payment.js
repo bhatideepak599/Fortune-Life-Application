@@ -1,14 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import "./Payment.css";
 import { createPaymentIntent } from "../../services/CustomerService";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getPolicyByPolicyId } from "../../services/commonService";
 
 const stripePromise = loadStripe("pk_test_51Puzcj2MY7JIifoyC6FTDIlzNncUaOmYkXtV5lKLTh7kkHhQe37YMWF9pbndceIKKYws4IQqwyWTIzYhZkgZ393v00oozKhdhP");
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const { policyId } = useParams();
+  console.log(policyId);
+
+  useEffect(() => {
+    const getPolicyById = async () => {
+      try {
+        const response = await getPolicyByPolicyId(policyId);
+        console.log(response);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+
+    getPolicyById();
+  }, [policyId]);
 
   const [paymentData, setPaymentData] = useState({
     paymentType: "credit",

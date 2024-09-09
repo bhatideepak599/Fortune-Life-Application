@@ -32,3 +32,17 @@ export const getSchemeByPlanId = async (planId, schemeId) => {
     throw error;
   }
 };
+
+export const getPolicyByPolicyId = async (policyId) => {
+  try {
+    const reponse = await axios.get(`${API_BASE_URL}/fortuneLife/policy/${policyId}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+
+    return reponse.data;
+  } catch (error) {
+    throw error;
+  }
+};

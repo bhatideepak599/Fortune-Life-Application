@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../customerDashBoard/LandingPage/Navbar/Navbar";
+import Navbar from "../CommonNavbarFooter/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSchemeByPlanId } from "../../../services/commonService";
 import { fetchFile } from "../../../services/fileServices";
 import { errorToast } from "../../../utils/Toast";
 import Modal from "../../../utils/Modals/Modal";
 import InsurancePolicy from "../InsurancePolicy/InsurancePolicy";
+import { toast } from "react-toastify";
+import { getLoggedInUser } from "../../../services/authService";
 
 const InsuranceSchemeDetails = () => {
   const { planId, schemeId } = useParams();
@@ -35,8 +37,25 @@ const InsuranceSchemeDetails = () => {
     fetchSchemeByPlanId();
   }, [planId, schemeId, navigate]);
 
-  const handleShowMore = () => {
-    setPolicyOpen(true);
+  const handleShowMore = async () => {
+    try {
+      const response = await getLoggedInUser();
+      if (response) {
+        const today = new Date();
+        const birthYear = parseInt(response.dateOfBirth.split("-")[0]);
+        const ageInYears = today.getFullYear() - birthYear;
+        if (ageInYears < scheme.schemeDetails.minAge || ageInYears > scheme.schemeDetails.maxAge) {
+          toast.error("Person with your age group is not eligible for this scheme");
+          return;
+        }
+
+        setPolicyOpen(true);
+      } else {
+        setPolicyOpen(true);
+      }
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   // If scheme data is not yet loaded, display a loading message or a placeholder
@@ -47,8 +66,8 @@ const InsuranceSchemeDetails = () => {
   return (
     <>
       <Navbar />
-      <img src={schemeImage} alt="schemeImge" className="border border-2 rounded-3" style={{ width: "50%", marginLeft: "auto", marginRight: "auto" }} />
-      <div className="col-md-7 col-lg-8" style={{ marginLeft: "auto", marginRight: "auto" }}>
+      <img src={schemeImage} alt="schemeImge" className="border border-2 rounded-3" style={{ width: "40%", marginLeft: "auto", marginRight: "auto" }} />
+      <div className="col-md-7 col-lg-8" style={{ width: "60%", marginLeft: "auto", marginRight: "auto" }}>
         <form key={scheme.id} className="needs-validation" noValidate>
           <h2 className="mb-3 text-center">{scheme.schemeName}</h2>
 
@@ -107,7 +126,7 @@ const InsuranceSchemeDetails = () => {
 
           <hr className="my-4" />
 
-          <button className="w-100 btn btn-primary btn-lg mb-5" type="button" onClick={handleShowMore}>
+          <button className="w-100 btn btn-primary btn-lg mb-5" type="button" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={handleShowMore}>
             Show More Details
           </button>
         </form>

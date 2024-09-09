@@ -15,23 +15,27 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 public class Payment {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(nullable = false)
-	private String paymentType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable = false)
-	private Double amount;
+    @Column(nullable = false)
+    private String paymentType;
 
-	@Column(nullable = false)
-	private LocalDateTime paymentDate = LocalDateTime.now();
+    @Column(nullable = false)
+    private Double amount;
 
-	private Double tax;
+    @Column(nullable = false)
+    private LocalDateTime paymentDate = LocalDateTime.now();
 
-	private Double totalPayment;
+    private Double tax;
 
-	@Column(nullable = false)
-	private String paymentStatus = PaymentStatus.UNPAID.name();
+    private Double totalPayment;
+
+    @ManyToOne
+    @JoinColumn(name = "policy_id", nullable = false)
+    private InsurancePolicy insurancePolicy;
+
+    @Column(nullable = false)
+    private String paymentStatus = PaymentStatus.UNPAID.name();
 }

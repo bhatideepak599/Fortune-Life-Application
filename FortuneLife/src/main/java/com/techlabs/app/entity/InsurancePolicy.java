@@ -60,6 +60,12 @@ public class InsurancePolicy {
 	@Column(nullable = false)
 	private String policyStatus = PolicyStatus.PENDING.name();
 
+	@Column(nullable = false)
+	private Double paidPolicyAmountTillDate = 0D;
+
+	@Column(nullable = false)
+	private Double totalPolicyAmount = 0D;
+
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "schemeId")
 	private InsuranceScheme insuranceScheme;// scheme name
@@ -71,7 +77,7 @@ public class InsurancePolicy {
 	@OneToMany(cascade = { CascadeType.ALL })
 	private List<Nominee> nominees; //
 
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "insurancePolicy")
 	private List<Payment> payments = new ArrayList<>(); //
 
 	@OneToOne(cascade = { CascadeType.ALL })

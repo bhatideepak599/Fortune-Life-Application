@@ -37,11 +37,23 @@ const LoginForm = () => {
       if (response) {
         switch (localStorage.getItem("role")) {
           case "ROLE_ADMIN":
-            navigate('/admin-dashboard');
+            navigate("/admin-dashboard");
             break;
-          
+
+          case "ROLE_EMPLOYEE":
+            navigate("/employee-dashboard");
+            break;
+
+          case "ROLE_AGENT":
+            navigate("/agent-dashboard");
+            break;
+
+          case "ROLE_CUSTOMER":
+            navigate("/customer-dashboard");
+            break;
+
           default:
-            navigate('/'); // Navigate to a default or home route
+            navigate("/");
             break;
         }
       }
@@ -62,27 +74,13 @@ const LoginForm = () => {
           <Form noValidate validated={validated} onSubmit={handleSubmit} className="login-form">
             <Form.Group controlId="loginId">
               <Form.Label>Email Or Username</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your Email or Username"
-                value={loginId}
-                onChange={(e) => setLoginId(e.target.value)}
-                required
-                className="input-field"
-              />
+              <Form.Control type="text" placeholder="Enter your Email or Username" value={loginId} onChange={(e) => setLoginId(e.target.value)} required className="input-field" />
               <Form.Control.Feedback type="invalid">Please provide a login ID.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="input-field"
-              />
+              <Form.Control type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required className="input-field" />
               <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
             </Form.Group>
 
@@ -92,9 +90,13 @@ const LoginForm = () => {
           </Form>
 
           <div className="d-flex justify-content-between mt-3">
-            <a href="#forgot-password" className="text-muted">Forget Password?</a>
+            <a href="#forgot-password" className="text-muted">
+              Forget Password?
+            </a>
             {role !== "Admin" && role !== "Employee" && (
-              <a href="#register" className="text-muted">Register</a>
+              <a href="#register" className="text-muted">
+                Register
+              </a>
             )}
           </div>
         </Col>

@@ -5,9 +5,9 @@ import Modal from "../../../utils/Modals/Modal";
 import { getLoggedInUser } from "../../../services/authService";
 import { uploadFile } from "../../../services/fileServices";
 import "./InsurancePolicy.css";
-import { errorToast } from "../../../utils/Toast";
 import { getSchemeByPlanId } from "../../../services/commonService";
 import { buyNewPolicy } from "../../../services/CustomerService";
+import LoginModal from "../../customerDashBoard/CustomerLogin/LoginModal";
 
 const InsurancePolicy = ({ documentNames, onClose }) => {
   const { planId, schemeId } = useParams();
@@ -17,8 +17,8 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
   const [interestAmount, setInterestAmount] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [fileInputs, setFileInputs] = useState({});
-  // const [submittedDocumentsDto, setSubmittedDocumentsDto] = useState([]);
   const [isTouched, setIsTouched] = useState(true);
   const interestFormRef = useRef();
   const nomineeFormRef = useRef();
@@ -39,7 +39,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
         const response = await getLoggedInUser();
         setCurrentUser(response);
       } catch (error) {
-        errorToast(error);
+        toast.error(error);
       }
     };
 
@@ -52,7 +52,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
         const response = await getSchemeByPlanId(planId, schemeId);
         setUsedScheme(response);
       } catch (error) {
-        errorToast(error);
+        toast.error(error);
       }
     };
 
@@ -84,7 +84,6 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
 
     const sum = interest + parsedTotalInvestmentAmount;
     setTotalAmount(sum);
-    toast.success("Interest Calculated Successfully!");
   };
 
   const handleFileChange = (documentName, event) => {
@@ -116,7 +115,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
             console.error(`Upload response did not contain data for ${documentName}`, response);
           }
         } catch (error) {
-          errorToast("Failed to upload file");
+          toast.error("Failed to upload file");
           console.error(`Error uploading file ${documentName}`, error);
         }
       } else {
@@ -135,7 +134,17 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
       return;
     }
 
-    await handleFileUpload(); // Upload files when clicking Buy Now
+    if (!formData.policyTerm || !formData.policyAmount || !formData.premiumType) {
+      toast.error("Please enter all required fields.");
+      return;
+    }
+
+    if (documentNames.length !== Object.keys(fileInputs).length || Object.values(fileInputs).includes(undefined)) {
+      toast.error("Please select all the required documents.");
+      return;
+    }
+
+    await handleFileUpload();
 
     const dataToSend = {
       premiumType: formData.premiumType,
@@ -150,9 +159,18 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
     console.log(dataToSend);
 
     const response = await buyNewPolicy({ customerId: currentUser.id, schemeId: usedScheme.id, dataToSend });
-    console.log(response);
+    if (response) {
+      toast.success("Policy Created Successfully");
+      console.log(response);
+
+      // const policyId = response.id;
+      // window.open(`/policy-payment/${policyId}`, "_blank");
+    }
+
+    // window.open(`/policy-payment/${6}`, "_blank");
 
     onClose();
+    navigate("/customer-dashboard");
   };
 
   if (!usedScheme || !usedScheme.schemeDetails) {
@@ -175,9 +193,22 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
     }));
   };
 
+  const handleLogin = () => {
+    setIsModalOpen(false);
+    setIsLoginModalOpen(true);
+  };
+
+  const handleRegister = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      <h1 className="text-center mb-4">Create Policy</h1>
+      <h1 className="d-grid mx-auto mt-3">
+        <span className="badge p-3" style={{ backgroundColor: "hsl(245, 67%, 59%)" }}>
+          Create Policy
+        </span>
+      </h1>
 
       <form className="mb-4">
         <div className="mb-3">
@@ -239,9 +270,12 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
             <option value="12">Yearly</option>
           </select>
         </div>
-        <button type="button" className="btn btn-primary" onClick={calculateInterest}>
-          Calculate Interest
-        </button>
+
+        <div className="d-grid col-6 mx-auto">
+          <button type="button" className="btn btn-primary mt-2" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={calculateInterest}>
+            Calculate Interest
+          </button>
+        </div>
       </form>
 
       <form className="mb-4" ref={nomineeFormRef}>
@@ -259,12 +293,11 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
         </div>
         <div className="mb-3">
           <label className="form-label">Nominee Name</label>
-          <input type="text" id="nominee" className={`form-control ${isTouched && !formData.nominee ? "is-invalid" : ""}`} value={formData.nominee} onChange={handleNomineeChange} />
-          {isTouched && !formData.nominee && <small className="text-danger">Nominee name is required.</small>}
+          <input type="text" id="nominee" className="form-control" value={formData.nominee} onChange={handleNomineeChange} />
         </div>
         <div className="mb-3">
           <label className="form-label">Nominee Relation</label>
-          <select className="form-select" id="nomineeRelation" value={formData.nomineeRelation} onChange={handleNomineeChange}>
+          <select className="form-select" id="nomineeRelation" value={formData.nomineeRelation} onChange={handleNomineeChange} disabled={!formData.nominee}>
             <option value="">Select Relation</option>
             <option value="SPOUSE">Spouse</option>
             <option value="CHILD">Child</option>
@@ -277,29 +310,35 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
           {documentNames.map((docName) => (
             <div key={docName} className="mb-3">
               <label className="form-label">{docName}</label>
-              <input type="file" className="form-control" onChange={(e) => handleFileChange(docName, e)} />
+              <input type="file" className="form-control" onChange={(e) => handleFileChange(docName, e)} required />
             </div>
           ))}
         </div>
-        <button type="button" className="btn btn-primary" onClick={handleBuyNow}>
-          Buy Now
-        </button>
+        <div className="d-grid col-6 mx-auto">
+          <button type="button" className="btn btn-primary mt-2" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={handleBuyNow}>
+            Buy Now
+          </button>
+        </div>
       </form>
 
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <div className="text-center">
-            <h5>Login Required</h5>
-            <p>You need to log in to proceed with the purchase.</p>
-            <button className="btn btn-secondary" onClick={() => navigate("/login")}>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} width="40%" height="40%">
+        <div className="text-center">
+          <h5>Login Required</h5>
+          <p>You need to log in to proceed with the purchase.</p>
+          <div className="d-grid gap-4 d-flex justify-content-center mt-5">
+            <button type="button" className="btn btn-primary btn-md col-4" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={handleLogin}>
               Login
             </button>
-            <button className="btn btn-primary ms-2" onClick={() => navigate("/register")}>
+            <button type="button" className="btn btn-secondary btn-md col-4" onClick={handleRegister}>
               Register
             </button>
           </div>
-        </Modal>
-      )}
+        </div>
+      </Modal>
+
+      <Modal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} width="40%" height="55%">
+        <LoginModal onClose={() => setIsLoginModalOpen(false)} />
+      </Modal>
     </>
   );
 };

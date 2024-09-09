@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../customerDashBoard/LandingPage/Navbar/Navbar";
+import Navbar from "../CommonNavbarFooter/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { errorToast } from "../../../utils/Toast";
 import { getSchemesByPlanId } from "../../../services/commonService";
-import { fetchFile } from "../../../services/fileServices"; // Import the fetchFile function
+import { fetchFile } from "../../../services/fileServices";
 import "./InsuranceSchemes.css";
-import Footer from "../../customerDashBoard/LandingPage/Footer/Footer";
+import Footer from "../CommonNavbarFooter/Footer";
 
 const InsuranceSchemes = () => {
   const { planId } = useParams();
+  console.log(planId);
+
   const [schemes, setSchemes] = useState([]);
   const [schemeImages, setSchemeImages] = useState({});
   const navigate = useNavigate();
@@ -17,7 +19,8 @@ const InsuranceSchemes = () => {
     const fetchAllSchemesById = async () => {
       try {
         const response = await getSchemesByPlanId(planId);
-        setSchemes(response);
+        const activeSchemes = response.filter((scheme) => scheme.active);
+        setSchemes(activeSchemes);
 
         const images = {};
         for (const scheme of response) {
@@ -43,7 +46,7 @@ const InsuranceSchemes = () => {
     <>
       <Navbar />
 
-      <section className="popular" id="popular">
+      <section className="popular p-5" id="popular" >
         <div className="container">
           {schemes.length > 0 ? (
             <>

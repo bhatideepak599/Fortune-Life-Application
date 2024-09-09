@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.techlabs.app.enums.PremiumType;
 import com.techlabs.app.exception.FortuneLifeException;
+import com.techlabs.app.util.PageResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.techlabs.app.dto.InsurancePolicyDto;
@@ -150,6 +155,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
         Double sumAssured = 100 + insuranceScheme.getSchemeDetails().getProfitRatio();
         sumAssured = insurancePolicyDto.getPolicyAmount() * 0.01 * sumAssured;
 
+        insurancePolicy.setTotalPolicyAmount(insurancePolicyDto.getPolicyAmount());
         insurancePolicy.setIssueDate(LocalDate.now());
         insurancePolicy.setMaturityDate(LocalDate.now().plusYears(insurancePolicyDto.getTime()));
         insurancePolicy.setInsuranceScheme(insuranceScheme);
@@ -191,4 +197,12 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
         insurancePolicy.setSubmittedDocuments(documents);
         return insurancePolicy;
     }
+
+    @Override
+    public InsurancePolicyResponseDto getPolicyById(Long policyId) {
+        InsurancePolicy insurancePolicy = insurancePolicyRepository.findById(policyId)
+                .orElseThrow(() -> new FortuneLifeException("No Policy Found With ID: " + policyId));
+        return insurancePolicyMapper.entityToDto(insurancePolicy);
+    }
+
 }
