@@ -11,6 +11,7 @@ import CustomerHome from "./components/customerDashBoard/CustomerHome/CustomerHo
 import InsuranceSchemes from "./components/sharedComponents/InsuranceSchemes/InsuranceSchemes";
 import InsuranceSchemeDetails from "./components/sharedComponents/InsuranceSchemes/InsuranceSchemeDetails";
 import ViewAndUpdateScheme from "./components/adminDashboard/adminFunctionComponents/commissionSettings/viewAndUpdateScheme/ViewAndUpdateScheme";
+import { Withdrawal } from "./components/adminDashboard/adminFunctionComponents/withdrawal/Withdrawal";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
         <Route exact path="/view-update-scheme/:planId" element={<ViewAndUpdateScheme />} />
         <Route exact path="/fortuneLife/plan/:planId" element={<InsuranceSchemes />} />
         <Route exact path="/fortuneLife/plan/:planId/scheme-details/:schemeId" element={<InsuranceSchemeDetails />} />
+        <Route exact path="/all-withdrawals" element={<Withdrawal />} />
+        
       </Routes>
     </>
   );

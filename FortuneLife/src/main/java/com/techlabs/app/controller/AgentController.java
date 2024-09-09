@@ -27,7 +27,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/fortuneLife/agent")
-@CrossOrigin(origins = "http://localhost:3000")
+
 public class AgentController {
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 	@Autowired
@@ -106,7 +106,24 @@ public class AgentController {
 		return new ResponseEntity<>(withdrawalDto, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Approve Withdrawal ")
+	@PutMapping("/withdrawal/approve/{id}")
+	public ResponseEntity<Object> approveWithdrawal(@PathVariable("id") Long id) {
+		logger.info("Approving  Withdrawal");
 
+		String approve = withdrawalService.approveWithdrawal(id);
+
+		return new ResponseEntity<>(approve, HttpStatus.OK);
+	}
+	@Operation(summary = "Reject Withdrawal ")
+	@PutMapping("/withdrawal/reject/{id}")
+	public ResponseEntity<Object> rejectWithdrawal(@PathVariable("id") Long id) {
+		logger.info("Rejecting  Withdrawal");
+
+		String reject = withdrawalService.rejectWithdrawal(id);
+
+		return new ResponseEntity<>(reject, HttpStatus.OK);
+	}
 	@Operation(summary = "Get All Agents Withdrawal Requests")
 	@GetMapping("/withdrawal-requests")
 	public ResponseEntity<PageResponse<WithdrawalDto>> getAllWithdrawalRequests(@RequestParam(required = false) Long id,
@@ -115,6 +132,13 @@ public class AgentController {
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
 		logger.info("Fetching All The Agents Withdrawal Requests");
+		if(status!=null) {
+			status=status.toUpperCase();
+			if(status.charAt(0)=='A') status="APPROVED";
+			else if(status.charAt(0)=='R') status="REJECTED";
+			else if(status.charAt(0)=='P') status="PENDING";
+		}
+		
 		PageResponse<WithdrawalDto> allWidrawals = withdrawalService.getAllWithdrawalRequests(id,agentId, status,page, size);
 
 		return new ResponseEntity<>(allWidrawals, HttpStatus.OK);

@@ -6,8 +6,9 @@ import AgentReport from "./agentReport/AgentReport";
 import ManageTaxAndDeductions from "./manageTaxAndDeduction/ManageTaxAndDeductions";
 import { Button } from "react-bootstrap";
 import Modal from "../../sharedComponents/modal/Modal";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AgentwiseCommissionReport from "./agentwiseCommissionReport/AgentwiseCommissionReport";
+import { Withdrawal } from "./withdrawal/Withdrawal";
 // Import other components here
 // import AgentReport from './AgentReport';
 // import InsurancePlanMaster from './InsurancePlanMaster';
@@ -16,6 +17,7 @@ import AgentwiseCommissionReport from "./agentwiseCommissionReport/AgentwiseComm
 
 const MainContent = ({ activeItem, show, setShow }) => {
   const handleClose = () => setShow(false);
+  const navigate=useNavigate();
   const location = useLocation();
   const renderSection = () => {
     const queryParams = new URLSearchParams();
@@ -44,6 +46,9 @@ const MainContent = ({ activeItem, show, setShow }) => {
         );
       case 'Agent wise commission report':
         return <AgentwiseCommissionReport />;
+      case 'Withdrawal approval':
+        // navigate('/all-withdrawals')
+        return <Withdrawal/>
       default:
         return <h2>Select a section</h2>;
     }

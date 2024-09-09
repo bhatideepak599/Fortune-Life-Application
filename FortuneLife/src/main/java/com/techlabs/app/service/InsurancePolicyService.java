@@ -15,4 +15,7 @@ public interface InsurancePolicyService {
 
     InsurancePolicyResponseDto getPolicyById(Long policyId);
 
+	PageResponse<InsurancePolicyResponseDto> getAllPolicies(Long id, Long customerId, Long agentId, Long schemeId,
+			String schemeName, String customerName, String policyStatus, int page, int size);
+
 }

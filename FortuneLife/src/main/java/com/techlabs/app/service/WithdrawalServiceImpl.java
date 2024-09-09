@@ -1,6 +1,7 @@
 package com.techlabs.app.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +44,11 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 			throw new AgentRelatedException("No Agent Found!.");
 		if (agent.getVerified() == false)
 			throw new AgentRelatedException("Agent is Not Active!.");
-		
-		if(agent.getTotalCommission()<amount) throw new AgentRelatedException("Claim Amount Should be Less than Total Commission.");
 
+		if (agent.getTotalCommission() < amount)
+			throw new AgentRelatedException("Claim Amount Should be Less than Total Commission.");
+
+		agent.setTotalCommission(agent.getTotalCommission() - amount);
 		Withdrawal withdrawal = new Withdrawal();
 		withdrawal.setAmount(amount);
 		withdrawal.setStatus(DocumentStatus.PENDING.name());
@@ -60,9 +63,14 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 	private WithdrawalDto entityToDto(Withdrawal withdrawal) {
 		WithdrawalDto withdrawalDto = new WithdrawalDto();
 		withdrawalDto.setAmount(withdrawal.getAmount());
-		withdrawalDto.setId(withdrawal.getId());
+		withdrawalDto.setWithdrawalId(withdrawal.getId());
 		withdrawalDto.setStatus(withdrawal.getStatus());
-		withdrawalDto.setWithdrawalDate(withdrawal.getWithdrawalDate());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+		String formattedDate = withdrawal.getWithdrawalDate().format(formatter);
+
+		LocalDateTime dateTime = LocalDateTime.parse(formattedDate, formatter);
+		withdrawalDto.setWithdrawalDate(dateTime);
 		withdrawalDto.setAgentDto(agentMapper.entityToDto(withdrawal.getAgent()));
 
 		return withdrawalDto;
@@ -81,13 +89,34 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 		List<Withdrawal> allWithdrawals = withdrawals.getContent();
 		List<WithdrawalDto> response = new ArrayList<>();
 		for (Withdrawal withdrawal : allWithdrawals) {
-			
+
 			response.add(entityToDto(withdrawal));
 		}
 
-		return new PageResponse<>(response, withdrawals.getNumber(), withdrawals.getNumberOfElements(), withdrawals.getTotalElements(),
-				withdrawals.getTotalPages(), withdrawals.isLast());
-		
+		return new PageResponse<>(response, withdrawals.getNumber(), withdrawals.getNumberOfElements(),
+				withdrawals.getTotalElements(), withdrawals.getTotalPages(), withdrawals.isLast());
+
+	}
+
+	@Override
+	public String approveWithdrawal(Long id) {
+		Withdrawal withdrawal=withdrawalRepository.findById(id)
+				.orElseThrow(()-> new FortuneLifeException("No Request Found For WithDrawal!."));
+		withdrawal.setStatus("APPROVED");
+		withdrawalRepository.save(withdrawal);
+		return "WithDrawal Approved";
+	}
+
+	@Override
+	public String rejectWithdrawal(Long id) {
+		Withdrawal withdrawal=withdrawalRepository.findById(id)
+				.orElseThrow(()-> new FortuneLifeException("No Request Found For WithDrawal!."));
+		withdrawal.setStatus("REJECTED");
+		Agent agent=withdrawal.getAgent();
+		agent.setTotalCommission(agent.getTotalCommission()+withdrawal.getAmount());
+		withdrawalRepository.save(withdrawal);
+		agentRepository.save(agent);
+		return "WithDrawal Rejected";
 	}
 
 }

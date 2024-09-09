@@ -9,4 +9,8 @@ public interface WithdrawalService {
 
 	PageResponse<WithdrawalDto> getAllWithdrawalRequests(Long id, Long agentId, String status, int page, int size);
 
+	String approveWithdrawal(Long id);
+
+	String rejectWithdrawal(Long id);
+
 }

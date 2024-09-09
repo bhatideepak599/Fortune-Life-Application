@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class WithdrawalDto {
 
-	private Long id;
+	private Long withdrawalId;
 	
 	private LocalDateTime withdrawalDate;
 	

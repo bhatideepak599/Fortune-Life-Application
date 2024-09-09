@@ -32,8 +32,8 @@ public class Customer {
 	
 	@Column(nullable = false)
 	private Boolean verified=false;
-	@OneToMany(cascade = { CascadeType.ALL })
-	private List<InsurancePolicy> policies;
+	  @OneToMany(mappedBy = "customer", cascade = { CascadeType.ALL })
+	    private List<InsurancePolicy> policies;
 
 	@OneToOne(cascade = { CascadeType.ALL})
 	@JoinColumn(name = "userId")

@@ -21,9 +21,11 @@ public class InsurancePolicyResponseDto {
 	private String schemeName;
 	private String agentName;
 	private Long agentId;
+	private CustomerDto customerDto;
 	private List<PaymentDto> paymentList;
 	private Double totalPolicyAmount;
 	private Double totalAmountPaidTillDate;
 	private List<String> nomineeNameAndRelation;
 	private Set<SubmittedDocumentDto> submittedDocumentsDto = new HashSet<>();
+	
 }

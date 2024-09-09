@@ -83,6 +83,10 @@ public class InsurancePolicy {
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "claimId")
 	private Claim claims; //
+	
+	  @ManyToOne(cascade = { CascadeType.ALL })
+	    @JoinColumn(name = "customerId")
+	    private Customer customer;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private Set<SubmittedDocument> submittedDocuments = new HashSet<>();//

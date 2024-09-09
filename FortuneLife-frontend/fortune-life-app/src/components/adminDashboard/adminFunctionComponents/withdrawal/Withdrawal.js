@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
-import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
-import {Dropdown } from "react-bootstrap";
-import { FaDownload } from 'react-icons/fa';
-import { getAgentsExcelReport, getAgentsPdfReport } from "../../../../services/reportsService";
 import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getAllAgents } from "../../../../services/agentService";
+import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
+import { Dropdown, Pagination } from "react-bootstrap";
+import { FaDownload } from "react-icons/fa";
+import { approveWithdrawal, getAllWithdrawals, rejectWithdrawal } from "../../../../services/withdrawalService";
+import {
+  getWithdrawalsExcelReport,
+  getWithdrawalsPdfReport,
+} from "../../../../services/reportsService";
 
-const AgentwiseCommissionReport = () => {
+export const Withdrawal = () => {
   const location = useLocation();
-  const navigate=useNavigate()
-  const [agents, setAgents] = useState([]);
-  const [agentsList, setAgentsList] = useState([]);
+  const navigate = useNavigate();
+  const [withdrawals, setWithdrawals] = useState([]);
+  const [withdrawalsList, setWithdrawalsList] = useState([]);
   const [flag, setFlag] = useState(false);
   const [format, setFormat] = useState("pdf");
   const [searchType, setSearchType] = useState("");
@@ -23,61 +25,48 @@ const AgentwiseCommissionReport = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchParams, setSearchParams] = useState({
     id: "",
-    username: "",
-    name: "",
-    mobileNumber: "",
-    email: "",
-    active: "",
-    verified: ""
+    agentId: "",
+    status: "",
   });
 
-  useEffect(()=>{
-   
-      const queryParams = new URLSearchParams(location.search);
-      const initialPageSize = parseInt(queryParams.get("pageSize")) || 5;
-      const initialPageNumber = parseInt(queryParams.get("pageNumber")) || 0;
-      const initialSearchType = queryParams.get("searchType") || "Search By:";
-      const initialSearchParams = {
-        id: queryParams.get("id"),
-        name: queryParams.get("name") || "",
-        username: queryParams.get("username") || "",
-        active: queryParams.get("active") || "",
-        mobileNumber: queryParams.get("mobileNumber") || "",
-        email: queryParams.get("email") || "",
-        active: queryParams.get("active") || "",
-        
-        verified: queryParams.get("verified") || "",
-      };
-      setPageSize(initialPageSize);
-      setPageNumber(initialPageNumber);
-      setSearchType(initialSearchType);
-      setSearchParams(initialSearchParams);
-  
-  },[])
-
   useEffect(() => {
-    fetchAgents();
+    const queryParams = new URLSearchParams(location.search);
+    const initialPageSize = parseInt(queryParams.get("pageSize")) || 5;
+    const initialPageNumber = parseInt(queryParams.get("pageNumber")) || 0;
+    const initialSearchType = queryParams.get("searchType") || "Search By:";
+    const initialSearchParams = {
+      id: queryParams.get("id"),
+      agentId: queryParams.get("agentId") || "",
+      status: queryParams.get("status") || "",
+    };
+    setPageSize(initialPageSize);
+    setPageNumber(initialPageNumber);
+    setSearchType(initialSearchType);
+    setSearchParams(initialSearchParams);
+  }, []);
+  useEffect(() => {
+    fetchWithdrawals();
   }, [pageSize, pageNumber, flag]);
 
-  const fetchAgents = async () => {
-   
-    
+  const fetchWithdrawals = async () => {
     try {
-      const response = await getAllAgents(pageSize,
+      const response = await getAllWithdrawals(
+        pageSize,
         pageNumber,
-        searchParams);
-      setAgentsList(response.content); // Set the response content to AgentsList
+        searchParams
+      );
+      setWithdrawalsList(response.content); // Set the response content to AgentsList
       setTotalPages(response.totalPages);
+      console.log(withdrawalsList);
 
       const keys = [
-        "id",
-        "userDto.firstName",
-        "userDto.lastName",
-        "userDto.mobileNumber",
-        "active",
-        "totalTransactions",
-        "totalCommission",
-       
+        "withdrawalId",
+        "agentDto.id",
+        "agentDto.userDto.firstName",
+        "agentDto.totalCommission",
+        "withdrawalDate",
+        "amount",
+        "status",
       ];
 
       const newSanitizedData = sanitizedData({
@@ -86,7 +75,7 @@ const AgentwiseCommissionReport = () => {
       });
 
       //console.log("Sanitized Data:", newSanitizedData);
-      setAgents(newSanitizedData);
+      setWithdrawals(newSanitizedData);
       setTotalPages(response.totalPages);
       const queryParams = new URLSearchParams();
       queryParams.set("pageSize", pageSize);
@@ -101,11 +90,10 @@ const AgentwiseCommissionReport = () => {
       errorToast(error.response?.data?.message);
     }
   };
-
   const handleSearch = () => {
-    setAgents([])
-    setPageNumber(0); 
-    fetchAgents();
+    setWithdrawals([]);
+    setPageNumber(0);
+    fetchWithdrawals();
   };
 
   const handleFormatChange = (eventKey) => {
@@ -117,46 +105,43 @@ const AgentwiseCommissionReport = () => {
       let response;
       let blob;
       let fileName;
-  
+
       if (format === "pdf") {
-        response = await getAgentsPdfReport();
+        response = await getWithdrawalsPdfReport();
         if (!response || !response.data) {
           throw new Error("Failed to fetch PDF data");
         }
         blob = new Blob([response.data], { type: "application/pdf" });
         fileName = "Agents_report.pdf";
       } else {
-        response = await getAgentsExcelReport();
+        response = await getWithdrawalsExcelReport();
         if (!response || !response.data) {
           throw new Error("Failed to fetch Excel data");
         }
-        blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+        blob = new Blob([response.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
         fileName = "Agents_report.xlsx";
       }
-  
-      
+
       if (response.data.byteLength === 0) {
         throw new Error("The downloaded file is empty");
       }
-  
-    
-      const link = document.createElement('a');
+
+      const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = fileName;
       link.click();
-  
-     
+
       window.URL.revokeObjectURL(link.href);
-  
-      
-     // successToast(`${format.toUpperCase()} Downloaded Successfully`);
+
+      // successToast(`${format.toUpperCase()} Downloaded Successfully`);
     } catch (error) {
-      console.error("Error during download:", error);
+     
       errorToast(error.message || "Error downloading the file");
     }
   };
-  
-  
+
   const handleSearchTypeChange = (type) => {
     setSearchType(type);
     setSearchParams((prevParams) => ({ ...prevParams, [type]: "" }));
@@ -164,18 +149,14 @@ const AgentwiseCommissionReport = () => {
   const handleReset = () => {
     setSearchParams({
       id: "",
-      userName: "",
-      name: "",
-      mobileNumber: "",
-      email: "",
-      active: "",
-      verified: ""
+      agentId: "",
+      status: "",
     });
     setSearchType("");
     setPageNumber(0);
     setPageSize(5);
 
-    fetchAgents();
+    fetchWithdrawals();
   };
 
   const pageObject = {
@@ -188,33 +169,43 @@ const AgentwiseCommissionReport = () => {
   const handleSearchChange = (e) => {
     setSearchParams({
       ...searchParams,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
- 
-
+  const handleApproveClick=async(id)=>{
+    try{
+        const response= await approveWithdrawal(id);
+        if(response){
+            successToast("WithDrawal Approved")
+        }
+    }catch (error) {
+        errorToast(error.response?.data?.message);
+      }
+    
+  }
+  const handleRejectClick=async(id)=>{
+    try{
+        const response= await rejectWithdrawal(id);
+        if(response){
+            warnToast("WithDrawal Rejected")
+        }
+    }catch (error) {
+      errorToast(error.response?.data?.message);
+    }
+  }
+  const actions = {
+    approve: handleApproveClick,
+    reject: handleRejectClick,
+  };
   return (
     <div>
-      <h2 className="text-center mb-4">Agent Wise Commission List</h2>
-  
-      <div className="d-flex justify-content-between mb-0 align-items-center">
-        <div className="d-flex flex-grow-1 me-3">
-          <SearchComponent
-            searchType={searchType}
-            searchParams={searchParams}
-            handleSearchTypeChange={handleSearchTypeChange}
-            handleSearchChange={handleSearchChange}
-            handleSearch={handleSearch}
-            handleReset={handleReset}
-          />
-        </div>
-  
+      <div className="d-flex justify-content-center align-items-center mb-4">
         <div className="d-flex align-items-center">
           <Dropdown onSelect={handleFormatChange}>
             <Dropdown.Toggle id="dropdown-basic">
-              {format.toUpperCase()}
+             
             </Dropdown.Toggle>
-  
+
             <Dropdown.Menu>
               <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
               <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>
@@ -223,12 +214,18 @@ const AgentwiseCommissionReport = () => {
           <FaDownload size={18} className="ms-2" onClick={handleDownload} />
         </div>
       </div>
-  
-      <div className="mt-0">
-        <CommonTable data={agents} />
-      </div>
-  
-      <div className="table-footer mt-3">
+
+      <h2 className="text-center mb-4">Agents List</h2>
+      <SearchComponent
+        searchType={searchType}
+        searchParams={searchParams}
+        handleSearchTypeChange={handleSearchTypeChange}
+        handleSearchChange={handleSearchChange}
+        handleSearch={handleSearch}
+        handleReset={handleReset}
+      />
+      <CommonTable data={withdrawals} actions={actions} />
+      <div className="table-footer">
         <Pagination
           pager={pageObject}
           onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
@@ -236,8 +233,4 @@ const AgentwiseCommissionReport = () => {
       </div>
     </div>
   );
-  
-  
 };
-
-export default AgentwiseCommissionReport;

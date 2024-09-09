@@ -17,6 +17,6 @@ public class CustomerDto {
 	private Boolean active;
 	private Boolean verified;
 	private UserDto userDto;
-	private List<InsurancePolicyResponseDto> policies;
+	//private List<InsurancePolicyResponseDto> policies;
 
 }

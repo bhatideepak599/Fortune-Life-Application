@@ -15,8 +15,8 @@ import com.techlabs.app.entity.User;
 public class CustomerMapper {
 	@Autowired
 	private UserMapper userMapper;
-	@Autowired
-	private InsurancePolicyMapper insurancePolicyMapper;
+//	@Autowired
+//	private InsurancePolicyMapper insurancePolicyMapper;
 
 	public Customer getCustomer(User user) {
 		Customer customer = new Customer();
@@ -34,10 +34,10 @@ public class CustomerMapper {
 		customerDto.setUserDto(userDto);
 		customerDto.setVerified(customer.getVerified());
 		
-		List<InsurancePolicyResponseDto> allPolicies=new ArrayList<>();
+		//List<InsurancePolicyResponseDto> allPolicies=new ArrayList<>();
 		
-		customer.getPolicies().forEach((policy)->allPolicies.add(insurancePolicyMapper.entityToDto(policy)) );
-		customerDto.setPolicies(allPolicies);
+//		customer.getPolicies().forEach((policy)->allPolicies.add(insurancePolicyMapper.entityToDto(policy)) );
+//		customerDto.setPolicies(allPolicies);
 
 		return customerDto;
 	}

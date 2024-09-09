@@ -11,34 +11,41 @@ const SearchComponent = ({
 }) => {
   return (
     <div className="d-flex justify-content-end mb-3">
-      <Row className="my-3 align-items-end">
+      <Row className="my-4 mx-5  align-items-end">
         <Col md={3}>
           <Dropdown>
             <Dropdown.Toggle variant="info" id="searchDropdown">
               {searchType ? searchType.toUpperCase() : 'Search By:'}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleSearchTypeChange("id")}>
-                Customer ID
+             <Dropdown.Item onClick={() => handleSearchTypeChange("id")}>
+                 ID
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleSearchTypeChange("name")}>
+              {searchParams.name=="" && <Dropdown.Item onClick={() => handleSearchTypeChange("name")}>
                 Name
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleSearchTypeChange("userName")}>
+              </Dropdown.Item>}
+              {searchParams.userName=="" && <Dropdown.Item onClick={() => handleSearchTypeChange("userName")}>
                 User Name
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleSearchTypeChange("mobileNumber")}>
+              </Dropdown.Item>}
+
+              {searchParams.mobileNumber=="" && <Dropdown.Item onClick={() => handleSearchTypeChange("mobileNumber")}>
                 Mobile Number
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleSearchTypeChange("email")}>
+              </Dropdown.Item>}
+            { searchParams.email=="" &&  <Dropdown.Item onClick={() => handleSearchTypeChange("email")}>
                 Email
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleSearchTypeChange("active")}>
+              </Dropdown.Item>}
+              {searchParams.active=="" && <Dropdown.Item onClick={() => handleSearchTypeChange("active")}>
                 Active
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleSearchTypeChange("verified")}>
+              </Dropdown.Item>}
+             { searchParams.verified=="" && <Dropdown.Item onClick={() => handleSearchTypeChange("verified")}>
                 Verified
-              </Dropdown.Item>
+              </Dropdown.Item>}
+              {searchParams.agentId=="" && <Dropdown.Item onClick={() => handleSearchTypeChange("agentId")}>
+                Agent Id
+              </Dropdown.Item>}
+              {searchParams.status=="" && <Dropdown.Item onClick={() => handleSearchTypeChange("status")}>
+                Status
+              </Dropdown.Item>}
             </Dropdown.Menu>
           </Dropdown>
         </Col>

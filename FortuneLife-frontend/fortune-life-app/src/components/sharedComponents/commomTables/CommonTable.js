@@ -36,8 +36,24 @@ const CommonTable = ({ data, actions }) => {
                   : row[header]}
               </td>
             ))}
+           
             {actions && (
               <td>
+                {row.status=="PENDING" && (<>
+                  <button
+                  className="btn btn-success me-2"
+                  onClick={() => actions.approve(row[primaryKey])}
+                >
+                  Approve
+                </button>
+                <button
+                className="btn btn-danger me-2"
+                onClick={() => actions.reject(row[primaryKey])}
+              >
+                Reject
+              </button>
+              </>
+                )}
                 {row.active ? (
                   <>
                     {actions.update && (
