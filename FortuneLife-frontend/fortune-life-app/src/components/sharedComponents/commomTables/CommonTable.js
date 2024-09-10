@@ -1,111 +1,88 @@
-import React from 'react';
+import React from "react";
 
-import  "../commomTables/commonTables.css"
+import "../commomTables/commonTables.css";
 const CommonTable = ({ data, actions }) => {
-    if (!data || !data.length) return <div>No data available</div>;
+  if (!data || !data.length) return <div>No data available</div>;
 
-    const headers = Object.keys(data[0]);
-    const primaryKey = headers[0];
+  const headers = Object.keys(data[0]);
+  const primaryKey = headers[0];
   return (
-    <div className="table-container" >
-      <table className="styled-table"
-      >
+    <div className="table-container">
+      <table className="styled-table">
         <thead>
           <tr>
-          {headers.map((header) => (
-            <th  key={header}>{formatHeader(header)}</th>
-          ))}
-          {actions && <th>Actions</th>}
+            {headers.map((header) => (
+              <th key={header}>{formatHeader(header)}</th>
+            ))}
+            {actions && <th>Actions</th>}
           </tr>
         </thead>
-        <tbody style={{
+        <tbody
+          style={{
+            background: "linear-gradient(135deg, #f3f4f6, #af92ca69)",
+          }}
+        >
+          {data.map((row, index) => (
+            <tr key={index}>
+              {headers.map((header) => (
+                <td
+                  style={{
                     background: "linear-gradient(135deg, #f3f4f6, #af92ca69)",
-                  }}>
-        {data.map((row, index) => (
-          <tr key={index}>
-            {headers.map((header) => (
-              <td style={{
-                background: "linear-gradient(135deg, #f3f4f6, #af92ca69)",
-              }} key={header}>
-                {header === "active"
-                  ? row[header]
-                    ? "Active"
-                    : "Inactive"
-                  : typeof row[header] === "object"
-                  ? JSON.stringify(row[header])
-                  : row[header]}
-              </td>
-            ))}
-           
-            {actions && (
-              <td>
-                {row.status=="PENDING" && (<>
-                  <button
-                  className="btn btn-success me-2"
-                  onClick={() => actions.approve(row[primaryKey])}
+                  }}
+                  key={header}
                 >
-                  Approve
-                </button>
-                <button
-                className="btn btn-danger me-2"
-                onClick={() => actions.reject(row[primaryKey])}
-              >
-                Reject
-              </button>
-              </>
-                )}
-                {row.active ? (
-                  <>
-                    {actions.update && (
-                      <button
-                        className="btn btn-success me-2"
-                        onClick={() => actions.update(row[primaryKey])}
-                      >
-                        Update
+                  {header === "active" ? (row[header] ? "Active" : "Inactive") : typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header]}
+                </td>
+              ))}
+
+              {actions && (
+                <td>
+                  {row.status === "PENDING" && (
+                    <>
+                      <button className="btn btn-success me-2" onClick={() => actions.approve(row[primaryKey])}>
+                        Approve
                       </button>
-                    )}
-                    {actions.delete && (
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => actions.delete(row[primaryKey])}
-                      >
-                        Delete
+                      <button className="btn btn-danger me-2" onClick={() => actions.reject(row[primaryKey])}>
+                        Reject
                       </button>
-                    )}
-                    {actions.create && (
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => actions.create(row[primaryKey])}
-                      >
-                        Create
+                    </>
+                  )}
+                  {row.active ? (
+                    <>
+                      {actions.update && (
+                        <button className="btn btn-success me-2" onClick={() => actions.update(row[primaryKey])}>
+                          Update
+                        </button>
+                      )}
+                      {actions.delete && (
+                        <button className="btn btn-danger" onClick={() => actions.delete(row[primaryKey])}>
+                          Delete
+                        </button>
+                      )}
+                      {actions.create && (
+                        <button className="btn btn-primary" onClick={() => actions.create(row[primaryKey])}>
+                          Create
+                        </button>
+                      )}
+                      {actions.view && (
+                        <button className="btn btn-secondary" onClick={() => actions.view(row[primaryKey])}>
+                          View
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    actions.activate && (
+                      <button className="btn btn-secondary" onClick={() => actions.activate(row[primaryKey])}>
+                        Activate
                       </button>
-                    )}
-                    {actions.view && (
-                      <button
-                        className="btn btn-secondary"
-                        onClick={() => actions.view(row[primaryKey])}
-                      >
-                        View
-                      </button>
-                    )}
-                  </>
-                ) : (
-                  actions.activate && (
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => actions.activate(row[primaryKey])}
-                    >
-                      Activate
-                    </button>
-                  )
-                )}
-              </td>
-            )}
-          </tr>
-        ))}
+                    )
+                  )}
+                </td>
+              )}
+            </tr>
+          ))}
         </tbody>
       </table>
-     
     </div>
   );
 };

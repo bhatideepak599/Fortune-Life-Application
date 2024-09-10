@@ -59,13 +59,13 @@ export const getAllAgents = async (pageSize,
         Authorization: accessToken, // Add the correct authorization format
       },
       params:{
-        id: searchParams.id!=""?searchParams.id:null, 
-        userName: searchParams.username!=""?searchParams.username:null, 
-        name: searchParams.name!=""?searchParams.name:null, 
-        mobileNumber: searchParams.mobileNumber!=""?searchParams.mobileNumber:null, 
-        email: searchParams.email!=""?searchParams.email:null,
-        active: searchParams.active!=""?searchParams.active:null, 
-        verified: searchParams.verified!=""?searchParams.verified:null, 
+        id: searchParams.id!==""?searchParams.id:null, 
+        userName: searchParams.username!==""?searchParams.username:null, 
+        name: searchParams.name!==""?searchParams.name:null, 
+        mobileNumber: searchParams.mobileNumber!==""?searchParams.mobileNumber:null, 
+        email: searchParams.email!==""?searchParams.email:null,
+        active: searchParams.active!==""?searchParams.active:null, 
+        verified: searchParams.verified!==""?searchParams.verified:null, 
         page: pageNumber,
         size: pageSize
       }

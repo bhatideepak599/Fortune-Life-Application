@@ -32,62 +32,62 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class InsurancePolicy {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private LocalDate issueDate = LocalDate.now();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private LocalDate maturityDate;
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate issueDate = LocalDate.now();
 
-	@Column(nullable = false)
-	@NotBlank
-	private String premiumType;
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate maturityDate;
 
-	@Column(nullable = false)
-	@PositiveOrZero(message = "Amount Should be Greater than Zero")
-	private Double sumAssured;
+    @Column(nullable = false)
+    @NotBlank
+    private String premiumType;
 
-	@Column(nullable = false)
-	@PositiveOrZero(message = "Amount Should be Greater than Zero")
-	private Double premiumAmount;
+    @Column(nullable = false)
+    @PositiveOrZero(message = "Amount Should be Greater than Zero")
+    private Double sumAssured;
 
-	@Column(nullable = false)
-	private String policyStatus = PolicyStatus.PENDING.name();
+    @Column(nullable = false)
+    @PositiveOrZero(message = "Amount Should be Greater than Zero")
+    private Double premiumAmount;
 
-	@Column(nullable = false)
-	private Double paidPolicyAmountTillDate = 0D;
+    @Column(nullable = false)
+    private String policyStatus = PolicyStatus.PENDING.name();
 
-	@Column(nullable = false)
-	private Double totalPolicyAmount = 0D;
+    @Column(nullable = false)
+    private Double paidPolicyAmountTillDate = 0D;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "schemeId")
-	private InsuranceScheme insuranceScheme;// scheme name
+    @Column(nullable = false)
+    private Double totalPolicyAmount = 0D;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "agentId")
-	private Agent agent; //agent
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "schemeId")
+    private InsuranceScheme insuranceScheme;// scheme name
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	private List<Nominee> nominees; //
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "agentId")
+    private Agent agent; //agent
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "insurancePolicy")
-	private List<Payment> payments = new ArrayList<>(); //
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Nominee> nominees; //
 
-	@OneToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "claimId")
-	private Claim claims; //
-	
-	  @ManyToOne(cascade = { CascadeType.ALL })
-	    @JoinColumn(name = "customerId")
-	    private Customer customer;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insurancePolicy")
+    private List<Payment> payments = new ArrayList<>(); //
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	private Set<SubmittedDocument> submittedDocuments = new HashSet<>();//
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "claimId")
+    private Claim claims; //
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "customerId")
+    private Customer customer;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    private Set<SubmittedDocument> submittedDocuments = new HashSet<>();//
 }

@@ -7,6 +7,7 @@ import com.techlabs.app.dto.PaymentDto;
 import com.techlabs.app.entity.*;
 import com.techlabs.app.enums.CommissionType;
 import com.techlabs.app.enums.PaymentType;
+import com.techlabs.app.enums.PolicyStatus;
 import com.techlabs.app.exception.FortuneLifeException;
 import com.techlabs.app.mapper.PaymentMapper;
 import com.techlabs.app.repository.AgentRepository;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,8 +69,19 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         payment.setTax(paymentDto.getTax());
         payment.setTotalPayment(paymentDto.getTotalPayment());
         payment.setPaymentDate(LocalDateTime.now());
+        payment.setInsurancePolicy(policy);
         double totalAmountPaidTillDate = paymentDto.getAmount() + policy.getPaidPolicyAmountTillDate();
         policy.setPaidPolicyAmountTillDate(totalAmountPaidTillDate);
+        policy.setPolicyStatus(PolicyStatus.ACTIVE.name());
+
+        if(policy.getTotalPolicyAmount()<policy.getPaidPolicyAmountTillDate()){
+            throw new FortuneLifeException("Paid amount till date exceeds total policy amount");
+        }
+
+        if(Objects.equals(policy.getTotalPolicyAmount(), policy.getPaidPolicyAmountTillDate())){
+            policy.setPolicyStatus(PolicyStatus.COMPLETE.name());
+        }
+
         policy.getPayments().add(payment);
 
         InsuranceScheme insuranceScheme = policyRepository.findInsuranceSchemeByPolicyId(policy.getId());

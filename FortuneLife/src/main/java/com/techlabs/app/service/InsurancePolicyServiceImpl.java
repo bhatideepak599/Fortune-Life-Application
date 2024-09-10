@@ -171,7 +171,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 		}
 
 		insurancePolicy.setSumAssured(sumAssured);
-		insurancePolicy.setPolicyStatus(PolicyStatus.ACTIVE.name());
+		insurancePolicy.setPolicyStatus(PolicyStatus.PENDING.name());
 		insurancePolicy.setPayments(new ArrayList<>());
 
 		Set<SubmittedDocument> documents = new HashSet<>();

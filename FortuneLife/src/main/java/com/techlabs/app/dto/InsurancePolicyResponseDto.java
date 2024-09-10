@@ -6,26 +6,30 @@ import java.util.List;
 import java.util.Set;
 
 import com.techlabs.app.entity.Payment;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class InsurancePolicyResponseDto {
 
-	private Long id;
-	private LocalDate issueDate;
-	private LocalDate maturityDate;
-	private String premiumType;
-	private Double sumAssured;
-	private Double premiumAmount;
-	private String policyStatus;
-	private String schemeName;
-	private String agentName;
-	private Long agentId;
-	private CustomerDto customerDto;
-	private List<PaymentDto> paymentList;
-	private Double totalPolicyAmount;
-	private Double totalAmountPaidTillDate;
-	private List<String> nomineeNameAndRelation;
-	private Set<SubmittedDocumentDto> submittedDocumentsDto = new HashSet<>();
-	
+    private Long id;
+    private LocalDate issueDate;
+    private LocalDate maturityDate;
+    private String premiumType;
+    private Double sumAssured;
+    private Double premiumAmount;
+    private String policyStatus;
+    private String schemeName;
+    private String agentName;
+    private Long agentId;
+    private CustomerDto customerDto;
+    private Long claimId;
+    private List<PaymentDto> paymentList;
+    private Double totalPolicyAmount;
+    private Double totalAmountPaidTillDate;
+    private List<String> nomineeNameAndRelation;
+    private Set<SubmittedDocumentDto> submittedDocumentsDto = new HashSet<>();
+
 }

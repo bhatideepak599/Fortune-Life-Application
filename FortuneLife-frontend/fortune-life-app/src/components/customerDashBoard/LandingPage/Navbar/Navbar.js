@@ -76,7 +76,7 @@ const Navbar = () => {
               </li>
 
               <li className="ms-4">
-                <a href="/" className="fs-5 nav-link px-2 link-body-emphasis">
+                <a href="/fortuneLife/policy" className="fs-5 nav-link px-2 link-body-emphasis">
                   My Policies
                 </a>
               </li>

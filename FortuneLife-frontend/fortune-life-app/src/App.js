@@ -12,6 +12,8 @@ import InsuranceSchemes from "./components/sharedComponents/InsuranceSchemes/Ins
 import InsuranceSchemeDetails from "./components/sharedComponents/InsuranceSchemes/InsuranceSchemeDetails";
 import ViewAndUpdateScheme from "./components/adminDashboard/adminFunctionComponents/commissionSettings/viewAndUpdateScheme/ViewAndUpdateScheme";
 import { Withdrawal } from "./components/adminDashboard/adminFunctionComponents/withdrawal/Withdrawal";
+import CustomerPolicies from "./components/customerDashBoard/CustomerPolicies/CustomerPolicies";
+import PolicyPaymentDetails from "./components/Payment/PolicyPaymentDetails";
 
 function App() {
   return (
@@ -28,8 +30,9 @@ function App() {
         <Route exact path="/view-update-scheme/:planId" element={<ViewAndUpdateScheme />} />
         <Route exact path="/fortuneLife/plan/:planId" element={<InsuranceSchemes />} />
         <Route exact path="/fortuneLife/plan/:planId/scheme-details/:schemeId" element={<InsuranceSchemeDetails />} />
+        <Route exact path="/fortuneLife/policy" element={<CustomerPolicies />} />
+        <Route exact path="/fortuneLife/policy/:policyId/payment-details" element={<PolicyPaymentDetails />} />
         <Route exact path="/all-withdrawals" element={<Withdrawal />} />
-        
       </Routes>
     </>
   );

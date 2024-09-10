@@ -33,6 +33,7 @@ public class PaymentController {
 
     @PostMapping("/charge")
     public ResponseEntity<Object> chargeCard(@Valid @RequestBody PaymentDto paymentDto) {
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         Payment payment = new Payment();
         try {
 

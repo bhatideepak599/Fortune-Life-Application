@@ -3,32 +3,6 @@ import axios from "axios";
 const API_BASE_URL = `http://localhost:8082`;
 const token = `Bearer ${localStorage.getItem("accessToken")}`;
 
-export const createPaymentIntent = async ({ policyId, paymentMethodId, paymentType, amount, tax, totalPayment }) => {
-  try {
-    const response = await axios.post(
-      `${API_BASE_URL}/fortuneLife/payments/charge`,
-      {
-        policyId,
-        paymentMethodId,
-        paymentType,
-        amount,
-        tax,
-        totalPayment,
-      },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error("Error creating payment intent:", error);
-    return { error: error.message };
-  }
-};
-
 export const getCustomerById = async ({ id }) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/customer/${id}`, {
@@ -105,27 +79,25 @@ export const updateCustomerByAdmin = async (customer) => {
     throw error;
   }
 };
-export const getAllCustomers = async ( pageSize,
-  pageNumber,
-  searchParams) => {
+export const getAllCustomers = async (pageSize, pageNumber, searchParams) => {
   //console.log(searchParams + "================================");
-  
+
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/customer`, {
       headers: {
         Authorization: token,
       },
-      params:{
-        id: searchParams.id!=""?searchParams.id:null, 
-        userName: searchParams.username!=""?searchParams.username:null, 
-        name: searchParams.name!=""?searchParams.name:null, 
-        mobileNumber: searchParams.mobileNumber!=""?searchParams.mobileNumber:null, 
-        email: searchParams.email!=""?searchParams.email:null,
-        active: searchParams.active!=""?searchParams.active:null, 
-        verified: searchParams.verified!=""?searchParams.verified:null, 
+      params: {
+        id: searchParams.id !== "" ? searchParams.id : null,
+        userName: searchParams.username !== "" ? searchParams.username : null,
+        name: searchParams.name !== "" ? searchParams.name : null,
+        mobileNumber: searchParams.mobileNumber !== "" ? searchParams.mobileNumber : null,
+        email: searchParams.email !== "" ? searchParams.email : null,
+        active: searchParams.active !== "" ? searchParams.active : null,
+        verified: searchParams.verified !== "" ? searchParams.verified : null,
         page: pageNumber,
-        size: pageSize
-      }
+        size: pageSize,
+      },
     });
     console.log(response.data);
 
@@ -149,6 +121,7 @@ export const deleteCustomer = async (id) => {
     throw error;
   }
 };
+
 export const activateCustomer = async (id) => {
   try {
     const response = await axios.put(
@@ -160,6 +133,30 @@ export const activateCustomer = async (id) => {
         },
       }
     );
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getPoliciesByCustomerId = async ({ policyId, schemeName, policyStatus, customerId, page, size }) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy`, {
+      headers: {
+        Authorization: token,
+      },
+      params: {
+        id: policyId,
+        schemeName,
+        policyStatus,
+        customerId,
+        page,
+        size,
+      },
+    });
+
     console.log(response.data);
 
     return response.data;

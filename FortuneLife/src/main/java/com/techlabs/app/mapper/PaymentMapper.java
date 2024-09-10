@@ -27,7 +27,7 @@ public class PaymentMapper {
                 .orElseThrow(() -> new RuntimeException("Policy not found"));
 
         PaymentDto paymentDto = new PaymentDto();
-        paymentDto.setPolicyHolderName(policy.getAgent().getUser().getFirstName() + " " + policy.getAgent().getUser().getLastName()); // Assuming agent has user
+        paymentDto.setPolicyHolderName(policy.getCustomer().getUser().getFirstName() + " " + policy.getCustomer().getUser().getLastName()); // Assuming agent has user
         // details
 
         paymentDto.setPolicyId(policy.getId());

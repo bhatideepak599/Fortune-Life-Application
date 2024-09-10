@@ -10,7 +10,7 @@ export const setTaxGlobally = async (tax) => {
 
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/fortuneLife/admin/set-tax`,{},
+      `${API_BASE_URL}/fortuneLife/tax/set-tax`,{},
 
       {
        
@@ -29,11 +29,12 @@ export const setTaxGlobally = async (tax) => {
   }
 };
 
+
 export const getTax = async () => {
  
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/fortuneLife/admin/get-tax`,
+      `${API_BASE_URL}/fortuneLife/tax/get-tax`,
 
       {
         headers: {

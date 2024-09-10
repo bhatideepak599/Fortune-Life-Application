@@ -49,7 +49,7 @@ const LoginModal = ({ onClose }) => {
                   <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="c-button">
-                  <button type="button" className="btn btn-primary n-button" onClick={UserLogin}>
+                  <button type="button" className="btn btn-primary n-button" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={UserLogin}>
                     Submit
                   </button>
                 </div>

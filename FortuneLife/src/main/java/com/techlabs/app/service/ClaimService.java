@@ -13,4 +13,5 @@ public interface ClaimService {
 
 	String approveOrRejectClaim(Long id,String operation,String message);
 
+    ClaimDto getClaimById(Long id);
 }

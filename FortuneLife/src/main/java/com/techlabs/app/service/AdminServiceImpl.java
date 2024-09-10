@@ -241,29 +241,5 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
-    @Override
-    public GlobalTax setTax(Double taxRate, Double deductionRate) {
-        Optional<GlobalTax> existingTax = globalTaxRepository.findById(1L);
 
-        if (existingTax.isPresent()) {
-            GlobalTax existing = existingTax.get();
-            existing.setTaxRate(taxRate);
-            existing.setDeductionRate(deductionRate);
-            return globalTaxRepository.save(existing);
-        } else {
-            GlobalTax newTax = new GlobalTax();
-            newTax.setId(1L);
-            newTax.setTaxRate(taxRate);
-            newTax.setDeductionRate(deductionRate);
-            return globalTaxRepository.save(newTax);
-        }
-    }
-
-    @Override
-    public GlobalTax getTax() {
-        GlobalTax globalTax = globalTaxRepository.findById(1L)
-                .orElseThrow(()-> new FortuneLifeException("Tax didn't exist please set tax"));
-
-        return globalTax;
-    }
 }

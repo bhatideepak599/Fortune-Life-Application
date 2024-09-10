@@ -20,6 +20,10 @@ public class InsurancePolicyMapper {
     @Autowired
     private PaymentMapper paymentMapper;
 
+    @Autowired
+    private CustomerMapper customerMapper;
+
+
     public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
         InsurancePolicyResponseDto response = new InsurancePolicyResponseDto();
         if (policy.getAgent() != null) {
@@ -38,6 +42,13 @@ public class InsurancePolicyMapper {
         response.setPaymentList(paymentMapper.getDtoList(policy.getPayments()));
         response.setTotalPolicyAmount(policy.getTotalPolicyAmount());
         response.setTotalAmountPaidTillDate(policy.getPaidPolicyAmountTillDate());
+        if(policy.getClaims()!=null){
+            response.setClaimId(policy.getClaims().getId());
+        }else {
+            response.setClaimId(null);
+        }
+        response.setCustomerDto(customerMapper.entityToDto(policy.getCustomer()));
+
 
         List<String> nominies = new ArrayList<>();
 

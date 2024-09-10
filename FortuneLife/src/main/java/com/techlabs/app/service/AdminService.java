@@ -25,8 +25,4 @@ public interface AdminService {
 	AdminDto getAdminById(Long id);
 
 	AdminDto getAdminByToken(HttpServletRequest request);
-
-    GlobalTax setTax(Double taxRate, Double deductionRate);
-
-	GlobalTax getTax();
 }

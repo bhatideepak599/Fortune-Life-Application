@@ -46,3 +46,46 @@ export const getPolicyByPolicyId = async (policyId) => {
     throw error;
   }
 };
+
+export const getGlobalTax = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/tax/get-tax`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const createPaymentIntent = async ({ policyId, paymentMethodId, paymentType, amount, tax, totalPayment }) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/fortuneLife/payments/charge`,
+      {
+        policyId,
+        paymentMethodId,
+        paymentType,
+        amount,
+        tax,
+        totalPayment,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating payment intent:", error);
+    return { error: error.message };
+  }
+};

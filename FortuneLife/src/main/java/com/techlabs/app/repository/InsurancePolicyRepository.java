@@ -13,28 +13,28 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy, Long> {
-	@Query("SELECT ip.insuranceScheme FROM InsurancePolicy ip WHERE ip.id = :policyId")
-	InsuranceScheme findInsuranceSchemeByPolicyId(@Param("policyId") Long policyId);
-	@Query("SELECT i FROM InsurancePolicy i " +
-		       "JOIN i.customer c " +
-		       "JOIN c.user u " +
-		      
-		       "JOIN i.insuranceScheme s " +
-		       "WHERE (:id IS NULL OR i.id = :id) " +
-		       "AND (:customerId IS NULL OR c.id = :customerId) " +
-		       "AND (:agentId IS NULL OR i.agent.id = :agentId) " +
-		       "AND (:schemeId IS NULL OR s.id = :schemeId) " +
-		       "AND (:customerName IS NULL OR LOWER(CONCAT(u.firstName, ' ', u.lastName)) LIKE LOWER(CONCAT('%', :customerName, '%'))) " +
-		       "AND (:schemeName IS NULL OR LOWER(s.schemeName) LIKE LOWER(CONCAT('%', :schemeName, '%'))) " +
-		       "AND (:policyStatus IS NULL OR i.policyStatus = :policyStatus)")
-		Page<InsurancePolicy> findAllPoliciesBasedOnSearch(@Param("id") Long id, 
-		                                                    @Param("customerId") Long customerId,
-		                                                    @Param("agentId") Long agentId, 
-		                                                    @Param("schemeId") Long schemeId, 
-		                                                    @Param("schemeName") String schemeName,
-		                                                    @Param("customerName") String customerName, 
-		                                                    @Param("policyStatus") String policyStatus, 
-		                                                    Pageable pageable);
+    @Query("SELECT ip.insuranceScheme FROM InsurancePolicy ip WHERE ip.id = :policyId")
+    InsuranceScheme findInsuranceSchemeByPolicyId(@Param("policyId") Long policyId);
+
+    @Query("SELECT i FROM InsurancePolicy i " +
+            "JOIN i.customer c " +
+            "JOIN c.user u " +
+            "JOIN i.insuranceScheme s " +
+            "WHERE (:id IS NULL OR i.id = :id) " +
+            "AND (:customerId IS NULL OR c.id = :customerId) " +
+            "AND (:agentId IS NULL OR i.agent.id = :agentId) " +
+            "AND (:schemeId IS NULL OR s.id = :schemeId) " +
+            "AND (:customerName IS NULL OR LOWER(CONCAT(u.firstName, ' ', u.lastName)) LIKE LOWER(CONCAT('%', :customerName, '%'))) " +
+            "AND (:schemeName IS NULL OR LOWER(s.schemeName) LIKE LOWER(CONCAT('%', :schemeName, '%'))) " +
+            "AND (:policyStatus IS NULL OR i.policyStatus = :policyStatus)")
+    Page<InsurancePolicy> findAllPoliciesBasedOnSearch(@Param("id") Long id,
+                                                       @Param("customerId") Long customerId,
+                                                       @Param("agentId") Long agentId,
+                                                       @Param("schemeId") Long schemeId,
+                                                       @Param("schemeName") String schemeName,
+                                                       @Param("customerName") String customerName,
+                                                       @Param("policyStatus") String policyStatus,
+                                                       Pageable pageable);
 
 //	@Query("SELECT i FROM InsurancePolicy i " +
 //		       "JOIN i.customer c " +
@@ -42,7 +42,6 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
 //		       "JOIN i.insuranceScheme s " +
 //		       "WHERE (:id IS NULL OR i.id = :id)")
 //		Page<InsurancePolicy> findPoliciesWithJoins(@Param("id") Long id, Pageable pageable);
-
 
 
 }

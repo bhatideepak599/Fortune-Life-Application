@@ -129,7 +129,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
   const handleBuyNow = async (e) => {
     e.preventDefault();
 
-    if (!currentUser) {
+    if (!(await getLoggedInUser())) {
       setIsModalOpen(true);
       return;
     }
@@ -163,11 +163,11 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
       toast.success("Policy Created Successfully");
       console.log(response);
 
-      // const policyId = response.id;
-      // window.open(`/policy-payment/${policyId}`, "_blank");
+      const policyId = response.id;
+      window.open(`/policy-payment/${policyId}`, "_blank");
     }
 
-    // window.open(`/policy-payment/${6}`, "_blank");
+    // window.open(`/policy-payment/${2}`, "_blank");
 
     onClose();
     navigate("/customer-dashboard");

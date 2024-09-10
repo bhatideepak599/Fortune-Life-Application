@@ -1,10 +1,13 @@
 package com.techlabs.app.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PaymentDto {
     private String policyHolderName;
     private String paymentMethodId;
