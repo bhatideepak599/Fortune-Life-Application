@@ -48,18 +48,19 @@ const PolicyPaymentDetails = () => {
     return <div>Loading...</div>;
   }
 
-  // Function to calculate installments
-  const { issueDate, premiumType, premiumAmount, paymentList } = policy;
+  const { issueDate,maturityDate, premiumType, premiumAmount, paymentList } = policy;
 
   const calculateInstallments = () => {
     const installments = [];
     const startDate = new Date(issueDate);
+    const endDate=new Date(maturityDate)
+    const time=endDate.getFullYear()-startDate.getFullYear();
     const numberOfInstallments = getInstallmentCount(premiumType);
-    const intervalMonths = 12 / numberOfInstallments;
+    const intervalMonths = numberOfInstallments;
 
-    for (let i = 0; i < numberOfInstallments; i++) {
+    for (let i = 0; i < numberOfInstallments*time; i++) {
       const dueDate = new Date(startDate);
-      dueDate.setMonth(dueDate.getMonth() + i * intervalMonths);
+      dueDate.setMonth(dueDate.getMonth() + (i) * intervalMonths);
 
       const isPaid = paymentList.some((payment) => new Date(payment.paymentDate) <= dueDate);
 
@@ -69,6 +70,12 @@ const PolicyPaymentDetails = () => {
         dueDate: dueDate.toISOString().split("T")[0], // format as YYYY-MM-DD
         isPaid,
       });
+    }
+     const countPaid = paymentList.filter(payment => payment.paymentStatus == "PAID").length;
+    console.log(paymentList[0].status);
+    
+    for(let i=0;i<countPaid;i++){
+      installments[i].isPaid="Paid"
     }
 
     return installments;
@@ -80,7 +87,7 @@ const PolicyPaymentDetails = () => {
         return 1;
       case "Semi-Annual":
         return 2;
-      case "Quarterly":
+      case "QUARTERLY":
         return 4;
       case "Monthly":
         return 12;

@@ -39,13 +39,15 @@ const MainContent = ({ activeItem, show, setShow }) => {
         return <AddEmployeeOrAgent />;
       case "Manage Tax and Scheme Deductions":
         queryParams.set("activeItem", "Manage Tax and Scheme Deductions");
-        return (
-          <>
-            <Modal isOpen={show} onClose={() => setShow(false)}>
-              <ManageTaxAndDeductions onClose={() => setShow(false)} />
-            </Modal>
-          </>
-        );
+        return  <ManageTaxAndDeductions onClose={() => setShow(false)} />
+        // return (
+        //   <>
+        //     <Modal isOpen={show} onClose={() => setShow(false)}
+        //       width={'40%'} >
+        //       <ManageTaxAndDeductions onClose={() => setShow(false)} />
+        //     </Modal>
+        //   </>
+        // );
       case "Agent wise commission report":
         return <AgentwiseCommissionReport />;
       case "Withdrawal approval":

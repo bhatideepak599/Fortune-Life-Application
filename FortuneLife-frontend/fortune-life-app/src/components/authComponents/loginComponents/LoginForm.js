@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Alert, Container, Row, Col } from "react-bootstrap";
 import "./LoginForm.css"; // Import custom styles
 import { useLocation, useNavigate } from "react-router-dom";
-import { loginAuth } from "../../../services/authService";
+import { loginAuth, verifyUser } from "../../../services/authService";
 import { errorToast, successToast } from "../../../utils/Toast";
 
 const LoginForm = () => {
@@ -14,6 +14,40 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState("");
+  const accessToken = localStorage.getItem("accessToken");
+
+  useEffect(()=>{
+    const loggedRole=localStorage.getItem("role");
+    // const check=loggedRole.substring(5)
+    // console.log(check+" "+role);
+    
+    if(loggedRole && role.toUpperCase()==loggedRole.substring(5)){
+      
+      if(accessToken && verifyUser(accessToken, role))
+        switch (loggedRole) {
+          case "ROLE_ADMIN":
+            navigate("/admin-dashboard");
+            break;
+    
+          case "ROLE_EMPLOYEE":
+            navigate("/employee-dashboard");
+            break;
+    
+          case "ROLE_AGENT":
+            navigate("/agent-dashboard");
+            break;
+    
+          case "ROLE_CUSTOMER":
+            navigate("/customer-dashboard");
+            break;
+    
+          default:
+            navigate("/"); 
+            break;
+        }
+    }
+    
+  })
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,7 +65,7 @@ const LoginForm = () => {
     }
 
     try {
-      setError(""); // Clear any previous error
+      setError(""); 
       const response = await loginAuth(loginId, password, role);
 
       if (response) {
