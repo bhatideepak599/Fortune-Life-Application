@@ -40,10 +40,11 @@ export const logout = async () => {
     );
 
     if (response.status === 200) {
-      // Clear localStorage
+      
       localStorage.removeItem("accessToken");
       localStorage.removeItem("role");
       localStorage.removeItem("expirationTime");
+      
       return response.data;
     }
   } catch (error) {

@@ -1,5 +1,6 @@
 package com.techlabs.app.service;
 
+import com.techlabs.app.dto.CommissionDto;
 import com.techlabs.app.dto.InsurancePolicyDto;
 import com.techlabs.app.dto.InsurancePolicyResponseDto;
 
@@ -17,5 +18,8 @@ public interface InsurancePolicyService {
 
 	PageResponse<InsurancePolicyResponseDto> getAllPolicies(Long id, Long customerId, Long agentId, Long schemeId,
 			String schemeName, String customerName, String policyStatus, int page, int size);
+
+	PageResponse<CommissionDto> getAllCommissions(Long id, Long policyId, Long agentId, String commissionType,
+			String customerName, int page, int size);
 
 }

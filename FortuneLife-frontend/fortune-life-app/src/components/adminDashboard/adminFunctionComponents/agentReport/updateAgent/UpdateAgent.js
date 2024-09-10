@@ -30,7 +30,7 @@ const UpdateAgent = ({ agent, flag, setFlag, onClose }) => {
     },
   });
 
-  // Initialize the form data with agent details
+ 
   useEffect(() => {
     if (agent) {
       setFormData({
@@ -39,7 +39,7 @@ const UpdateAgent = ({ agent, flag, setFlag, onClose }) => {
         verified: true,
         totalCommission: agent.totalCommission,
         userDto: {
-          id: agent.userDto.id || "", // Ensure ID is not null
+          id: agent.userDto.id || "", 
           username: agent.userDto.username || "",
           password: agent.password || "",
           firstName: agent.userDto.firstName || "",

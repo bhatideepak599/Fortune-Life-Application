@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.techlabs.app.dto.CommissionDto;
 import com.techlabs.app.dto.CustomerDto;
 import com.techlabs.app.dto.InsurancePolicyDto;
 import com.techlabs.app.dto.InsurancePolicyResponseDto;
@@ -129,6 +130,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 		commission.setIssueDate(LocalDateTime.now());
 
 		agent.setTotalCommission(commissionAmount + agent.getTotalCommission());
+		commission.setPolicyId(insurancePolicy.getId());
 		commission.setAgent(agent);
 		commission = commissionRepository.save(commission);
 
@@ -207,24 +209,38 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 	}
 
 	public PageResponse<InsurancePolicyResponseDto> getAllPolicies(Long id, Long customerId, Long agentId,
-	        Long schemeId, String schemeName, String customerName, String policyStatus, int page, int size) {
-	    Pageable pageable = PageRequest.of(page, size);
-	    Page<InsurancePolicy> policies = insurancePolicyRepository
-	            .findAllPoliciesBasedOnSearch(id, customerId, agentId, schemeId,
-	                    schemeName, customerName, policyStatus, pageable);
+			Long schemeId, String schemeName, String customerName, String policyStatus, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<InsurancePolicy> policies = insurancePolicyRepository.findAllPoliciesBasedOnSearch(id, customerId, agentId,
+				schemeId, schemeName, customerName, policyStatus, pageable);
 //	    
 //	    Page<InsurancePolicy> policies = insurancePolicyRepository.findPoliciesWithJoins(id, pageable);
-	    if (policies.isEmpty()) {
-	        throw new FortuneLifeException("No Policies Found!");
-	    }
+		if (policies.isEmpty()) {
+			throw new FortuneLifeException("No Policies Found!");
+		}
 
-	    List<InsurancePolicyResponseDto> response = policies.getContent().stream()
-	            .map(insurancePolicyMapper::entityToDto)
-	            .collect(Collectors.toList());
+		List<InsurancePolicyResponseDto> response = policies.getContent().stream()
+				.map(insurancePolicyMapper::entityToDto).collect(Collectors.toList());
 
-	    return new PageResponse<>(response, policies.getNumber(), policies.getNumberOfElements(),
-	            policies.getTotalElements(), policies.getTotalPages(), policies.isLast());
+		return new PageResponse<>(response, policies.getNumber(), policies.getNumberOfElements(),
+				policies.getTotalElements(), policies.getTotalPages(), policies.isLast());
 	}
 
+	@Override
+	public PageResponse<CommissionDto> getAllCommissions(Long id, Long policyId, Long agentId, String commissionType,
+			String customerName, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Commission> commissions = commissionRepository.findByCriteria(id, policyId, agentId, commissionType,
+				customerName, pageable);
+		if (commissions.isEmpty()) {
+			throw new FortuneLifeException("No Policies Found!");
+		}
+
+		List<CommissionDto> response =null;// commissions.getContent().stream()
+				//.map(insurancePolicyMapper::entityToDto).collect(Collectors.toList());
+
+		return new PageResponse<>(response, commissions.getNumber(), commissions.getNumberOfElements(),
+				commissions.getTotalElements(), commissions.getTotalPages(), commissions.isLast());
+	}
 
 }

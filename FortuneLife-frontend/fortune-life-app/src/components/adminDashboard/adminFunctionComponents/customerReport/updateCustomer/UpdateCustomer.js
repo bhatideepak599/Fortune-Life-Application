@@ -15,6 +15,7 @@ const UpdateCustomer = ({ customer,flag,setFlag, onClose }) => {
     email: "",
     dateOfBirth: "",
     addressDto: {
+      id: "",
       houseNumber: "",
       apartment: "",
       city: "",
@@ -62,17 +63,32 @@ const UpdateCustomer = ({ customer,flag,setFlag, onClose }) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      address: {
-        ...prevData.address,
+      addressDto: {
+        ...prevData.addressDto,
         [name]: value,
       },
     }));
   };
-
+  const handleAddressChange1= (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      userDto: {
+        ...prevData.userDto,
+        addressDto: {
+          ...prevData.userDto.addressDto,
+          [name]: value,
+        },
+      },
+    }));
+  };
   // Handle form submission
   const handleSubmit = async(e) => {
     e.preventDefault();
+    formData.addressDto.id=customer.userDto.addressDto?.id;
     try{
+      console.log(formData+"============================");
+      
       const response= await updateCustomerByAdmin(formData);
       if(response){
         successToast("Customer Updated")

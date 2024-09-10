@@ -14,6 +14,10 @@ import ViewAndUpdateScheme from "./components/adminDashboard/adminFunctionCompon
 import { Withdrawal } from "./components/adminDashboard/adminFunctionComponents/withdrawal/Withdrawal";
 import CustomerPolicies from "./components/customerDashBoard/CustomerPolicies/CustomerPolicies";
 import PolicyPaymentDetails from "./components/Payment/PolicyPaymentDetails";
+import EmployeeDashboard from "./components/employeeDashboard/employeeHomeDashboard/EmployeeDashbaord";
+import CustomerReport from "./components/adminDashboard/adminFunctionComponents/customerReport/CustomerReport";
+import AgentReport from "./components/adminDashboard/adminFunctionComponents/agentReport/AgentReport";
+
 
 function App() {
   return (
@@ -33,6 +37,10 @@ function App() {
         <Route exact path="/fortuneLife/policy" element={<CustomerPolicies />} />
         <Route exact path="/fortuneLife/policy/:policyId/payment-details" element={<PolicyPaymentDetails />} />
         <Route exact path="/all-withdrawals" element={<Withdrawal />} />
+        <Route exact path="/employee-dashboard" element={<EmployeeDashboard />} />
+        <Route exact path="/all-customers" element={<CustomerReport />} />
+        <Route exact path="/all-agents" element={<AgentReport />} />
+      
       </Routes>
     </>
   );

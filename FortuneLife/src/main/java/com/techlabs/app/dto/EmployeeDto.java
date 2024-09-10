@@ -1,6 +1,7 @@
 package com.techlabs.app.dto;
 
 import java.time.LocalDate;
+
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
@@ -13,4 +14,6 @@ public class EmployeeDto {
 	private Double salary;
 	private LocalDate joiningDate = LocalDate.now();
 	private UserDto userDto;
+	
+	
 }

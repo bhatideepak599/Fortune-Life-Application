@@ -60,7 +60,7 @@ const PolicyPaymentDetails = () => {
 
     for (let i = 0; i < numberOfInstallments*time; i++) {
       const dueDate = new Date(startDate);
-      dueDate.setMonth(dueDate.getMonth() + (i) * intervalMonths);
+      dueDate.setMonth(dueDate.getMonth() + (i) *(12/ intervalMonths));
 
       const isPaid = paymentList.some((payment) => new Date(payment.paymentDate) <= dueDate);
 
@@ -77,19 +77,22 @@ const PolicyPaymentDetails = () => {
     for(let i=0;i<countPaid;i++){
       installments[i].isPaid="Paid"
     }
+    for(let i=countPaid+1;i<numberOfInstallments*time;i++){
+      installments[i].isPaid="UnPaid"
+    }
 
     return installments;
   };
 
   const getInstallmentCount = (premiumType) => {
     switch (premiumType) {
-      case "Annual":
+      case "YEARLY":
         return 1;
-      case "Semi-Annual":
+      case "HALF_YEARLY":
         return 2;
       case "QUARTERLY":
         return 4;
-      case "Monthly":
+      case "MONTHLY":
         return 12;
       default:
         return 1;
@@ -201,12 +204,12 @@ const PolicyPaymentDetails = () => {
                       <th scope="row">{installment.serialNo}</th>
                       <td>{installment.premiumAmount.toFixed(2)}</td>
                       <td>{installment.dueDate}</td>
-                      <td>{installment.isPaid ? "Paid" : "Unpaid"}</td>
+                      <td>{installment.isPaid=="Paid" ? "Paid" : "Unpaid"}</td>
                       <td>
                         {!installment.isPaid && <button className="btn btn-primary" onClick={handlePayment}>Pay</button>}
                         {installment.isPaid && (
                           <button className="btn btn-secondary" disabled>
-                            Paid
+                           {installment.isPaid=="Paid"? "Paid": "Pay"}
                           </button>
                         )}
                       </td>

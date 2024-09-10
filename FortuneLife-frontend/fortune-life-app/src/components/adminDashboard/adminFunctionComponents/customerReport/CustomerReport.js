@@ -5,7 +5,7 @@ import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
 import UpdateCustomer from "./updateCustomer/UpdateCustomer";
 import Modal from "../../../sharedComponents/modal/Modal";
-import {Dropdown } from "react-bootstrap";
+import {Button, Dropdown } from "react-bootstrap";
 import { FaDownload } from 'react-icons/fa';
 import { getCustomersExcelReport, getCustomersPdfReport } from "../../../../services/reportsService";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -242,7 +242,14 @@ const CustomerReport = () => {
     delete: handleDeleteClick,
     update: handleUpdateClick,
   };
-
+  const styles = {
+    container: {
+      display: 'flex',
+      justifyContent: 'center',
+      marginTop: '20px',
+       // Adjust as needed
+    },
+  };
   return (
     <div>
       <div className="d-flex justify-content-center align-items-center mb-4">
@@ -279,6 +286,11 @@ const CustomerReport = () => {
           onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
         />
       </div>
+      <div style={styles.container}>
+      <Button onClick={() => navigate(-1)} variant="secondary">
+        Back
+      </Button>
+    </div>
       
       <Modal
         isOpen={updateCustomerModal}

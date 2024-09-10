@@ -61,10 +61,10 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/auth/verify-otp").permitAll()
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/auth/send-otp").permitAll()
 
-				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/Excel-Report/download").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/pdf-Report/download").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/Excel-Report/download").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/pdf-Report/download").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/Excel-Report/download").hasAnyRole("ADMIN","EMPLOYEE")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/customer/pdf-Report/download").hasAnyRole("ADMIN","EMPLOYEE")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/Excel-Report/download").hasAnyRole("ADMIN","EMPLOYEE")
+				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent/pdf-Report/download").hasAnyRole("ADMIN","EMPLOYEE")
 
 				// Admin Endpoints
 				.requestMatchers(HttpMethod.POST, "/fortuneLife/admin").hasRole("ADMIN")
@@ -104,7 +104,7 @@ public class SecurityConfig {
 
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/withdrawal/approve/{id}").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/withdrawal/reject/{id}").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.PUT, "/fortuneLife/agent").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/fortuneLife/agent").hasAnyRole("ADMIN","EMPLOYEE")
 				.requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/activate/{id}").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/fortuneLife/agent/{id}").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/fortuneLife/agent").hasAnyRole("ADMIN", "EMPLOYEE")

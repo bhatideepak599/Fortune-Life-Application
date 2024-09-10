@@ -18,9 +18,6 @@ const LoginForm = () => {
 
   useEffect(()=>{
     const loggedRole=localStorage.getItem("role");
-    // const check=loggedRole.substring(5)
-    // console.log(check+" "+role);
-    
     if(loggedRole && role.toUpperCase()==loggedRole.substring(5)){
       
       if(accessToken && verifyUser(accessToken, role))

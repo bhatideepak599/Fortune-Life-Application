@@ -34,7 +34,7 @@ const API_BASE_URL = `http://localhost:8082`;
 // };
 
 export const addEmployee = async (employeeDto) => {
-    const accessToken = localStorage.getItem("accessToken"); // Ensure you get the token from storage
+    const accessToken = localStorage.getItem("accessToken"); 
   
     if (!accessToken) {
       console.error("No access token available.");

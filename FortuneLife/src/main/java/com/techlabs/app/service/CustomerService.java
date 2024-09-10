@@ -4,6 +4,7 @@ import com.techlabs.app.dto.CustomerDto;
 import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.util.PageResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 public interface CustomerService {
@@ -20,5 +21,7 @@ public interface CustomerService {
 	String activateCustomer(Long id);
 
 	String deleteCustomerById(Long id);
+
+	CustomerDto getCustomerByToken(HttpServletRequest request);
 	
 }

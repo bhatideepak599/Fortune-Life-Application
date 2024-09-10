@@ -15,19 +15,23 @@ import com.techlabs.app.dto.CustomerDto;
 import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.entity.Address;
 import com.techlabs.app.entity.Customer;
+import com.techlabs.app.entity.Employee;
 import com.techlabs.app.entity.Role;
 import com.techlabs.app.entity.User;
 import com.techlabs.app.exception.APIException;
 import com.techlabs.app.exception.AdminRelatedException;
 import com.techlabs.app.exception.CustomerRelatedException;
+import com.techlabs.app.exception.EmployeeRelatedExcetption;
 import com.techlabs.app.mapper.CustomerMapper;
 import com.techlabs.app.mapper.UserMapper;
 import com.techlabs.app.repository.AddressRepository;
 import com.techlabs.app.repository.CustomerRepository;
 import com.techlabs.app.repository.RoleRepository;
 import com.techlabs.app.repository.UserRepository;
+import com.techlabs.app.security.JwtTokenProvider;
 import com.techlabs.app.util.PageResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @Service
@@ -39,10 +43,13 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerMapper customerMapper;
 	private AddressRepository addressRepository;
 	private PasswordEncoder passwordEncoder;
+	private JwtTokenProvider jwtTokenProvider;
+
+	
 
 	public CustomerServiceImpl(CustomerRepository customerRepository, UserRepository userRepository,
 			RoleRepository roleRepository, UserMapper userMapper, CustomerMapper customerMapper,
-			AddressRepository addressRepository, PasswordEncoder passwordEncoder) {
+			AddressRepository addressRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
 		super();
 		this.customerRepository = customerRepository;
 		this.userRepository = userRepository;
@@ -51,6 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
 		this.customerMapper = customerMapper;
 		this.addressRepository = addressRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.jwtTokenProvider = jwtTokenProvider;
 	}
 
 	@Override
@@ -134,6 +142,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDto updateCustomer(@Valid UserDto userDto) {
+		//System.out.println(userDto+"=================================================================================================================================================");
 		Optional<Customer> customerById = customerRepository.findById(userDto.getId());
 
 		if (customerById.isEmpty() || !customerById.get().getActive()) {
@@ -144,7 +153,7 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new CustomerRelatedException("No Customer Found for Id " + userDto.getId());
 		}
 
-		Optional<Address> addressById = addressRepository.findById(userDto.getAddressDto().getId());
+		Optional<Address> addressById = addressRepository.findById(user.get().getAddress().getId());
 		if (addressById.isEmpty()) {
 			throw new CustomerRelatedException("No Address Found for Address Id " + userDto.getAddressDto().getId());
 		}
@@ -155,7 +164,8 @@ public class CustomerServiceImpl implements CustomerService {
 		userForUpdate.setRoles(user.get().getRoles());
 		userForUpdate.setPassword(user.get().getPassword());
 		Address address = userForUpdate.getAddress();
-		address.setId(userDto.getAddressDto().getId());
+		if(addressById.get().getId()!=null)
+		address.setId(addressById.get().getId());
 
 		// Debugging: Log before saving
 		// sSystem.out.println("Saving Address: " + address);
@@ -197,6 +207,22 @@ public class CustomerServiceImpl implements CustomerService {
 		custimerToDelete.setActive(false);
 		customerRepository.save(custimerToDelete);
 		return "Customer Deleted SuccessFully";
+	}
+
+	@Override
+	public CustomerDto getCustomerByToken(HttpServletRequest request) {
+		final String authHeader = request.getHeader("Authorization");
+		final String token = authHeader.substring(7);
+		String username = jwtTokenProvider.getUsername(token);
+		User user = userRepository.findUserByUsernameOrEmail(username, username)
+				.orElseThrow(() -> new AdminRelatedException("No Admin Found!."));
+		Customer customer = customerRepository.findById(user.getId())
+				.orElseThrow(() -> new CustomerRelatedException("No Customer Found!."));
+		if (!customer.getActive())
+			throw new CustomerRelatedException("No Customer Found!.");
+
+		return customerMapper.entityToDto(customer);
+		
 	}
 
 }

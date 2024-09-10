@@ -3,7 +3,7 @@ import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
 import Modal from "../../../sharedComponents/modal/Modal";
-import {Dropdown } from "react-bootstrap";
+import {Dropdown ,Button } from "react-bootstrap";
 import { FaDownload } from 'react-icons/fa';
 import { getAgentsExcelReport, getAgentsPdfReport } from "../../../../services/reportsService";
 import { activateAgent, deleteAgent, getAllAgents } from "../../../../services/agentService";
@@ -234,6 +234,14 @@ const AgentReport = () => {
     delete: handleDeleteClick,
     update: handleUpdateClick,
   };
+  const styles = {
+    container: {
+      display: 'flex',
+      justifyContent: 'center',
+      marginTop: '20px',
+       // Adjust as needed
+    },
+  };
 
   return (
     <div>
@@ -270,6 +278,11 @@ const AgentReport = () => {
           pager={pageObject}
           onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
         />
+        <div style={styles.container}>
+      <Button onClick={() => navigate(-1)} variant="secondary">
+        Back
+      </Button>
+    </div>
       </div>
       <Modal
         isOpen={updateAgentModal}
