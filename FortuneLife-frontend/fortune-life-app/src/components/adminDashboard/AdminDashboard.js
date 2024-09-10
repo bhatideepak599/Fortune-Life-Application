@@ -45,12 +45,11 @@ const AdminDashboard = () => {
     const initialActiveItem = queryParams.get("activeItem");
 
     // Set the active item state, preferring query parameter if available
-    setActiveItem(initialActiveItem || savedActiveItem || "Manage City/State");
+    setActiveItem(initialActiveItem ||savedActiveItem || "Manage City/State");
   }, [accessToken, navigate, location.search]);
 
   useEffect(() => {
-    // Save the active item to localStorage whenever it changes
-    localStorage.setItem("activeItem", activeItem);
+   localStorage.setItem("activeItem", activeItem);
   }, [activeItem]);
 
   const fetchAdmin = async () => {

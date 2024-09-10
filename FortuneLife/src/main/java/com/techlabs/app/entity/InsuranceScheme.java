@@ -43,12 +43,14 @@ public class InsuranceScheme {
 	    @OneToMany(cascade = {CascadeType.ALL})
 	    private List<InsurancePolicy> policies;
 	   
-	    @ManyToMany(cascade = {CascadeType.ALL})
+
+	    
+	    @ManyToMany(cascade = CascadeType.ALL)
 	    @JoinTable(
-	        name = "scheme_state",
+	        name = "scheme_city",
 	        joinColumns = @JoinColumn(name = "scheme_id"),
-	        inverseJoinColumns = @JoinColumn(name = "state_id")
+	        inverseJoinColumns = @JoinColumn(name = "city_id")
 	    )
-	    private Set<State> states = new HashSet<>();
+	    private Set<City> cities = new HashSet<>();
 	    
 }

@@ -68,6 +68,24 @@ export const getAllSchemesOfUnderAPlan = async (id) => {
   }
 };
 
+export const getAllSchemes = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (!accessToken) {
+    return null;
+  }
+  try {
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/scheme`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (response) return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const updateCommission = async (planId, id, formData) => {
   const accessToken = localStorage.getItem("accessToken");
 

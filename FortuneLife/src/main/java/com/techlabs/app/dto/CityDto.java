@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CityDto {
-    private Long id;
+    private Long pincode;
 
     private String name;
 

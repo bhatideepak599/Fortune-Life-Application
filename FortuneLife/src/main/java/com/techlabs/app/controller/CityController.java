@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -77,5 +78,28 @@ public class CityController {
         String message = cityService.activateCity(stateId, id);
         return ResponseEntity.ok(message);
     }
+    
+   // @Secured("ADMIN")
+    @Operation(summary = "Add  A Scheme Into A City")
+    @PutMapping("/{pincode}/scheme/{schemeId}")
+    public ResponseEntity<Object> addSchemeToCity(@PathVariable(name = "pincode") Long pincode,
+                                               @PathVariable(name = "schemeId") Long schemeId) {
+        logger.info("Adding A Scheme Into A City");
+
+        String message = cityService.addSchemeToCity(schemeId, pincode);
+        return ResponseEntity.ok(message);
+    }
+    
+   // @Secured("ADMIN")
+    @Operation(summary = "Remove  A Scheme from A City")
+    @DeleteMapping("/{pincode}/scheme/{schemeId}")
+    public ResponseEntity<Object> removeSchemeFromCity(@PathVariable(name = "pincode") Long pincode,
+                                               @PathVariable(name = "schemeId") Long schemeId) {
+        logger.info("Removing A Scheme from A City");
+
+        String message = cityService.removeSchemeFromCity(schemeId, pincode);
+        return ResponseEntity.ok(message);
+    }
+    
 
 }

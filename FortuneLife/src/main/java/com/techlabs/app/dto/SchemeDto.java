@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,7 +22,8 @@ public class SchemeDto {
 
     private SchemeDetailsDto schemeDetails;
 
-    private List<InsurancePolicyResponseDto> policies;
+    //private List<InsurancePolicyResponseDto> policies;
+    private Set<CityDto> citiesDto;
 
     private Boolean active;
 }

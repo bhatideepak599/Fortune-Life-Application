@@ -9,6 +9,8 @@ import Modal from "../../sharedComponents/modal/Modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import AgentwiseCommissionReport from "./agentwiseCommissionReport/AgentwiseCommissionReport";
 import { Withdrawal } from "./withdrawal/Withdrawal";
+import InsuranceAccountReport from "./insuranceAccountReport/InsuranceAccountReport";
+import ManageCityAndState from "./manageCityAndState/ManageCityAndState";
 // Import other components here
 // import AgentReport from './AgentReport';
 // import InsurancePlanMaster from './InsurancePlanMaster';
@@ -17,26 +19,26 @@ import { Withdrawal } from "./withdrawal/Withdrawal";
 
 const MainContent = ({ activeItem, show, setShow }) => {
   const handleClose = () => setShow(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const renderSection = () => {
     const queryParams = new URLSearchParams();
     switch (activeItem) {
       case "Customer report":
-        queryParams.set("activeItem","Customer report");
+        queryParams.set("activeItem", "Customer report");
         return <CustomerReport />;
 
       case "Agent report":
-        queryParams.set("activeItem","Agent report");
+        queryParams.set("activeItem", "Agent report");
         return <AgentReport />;
       case "Manage Insurance Plans & Schemes":
-        queryParams.set("activeItem","Manage Insurance Plans & Schemes");
+        queryParams.set("activeItem", "Manage Insurance Plans & Schemes");
         return <CommissionSettings />;
       case "Add Employee and Agent":
-        queryParams.set("activeItem","Add Employee and Agent");
+        queryParams.set("activeItem", "Add Employee and Agent");
         return <AddEmployeeOrAgent />;
       case "Manage Tax and Scheme Deductions":
-        queryParams.set("activeItem","Manage Tax and Scheme Deductions");
+        queryParams.set("activeItem", "Manage Tax and Scheme Deductions");
         return (
           <>
             <Modal isOpen={show} onClose={() => setShow(false)}>
@@ -44,11 +46,15 @@ const MainContent = ({ activeItem, show, setShow }) => {
             </Modal>
           </>
         );
-      case 'Agent wise commission report':
+      case "Agent wise commission report":
         return <AgentwiseCommissionReport />;
-      case 'Withdrawal approval':
-        // navigate('/all-withdrawals')
-        return <Withdrawal/>
+      case "Withdrawal approval":
+        return <Withdrawal />;
+      case "Insurance account report":
+        return <InsuranceAccountReport />;
+
+        case "Manage City/State":
+          return <ManageCityAndState/>
       default:
         return <h2>Select a section</h2>;
     }

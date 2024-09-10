@@ -28,7 +28,7 @@ public class PaymentMapper {
 
         PaymentDto paymentDto = new PaymentDto();
         paymentDto.setPolicyHolderName(policy.getCustomer().getUser().getFirstName() + " " + policy.getCustomer().getUser().getLastName()); // Assuming agent has user
-        // details
+
 
         paymentDto.setPolicyId(policy.getId());
         paymentDto.setPaymentId(payment.getId());

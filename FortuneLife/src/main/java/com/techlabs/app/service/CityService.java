@@ -16,4 +16,8 @@ public interface CityService {
     String deleteCity(Long stateId, Long id);
 
     String activateCity(Long stateId, Long id);
+
+	String addSchemeToCity(Long schemeId, Long cityId);
+
+	String removeSchemeFromCity(Long schemeId, Long pincode);
 }

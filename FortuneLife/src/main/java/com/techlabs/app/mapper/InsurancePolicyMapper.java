@@ -19,9 +19,9 @@ public class InsurancePolicyMapper {
 
     @Autowired
     private PaymentMapper paymentMapper;
-
     @Autowired
     private CustomerMapper customerMapper;
+
 
 
     public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
@@ -42,6 +42,7 @@ public class InsurancePolicyMapper {
         response.setPaymentList(paymentMapper.getDtoList(policy.getPayments()));
         response.setTotalPolicyAmount(policy.getTotalPolicyAmount());
         response.setTotalAmountPaidTillDate(policy.getPaidPolicyAmountTillDate());
+
         if(policy.getClaims()!=null){
             response.setClaimId(policy.getClaims().getId());
         }else {

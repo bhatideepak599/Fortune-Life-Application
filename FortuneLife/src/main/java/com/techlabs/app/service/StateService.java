@@ -17,4 +17,8 @@ public interface StateService {
     String deleteState(Long id);
 
     String activateState(Long id);
+
+//	String addSchemeToAState(Long schemeId, Long stateId);
+//
+//	String removeSchemeFromAState(Long schemeId, Long stateId);
 }

@@ -35,6 +35,6 @@ public class State {
     @OneToMany(mappedBy = "state", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<City> cities = new HashSet<>();
     
-    @ManyToMany(mappedBy = "states")
-    private Set<InsuranceScheme> schemes = new HashSet<>();
+//    @ManyToMany(mappedBy = "states")
+//    private Set<InsuranceScheme> schemes = new HashSet<>();
 }
