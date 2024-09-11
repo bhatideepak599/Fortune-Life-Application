@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col , Image} from "react-bootstrap";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "./AddEmployeeOrAgent.css"; // Import the custom CSS file
 import { errorToast, successToast } from "../../../../utils/Toast";
 import { addEmployee } from "../../../../services/employeeService";
 import { addAgent } from "../../../../services/agentService";
 
-const AddEmployeeOrAgent = () => {
+const AddEmployeeOrAgent = ({onlyAgent}) => {
     const [passwordVisible, setPasswordVisible] = useState(false);
+    
   const [formData, setFormData] = useState({
     id: 0,
     active: true,
@@ -61,7 +62,7 @@ const AddEmployeeOrAgent = () => {
     console.log("Form data:", formData); // Log form data
     try {
       if (formData.role === "Employee") {
-        console.log("Calling addEmployee");
+        //console.log("Calling addEmployee");
         const response = await addEmployee(formData);
         if (response) {
           successToast("Employee Added.");

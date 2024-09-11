@@ -1,0 +1,18 @@
+/* AddAgent.css */
+.form-label-highlight {
+    color: #007bff; /* or any color you prefer */
+    font-weight: bold;
+  }
+  
+  .form-control-placeholder::placeholder {
+    color: #6c757d; /* Better contrast for readability */
+  }
+  
+  .btn-custom {
+    font-size: 0.875rem; /* Smaller font size */
+  }
+  
+  .card-body {
+    padding: 2rem; /* Increased padding inside card */
+  }
+  

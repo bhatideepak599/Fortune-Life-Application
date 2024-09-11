@@ -86,6 +86,7 @@ public class AgentServiceImpl implements AgentService {
 		if (agentDto.getVerified())
 			agent.setVerified(true);
 		agent.setWithdrawals(new ArrayList<>());
+		agent.setImage(agentDto.getImage());
 		agent = agentRepository.save(agent);
 		return agentMapper.entityToDto(agent);
 	}
@@ -136,7 +137,7 @@ public class AgentServiceImpl implements AgentService {
 
 		User user = userMapper.dtoToEntity(agentDto.getUserDto());
 		Address address = user.getAddress();
-		address.setId(agentDto.getUserDto().getAddressDto().getId());
+		address.setId(agent.getUser().getAddress().getId());
 		address = addressRepository.save(address);
 		user.setAddress(address);
 		user.setPassword(passwordEncoder.encode(agent.getUser().getPassword()));

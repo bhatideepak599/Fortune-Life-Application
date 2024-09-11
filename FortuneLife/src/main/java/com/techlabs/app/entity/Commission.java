@@ -38,7 +38,9 @@ public class Commission {
 	@PositiveOrZero(message = "Amount Should be Greater than Zero")
 	@Column(nullable = false)
 	private Double amount;
-
+	
+	@Column(nullable=false)
+	private Long policyId;
 	@ManyToOne(cascade = { CascadeType.ALL})
 	@JoinColumn(name = "agentId")
 	private Agent agent; 

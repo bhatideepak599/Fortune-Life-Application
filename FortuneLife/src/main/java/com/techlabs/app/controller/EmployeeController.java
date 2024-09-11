@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.techlabs.app.dto.AdminDto;
 import com.techlabs.app.dto.EmployeeDto;
 import com.techlabs.app.service.EmployeeService;
 import com.techlabs.app.util.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -84,6 +88,15 @@ public class EmployeeController {
 		String message = employeeService.deleteEmployeeById(id);
 
 		return new ResponseEntity<>(message, HttpStatus.OK);
+	}
+
+	@Secured("EMPLOYEE")
+	@Operation(summary = "Fetch Logged Employee By Token")
+	@GetMapping("/logged")
+	public ResponseEntity<EmployeeDto> getEmployeeByToken(HttpServletRequest request) {
+		logger.info("Fetching An Employee");
+		EmployeeDto employee = employeeService.getEmployeeByToken(request);
+		return new ResponseEntity<>(employee, HttpStatus.OK);
 	}
 
 }

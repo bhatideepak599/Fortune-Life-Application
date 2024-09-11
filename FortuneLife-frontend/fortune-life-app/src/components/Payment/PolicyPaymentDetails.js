@@ -47,7 +47,6 @@ const PolicyPaymentDetails = () => {
     }
   };
 
-
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
@@ -97,6 +96,9 @@ const PolicyPaymentDetails = () => {
 
     for (let i = countPaid + 1; i < numberOfInstallments * time; i++) {
       installments[i].isPaid = "Unpaid";
+    }
+    for (let i = countPaid + 1; i < numberOfInstallments * time; i++) {
+      installments[i].isPaid = "UnPaid";
     }
 
     return installments;

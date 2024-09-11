@@ -4,6 +4,7 @@ import com.techlabs.app.dto.EmployeeDto;
 import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.util.PageResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 public interface EmployeeService {
@@ -20,5 +21,7 @@ public interface EmployeeService {
 	String activateEmployee(Long id);
 
 	String deleteEmployeeById(Long id);
+
+	EmployeeDto getEmployeeByToken(HttpServletRequest request);
 
 }

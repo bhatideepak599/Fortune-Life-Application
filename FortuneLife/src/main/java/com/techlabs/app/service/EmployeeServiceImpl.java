@@ -6,18 +6,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.techlabs.app.dto.AdminDto;
 import com.techlabs.app.dto.EmployeeDto;
+import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.entity.Address;
+import com.techlabs.app.entity.Admin;
 import com.techlabs.app.entity.Employee;
 import com.techlabs.app.entity.Role;
 import com.techlabs.app.entity.User;
 import com.techlabs.app.exception.APIException;
+import com.techlabs.app.exception.AdminRelatedException;
 import com.techlabs.app.exception.EmployeeRelatedExcetption;
 import com.techlabs.app.mapper.EmployeeMapper;
 import com.techlabs.app.mapper.UserMapper;
@@ -25,7 +32,10 @@ import com.techlabs.app.repository.AddressRepository;
 import com.techlabs.app.repository.EmployeeRepository;
 import com.techlabs.app.repository.RoleRepository;
 import com.techlabs.app.repository.UserRepository;
+import com.techlabs.app.security.JwtTokenProvider;
 import com.techlabs.app.util.PageResponse;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -38,9 +48,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository employeeRepository;
 	private EmployeeMapper employeeMapper;
 
+	private JwtTokenProvider jwtTokenProvider;
+
 	public EmployeeServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper,
 			AddressRepository addressRepository, PasswordEncoder passwordEncoder, EmployeeRepository employeeRepository,
-			EmployeeMapper employeeMapper) {
+			EmployeeMapper employeeMapper, JwtTokenProvider jwtTokenProvider) {
 		super();
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
@@ -49,6 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		this.passwordEncoder = passwordEncoder;
 		this.employeeRepository = employeeRepository;
 		this.employeeMapper = employeeMapper;
+		this.jwtTokenProvider = jwtTokenProvider;
 	}
 
 	@Override
@@ -65,14 +78,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = employeeMapper.dtoToEntity(employeeDto);
 		User user = employee.getUser();
 		user.setPassword(passwordEncoder.encode(employeeDto.getUserDto().getPassword()));
-		if(user.getAddress()!=null) {
+		if (user.getAddress() != null) {
 			Address address = addressRepository.save(user.getAddress());
 			user.setAddress(address);
 		}
-		
+
 		user.setActive(true);
 
-		Optional<Role> byName = roleRepository.findByRoleName("ROLE_CUSTOMER");
+		Optional<Role> byName = roleRepository.findByRoleName("ROLE_EMPLOYEE");
 		if (byName.isEmpty()) {
 			throw new RuntimeException("ROLE NOT FOUND ");
 		}
@@ -170,6 +183,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setActive(false);
 		employeeRepository.save(employee);
 		return "Employee Deleted Successfully.";
+	}
+
+	@Override
+	public EmployeeDto getEmployeeByToken(HttpServletRequest request) {
+		final String authHeader = request.getHeader("Authorization");
+		final String token = authHeader.substring(7);
+		String username = jwtTokenProvider.getUsername(token);
+		User user = userRepository.findUserByUsernameOrEmail(username, username)
+				.orElseThrow(() -> new AdminRelatedException("No Admin Found!."));
+		Employee employee = employeeRepository.findById(user.getId())
+				.orElseThrow(() -> new EmployeeRelatedExcetption("No Employee Found!."));
+		if (!employee.getActive())
+			throw new EmployeeRelatedExcetption("No Employee Found!.");
+
+		return employeeMapper.entityToDto(employee);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.techlabs.app.controller;
 
+import com.techlabs.app.dto.CommissionDto;
 import com.techlabs.app.dto.InsurancePolicyResponseDto;
 import com.techlabs.app.service.InsurancePolicyService;
 import com.techlabs.app.util.PageResponse;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,10 +40,25 @@ public class PolicyController {
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
 		logger.info("Fetching All The Policies");
-		PageResponse<InsurancePolicyResponseDto> policies = policyService.getAllPolicies(id, customerId, agentId, schemeId,
-				schemeName, customerName, policyStatus, page, size);
+		PageResponse<InsurancePolicyResponseDto> policies = policyService.getAllPolicies(id, customerId, agentId,
+				schemeId, schemeName, customerName, policyStatus, page, size);
 
 		return new ResponseEntity<>(policies, HttpStatus.OK);
+	}
+	
+	@Secured({"EMPLOYEE", "ADMIN"})
+	@Operation(summary = "Get All Commission based on Search Criteria")
+	@GetMapping("/commission")
+	public ResponseEntity<PageResponse<CommissionDto>> getAllCommissions(@RequestParam(required = false) Long id,
+			@RequestParam(required = false) Long policyId, @RequestParam(required = false) Long agentId,
+			@RequestParam(required = false) String commissionType, @RequestParam(required = false) String customerName,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size) {
+		logger.info("Fetching All The Policies");
+		PageResponse<CommissionDto> commissions = policyService.getAllCommissions(id, policyId, agentId, commissionType,
+				customerName, page, size);
+
+		return new ResponseEntity<>(commissions, HttpStatus.OK);
 	}
 
 }
