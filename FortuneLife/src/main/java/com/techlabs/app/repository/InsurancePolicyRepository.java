@@ -36,12 +36,7 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
                                                        @Param("policyStatus") String policyStatus,
                                                        Pageable pageable);
 
-//	@Query("SELECT i FROM InsurancePolicy i " +
-//		       "JOIN i.customer c " +
-//		      
-//		       "JOIN i.insuranceScheme s " +
-//		       "WHERE (:id IS NULL OR i.id = :id)")
-//		Page<InsurancePolicy> findPoliciesWithJoins(@Param("id") Long id, Pageable pageable);
+
 
 
 }

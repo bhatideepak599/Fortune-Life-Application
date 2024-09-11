@@ -1,5 +1,7 @@
 import axios from "axios";
-
+import { verifyUser } from "./authService";
+import { warnToast } from "../utils/Toast";
+const accessToken = localStorage.getItem("accessToken");
 const API_BASE_URL = `http://localhost:8082`;
 //const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
 
@@ -34,30 +36,84 @@ const API_BASE_URL = `http://localhost:8082`;
 // };
 
 export const addEmployee = async (employeeDto) => {
-    const accessToken = localStorage.getItem("accessToken"); 
-  
-    if (!accessToken) {
-      console.error("No access token available.");
-      return null;
-    }
-  
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}/fortuneLife/employee`,
-        employeeDto,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          params: {
-            role: "employee", // Adjust the role value as needed
-          },
-        }
-      );
-      return response.data; // Return the data from the response
-    } catch (error) {
-     
-      throw error; // Optional: re-throwing to be handled by the calling code
-    }
+  if (!accessToken) {
+    return null;
+  }
+
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/fortuneLife/employee`,
+      employeeDto,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          role: "employee", // Adjust the role value as needed
+        },
+      }
+    );
+    return response.data; // Return the data from the response
+  } catch (error) {
+    throw error; // Optional: re-throwing to be handled by the calling code
+  }
+};
+
+export const validateEmployee = (accessToken1) => {
+  if (!accessToken1 || !verifyUser(accessToken1, "employee")) {
+    return false;
+  }
+  return true;
+};
+
+export const getEmployee = async () => {
+  if (accessToken == null) {
+    return null;
+  }
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/fortuneLife/employee/logged`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    if (response) return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateEmployee = async (id, userDto, addressDto) => {
+  const payload = {
+    id: id,
+    userDto: {
+      ...userDto,
+      addressDto: addressDto || null,
+    },
   };
+  console.log("Payload being sent:", payload);
+
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/fortuneLife/employee`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Response:", response);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating employee:", error);
+    throw error; // Re-throwing the error for further handling
+  }
+};

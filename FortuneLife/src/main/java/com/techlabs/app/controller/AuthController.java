@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 
 @RestController
@@ -104,5 +106,13 @@ public class AuthController {
         return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 
+   
+    @Operation(summary = "Forget PassWord")
+    @PutMapping("/forget-Password")
+    public ResponseEntity<String> forgetPassWord(@RequestParam String userName, @RequestParam String passWord){
+        String message = authService.forgetPassWord(userName,passWord);
+
+        return new ResponseEntity<>(message,HttpStatus.OK);
+    }
 
 }

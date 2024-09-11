@@ -57,7 +57,6 @@ const CustomerReport = () => {
         mobileNumber: queryParams.get("mobileNumber") || "",
         email: queryParams.get("email") || "",
         active: queryParams.get("active") || "",
-        
         verified: queryParams.get("verified") || "",
       };
       setPageSize(initialPageSize);

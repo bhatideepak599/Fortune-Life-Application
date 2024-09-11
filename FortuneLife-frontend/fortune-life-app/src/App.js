@@ -17,6 +17,7 @@ import PolicyPaymentDetails from "./components/Payment/PolicyPaymentDetails";
 import EmployeeDashboard from "./components/employeeDashboard/employeeHomeDashboard/EmployeeDashbaord";
 import CustomerReport from "./components/adminDashboard/adminFunctionComponents/customerReport/CustomerReport";
 import AgentReport from "./components/adminDashboard/adminFunctionComponents/agentReport/AgentReport";
+import CommissionReport from "./components/employeeDashboard/commissionReport/CommissionReport";
 
 function App() {
   return (
@@ -39,6 +40,8 @@ function App() {
         <Route exact path="/employee-dashboard" element={<EmployeeDashboard />} />
         <Route exact path="/all-customers" element={<CustomerReport />} />
         <Route exact path="/all-agents" element={<AgentReport />} />
+        <Route exact path="/commission-Report" element={<CommissionReport />} />
+      
       </Routes>
     </>
   );

@@ -67,8 +67,9 @@ public class EmployeeController {
 
 	@Operation(summary = "Update An  Employee")
 	@PutMapping
-	public ResponseEntity<EmployeeDto> updateEmployee(@Valid EmployeeDto employeeDto) {
+	public ResponseEntity<EmployeeDto> updateEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
 		logger.info("Updating An Employee");
+		System.out.println(employeeDto+"  ===========================================================================================");
 		EmployeeDto updatedEmployeeDto = employeeService.updateEmployee(employeeDto);
 		return new ResponseEntity<>(updatedEmployeeDto, HttpStatus.OK);
 	}

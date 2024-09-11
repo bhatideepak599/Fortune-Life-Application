@@ -36,7 +36,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     if (!validateAdmin()) return;
 
-    // Fetch the admin details
+    
     fetchAdmin();
 
     // Retrieve the active item from localStorage or query parameters

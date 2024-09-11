@@ -1,19 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, Card, Button, Row, Col, Dropdown, Image } from 'react-bootstrap';
 import Logo from '../../../images/fortunelife.png'; 
 import './EmployeeDashboard.css'; 
-import { logout } from '../../../services/authService';
-import { successToast } from '../../../utils/Toast';
+import { logout, verifyUser } from '../../../services/authService';
+import { errorToast, successToast, warnToast } from '../../../utils/Toast';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../sharedComponents/modal/Modal';
 import AddAgent from '../agent/AddAgent';
+import { getEmployee, updateEmployee, validateEmployee } from '../../../services/employeeService';
+import UserProfile from '../../sharedComponents/UserProfile/UserProfile';
 
 const EmployeeDashboard = () => {
 const navigate=useNavigate()
 const [addAgentModal,setAddAgentModal]=useState(false)
+const [id, setId] = useState("");
+const[name,setName]=useState("")
+const [showEmployeeProfileModal,setShowEmployeeProfileModal]=useState(false)
+const [isUpdate,setIsUpdate]=useState(false)
+const accessToken=localStorage.getItem("accessToken")
 
+useEffect(()=>{
 
+  if(!validateEmployee(accessToken)){
+    warnToast("Unauthorized Access! Login First");
+    navigate("/");
+    return 
+  }
+  fetchEmployee()
+},[navigate])
 
+useEffect(()=>{
+ console.log(name);
+ 
+},[name])
+ 
+
+const fetchEmployee = async () => {
+  try {
+    const response = await getEmployee();
+    // console.log(response);
+    
+    // setEmployeeDetails(response.data);
+    setId(response.data.id)
+    setName(response.data.userDto.firstName);
+  } catch (error) {
+    errorToast(error.response?.data?.message);
+  }
+};
+
+const updateProfile=async(userDto,addressDto)=>{
+  let id=userDto.id;
+try{
+  const response=await updateEmployee(id,userDto,addressDto);
+}catch(error){
+
+}
+  
+  
+}
   const handleAddAgentClick = () => {
     setAddAgentModal(true)
   };
@@ -22,6 +66,13 @@ const [addAgentModal,setAddAgentModal]=useState(false)
   }
   const handleEditAgent=()=>{
     navigate("/all-agents")
+  }
+  const handleViewCommissionReport=()=>{
+      navigate("/commission-Report")
+  }
+  const handleProfileClick=()=>{
+    setIsUpdate(true)
+    setShowEmployeeProfileModal(true);
   }
   const handleLogout = () => {
     logout();
@@ -51,10 +102,10 @@ const [addAgentModal,setAddAgentModal]=useState(false)
                     roundedCircle
                     className="mr-2"
                   />
-                  <span>Profile</span>
+                  <span>{name}</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#">View Profile</Dropdown.Item>
+                  <Dropdown.Item onClick={handleProfileClick}>{name}</Dropdown.Item>
                   <Dropdown.Item href="#">Settings</Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
@@ -134,7 +185,7 @@ const [addAgentModal,setAddAgentModal]=useState(false)
                 <Card.Text className="flex-grow-1">
                   View reports on agent commissions.
                 </Card.Text>
-                <Button variant="primary" className="mt-auto">View Reports</Button>
+                <Button variant="primary" className="mt-auto" onClick={handleViewCommissionReport}>View Reports</Button>
               </Card.Body>
             </Card>
           </Col>
@@ -157,11 +208,15 @@ const [addAgentModal,setAddAgentModal]=useState(false)
         onClose={() => setAddAgentModal(false)}
       >
         <AddAgent
-          
-          // flag={flag}
-          // setFlag={setFlag}
           onClose={() => setAddAgentModal(false)}
         />
+        </Modal>
+
+        <Modal isOpen={showEmployeeProfileModal} onClose={() => setShowEmployeeProfileModal(false)}>
+          <UserProfile 
+          isUpdate={isUpdate}
+          updateProfile={updateProfile}
+          onClose={() => setShowEmployeeProfileModal(false)} />
         </Modal>
     </div>
   );

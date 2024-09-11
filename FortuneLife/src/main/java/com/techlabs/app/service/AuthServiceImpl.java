@@ -234,6 +234,7 @@ public class AuthServiceImpl implements AuthService {
             return false;
         Set<Role> roles = byUsername.get().getRoles();
         for (Role role : roles) {
+        	System.out.println(role.getRoleName()+"==========================================================ROLENAME"+forrole);
             if (role.getRoleName().equalsIgnoreCase(forrole))
                 return true;
         }
@@ -259,5 +260,21 @@ public class AuthServiceImpl implements AuthService {
 
         return userMapper.entityToDto(user);
     }
+
+	@Override
+	public String forgetPassWord(String userName,String passWord) {
+		User user = userRepository
+                .findUserByUsernameOrEmail(userName, userName)
+                .orElseThrow(() -> new UserRelatedException(
+                        "User with username or email " + userName + " cannot be found"));
+
+        if (!user.getActive()) {
+            throw new UserRelatedException("User is not active");
+        }
+        
+        user.setPassword(passwordEncoder.encode(passWord));
+        userRepository.save(user);
+		return "Password has been changed.";
+	}
 
 }

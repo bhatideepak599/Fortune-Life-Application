@@ -60,6 +60,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/auth/user").permitAll()
                         .requestMatchers(HttpMethod.POST, "/fortuneLife/auth/verify-otp").permitAll()
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/auth/send-otp").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/auth/forget-Password").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/fortuneLife/auth/loggedUser")
+                        .hasAnyRole("ADMIN", "EMPLOYEE","CUSTOMER","AGENT")
 
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/customer/Excel-Report/download").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/customer/pdf-Report/download").hasRole("ADMIN")
@@ -91,7 +94,7 @@ public class SecurityConfig {
 
                         // Employee Endpoints
                         .requestMatchers(HttpMethod.POST, "/fortuneLife/employee/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/employee").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/employee").hasAnyRole("ADMIN", "EMPLOYEE")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/employee/activate/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/fortuneLife/employee/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/employee").hasAnyRole("ADMIN", "EMPLOYEE")
@@ -118,7 +121,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/fortuneLife/scheme/{planId}/{id}").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/scheme/activate/{planId}/{id}").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/scheme/update-commission/{planId}/{id}").hasRole("ADMIN")
-
+                        .requestMatchers(HttpMethod.GET, "/fortuneLife/scheme").hasAnyRole("ADMIN","EMPLOYEE")
+                        
                         // Customer Endpoints
                         .requestMatchers(HttpMethod.POST, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE", "CUSTOMER")
@@ -165,15 +169,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/state/{stateId}/scheme/{schemeId}").hasRole("ADMIN")
 
 
-                        // Insurance scheme endpoints
-                        .requestMatchers(HttpMethod.GET, "/fortuneLife/scheme/{planId}").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/fortuneLife/scheme/{planId}/{id}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/scheme/{planId}").hasAnyRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/scheme/{planId}").hasAnyRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/fortuneLife/scheme/{planId}/{id}").hasAnyRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/scheme/activate/{planId}/{id}").hasAnyRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/scheme/update-commission/{planId}/{id}").hasRole("ADMIN")
-
+                      
 
                         // Insurance Plan endpoints
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/plan").permitAll()
@@ -209,7 +205,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/query/{customerEmail}")
                         .hasAnyRole("CUSTOMER", "AGENT", "ADMIN", "EMPLOYEE")
 
-                        .requestMatchers(HttpMethod.GET, "/fortuneLife/scheme").hasAnyRole("ADMIN,EMPLOYEE")
+                       
 
                         // Any other request must be authenticated
                         .anyRequest().authenticated())

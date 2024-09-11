@@ -6,8 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import java.lang.Override;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,11 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.techlabs.app.dto.AdminDto;
 import com.techlabs.app.dto.EmployeeDto;
-import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.entity.Address;
-import com.techlabs.app.entity.Admin;
 import com.techlabs.app.entity.Employee;
 import com.techlabs.app.entity.Role;
 import com.techlabs.app.entity.User;
@@ -150,7 +146,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Address address = user.getAddress();
 		address = addressRepository.save(address);
 		user.setAddress(address);
-		user.setPassword(passwordEncoder.encode(employee.getUser().getPassword()));
+		user.setPassword(employee.getUser().getPassword());
 		user.setId(employee.getUser().getId());
 		user = userRepository.save(user);
 

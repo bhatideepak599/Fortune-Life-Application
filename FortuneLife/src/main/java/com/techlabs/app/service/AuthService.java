@@ -14,4 +14,6 @@ public interface AuthService {
     Boolean validateUserToken(HttpServletRequest request, String forrole);
 
     UserDto getLoggedUser(HttpServletRequest request);
+
+	String forgetPassWord(String userName, String passWord);
 }

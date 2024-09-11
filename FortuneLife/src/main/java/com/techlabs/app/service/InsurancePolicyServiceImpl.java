@@ -236,8 +236,8 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 			throw new FortuneLifeException("No Policies Found!");
 		}
 
-		List<CommissionDto> response =null;// commissions.getContent().stream()
-				//.map(insurancePolicyMapper::entityToDto).collect(Collectors.toList());
+		List<CommissionDto> response = commissions.getContent().stream()
+				.map(insurancePolicyMapper::commissionEntityToDto).collect(Collectors.toList());
 
 		return new PageResponse<>(response, commissions.getNumber(), commissions.getNumberOfElements(),
 				commissions.getTotalElements(), commissions.getTotalPages(), commissions.isLast());

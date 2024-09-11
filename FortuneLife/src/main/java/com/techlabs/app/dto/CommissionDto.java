@@ -1,18 +1,19 @@
 package com.techlabs.app.dto;
-import java.time.LocalDateTime;
 
+import lombok.Data;
 
+@Data
 public class CommissionDto {
 	private Long id;
 
-
 	private String commissionType;
 
-	private LocalDateTime issueDate;
+	private String issueDate;
 
 	private Double amount;
 
 	private Long policyId;
 
-	private AgentDto agentdto; 
+	private Long agentId;
+	private String agentName;
 }

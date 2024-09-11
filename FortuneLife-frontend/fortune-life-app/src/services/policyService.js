@@ -6,14 +6,14 @@ export const getAllPolicies = async (pageSize, pageNumber, searchParams) => {
   try {
     const params = {
       id: searchParams.id || undefined,
-      customerId: searchParams.agentId || undefined,
-      agentId: searchParams.customerId || undefined,
+      customerId: searchParams.customerId || undefined,
+      agentId: searchParams.agentId || undefined,
       schemeId: searchParams.schemeId || undefined,
       schemeName: searchParams.schemeName || undefined,
       customerName: searchParams.customerName || undefined,
       policyStatus: searchParams.policyStatus || undefined,
       page: pageNumber,
-      size: pageSize
+      size: pageSize,
     };
 
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy`, {
@@ -22,6 +22,34 @@ export const getAllPolicies = async (pageSize, pageNumber, searchParams) => {
       },
       params,
     });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllCommissions = async (pageSize, pageNumber, searchParams) => {
+  try {
+    const params = {
+      id: searchParams.id || undefined,
+      policyId: searchParams.policyId || undefined,
+      agentId: searchParams.agentId || undefined,
+      commissionType: searchParams.commissionType || undefined,
+      customerName: searchParams.agentName || undefined,
+      page: pageNumber,
+      size: pageSize,
+    };
+
+    const response = await axios.get(
+      `${API_BASE_URL}/fortuneLife/policy/commission`,
+      {
+        headers: {
+          Authorization: accessToken,
+        },
+        params,
+      }
+    );
 
     return response.data;
   } catch (error) {

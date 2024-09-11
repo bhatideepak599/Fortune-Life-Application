@@ -35,13 +35,13 @@ public class PolicyController {
 	public ResponseEntity<PageResponse<InsurancePolicyResponseDto>> getAllPolicies(
 			@RequestParam(required = false) Long id, @RequestParam(required = false) Long customerId,
 			@RequestParam(required = false) Long agentId, @RequestParam(required = false) Long schemeId,
-			@RequestParam(required = false) String schemeName, @RequestParam(required = false) String customerName,
+			@RequestParam(required = false) String schemeName, @RequestParam(required = false) String agentName,
 			@RequestParam(required = false) String policyStatus,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
 		logger.info("Fetching All The Policies");
 		PageResponse<InsurancePolicyResponseDto> policies = policyService.getAllPolicies(id, customerId, agentId,
-				schemeId, schemeName, customerName, policyStatus, page, size);
+				schemeId, schemeName, agentName, policyStatus, page, size);
 
 		return new ResponseEntity<>(policies, HttpStatus.OK);
 	}
