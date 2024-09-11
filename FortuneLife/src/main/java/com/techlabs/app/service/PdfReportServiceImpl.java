@@ -71,8 +71,7 @@ public class PdfReportServiceImpl implements PdfReportService {
 			// Customer ID, Active Status, Verified Status
 			StringBuilder customerDetails = new StringBuilder();
 			customerDetails.append("Customer ID: ").append(customer.getId()).append("\n").append("Active: ")
-					.append(customer.getActive()).append("\n").append("Verified: ").append(customer.getVerified())
-					.append("\n");
+					.append(customer.getActive()).append("\n");
 
 			// User and Address Details
 			User user = customer.getUser();

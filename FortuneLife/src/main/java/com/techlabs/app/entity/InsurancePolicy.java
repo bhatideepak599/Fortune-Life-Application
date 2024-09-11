@@ -66,6 +66,9 @@ public class InsurancePolicy {
     @Column(nullable = false)
     private Double totalPolicyAmount = 0D;
 
+    @Column(nullable = false)
+    private Boolean verified = false;
+
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "schemeId")
     private InsuranceScheme insuranceScheme;// scheme name

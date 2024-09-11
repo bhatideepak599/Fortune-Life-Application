@@ -21,15 +21,13 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 		       "AND (:name IS NULL OR CONCAT(u.firstName, ' ', u.lastName) LIKE %:name%) " +
 		       "AND (:userName IS NULL OR u.username LIKE %:userName%) " +
 		       "AND (:mobileNumber IS NULL OR u.mobileNumber LIKE %:mobileNumber%) " +
-		       "AND (:active IS NULL OR a.active = :active)"+
-				"AND (:verified IS NULL OR a.verified = :verified)")
+		       "AND (:active IS NULL OR a.active = :active)")
 	Page<Customer> findByIdAndUserNameAndNameAndMobileNumberAndEmailAndActive(@Param("id") Long id,
             @Param("email") String email,
             @Param("name") String name,
             @Param("userName") String userName,
             @Param("mobileNumber") String mobileNumber,
             @Param("active") Boolean active,
-            @Param("verified") Boolean verified,
             Pageable pageable);
 
 	Optional<Customer> findByUser(User user);

@@ -22,21 +22,18 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Customer {
-	@Id
-	private Long id;
-	
-	@Column(nullable = false)
-	private Boolean active = true;
-	
-	@Column(nullable = false)
-	private Boolean verified=false;
-	  @OneToMany(mappedBy = "customer", cascade = { CascadeType.ALL })
-	    private List<InsurancePolicy> policies;
+    @Id
+    private Long id;
 
-	@OneToOne(cascade = { CascadeType.ALL})
-	@JoinColumn(name = "userId")
-	private User user;
+    @Column(nullable = false)
+    private Boolean active = true;
+
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.ALL})
+    private List<InsurancePolicy> policies;
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "userId")
+    private User user;
 
 }

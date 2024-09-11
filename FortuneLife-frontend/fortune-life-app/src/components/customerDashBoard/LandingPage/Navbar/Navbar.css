@@ -123,3 +123,7 @@
 .profile-popup a:hover {
   background-color: #f1f1f1;
 }
+
+.edit-profile {
+  cursor: pointer;
+}

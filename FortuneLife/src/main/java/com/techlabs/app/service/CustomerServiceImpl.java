@@ -84,7 +84,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 		Customer customer = customerMapper.getCustomer(savedUser);
 		customer.setActive(true);
-		customer.setVerified(false);
 		Customer savedCustomer = customerRepository.save(customer);
 
 		return customerMapper.entityToDto(savedCustomer);
@@ -93,10 +92,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public PageResponse<CustomerDto> getAllCustomers(Long id, String userName, String name, String mobileNumber,
-			String email, Boolean active,Boolean verified ,int page, int size) {
+			String email, Boolean active,int page, int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Customer> customers = customerRepository.findByIdAndUserNameAndNameAndMobileNumberAndEmailAndActive(id,
-				userName, name, mobileNumber, email, active,verified, pageable);
+				userName, name, mobileNumber, email, active, pageable);
 		if (customers.getContent().isEmpty()) {
 
 			throw new CustomerRelatedException(" No Customers  Found! ");
@@ -134,42 +133,69 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDto updateCustomer(@Valid UserDto userDto) {
+		// Check if the customer exists
 		Optional<Customer> customerById = customerRepository.findById(userDto.getId());
 
 		if (customerById.isEmpty() || !customerById.get().getActive()) {
 			throw new CustomerRelatedException("No Customer Found for Id " + userDto.getId());
 		}
+
+		// Check if the user exists
 		Optional<User> user = userRepository.findById(userDto.getId());
 		if (user.isEmpty() || !user.get().getActive()) {
 			throw new CustomerRelatedException("No Customer Found for Id " + userDto.getId());
 		}
 
-		Optional<Address> addressById = addressRepository.findById(userDto.getAddressDto().getId());
-		if (addressById.isEmpty()) {
-			throw new CustomerRelatedException("No Address Found for Address Id " + userDto.getAddressDto().getId());
-		}
-
 		User userForUpdate = userMapper.dtoToEntity(userDto);
 		userForUpdate.setId(userDto.getId());
-		
+
+		// Preserve roles and password from the existing user
 		userForUpdate.setRoles(user.get().getRoles());
 		userForUpdate.setPassword(user.get().getPassword());
-		Address address = userForUpdate.getAddress();
-		address.setId(userDto.getAddressDto().getId());
 
-		// Debugging: Log before saving
-		// sSystem.out.println("Saving Address: " + address);
-		addressRepository.save(address);
+		// Check if AddressDto contains an ID or if it's a new address
+		if (userDto.getAddressDto() != null && userDto.getAddressDto().getId() != null) {
+			// Existing address, update it
+			Optional<Address> addressById = addressRepository.findById(userDto.getAddressDto().getId());
+			if (addressById.isEmpty()) {
+				throw new CustomerRelatedException("No Address Found for Address Id " + userDto.getAddressDto().getId());
+			}
 
+			Address address = addressById.get();
+			// Update the address fields from the DTO
+			address.setHouseNumber(userDto.getAddressDto().getHouseNumber());
+			address.setApartment(userDto.getAddressDto().getApartment());
+			address.setCity(userDto.getAddressDto().getCity());
+			address.setState(userDto.getAddressDto().getState());
+			address.setPinCode(userDto.getAddressDto().getPinCode());
+			addressRepository.save(address);  // Save the updated address
+			userForUpdate.setAddress(address);
+
+		} else {
+			// No address ID provided, create a new address
+			Address newAddress = new Address();
+			newAddress.setHouseNumber(userDto.getAddressDto().getHouseNumber());
+			newAddress.setApartment(userDto.getAddressDto().getApartment());
+			newAddress.setCity(userDto.getAddressDto().getCity());
+			newAddress.setState(userDto.getAddressDto().getState());
+			newAddress.setPinCode(userDto.getAddressDto().getPinCode());
+
+			// Save the new address
+			newAddress = addressRepository.save(newAddress);
+			userForUpdate.setAddress(newAddress); // Set the new address to the user
+		}
+
+		// Save the updated user
 		userForUpdate = userRepository.save(userForUpdate);
 
-		Customer customer =customerById.get();
-		//customer.setId(userForUpdate.getId());
+		// Update the customer with the updated user
+		Customer customer = customerById.get();
 		customer.setUser(userForUpdate);
-		customer.setVerified(customerById.get().getVerified());
-		return customerMapper.entityToDto(customer);
 
+		// Return the updated customer DTO
+		return customerMapper.entityToDto(customer);
 	}
+
 
 	@Override
 	public String activateCustomer(Long id) {

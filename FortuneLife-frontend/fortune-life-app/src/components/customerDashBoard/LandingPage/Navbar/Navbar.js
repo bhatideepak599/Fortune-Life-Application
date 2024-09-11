@@ -4,11 +4,14 @@ import logoImg from "../../../../images/fortunelife.png";
 import { useNavigate } from "react-router-dom";
 import { getAllInsurancePlans } from "../../../../services/commonService";
 import { errorToast } from "../../../../utils/Toast";
+import Modal from "../../../../utils/Modals/Modal";
+import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [insurancePlans, setInsurancePlans] = useState([]);
   const [showDropDown, setShowDropDown] = useState(false);
+  const [showCustomerModal, setShowCustomerModal] = useState(false);
 
   useEffect(() => {
     if (showDropDown) {
@@ -26,6 +29,10 @@ const Navbar = () => {
 
   const handleDropdownClick = () => {
     setShowDropDown((prev) => !prev);
+  };
+
+  const handleEditProfile = () => {
+    setShowCustomerModal(true);
   };
 
   const handleSignOut = () => {
@@ -94,7 +101,7 @@ const Navbar = () => {
               </a>
               <ul className="dropdown-menu text-small">
                 <li>
-                  <a className="dropdown-item" href="/">
+                  <a className="dropdown-item edit-profile" onClick={handleEditProfile}>
                     My profile
                   </a>
                 </li>
@@ -118,6 +125,9 @@ const Navbar = () => {
             </div>
           </div>
         </div>
+        <Modal isOpen={showCustomerModal} onClose={() => setShowCustomerModal(false)}>
+          <UserProfile onClose={() => setShowCustomerModal(false)} />
+        </Modal>
       </header>
     </>
   );

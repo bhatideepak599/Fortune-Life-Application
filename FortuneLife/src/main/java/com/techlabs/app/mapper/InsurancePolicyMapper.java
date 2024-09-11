@@ -45,8 +45,10 @@ public class InsurancePolicyMapper {
 
         if(policy.getClaims()!=null){
             response.setClaimId(policy.getClaims().getId());
+            response.setClaimStatus(policy.getClaims().getClaimStatus());
         }else {
             response.setClaimId(null);
+            response.setClaimStatus("N/A");
         }
         response.setCustomerDto(customerMapper.entityToDto(policy.getCustomer()));
 

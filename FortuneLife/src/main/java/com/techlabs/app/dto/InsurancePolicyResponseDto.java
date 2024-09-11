@@ -26,6 +26,7 @@ public class InsurancePolicyResponseDto {
     private Long agentId;
     private CustomerDto customerDto;
     private Long claimId;
+    private String claimStatus;
     private List<PaymentDto> paymentList;
     private Double totalPolicyAmount;
     private Double totalAmountPaidTillDate;

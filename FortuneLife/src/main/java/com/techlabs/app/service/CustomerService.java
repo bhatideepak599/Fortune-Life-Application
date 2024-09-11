@@ -11,7 +11,7 @@ public interface CustomerService {
 	CustomerDto addCustomer( UserDto userDto, String role);
 
 	PageResponse<CustomerDto> getAllCustomers(Long id, String userName, String name, String mobileNumber, String email,
-			Boolean active,Boolean varified, int page, int size);
+			Boolean active, int page, int size);
 
 	CustomerDto getCustomerById(Long id);
 

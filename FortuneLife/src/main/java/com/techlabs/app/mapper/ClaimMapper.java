@@ -21,6 +21,7 @@ public class ClaimMapper {
 		claim.setClaimAmount(dto.getClaimAmount());
 		claim.setIfscCode(dto.getIfscCode());
 		claim.setDate(LocalDateTime.now());
+		claim.setRemarks(dto.getRemarks());
 		claim.setClaimStatus(ClaimStatus.PENDING.name());
 		
 		return claim;
@@ -34,6 +35,7 @@ public class ClaimMapper {
 		claimDto.setClaimAmount(claim.getClaimAmount());
 		claimDto.setIfscCode(claim.getIfscCode());
 		claimDto.setDate(claim.getDate());
+		claimDto.setRemarks(claim.getRemarks());
 		claimDto.setClaimStatus(claim.getClaimStatus());
 		claimDto.setPolicy(insurancePolicyMapper.entityToDto(claim.getPolicy()));
 		return claimDto;

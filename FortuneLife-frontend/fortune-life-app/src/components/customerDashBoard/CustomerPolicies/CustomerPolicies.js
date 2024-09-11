@@ -38,8 +38,6 @@ const CustomerPolicies = () => {
           toast.error("Please login to access this resource");
           navigate("/");
         }
-        console.log(response);
-
         setCurrentUser(response);
       } catch (error) {
         toast.error("Error fetching user details.");
@@ -127,7 +125,7 @@ const CustomerPolicies = () => {
       });
 
       if (response.content) {
-        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus"];
+        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "claimId", "claimStatus"];
         const sanitized = sanitizedData({ data: response.content, keysTobeSelected });
 
         setSanitizedPolicies(sanitized);
@@ -150,9 +148,8 @@ const CustomerPolicies = () => {
       });
 
       if (response.content) {
-        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "claimId"];
+        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "claimId", "claimStatus"];
         const sanitized = sanitizedData({ data: response.content, keysTobeSelected });
-        console.log(sanitized.claimId);
 
         setSanitizedPolicies(sanitized);
         setTotalPages(response.totalPages);
@@ -165,7 +162,6 @@ const CustomerPolicies = () => {
   };
 
   const handleClaim = (policyId) => {
-    console.log(policyId);
     setSelectedPolicy(policyId);
     setIsClaimModalOpen(true);
   };
@@ -177,6 +173,10 @@ const CustomerPolicies = () => {
   const actions = {
     claim: handleClaim,
     payment: handlePayment,
+  };
+
+  const refetchPolicies = () => {
+    getAllPolicies();
   };
 
   return (
@@ -192,7 +192,13 @@ const CustomerPolicies = () => {
               <input id="schemeName" className="form-control" type="text" placeholder="Search by Scheme Name" value={searchParams.schemeName || ""} onChange={handleSearchChange} />
             </div>
             <div className="col-md-3">
-              <input id="policyStatus" className="form-control" type="text" placeholder="Search by Policy Status" value={searchParams.policyStatus || ""} onChange={handleSearchChange} />
+              <select id="policyStatus" className="form-control" value={searchParams.policyStatus} onChange={handleSearchChange}>
+                <option value="">All Statuses</option>
+                <option value="PENDING">Pending</option>
+                <option value="ACTIVE">Active</option>
+                <option value="CLAIMED">Claimed</option>
+                <option value="COMPLETE">Complete</option>
+              </select>
             </div>
             <div className="col-md-3">
               <button type="submit" className="btn btn-primary" style={{ backgroundColor: "hsl(245, 67%, 59%)" }}>
@@ -200,6 +206,9 @@ const CustomerPolicies = () => {
               </button>
               <button type="reset" className="btn btn-secondary ms-2" onClick={handleReset}>
                 Reset
+              </button>
+              <button type="reset" className="btn btn-secondary ms-2" onClick={() => navigate("/customer-dashboard")}>
+                Back
               </button>
             </div>
           </div>
@@ -218,7 +227,13 @@ const CustomerPolicies = () => {
         )}
 
         <Modal isOpen={isClaimModalOpen} onClose={() => setIsClaimModalOpen(false)} width="60%" height="70%">
-          <ClaimModal policyId={selectedPolicy} onClose={() => setIsClaimModalOpen(false)} />
+          <ClaimModal
+            policyId={selectedPolicy}
+            onClose={() => {
+              setIsClaimModalOpen(false);
+              refetchPolicies();
+            }}
+          />
         </Modal>
       </div>
     </>

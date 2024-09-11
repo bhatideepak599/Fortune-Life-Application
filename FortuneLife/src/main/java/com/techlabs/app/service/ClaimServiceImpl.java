@@ -3,6 +3,7 @@ package com.techlabs.app.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.techlabs.app.enums.ClaimStatus;
 import com.techlabs.app.enums.PolicyStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,8 +47,10 @@ public class ClaimServiceImpl implements ClaimService {
         InsurancePolicy insurancePolicy = insurancePolicyRepository.findById(policyId)
                 .orElseThrow(() -> new FortuneLifeException("No Policy Found for the Policy Number :" + policyId));
 
-        if (!insurancePolicy.getPolicyStatus().equals("ACTIVE"))
-            throw new FortuneLifeException("Policy Is Not Completed  or Inactive");
+        if (!insurancePolicy.getPolicyStatus().equals("ACTIVE") && !insurancePolicy.getPolicyStatus().equals("COMPLETE")) {
+            throw new FortuneLifeException("Policy Is Not Completed or Inactive");
+        }
+
         Claim claim = claimMapper.dtoToEntity(claimDto);
         if (claim.getClaimAmount() > insurancePolicy.getSumAssured()) {
             throw new FortuneLifeException("Amount Should be less than Assured Amount!.");
@@ -85,12 +88,12 @@ public class ClaimServiceImpl implements ClaimService {
             throw new FortuneLifeException("Claim Already Approved.");
 
         if (operation.equals("REJECT")) {
-            claim.setClaimStatus("REJECT");
+            claim.setClaimStatus(ClaimStatus.REJECT.name());
             claim.setRemarks(message);
             claimRepository.save(claim);
             return "Claim Rejected";
         }
-        claim.setClaimStatus("APPROVED");
+        claim.setClaimStatus(ClaimStatus.APPROVED.name());
         claim.getPolicy().setPolicyStatus(PolicyStatus.CLAIMED.name());
         claim.setRemarks(message);
         claimRepository.save(claim);

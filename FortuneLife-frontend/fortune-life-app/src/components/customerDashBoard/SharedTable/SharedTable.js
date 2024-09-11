@@ -21,7 +21,7 @@ const SharedTable = ({ data, actions }) => {
         {data.map((row, index) => (
           <tr key={index}>
             {headers.map((header) => (
-              <td key={header}>{header === "active" ? (row[header] ? "Active" : "Inactive") : typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header]}</td>
+              <td key={header}>{header === "active" ? (row[header] ? "Active" : "Inactive") : header === "claimId" && row[header] === null ? "N/A" : typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header]}</td>
             ))}
             {actions && (
               <td>
@@ -30,8 +30,10 @@ const SharedTable = ({ data, actions }) => {
                     Payment
                   </button>
                 )}
-                {actions.claim && (row.policyStatus === "ACTIVE" || row.policyStatus === "COMPLETE") && !row.claimId && actions.claim && (
-                  <button className="btn btn-secondary" onClick={() => actions.claim(row[primaryKey])}>
+
+                {/* Enable claim button if policy status is ACTIVE or COMPLETE and either there is no claimId, or the claim was REJECTED */}
+                {actions.claim && (
+                  <button className="btn btn-secondary" onClick={() => actions.claim(row[primaryKey])} disabled={!(row.policyStatus === "ACTIVE" || row.policyStatus === "COMPLETE") || (row.claimId && row.claimStatus !== "REJECT")}>
                     Claim
                   </button>
                 )}

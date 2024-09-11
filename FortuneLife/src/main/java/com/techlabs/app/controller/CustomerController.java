@@ -50,12 +50,12 @@ public class CustomerController {
 	public ResponseEntity<PageResponse<CustomerDto>> getAllCustomers(@RequestParam(required = false) Long id,
 			@RequestParam(required = false) String userName, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String mobileNumber, @RequestParam(required = false) String email,
-			@RequestParam(required = false) Boolean active, @RequestParam(required = false) Boolean verified,
+			@RequestParam(required = false) Boolean active,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
 		logger.info("Fetching All The Customers");
 		PageResponse<CustomerDto> customers = customerService.getAllCustomers(id, userName, name, mobileNumber, email,
-				active, verified, page, size);
+				active, page, size);
 
 		return new ResponseEntity<>(customers, HttpStatus.OK);
 	}

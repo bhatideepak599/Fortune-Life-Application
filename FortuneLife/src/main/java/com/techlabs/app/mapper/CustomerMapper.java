@@ -32,7 +32,7 @@ public class CustomerMapper {
 		customerDto.setId(customer.getId());
 		customerDto.setActive(customer.getActive());
 		customerDto.setUserDto(userDto);
-		customerDto.setVerified(customer.getVerified());
+
 		
 		//List<InsurancePolicyResponseDto> allPolicies=new ArrayList<>();
 		

@@ -14,6 +14,7 @@ import ViewAndUpdateScheme from "./components/adminDashboard/adminFunctionCompon
 import { Withdrawal } from "./components/adminDashboard/adminFunctionComponents/withdrawal/Withdrawal";
 import CustomerPolicies from "./components/customerDashBoard/CustomerPolicies/CustomerPolicies";
 import PolicyPaymentDetails from "./components/Payment/PolicyPaymentDetails";
+import UserProfile from "./components/sharedComponents/UserProfile/UserProfile";
 
 function App() {
   return (
