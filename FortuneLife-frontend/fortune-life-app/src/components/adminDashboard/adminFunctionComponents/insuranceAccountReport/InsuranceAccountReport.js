@@ -240,7 +240,8 @@ const InsuranceAccountReport = () => {
           onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
         />
       </div>
-      <Modal isOpen={paymentModal} onClose={() => setPaymentModal(false)}>
+      <Modal isOpen={paymentModal} onClose={() => setPaymentModal(false)}
+        width={"2000px"}>
         <ViewPayment
           payments={viewPayment}
           onClose={() => setPaymentModal(false)}

@@ -8,19 +8,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.techlabs.app.dto.*;
 import com.techlabs.app.enums.PremiumType;
 import com.techlabs.app.exception.FortuneLifeException;
 import com.techlabs.app.util.PageResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.techlabs.app.dto.CommissionDto;
-import com.techlabs.app.dto.CustomerDto;
-import com.techlabs.app.dto.InsurancePolicyDto;
-import com.techlabs.app.dto.InsurancePolicyResponseDto;
-import com.techlabs.app.dto.SubmittedDocumentDto;
 import com.techlabs.app.entity.Agent;
 import com.techlabs.app.entity.Commission;
 import com.techlabs.app.entity.Customer;
@@ -53,7 +51,8 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 	private InsurancePolicyMapper insurancePolicyMapper;
 	private AgentRepository agentRepository;
 	private CommissionRepository commissionRepository;
-
+	@Autowired
+	private AuthService authService;
 	public InsurancePolicyServiceImpl(SchemeRepository schemeRepository, CustomerRepository customerRepository,
 			InsurancePolicyRepository insurancePolicyRepository, NomineeRepository nomineeRepository,
 			SubmittedDocumentRepository documentRepository, InsurancePolicyMapper insurancePolicyMapper,
@@ -233,7 +232,26 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 		Page<Commission> commissions = commissionRepository.findByCriteria(id, policyId, agentId, commissionType,
 				customerName, pageable);
 		if (commissions.isEmpty()) {
-			throw new FortuneLifeException("No Policies Found!");
+			throw new FortuneLifeException("No Commissions Found!");
+		}
+
+		List<CommissionDto> response = commissions.getContent().stream()
+				.map(insurancePolicyMapper::commissionEntityToDto).collect(Collectors.toList());
+
+		return new PageResponse<>(response, commissions.getNumber(), commissions.getNumberOfElements(),
+				commissions.getTotalElements(), commissions.getTotalPages(), commissions.isLast());
+	}
+
+	@Override
+	public PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, Long policyId, String commissionType, String customerName, int page, int size, HttpServletRequest request) {
+		Pageable pageable = PageRequest.of(page, size);
+		UserDto user=authService.getLoggedUser(request);
+		Long agentId=user.getId();
+
+		Page<Commission> commissions = commissionRepository.findByCriteria(id, policyId, agentId, commissionType,
+				customerName, pageable);
+		if (commissions.isEmpty()) {
+			throw new FortuneLifeException("No Commissions Found!");
 		}
 
 		List<CommissionDto> response = commissions.getContent().stream()

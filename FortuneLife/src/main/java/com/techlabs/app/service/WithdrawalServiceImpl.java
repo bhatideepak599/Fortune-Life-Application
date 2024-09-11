@@ -5,12 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.techlabs.app.dto.UserDto;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.techlabs.app.dto.AgentDto;
 import com.techlabs.app.dto.WithdrawalDto;
 import com.techlabs.app.entity.Agent;
 import com.techlabs.app.entity.Withdrawal;
@@ -28,13 +29,13 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 	private AgentRepository agentRepository;
 	private WithdrawalRepository withdrawalRepository;
 	private AgentMapper agentMapper;
+	private AuthService authService;
 
-	public WithdrawalServiceImpl(AgentRepository agentRepository, WithdrawalRepository withdrawalRepository,
-			AgentMapper agentMapper) {
-		super();
+	public WithdrawalServiceImpl(AgentRepository agentRepository, WithdrawalRepository withdrawalRepository, AgentMapper agentMapper, AuthService authService) {
 		this.agentRepository = agentRepository;
 		this.withdrawalRepository = withdrawalRepository;
 		this.agentMapper = agentMapper;
+		this.authService = authService;
 	}
 
 	@Override
@@ -117,6 +118,28 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 		withdrawalRepository.save(withdrawal);
 		agentRepository.save(agent);
 		return "WithDrawal Rejected";
+	}
+
+	@Override
+	public PageResponse<WithdrawalDto> getAllWithdrawalsOfAnAgent(Long id, String status, HttpServletRequest request, int page, int size) {
+		UserDto user=authService.getLoggedUser(request);
+		Long agentId=user.getId();
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Withdrawal> withdrawals = withdrawalRepository.findByIdAndAgentIdAndStatus(id, agentId, status, pageable);
+		if (withdrawals.getContent().isEmpty()) {
+
+			throw new FortuneLifeException(" No Withdrawals  Found! ");
+		}
+
+		List<Withdrawal> allWithdrawals = withdrawals.getContent();
+		List<WithdrawalDto> response = new ArrayList<>();
+		for (Withdrawal withdrawal : allWithdrawals) {
+
+			response.add(entityToDto(withdrawal));
+		}
+
+		return new PageResponse<>(response, withdrawals.getNumber(), withdrawals.getNumberOfElements(),
+				withdrawals.getTotalElements(), withdrawals.getTotalPages(), withdrawals.isLast());
 	}
 
 }

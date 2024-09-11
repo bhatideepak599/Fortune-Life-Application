@@ -2,6 +2,7 @@ package com.techlabs.app.service;
 
 import com.techlabs.app.dto.WithdrawalDto;
 import com.techlabs.app.util.PageResponse;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface WithdrawalService {
 
@@ -13,4 +14,5 @@ public interface WithdrawalService {
 
 	String rejectWithdrawal(Long id);
 
+    PageResponse<WithdrawalDto> getAllWithdrawalsOfAnAgent(Long id, String status, HttpServletRequest request, int page, int size);
 }

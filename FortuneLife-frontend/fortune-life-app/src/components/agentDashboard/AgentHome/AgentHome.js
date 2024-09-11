@@ -4,9 +4,10 @@ import Footer from "../../sharedComponents/CommonNavbarFooter/Footer";
 import Main from "../landingPage/Main/Main";
 
 const AgentHome = () => {
+  
   return (
     <>
-      <Navbar />
+     
       <Main />
       <Footer />
     </>

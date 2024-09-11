@@ -22,27 +22,27 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class Agent {
-	@Id
-	private Long id;
-	
-	@Column(nullable = false)
-	private Boolean active = true;
-	
-	@Column(nullable = false)
-	private Boolean verified=false;
-	private Double totalCommission = 0.0;
-	
-	private String image;
-	@OneToMany(cascade = { CascadeType.ALL })
-	private List<Commission> commissions;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "UserId")
-	private User user;
+    @Id
+    private Long id;
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	private List<Claim> claims;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agent")
+    @Column(nullable = false)
+    private Boolean active = true;
+
+    @Column(nullable = false)
+    private Boolean verified = false;
+    private Double totalCommission = 0.0;
+
+    private String image;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Commission> commissions;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "UserId")
+    private User user;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Claim> claims;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "agent")
     private List<Withdrawal> withdrawals;
 }

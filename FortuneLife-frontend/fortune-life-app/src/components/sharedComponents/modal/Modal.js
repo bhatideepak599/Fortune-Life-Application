@@ -78,11 +78,11 @@ const Modal = ({ title, isOpen, onClose, children, width, height }) => {
               <CloseButton onClick={handleClose}>&times;</CloseButton>
             </ModalHeader>
             {children}
-            <div className="text-end mt-5">
-              <button className="btn btn-secondary btn-md" onClick={handleClose}>
-                Close
-              </button>
-            </div>
+            <div className="text-center mt-5">
+  <button className="btn btn-secondary btn-md" onClick={handleClose}>
+    Close
+  </button>
+</div>
           </ModalContent>
         </ModalContainer>
       )}

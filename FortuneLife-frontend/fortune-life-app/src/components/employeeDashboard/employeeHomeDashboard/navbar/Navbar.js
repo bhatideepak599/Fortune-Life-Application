@@ -2,7 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import fortunelife from "../../../../images/fortunelife-high-resolution-logo-white-transparent.png";
 
-const Navbar = ({name,handleHistoryClick}) => {
+const Navbar = ({handleProfileClick,onLogoutClick}) => {
   return (
     <>
       <nav class="agent-navbar">
@@ -11,7 +11,7 @@ const Navbar = ({name,handleHistoryClick}) => {
         </div>
         <ul class="nav-links">
           <li>
-            <a href="/agent-dashboard">Home</a>
+            <a href="/employee-dashboard">Home</a>
           </li>
           <li>
             <a href="#">View Clients</a>
@@ -19,24 +19,17 @@ const Navbar = ({name,handleHistoryClick}) => {
           <li>
             <a href="#">Policies</a>
           </li>
+          {/* <li>
+            <a href="#">Commissions</a>
+          </li> */}
           <li class="dropdown">
             <a href="#" class="dropbtn">
-              Commission
+              More
             </a>
             <div class="dropdown-content">
-              <a href="#" onClick={handleHistoryClick}>History</a>
-              <a href="#" >Total Commission</a>
-              <a href="#" >Withdrawal History</a>
-            </div>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropbtn">
-              {name}
-            </a>
-            <div class="dropdown-content">
-              <a href="#">Profile</a>
+              <a href="#" onClick={handleProfileClick}>Profile</a>
               <a href="#">Change password</a>
-              <a href="#" >Logout</a>
+              <a href="#" onClick={onLogoutClick}>Logout</a>
             </div>
           </li>
         </ul>

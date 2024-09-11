@@ -34,7 +34,7 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    if (!validateAdmin()) return;
+   if (!validateAdmin()) return;
 
     
     fetchAdmin();

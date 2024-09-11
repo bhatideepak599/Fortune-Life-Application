@@ -5,6 +5,7 @@ import com.techlabs.app.dto.InsurancePolicyDto;
 import com.techlabs.app.dto.InsurancePolicyResponseDto;
 
 import com.techlabs.app.util.PageResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 public interface InsurancePolicyService {
@@ -21,5 +22,9 @@ public interface InsurancePolicyService {
 
 	PageResponse<CommissionDto> getAllCommissions(Long id, Long policyId, Long agentId, String commissionType,
 			String customerName, int page, int size);
+
+	public PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, Long policyId, String commissionType, String customerName, int page, int size, HttpServletRequest
+			 request) ;
+
 
 }

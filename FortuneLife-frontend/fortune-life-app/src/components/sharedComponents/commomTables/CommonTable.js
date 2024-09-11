@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../commomTables/commonTables.css";
-const CommonTable = ({ data, actions }) => {
+const CommonTable = ({ data, actions ,viewPayments}) => {
   if (!data || !data.length) return <div>No data available</div>;
 
   const headers = Object.keys(data[0]);
@@ -15,6 +15,7 @@ const CommonTable = ({ data, actions }) => {
               <th key={header}>{formatHeader(header)}</th>
             ))}
             {actions && <th>Actions</th>}
+            {  viewPayments &&<th> View</th>  }
           </tr>
         </thead>
         <tbody
@@ -34,7 +35,19 @@ const CommonTable = ({ data, actions }) => {
                   {header === "active" ? (row[header] ? "Active" : "Inactive") : typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header]}
                 </td>
               ))}
-
+              {viewPayments &&  <td style={{ textAlign: 'center' }}>
+          <a
+            href="#"
+           
+            className="text-primary"
+            onClick={(e) => {
+              e.preventDefault(); 
+              viewPayments.view(row[primaryKey]); 
+            }}
+          >
+            View
+          </a>
+        </td>}
               {actions && (
                 <td>
                   {row.status === "PENDING" && (

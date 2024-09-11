@@ -104,14 +104,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/fortuneLife/agent/**").hasAnyRole("ADMIN", "EMPLOYEE")
                         .requestMatchers(HttpMethod.POST, "/fortuneLife/agent/withdrawal/{agentId}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/agent/withdrawal-requests").hasRole("ADMIN")
-
+                        .requestMatchers(HttpMethod.GET, "/fortuneLife/agent/allwithdrawal").hasRole("AGENT")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/withdrawal/approve/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/withdrawal/reject/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/activate/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/fortuneLife/agent/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/agent").hasAnyRole("ADMIN", "EMPLOYEE")
-                        .requestMatchers(HttpMethod.GET, "/fortuneLife/agent/{id}").hasAnyRole("ADMIN", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.GET, "/fortuneLife/agent/{id}").hasAnyRole("ADMIN", "EMPLOYEE","AGENT")
 
                         // Insurance scheme endpoints
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/scheme/{planId}").permitAll()

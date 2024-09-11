@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col , Image} from "react-bootstrap";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import "./AddEmployeeOrAgent.css"; // Import the custom CSS file
+//import 'bootstrap/dist/css/bootstrap.min.css';
+//import "./AddEmployeeOrAgent.css"; // Import the custom CSS file
 import { errorToast, successToast } from "../../../../utils/Toast";
 import { addEmployee } from "../../../../services/employeeService";
 import { addAgent } from "../../../../services/agentService";

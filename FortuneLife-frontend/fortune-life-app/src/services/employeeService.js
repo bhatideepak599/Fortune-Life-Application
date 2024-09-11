@@ -50,13 +50,13 @@ export const addEmployee = async (employeeDto) => {
           "Content-Type": "application/json",
         },
         params: {
-          role: "employee", // Adjust the role value as needed
+          role: "employee", 
         },
       }
     );
-    return response.data; // Return the data from the response
+    return response.data; 
   } catch (error) {
-    throw error; // Optional: re-throwing to be handled by the calling code
+    throw error; 
   }
 };
 
