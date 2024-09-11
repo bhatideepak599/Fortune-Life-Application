@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../HomePageNavbar/HomePageNavbar.css";
 import logoImg from "../../../images/fortunelife.png";
 import { getAllInsurancePlans } from "../../../services/commonService";
 import { errorToast } from "../../../utils/Toast";
 import { useNavigate } from "react-router-dom";
+import "./HomePageNavbar.css";
 
 const HomePageNavbar = () => {
   const navigate = useNavigate();
@@ -39,8 +39,8 @@ const HomePageNavbar = () => {
 
             <ul className="ms-5 nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li className="ms-2">
-                <a href="/customer-dashboard" className="fs-5 nav-link px-2 link-body-emphasis">
-                  Customer Home
+                <a href="/" className="fs-5 nav-link px-2 link-body-emphasis">
+                  Home
                 </a>
               </li>
 
@@ -65,12 +65,6 @@ const HomePageNavbar = () => {
                     )}
                   </ul>
                 )}
-              </li>
-
-              <li className="ms-4">
-                <a href="/" className="fs-5 nav-link px-2 link-body-emphasis">
-                  My Policies
-                </a>
               </li>
 
               <li className="ms-4">

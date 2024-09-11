@@ -18,6 +18,7 @@ import EmployeeDashboard from "./components/employeeDashboard/employeeHomeDashbo
 import CustomerReport from "./components/adminDashboard/adminFunctionComponents/customerReport/CustomerReport";
 import AgentReport from "./components/adminDashboard/adminFunctionComponents/agentReport/AgentReport";
 import CommissionReport from "./components/employeeDashboard/commissionReport/CommissionReport";
+import AgentHome from "./components/agentDashboard/AgentHome/AgentHome";
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
         <Route exact path="/all-customers" element={<CustomerReport />} />
         <Route exact path="/all-agents" element={<AgentReport />} />
         <Route exact path="/commission-Report" element={<CommissionReport />} />
-      
+        <Route exact path="/agent-dashboard" element={<AgentHome />} />
       </Routes>
     </>
   );

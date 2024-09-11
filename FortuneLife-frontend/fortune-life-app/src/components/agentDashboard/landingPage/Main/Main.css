@@ -1,0 +1,83 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+}
+
+/* Main Section Styling */
+.agent-main-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Ensure spacing between cards */
+  padding: 40px;
+  background-color: #f8f9fa;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 30%; /* 3 cards per row */
+  margin-bottom: 20px; /* Space between rows */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-icon {
+  margin-bottom: 15px;
+  color: hsl(245, 67%, 59%);
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #7f8c8d;
+  margin-bottom: 20px;
+}
+
+.card-btn {
+  background-color: hsl(245, 67%, 59%);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-btn:hover {
+  background-color: hsl(245, 78%, 52%);
+}
+
+/* Responsive Styling */
+@media screen and (max-width: 1024px) {
+  .card {
+    width: 45%; /* 2 cards per row on medium screens */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    width: 100%; /* 1 card per row on small screens */
+  }
+
+  .agent-main-section {
+    justify-content: center;
+  }
+}
