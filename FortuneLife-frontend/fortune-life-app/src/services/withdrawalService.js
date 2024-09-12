@@ -61,3 +61,27 @@ export const approveWithdrawal = async (id) => {
       throw error;
     }
   };
+
+  export const getAllWithdrawalOfAnAgent = async (pageSize, pageNumber, searchParams) => {
+    try {
+      const params = {
+        id: searchParams.id || undefined,
+        agentId: searchParams.agentId || undefined,
+        status: searchParams.status || undefined,
+        page: pageNumber,
+        size: pageSize
+      };
+  
+      const response = await axios.get(`${API_BASE_URL}/fortuneLife/agent/allwithdrawal`, {
+        headers: {
+          Authorization: accessToken,
+        },
+        params,
+      });
+  
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  

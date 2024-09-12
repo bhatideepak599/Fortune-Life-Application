@@ -1,12 +1,13 @@
 package com.techlabs.app.service;
 
+import com.techlabs.app.dto.AgentDto;
 import com.techlabs.app.dto.WithdrawalDto;
 import com.techlabs.app.util.PageResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface WithdrawalService {
 
-	WithdrawalDto claimWithdrawal(Long id, Double amount);
+	WithdrawalDto claimWithdrawal(Long id, Double amount, AgentDto agentDto);
 
 	PageResponse<WithdrawalDto> getAllWithdrawalRequests(Long id, Long agentId, String status, int page, int size);
 

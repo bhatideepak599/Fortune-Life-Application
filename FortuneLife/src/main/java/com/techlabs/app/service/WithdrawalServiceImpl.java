@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.techlabs.app.dto.AgentDto;
 import com.techlabs.app.dto.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 	}
 
 	@Override
-	public WithdrawalDto claimWithdrawal(Long id, Double amount) {
+	public WithdrawalDto claimWithdrawal(Long id, Double amount,AgentDto agentDto) {
 		Agent agent = agentRepository.findById(id).orElseThrow(() -> new AgentRelatedException("No Agent Found!."));
 		if (agent.getActive() == false)
 			throw new AgentRelatedException("No Agent Found!.");
@@ -48,11 +49,20 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 
 		if (agent.getTotalCommission() < amount)
 			throw new AgentRelatedException("Claim Amount Should be Less than Total Commission.");
+		if(agentDto.getAccountNumber()==null || agentDto.getBankName()==null || agentDto.getIfscCode()==null) {
+			throw new AgentRelatedException("Account Details Missing!.");
+		}
 
 		agent.setTotalCommission(agent.getTotalCommission() - amount);
+		agent.setAccountNumber(agentDto.getAccountNumber());
+		agent.setBankName(agentDto.getBankName());
+		agent.setIfscCode(agentDto.getIfscCode());
 		Withdrawal withdrawal = new Withdrawal();
+		agentRepository.save(agent);
 		withdrawal.setAmount(amount);
 		withdrawal.setStatus(DocumentStatus.PENDING.name());
+		
+		
 		withdrawal.setAgent(agent);
 		withdrawal.setWithdrawalDate(LocalDateTime.now());
 

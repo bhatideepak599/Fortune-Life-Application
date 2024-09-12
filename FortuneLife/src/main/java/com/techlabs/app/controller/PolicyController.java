@@ -19,47 +19,63 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/fortuneLife/policy")
 public class PolicyController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PolicyController.class);
+	private static final Logger logger = LoggerFactory.getLogger(PolicyController.class);
 
-    @Autowired
-    private InsurancePolicyService policyService;
+	@Autowired
+	private InsurancePolicyService policyService;
 
-    @Operation(summary = "Get Policy By ID")
-    @GetMapping("/{policyId}")
-    public ResponseEntity<InsurancePolicyResponseDto> getPolicyById(@PathVariable Long policyId) {
-        logger.info("Fetching Policy with ID: {}", policyId);
-        InsurancePolicyResponseDto policyDto = policyService.getPolicyById(policyId);
-        return new ResponseEntity<>(policyDto, HttpStatus.OK);
-    }
+	@Operation(summary = "Get Policy By ID")
+	@GetMapping("/{policyId}")
+	public ResponseEntity<InsurancePolicyResponseDto> getPolicyById(@PathVariable Long policyId) {
+		logger.info("Fetching Policy with ID: {}", policyId);
+		InsurancePolicyResponseDto policyDto = policyService.getPolicyById(policyId);
+		return new ResponseEntity<>(policyDto, HttpStatus.OK);
+	}
 
-    @Operation(summary = "Get All Policies based on Search Criteria")
-    @GetMapping
-    public ResponseEntity<PageResponse<InsurancePolicyResponseDto>> getAllPolicies(@RequestParam(required = false) Long id, @RequestParam(required = false) Long customerId, @RequestParam(required = false) Long agentId, @RequestParam(required = false) Long schemeId, @RequestParam(required = false) String schemeName, @RequestParam(required = false) String agentName, @RequestParam(required = false) String policyStatus, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
-        logger.info("Fetching All The Policies");
-        PageResponse<InsurancePolicyResponseDto> policies = policyService.getAllPolicies(id, customerId, agentId, schemeId, schemeName, agentName, policyStatus, page, size);
+	@Operation(summary = "Get All Policies based on Search Criteria")
+	@GetMapping
+	public ResponseEntity<PageResponse<InsurancePolicyResponseDto>> getAllPolicies(
+			@RequestParam(required = false) Long id, @RequestParam(required = false) Long customerId,
+			@RequestParam(required = false) Long agentId, @RequestParam(required = false) Long schemeId,
+			@RequestParam(required = false) String schemeName, @RequestParam(required = false) String agentName,
+			@RequestParam(required = false) String policyStatus,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size) {
+		logger.info("Fetching All The Policies");
+		PageResponse<InsurancePolicyResponseDto> policies = policyService.getAllPolicies(id, customerId, agentId,
+				schemeId, schemeName, agentName, policyStatus, page, size);
 
-        return new ResponseEntity<>(policies, HttpStatus.OK);
-    }
+		return new ResponseEntity<>(policies, HttpStatus.OK);
+	}
 
-    @Secured({"EMPLOYEE", "ADMIN"})
-    @Operation(summary = "Get All Commission based on Search Criteria")
-    @GetMapping("/commission")
-    public ResponseEntity<PageResponse<CommissionDto>> getAllCommissions(@RequestParam(required = false) Long id, @RequestParam(required = false) Long policyId, @RequestParam(required = false) Long agentId, @RequestParam(required = false) String commissionType, @RequestParam(required = false) String customerName, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
-        logger.info("Fetching All The Policies");
-        PageResponse<CommissionDto> commissions = policyService.getAllCommissions(id, policyId, agentId, commissionType, customerName, page, size);
+	@Secured({ "EMPLOYEE", "ADMIN" })
+	@Operation(summary = "Get All Commission based on Search Criteria")
+	@GetMapping("/commission")
+	public ResponseEntity<PageResponse<CommissionDto>> getAllCommissions(@RequestParam(required = false) Long id,
+			@RequestParam(required = false) Long policyId, @RequestParam(required = false) Long agentId,
+			@RequestParam(required = false) String commissionType, @RequestParam(required = false) String customerName,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size) {
+		logger.info("Fetching All The Policies");
+		PageResponse<CommissionDto> commissions = policyService.getAllCommissions(id, policyId, agentId, commissionType,
+				customerName, page, size);
 
-        return new ResponseEntity<>(commissions, HttpStatus.OK);
-    }
+		return new ResponseEntity<>(commissions, HttpStatus.OK);
+	}
 
-//    @Secured({"AGENT"})
-//    @Operation(summary = "Get All Commission based on Search Criteria")
-//    @GetMapping("/commission")
-//    public ResponseEntity<PageResponse<CommissionDto>> getAllCommissionsOfAnAgent(@RequestParam(required = false) Long id, @RequestParam(required = false) Long policyId, @RequestParam(required = false) String commissionType, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size
-//	 HttpServletRequest request) {
-//        logger.info("Fetching All The Policies");
-//        PageResponse<CommissionDto> commissions = policyService.getAllCommissionsOfAnAgent(id, policyId, commissionType, page, size,request);
-//
-//        return new ResponseEntity<>(commissions, HttpStatus.OK);
-//    }
+	@Secured({ "AGENT" })
+	@Operation(summary = "Get All Commission of An Agent")
+	@GetMapping("/all-commission")
+	public ResponseEntity<PageResponse<CommissionDto>> getAllCommissionsOfAnAgent(
+			@RequestParam(required = false) Long id, @RequestParam(required = false) Long policyId,
+			@RequestParam(required = false) String commissionType,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size, HttpServletRequest request) {
+		logger.info("Fetching All The Policies");
+		PageResponse<CommissionDto> commissions = policyService.getAllCommissionsOfAnAgent(id, policyId, commissionType,
+				page, size, request);
+
+		return new ResponseEntity<>(commissions, HttpStatus.OK);
+	}
 
 }

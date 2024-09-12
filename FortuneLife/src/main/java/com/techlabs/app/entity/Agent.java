@@ -31,8 +31,10 @@ public class Agent {
     @Column(nullable = false)
     private Boolean verified = false;
     private Double totalCommission = 0.0;
-
     private String image;
+    private String bankName;
+    private String accountNumber;
+    private String ifscCode;
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Commission> commissions;
 

@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import fortunelife from "../../../../images/fortunelife-high-resolution-logo-white-transparent.png";
+import { useNavigate } from "react-router-dom";
+import { getLoggedInUser } from "../../../../services/authService";
 
-const Navbar = ({name,handleHistoryClick}) => {
+const Navbar = () => {
+  const [agent, setAgent] = useState(null);
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchAgent();
+  }, []);
+
+  const fetchAgent = async () => {
+    const response = await getLoggedInUser();
+
+    setName(response.firstName + " " + response.lastName);
+    setAgent(response);
+  };
+  const handleHistoryClick = () => {
+    navigate("/commission-history");
+  };
+  const handleAllWithdrawalsClick = () => {
+    navigate("/withdrawal-history");
+  };
   return (
     <>
       <nav class="agent-navbar">
@@ -24,9 +46,10 @@ const Navbar = ({name,handleHistoryClick}) => {
               Commission
             </a>
             <div class="dropdown-content">
-              <a href="#" onClick={handleHistoryClick}>History</a>
+             
               <a href="#" >Total Commission</a>
-              <a href="#" >Withdrawal History</a>
+              <a href="#" onClick={handleHistoryClick}>Commission</a>
+              <a href="#" onClick={handleAllWithdrawalsClick}>Withdrawal</a>
             </div>
           </li>
           <li class="dropdown">

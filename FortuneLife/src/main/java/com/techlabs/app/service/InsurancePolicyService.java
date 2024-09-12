@@ -23,7 +23,7 @@ public interface InsurancePolicyService {
 	PageResponse<CommissionDto> getAllCommissions(Long id, Long policyId, Long agentId, String commissionType,
 			String customerName, int page, int size);
 
-	public PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, Long policyId, String commissionType, String customerName, int page, int size, HttpServletRequest
+	public PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, Long policyId, String commissionType, int page, int size, HttpServletRequest
 			 request) ;
 
 

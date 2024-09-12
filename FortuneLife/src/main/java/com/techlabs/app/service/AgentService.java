@@ -2,6 +2,8 @@ package com.techlabs.app.service;
 
 import com.techlabs.app.dto.AgentDto;
 import com.techlabs.app.util.PageResponse;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 public interface AgentService {
@@ -18,5 +20,7 @@ public interface AgentService {
 	String activateAgent(Long id);
 
 	String deleteAgentById(Long id);
+
+	AgentDto getLoggedAgent(HttpServletRequest request);
 
 }

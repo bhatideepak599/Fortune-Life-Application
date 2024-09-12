@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.techlabs.app.dto.AgentDto;
+import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.entity.Address;
 import com.techlabs.app.entity.Agent;
 import com.techlabs.app.entity.Role;
@@ -25,6 +26,8 @@ import com.techlabs.app.repository.AgentRepository;
 import com.techlabs.app.repository.RoleRepository;
 import com.techlabs.app.repository.UserRepository;
 import com.techlabs.app.util.PageResponse;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @Service
@@ -36,10 +39,12 @@ public class AgentServiceImpl implements AgentService {
 	private UserMapper userMapper;
 	private AddressRepository addressRepository;
 	private PasswordEncoder passwordEncoder;
+	private AuthService authService;
 
+	
 	public AgentServiceImpl(AgentRepository agentRepository, AgentMapper agentMapper, UserRepository userRepository,
 			RoleRepository roleRepository, UserMapper userMapper, AddressRepository addressRepository,
-			PasswordEncoder passwordEncoder) {
+			PasswordEncoder passwordEncoder, AuthService authService) {
 		super();
 		this.agentRepository = agentRepository;
 		this.agentMapper = agentMapper;
@@ -48,6 +53,7 @@ public class AgentServiceImpl implements AgentService {
 		this.userMapper = userMapper;
 		this.addressRepository = addressRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.authService = authService;
 	}
 
 	@Override
@@ -181,6 +187,20 @@ public class AgentServiceImpl implements AgentService {
 		agent = agentRepository.save(agent);
 
 		return "Agent Deleted Successfully.";
+	}
+
+	@Override
+	public AgentDto getLoggedAgent(HttpServletRequest request) {
+		UserDto user=authService.getLoggedUser(request);
+		Agent agent=agentRepository.findById(user.getId())
+				.orElseThrow(()-> new AgentRelatedException("Login With Appropriate Credentials!."));
+		AgentDto agentDto = agentMapper.entityToDto(agent);
+		agentDto.setAccountNumber(agent.getAccountNumber()!=null?agent.getAccountNumber():"N/A");
+		agentDto.setBankName(agent.getBankName()!=null?agent.getBankName():"N/A");
+		agentDto.setIfscCode(agent.getIfscCode()!=null?agent.getIfscCode():"N/A");
+		
+		
+		return agentDto;
 	}
 
 }

@@ -7,7 +7,7 @@ const AgentHome = () => {
   
   return (
     <>
-     
+      <Navbar />
       <Main />
       <Footer />
     </>

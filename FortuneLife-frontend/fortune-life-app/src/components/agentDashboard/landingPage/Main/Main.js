@@ -24,9 +24,9 @@ const Main = () => {
     setName(response.firstName + " " + response.lastName);
     setAgent(response);
   };
-  const handleHistoryClick = () => {
-    navigate("commission-history");
-  };
+  // const handleHistoryClick = () => {
+  //   navigate("/commission-history");
+  // };
   const handleRegister = () => {
     setRegister(true);
     setShowCustomerModal(true);
@@ -39,7 +39,7 @@ const Main = () => {
   return (
     <>
      
-      <Navbar name={name} handleHistoryClick={handleHistoryClick} />
+     
       <div className="agent-main-section">
         <div className="card">
           <div className="card-icon">

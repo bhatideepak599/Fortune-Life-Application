@@ -19,6 +19,8 @@ import CustomerReport from "./components/adminDashboard/adminFunctionComponents/
 import AgentReport from "./components/adminDashboard/adminFunctionComponents/agentReport/AgentReport";
 import CommissionReport from "./components/employeeDashboard/commissionReport/CommissionReport";
 import AgentHome from "./components/agentDashboard/AgentHome/AgentHome";
+import CommissionHistory from "./components/agentDashboard/landingPage/commissionHistory/CommissionHistory";
+import WithdrawalHistory from "./components/agentDashboard/landingPage/withdrawalHistory/WithdrawalHistory";
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
         <Route exact path="/all-agents" element={<AgentReport />} />
         <Route exact path="/commission-Report" element={<CommissionReport />} />
         <Route exact path="/agent-dashboard" element={<AgentHome />} />
+        <Route exact path="/commission-history" element={<CommissionHistory />} />
+        <Route exact path="/withdrawal-history" element={<WithdrawalHistory />} />
       </Routes>
     </>
   );

@@ -34,10 +34,10 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-   if (!validateAdmin()) return;
+   validateAdmin();
 
-    
-    fetchAdmin();
+   
+   { fetchAdmin()};
 
     // Retrieve the active item from localStorage or query parameters
     const savedActiveItem = localStorage.getItem("activeItem");
@@ -45,20 +45,21 @@ const AdminDashboard = () => {
     const initialActiveItem = queryParams.get("activeItem");
 
     // Set the active item state, preferring query parameter if available
-    setActiveItem(initialActiveItem ||savedActiveItem || "Manage City/State");
+   // setActiveItem(initialActiveItem ||savedActiveItem || "Manage City/State");
   }, [accessToken, navigate, location.search]);
 
   useEffect(() => {
-   localStorage.setItem("activeItem", activeItem);
+   //localStorage.setItem("activeItem", activeItem);
   }, [activeItem]);
 
   const fetchAdmin = async () => {
+   
     try {
       const response = await getAdmin();
       setAdminDetails(response.data);
       setName(response.data.user.firstName);
     } catch (error) {
-      errorToast(error.response?.data?.message);
+      //errorToast(error.response?.data?.message);
     }
   };
 

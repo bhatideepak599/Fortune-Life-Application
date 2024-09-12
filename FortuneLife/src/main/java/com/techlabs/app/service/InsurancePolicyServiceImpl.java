@@ -243,11 +243,11 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 	}
 
 	@Override
-	public PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, Long policyId, String commissionType, String customerName, int page, int size, HttpServletRequest request) {
+	public PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, Long policyId, String commissionType,  int page, int size, HttpServletRequest request) {
 		Pageable pageable = PageRequest.of(page, size);
 		UserDto user=authService.getLoggedUser(request);
 		Long agentId=user.getId();
-
+		String customerName=null;
 		Page<Commission> commissions = commissionRepository.findByCriteria(id, policyId, agentId, commissionType,
 				customerName, pageable);
 		if (commissions.isEmpty()) {

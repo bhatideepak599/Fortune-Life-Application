@@ -114,6 +114,6 @@ export const updateEmployee = async (id, userDto, addressDto) => {
     return response.data;
   } catch (error) {
     console.error("Error updating employee:", error);
-    throw error; // Re-throwing the error for further handling
+    throw error; 
   }
 };

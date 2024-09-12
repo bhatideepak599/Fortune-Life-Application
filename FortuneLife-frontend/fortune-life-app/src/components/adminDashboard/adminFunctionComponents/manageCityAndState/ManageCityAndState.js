@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { errorToast } from "../../../../utils/Toast";
+import { errorToast, warnToast } from "../../../../utils/Toast";
 import { getAllStates } from "../../../../services/stateAndCityService";
 import { getAllSchemes } from "../../../../services/schemeService";
 import { Table, Button, Modal } from "react-bootstrap";
 
 import AddOrRemoveCity from "./addOrRemoveCity/AddOrRemoveCity";
 import ViewCities from "./viewCities/ViewCities";
+import { verifyUser } from "../../../../services/authService";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ManageCityAndState = () => {
   const [allSchemes, setAllSchemes] = useState([]);
@@ -15,21 +17,40 @@ const ManageCityAndState = () => {
   const[viewCities,setViewCities]=useState(false)
   const [schemeObject,setSchemeObject]=useState()
   const[flag,setFlag]=useState(false)
-  
+  const navigate = useNavigate();
+  const location = useLocation();
+  const accessToken = localStorage.getItem("accessToken");
+  const [verify,setVerify]=useState(true)
 
+  useEffect(()=>{
+    verifyAdmin()
+  })
   useEffect(() => {
+    
+  
+    if(!verify) {
+      warnToast("Login To access this resource!")
+      navigate("/")
+    }
   
     fetchAllSchemes();
-  }, [flag]);
+  }, [flag,verify]);
 
+ 
+const verifyAdmin=async()=>{
+  const response =await verifyUser(accessToken,"admin");
+  console.log(response);
+  setVerify(response);
 
+  
+}
 
   const fetchAllSchemes = async () => {
     try {
       const response = await getAllSchemes();
       setAllSchemes(response.data);
     } catch (error) {
-      errorToast(error.response?.data?.message || "An error occurred");
+     // errorToast(error.response?.data?.message || "An error occurred");
     }
   };
 
