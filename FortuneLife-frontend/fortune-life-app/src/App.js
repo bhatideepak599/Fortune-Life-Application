@@ -21,6 +21,7 @@ import CommissionReport from "./components/employeeDashboard/commissionReport/Co
 import AgentHome from "./components/agentDashboard/AgentHome/AgentHome";
 import CommissionHistory from "./components/agentDashboard/landingPage/commissionHistory/CommissionHistory";
 import WithdrawalHistory from "./components/agentDashboard/landingPage/withdrawalHistory/WithdrawalHistory";
+import RegisterForm from "./components/authComponents/Register/RegisterForm";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route exact path="/register" element={<RegisterForm />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-profile" element={<AdminProfile />} />
         <Route path="/all-schemes/:id" element={<AllSchemes />} />

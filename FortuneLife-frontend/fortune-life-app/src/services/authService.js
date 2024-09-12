@@ -40,11 +40,10 @@ export const logout = async () => {
     );
 
     if (response.status === 200) {
-      
       localStorage.removeItem("accessToken");
       localStorage.removeItem("role");
       localStorage.removeItem("expirationTime");
-      
+
       return response.data;
     }
   } catch (error) {
@@ -123,6 +122,31 @@ export const getLoggedInUser = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const registerUser = async (registerDto, role) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/fortuneLife/auth/register`,
+      {
+        firstName: registerDto.firstName ? registerDto.firstName : null,
+        lastName: registerDto.lastName ? registerDto.lastName : null,
+        username: registerDto.username ? registerDto.username : null,
+        password: registerDto.password ? registerDto.password : null,
+        email: registerDto.email ? registerDto.email : null,
+        mobileNumber: registerDto.mobileNumber ? registerDto.mobileNumber : null,
+        gender: registerDto.gender ? registerDto.gender : null,
+        dateOfBirth: registerDto.dateOfBirth ? registerDto.dateOfBirth : null,
+      },
+      {
+        params: role,
+      }
+    );
 
     return response.data;
   } catch (error) {

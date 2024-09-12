@@ -55,12 +55,12 @@ public class AuthController {
 
     @Operation(summary = "User Registration")
     @PostMapping(value = {"/register"})
-    public ResponseEntity<String> register(@Valid @RequestBody RegisterDto registerDto,
+    public ResponseEntity<UserDto> register(@Valid @RequestBody RegisterDto registerDto,
                                            @RequestParam(name = "tempRole") String tempRole) {
         String role = "ROLE_" + tempRole.toUpperCase();
-        String response = authService.register(registerDto, role);
+        UserDto userDto = authService.register(registerDto, role);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(userDto);
     }
 
     @Operation(summary = "User Logout")

@@ -3,7 +3,7 @@ import logoImg from "../../../images/fortunelife.png";
 import { getAllInsurancePlans } from "../../../services/commonService";
 import { errorToast } from "../../../utils/Toast";
 import { useNavigate } from "react-router-dom";
-import "./HomePageNavbar.css";
+import "./HomePageNavbar.module.css";
 
 const HomePageNavbar = () => {
   const navigate = useNavigate();
@@ -28,24 +28,30 @@ const HomePageNavbar = () => {
     setShowDropDown((prev) => !prev);
   };
 
+  const handleRegisterClick = () => {
+    navigate("/register");
+  };
+
   return (
     <>
-      <header className="p-3 mb-3">
-        <div className="container p-0">
-          <div className="p-0 d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" className="me-5 d-flex align-items-center mb-0 link-body-emphasis text-decoration-none">
-              <img src={logoImg} alt="Company Logo" style={{ width: "250px" }} />
+      <header className="customer-navbar customer-fixed-top bg-white">
+        <div className="customer-nav-container container p-0">
+          <div className="customer-navbar-brand me-4">
+            <a href="/" className="link-body-emphasis text-decoration-none">
+              <img src={logoImg} alt="Company Logo" style={{ width: "150px" }} />
             </a>
+          </div>
 
-            <ul className="ms-5 nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li className="ms-2">
-                <a href="/" className="fs-5 nav-link px-2 link-body-emphasis">
+          <div className="customer-collapsed">
+            <ul className="customer-navbar-left d-flex">
+              <li className="customer-nav-item me-4">
+                <a href="/" className="fs-5 customer-nav-link">
                   Home
                 </a>
               </li>
 
-              <li className="ms-4 position-relative">
-                <button className="fs-5 mt-2 dropdown-toggle" type="button" aria-expanded={showDropDown} onClick={handleDropdownClick}>
+              <li className="customer-nav-item position-relative me-4">
+                <button className="fs-5 dropdown-toggle customer-nav-link" type="button" aria-expanded={showDropDown} onClick={handleDropdownClick}>
                   Popular Insurance Plans
                 </button>
                 {showDropDown && (
@@ -67,46 +73,47 @@ const HomePageNavbar = () => {
                 )}
               </li>
 
-              <li className="ms-4">
-                <a href="/" className="fs-5 nav-link px-2 link-body-emphasis">
+              <li className="customer-nav-item">
+                <a href="/" className="fs-5 customer-nav-link">
                   Contact
                 </a>
               </li>
             </ul>
+          </div>
 
-            <div className="header-actions d-inline-block">
-              <div className="dropdown text-end">
-                <a href="/" className="mt-4 d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                  Login
-                </a>
-                <ul className="dropdown-menu text-small">
-                  <li>
-                    <a className="dropdown-item" href="/login?role=Customer">
-                      Login as Customer
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/login?role=Agent">
-                      Login as Agent
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/login?role=Employee">
-                      Login as Employee
-                    </a>
-                  </li>
-                  <hr className="dropdown-divider" />
-                  <li>
-                    <a className="dropdown-item" href="/login?role=Admin">
-                      Login as Admin
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a href="/" className="header-action-link">
-                Register
+          <div className="customer-navbar-right d-flex align-items-center">
+            <div className="dropdown text-end me-3">
+              <a href="/" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Login
               </a>
+              <ul className="dropdown-menu text-small">
+                <li>
+                  <a className="dropdown-item" href="/login?role=Customer">
+                    Login as Customer
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="/login?role=Agent">
+                    Login as Agent
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="/login?role=Employee">
+                    Login as Employee
+                  </a>
+                </li>
+                <hr className="dropdown-divider" />
+                <li>
+                  <a className="dropdown-item" href="/login?role=Admin">
+                    Login as Admin
+                  </a>
+                </li>
+              </ul>
             </div>
+
+            <a href="#" className="header-action-link ms-3" onClick={handleRegisterClick}>
+              Register
+            </a>
           </div>
         </div>
       </header>

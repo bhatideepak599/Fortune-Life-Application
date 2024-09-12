@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../CommonNavbarFooter/Navbar";
+import GuestNavbar from "../CommonNavbarFooter/Navbar";
+import CustomerNavbar from "../../customerDashBoard/LandingPage/Navbar/Navbar";
+import AgentNavbar from "../../agentDashboard/landingPage/Navbar/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSchemeByPlanId } from "../../../services/commonService";
 import { fetchFile } from "../../../services/fileServices";
@@ -39,34 +41,23 @@ const InsuranceSchemeDetails = () => {
 
   const handleShowMore = async () => {
     try {
-      const response = await getLoggedInUser();
-      if (response) {
-        const today = new Date();
-        const birthYear = parseInt(response.dateOfBirth.split("-")[0]);
-        const ageInYears = today.getFullYear() - birthYear;
-        if (ageInYears < scheme.schemeDetails.minAge || ageInYears > scheme.schemeDetails.maxAge) {
-          toast.error("Person with your age group is not eligible for this scheme");
-          return;
-        }
-
-        setPolicyOpen(true);
-      } else {
-        setPolicyOpen(true);
-      }
+      setPolicyOpen(true);
     } catch (error) {
       toast.error(error);
     }
   };
 
-  // If scheme data is not yet loaded, display a loading message or a placeholder
   if (!scheme) {
     return <div>Loading...</div>;
   }
 
+  const role = localStorage.getItem("role");
+
   return (
     <>
-      <Navbar />
-      <img src={schemeImage} alt="schemeImge" className="border border-2 rounded-3" style={{ width: "40%", marginLeft: "auto", marginRight: "auto" }} />
+      {role === "ROLE_CUSTOMER" ? <CustomerNavbar /> : role === "ROLE_AGENT" ? <AgentNavbar /> : <GuestNavbar />}
+
+      <img src={schemeImage} alt="schemeImge" className="border border-2 rounded-5" style={{ width: "35%", marginLeft: "auto", marginRight: "auto" }} />
       <div className="col-md-7 col-lg-8" style={{ width: "60%", marginLeft: "auto", marginRight: "auto" }}>
         <form key={scheme.id} className="needs-validation" noValidate>
           <h2 className="mb-3 text-center">{scheme.schemeName}</h2>

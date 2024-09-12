@@ -1,6 +1,6 @@
 import React from "react";
 import family2 from "../../../images/undraw_family_vg76.svg";
-import "./Main.css";
+import "./Main.module.css";
 import family from "../../../images/undraw_play_time_-7-k7b.svg";
 import hospital from "../../../images/undraw_medical_care_movn.svg";
 import maleAvatar from "../../../images/undraw_male_avatar_g98d.svg";

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import "../Navbar/Navbar.css";
-import logoImg from "../../../../images/fortunelife.png";
+import "./Navbar.module.css";
+import logoImg from "../../../../images/fortunelife-high-resolution-logo-black-transparent.png";
 import { useNavigate } from "react-router-dom";
 import { getAllInsurancePlans } from "../../../../services/commonService";
 import { errorToast } from "../../../../utils/Toast";
 import Modal from "../../../../utils/Modals/Modal";
 import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
+import { logout } from "../../../../services/authService";
+import maleAvatar from "../../../../images/undraw_male_avatar_g98d.svg";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -35,9 +38,11 @@ const Navbar = () => {
     setShowCustomerModal(true);
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     try {
-      localStorage.clear();
+      await logout();
+      navigate("/");
+      toast.success("Logout successful");
     } catch (error) {
       errorToast(error);
     }
@@ -45,7 +50,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="p-3 mb-0">
+      <header className="mb-0" style={{ backgroundColor: "#F5F7F8" }}>
         <div className="container p-0">
           <div className="p-0 d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" className="me-5 d-flex align-items-center mb-0 link-body-emphasis text-decoration-none">
@@ -97,7 +102,7 @@ const Navbar = () => {
 
             <div className="dropdown text-end">
               <a href="/" className="mt-4 d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="30" height="30" className="rounded-circle" />
+                <img src={maleAvatar} alt="mdo" width="40" height="40" className="rounded-circle" />
               </a>
               <ul className="dropdown-menu text-small">
                 <li>
@@ -117,7 +122,7 @@ const Navbar = () => {
                 </li>
                 <hr className="dropdown-divider" />
                 <li>
-                  <a className="dropdown-item" href="/" onClick={handleSignOut}>
+                  <a className="dropdown-item" href="#" onClick={handleSignOut}>
                     Sign out
                   </a>
                 </li>

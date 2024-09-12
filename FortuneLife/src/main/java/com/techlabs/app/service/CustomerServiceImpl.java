@@ -60,8 +60,18 @@ public class CustomerServiceImpl implements CustomerService {
         if (!role.equalsIgnoreCase("ROLE_CUSTOMER")) {
             throw new APIException(HttpStatus.BAD_REQUEST, "Role Should Be Customer Only!.");
         }
-        if (userRepository.existsByUsername(userDto.getUsername()))
-            throw new APIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
+
+        Optional<User> checkUser =
+                userRepository
+                        .findUserByUsernameOrEmail(userDto.getUsername(),userDto.getEmail());
+
+        if (checkUser.isPresent()){
+            CustomerDto customerDto = new CustomerDto();
+            customerDto.setId(checkUser.get().getId());
+            return customerDto;
+        }
+
+
 
         if (userRepository.existsUserByEmail(userDto.getEmail()))
             throw new APIException(HttpStatus.BAD_REQUEST, "Email  already exists!.");

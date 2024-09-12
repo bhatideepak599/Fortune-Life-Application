@@ -131,7 +131,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String register(RegisterDto registerDto, String role) {
+    public UserDto register(RegisterDto registerDto, String role) {
 
         if (userRepository.existsUserByUsername(registerDto.getUsername()) && role.equals("ROLE_ADMIN")) {
 
@@ -149,6 +149,10 @@ public class AuthServiceImpl implements AuthService {
 
             throw new AdminRelatedException(
                     "Customer with the Username : " + registerDto.getUsername() + " already exists");
+        }
+
+        if(role.equals("ROLE_EMPLOYEE")){
+            throw new FortuneLifeException("Employee cannot register himself");
         }
 
         User user = new User();
@@ -202,7 +206,7 @@ public class AuthServiceImpl implements AuthService {
             customerRepository.save(customer);
         }
 
-        return "Registration successful for role : " + role.substring(5);
+        return userMapper.entityToDto(savedUser);
     }
 
     private Token saveToken(User user, String jwtToken) {

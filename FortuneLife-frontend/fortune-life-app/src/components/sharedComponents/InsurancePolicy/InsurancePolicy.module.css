@@ -1,0 +1,71 @@
+.investment-heading {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #4a4a4a;
+  }
+  
+  .investment-blur {
+    height: 10px;
+    background: rgb(238, 210, 255);
+    margin-bottom: 20px;
+  }
+  
+  .investment-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .investment-form-group {
+    margin-bottom: 20px;
+  }
+  
+  .investment-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  .investment-form-group input,
+  .investment-form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .investment-form-group button {
+    width: 100%;
+    padding: 10px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .investment-form-group button:hover {
+    background: #45a049;
+  }
+  
+  .modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+  }
+  

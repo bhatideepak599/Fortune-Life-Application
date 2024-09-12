@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface AuthService {
     JWTAuthResponse login(LoginDto loginDto);
 
-    String register(RegisterDto registerDto, String role);
+    UserDto register(RegisterDto registerDto, String role);
     Boolean validateUserToken(HttpServletRequest request, String forrole);
 
     UserDto getLoggedUser(HttpServletRequest request);

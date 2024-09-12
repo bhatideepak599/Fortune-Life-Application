@@ -5,21 +5,10 @@ import Logo from "../../../images/fortunelife.png";
 import Modal from "../../sharedComponents/modal/Modal";
 import AddAgent from "../agent/AddAgent";
 import UserProfile from "../../sharedComponents/UserProfile/UserProfile";
-import {
-  logout,
-  verifyUser,
-} from "../../../services/authService";
-import {
-  getEmployee,
-  updateEmployee,
-  validateEmployee,
-} from "../../../services/employeeService";
-import {
-  errorToast,
-  successToast,
-  warnToast,
-} from "../../../utils/Toast";
-import "./EmployeeDashboard.css"; 
+import { logout, verifyUser } from "../../../services/authService";
+import { getEmployee, updateEmployee, validateEmployee } from "../../../services/employeeService";
+import { errorToast, successToast, warnToast } from "../../../utils/Toast";
+import "./EmployeeDashboard.module.css";
 
 import Footer from "../../sharedComponents/CommonNavbarFooter/Footer";
 import Main from "./main/Main";
@@ -90,8 +79,7 @@ const EmployeeDashboard = () => {
 
   return (
     <>
-   
-    {/* <div className="agent-main-section">
+      {/* <div className="agent-main-section">
       <div className="dashboard-navbar">
      
         <div className="user-profile">
@@ -180,8 +168,8 @@ const EmployeeDashboard = () => {
         />
       </Modal>
     </div> */}
-    <Main/>
-    <Footer/>
+      <Main />
+      <Footer />
     </>
   );
 };

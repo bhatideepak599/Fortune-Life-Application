@@ -36,7 +36,7 @@ const LoginModal = ({ onClose }) => {
         <div className="right-element">
           <div className="box">
             <div className="login-tittle">
-              <h1 className="heading">Login </h1>
+              <h1 className="heading">Customer Login </h1>
             </div>
             <div className="login-form">
               <form className="postdata">

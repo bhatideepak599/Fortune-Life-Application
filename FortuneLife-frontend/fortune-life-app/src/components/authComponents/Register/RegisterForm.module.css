@@ -1,0 +1,21 @@
+/* RegistrationForm.css */
+.registration-form {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  background: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.registration-form .btn-primary {
+  background-color: #3498db; /* A nice blue */
+  border-color: #3498db; /* Consistent border color */
+}
+
+.registration-form .form-label {
+  color: #34495e; /* Dark grey color for the text labels */
+}
+
+.registration-form input[type="date"] {
+  color: #333; /* Make sure text is visible in date picker */
+}

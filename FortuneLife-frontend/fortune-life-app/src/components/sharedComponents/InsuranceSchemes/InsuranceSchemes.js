@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../CommonNavbarFooter/Navbar";
+import GuestNavbar from "../CommonNavbarFooter/Navbar";
+import CustomerNavbar from "../../customerDashBoard/LandingPage/Navbar/Navbar";
+import AgentNavbar from "../../agentDashboard/landingPage/Navbar/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { errorToast } from "../../../utils/Toast";
 import { getSchemesByPlanId } from "../../../services/commonService";
@@ -42,18 +44,20 @@ const InsuranceSchemes = () => {
     navigate(`scheme-details/${schemeId}`);
   };
 
+  const role = localStorage.getItem("role");
+
   return (
     <>
-      <Navbar />
+      {role === "ROLE_CUSTOMER" ? <CustomerNavbar /> : role === "ROLE_AGENT" ? <AgentNavbar /> : <GuestNavbar />}
 
-      <section className="popular p-5" id="popular" >
+      <section className="popular p-5" id="popular" style={{ backgroundColor: "white" }}>
         <div className="container">
           {schemes.length > 0 ? (
             <>
               <h2 className="h2 section-title">Our Most Popular Schemes</h2>
               {schemes.map((scheme, index) => (
                 <div key={scheme.id} className={`mt-5 popular-wrapper ${index % 2 === 0 ? "left" : "right"}`}>
-                  <figure className="popular-banner">{schemeImages[scheme.id] ? <img src={schemeImages[scheme.id]} alt={scheme.schemeName} style={{ width: "80%" }} /> : <p>Loading image...</p>}</figure>
+                  <figure className="popular-banner ">{schemeImages[scheme.id] ? <img src={schemeImages[scheme.id]} className="rounded" alt={scheme.schemeName} style={{ width: "80%" }} /> : <p>Loading image...</p>}</figure>
 
                   <div className="popular-content p-4 border border-2 rounded-3">
                     <p className="popular-content-subtitle fs-2">

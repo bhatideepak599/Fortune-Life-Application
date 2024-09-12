@@ -124,8 +124,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/scheme").hasAnyRole("ADMIN","EMPLOYEE")
                         
                         // Customer Endpoints
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE")
-                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE", "CUSTOMER")
+                        .requestMatchers(HttpMethod.POST, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE","AGENT")
+                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE", "CUSTOMER","AGENT")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/customer/activate/{id}").hasAnyRole("ADMIN", "EMPLOYEE")
                         .requestMatchers(HttpMethod.DELETE, "/fortuneLife/customer/{id}").hasAnyRole("ADMIN", "EMPLOYEE")
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/customer").hasAnyRole("ADMIN", "EMPLOYEE", "CUSTOMER")

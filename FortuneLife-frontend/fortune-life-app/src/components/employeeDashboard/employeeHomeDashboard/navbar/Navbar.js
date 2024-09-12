@@ -1,8 +1,8 @@
 import React from "react";
-import "./Navbar.css";
+import "./Navbar.module.css";
 import fortunelife from "../../../../images/fortunelife-high-resolution-logo-white-transparent.png";
 
-const Navbar = ({handleProfileClick,onLogoutClick}) => {
+const Navbar = ({ handleProfileClick, onLogoutClick }) => {
   return (
     <>
       <nav class="agent-navbar">
@@ -27,9 +27,13 @@ const Navbar = ({handleProfileClick,onLogoutClick}) => {
               More
             </a>
             <div class="dropdown-content">
-              <a href="#" onClick={handleProfileClick}>Profile</a>
+              <a href="#" onClick={handleProfileClick}>
+                Profile
+              </a>
               <a href="#">Change password</a>
-              <a href="#" onClick={onLogoutClick}>Logout</a>
+              <a href="#" onClick={onLogoutClick}>
+                Logout
+              </a>
             </div>
           </li>
         </ul>

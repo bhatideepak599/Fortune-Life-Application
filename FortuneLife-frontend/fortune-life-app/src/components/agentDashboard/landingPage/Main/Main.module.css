@@ -1,0 +1,45 @@
+/* Main.module.css */
+.agent-main-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f4f4f9;
+}
+
+.decorative-card {
+  flex: 1 1 22%; /* Adjusts width for four cards per row */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.icon-container {
+  padding: 10px;
+  border-radius: 50%;
+  background-color: #e0e7ff;
+  margin-bottom: 10px;
+}
+
+.decorative-icon {
+  color: #6b728e;
+}
+
+@media (max-width: 960px) {
+  .decorative-card {
+    flex-basis: 47%; /* Adjusts to two cards per row on smaller screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .decorative-card {
+    flex-basis: 100%; /* Stacks cards vertically on very small screens */
+  }
+}

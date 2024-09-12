@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./CustomerHome.css";
 import Main from "../LandingPage/Main/Main";
 import Footer from "../../sharedComponents/CommonNavbarFooter/Footer";
@@ -9,19 +9,37 @@ import { toast } from "react-toastify";
 
 function CustomerHome() {
   const navigate = useNavigate();
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      if (!verifyUser(accessToken, "customer")) {
+
+    const verifyToken = async () => {
+      if (accessToken) {
+        try {
+          const isValid = await verifyUser(accessToken, "customer");
+          if (isValid) {
+            setIsVerified(true);
+          } else {
+            toast.error("Please Login to access this resource");
+            navigate("/");
+          }
+        } catch (error) {
+          toast.error("Verification failed. Please login again.");
+          navigate("/");
+        }
+      } else {
         toast.error("Please Login to access this resource");
         navigate("/");
       }
-    } else {
-      toast.error("Please Login to access this resource");
-      navigate("/");
-    }
+    };
+
+    verifyToken();
   }, [navigate]);
+
+  if (!isVerified) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

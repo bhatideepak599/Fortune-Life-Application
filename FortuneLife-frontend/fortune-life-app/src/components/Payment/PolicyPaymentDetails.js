@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getLoggedInUser } from "../../services/authService";
+import { getLoggedInUser, verifyUser } from "../../services/authService";
 import { toast } from "react-toastify";
 import { getPolicyByPolicyId } from "../../services/commonService";
-import Navbar from "../sharedComponents/CommonNavbarFooter/Navbar";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import "./PolicyPaymentDetails.css"; // Add this for custom styles if needed
+import Navbar from "../customerDashBoard/LandingPage/Navbar/Navbar";
 
 const PolicyPaymentDetails = () => {
   const { policyId } = useParams();
@@ -14,6 +14,34 @@ const PolicyPaymentDetails = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [policy, setPolicy] = useState(null);
   console.log(policyId);
+
+  const [isVerified, setIsVerified] = useState(false);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    const verifyToken = async () => {
+      if (accessToken) {
+        try {
+          const isValid = await verifyUser(accessToken, "customer");
+          if (isValid) {
+            setIsVerified(true);
+          } else {
+            toast.error("Please Login to access this resource");
+            navigate("/");
+          }
+        } catch (error) {
+          toast.error("Verification failed. Please login again.");
+          navigate("/");
+        }
+      } else {
+        toast.error("Please Login to access this resource");
+        navigate("/");
+      }
+    };
+
+    verifyToken();
+  }, [navigate]);
 
   useEffect(() => {
     const getCustomer = async () => {
@@ -148,6 +176,10 @@ const PolicyPaymentDetails = () => {
       pdf.save("payments.pdf");
     });
   };
+
+  if (!isVerified) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

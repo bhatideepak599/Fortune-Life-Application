@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Modal from "../../../utils/Modals/Modal";
-import { getLoggedInUser } from "../../../services/authService";
+import { getLoggedInUser, logout } from "../../../services/authService";
 import { uploadFile } from "../../../services/fileServices";
-import "./InsurancePolicy.css";
+import "./InsurancePolicy.module.css";
 import { getSchemeByPlanId } from "../../../services/commonService";
-import { buyNewPolicy } from "../../../services/CustomerService";
+import { buyNewPolicy, buyNewPolicyByAgent } from "../../../services/CustomerService";
 import LoginModal from "../../customerDashBoard/CustomerLogin/LoginModal";
+import CustomerRegister from "../../agentDashboard/customerRegistration/CustomerRegister";
 
 const InsurancePolicy = ({ documentNames, onClose }) => {
   const { planId, schemeId } = useParams();
@@ -20,6 +21,9 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [fileInputs, setFileInputs] = useState({});
   const [isTouched, setIsTouched] = useState(true);
+  const [newRegisterModal, setNewRegisterModal] = useState(false);
+  const [exCustomerId, setExCustomerId] = useState("");
+
   const interestFormRef = useRef();
   const nomineeFormRef = useRef();
   const navigate = useNavigate();
@@ -132,6 +136,33 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
     if (!(await getLoggedInUser())) {
       setIsModalOpen(true);
       return;
+    } else if (await getLoggedInUser()) {
+      if (localStorage.getItem("role") === "ROLE_CUSTOMER") {
+        const response = await getLoggedInUser();
+        const today = new Date();
+        const birthYear = parseInt(response.dateOfBirth.split("-")[0]);
+        const ageInYears = today.getFullYear() - birthYear;
+        if (ageInYears < usedScheme.schemeDetails.minAge || ageInYears > usedScheme.schemeDetails.maxAge) {
+          toast.error("Person with your age group is not eligible for this scheme");
+          onClose();
+          return;
+        }
+      } else if (localStorage.getItem("role") === "ROLE_AGENT") {
+        if (exCustomerId === "") {
+          setNewRegisterModal(true);
+          return;
+        }
+      } else if (localStorage.getItem("role") === "ROLE_EMPLOYEE") {
+        toast.warn("Login with apprpriate credentials");
+        await logout();
+        navigate("/");
+        return;
+      } else {
+        toast.warn("Login with apprpriate credentials");
+        await logout();
+        navigate("/");
+        return;
+      }
     }
 
     if (!formData.policyTerm || !formData.policyAmount || !formData.premiumType) {
@@ -158,19 +189,34 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
 
     console.log(dataToSend);
 
-    const response = await buyNewPolicy({ customerId: currentUser.id, schemeId: usedScheme.id, dataToSend });
-    if (response) {
-      toast.success("Policy Created Successfully");
-      console.log(response);
+    if (localStorage.getItem("role") === "ROLE_CUSTOMER") {
+      const response = await buyNewPolicy({ customerId: currentUser.id, schemeId: usedScheme.id, dataToSend });
+      if (response) {
+        toast.success("Policy Created Successfully");
+        console.log(response);
 
-      const policyId = response.id;
-      window.open(`/policy-payment/${policyId}`, "_blank");
+        const policyId = response.id;
+        window.open(`/policy-payment/${policyId}`, "_blank");
+      }
+    } else if (localStorage.getItem("role") === "ROLE_AGENT") {
+      const response = await buyNewPolicyByAgent({ customerId: exCustomerId, schemeId: usedScheme.id, agentId: currentUser.id, dataToSend });
+      if (response) {
+        toast.success("Policy Created Successfully");
+        console.log(response);
+
+        const policyId = response.id;
+        window.open(`/policy-payment/${policyId}`, "_blank");
+      }
     }
 
-    // window.open(`/policy-payment/${2}`, "_blank");
-
     onClose();
-    navigate("/customer-dashboard");
+    if (localStorage.getItem("role") === "ROLE_CUSTOMER") {
+      navigate("/customer-dashboard");
+    } else if (localStorage.getItem("role") === "ROLE_AGENT") {
+      navigate("/agent-dashboard");
+    } else {
+      navigate("/");
+    }
   };
 
   if (!usedScheme || !usedScheme.schemeDetails) {
@@ -200,6 +246,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
 
   const handleRegister = () => {
     setIsModalOpen(false);
+    setNewRegisterModal(true);
   };
 
   return (
@@ -338,6 +385,10 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
 
       <Modal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} width="40%" height="55%">
         <LoginModal onClose={() => setIsLoginModalOpen(false)} />
+      </Modal>
+
+      <Modal isOpen={newRegisterModal} onClose={() => setNewRegisterModal(false)} width="70%" height="85%">
+        <CustomerRegister id={setExCustomerId} onClose={() => setNewRegisterModal(false)} />
       </Modal>
     </>
   );

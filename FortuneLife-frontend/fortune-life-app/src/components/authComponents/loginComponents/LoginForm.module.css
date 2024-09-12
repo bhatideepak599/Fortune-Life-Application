@@ -1,0 +1,23 @@
+/* LoginForm.module.css */
+.login-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust based on your design needs */
+}
+
+.login-form-col,
+.image-col {
+  flex: 1 1 50%; /* Ensures each column takes half of the row */
+  max-width: 50%; /* Ensures no column exceeds half of the row */
+  padding: 20px; /* Smaller padding for better spacing */
+}
+
+@media (max-width: 768px) {
+  .login-form-col,
+  .image-col {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}

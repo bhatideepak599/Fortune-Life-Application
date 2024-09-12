@@ -1,0 +1,71 @@
+/* Background and container styles */
+.dashboard-background {
+  background: linear-gradient(135deg, #f3f4f6, #af92ca69);
+  min-height: 100vh;
+  padding-top: 20px;
+}
+
+/* Content container spacing */
+.content-container {
+  padding-top: 100px;
+}
+
+/* Card styling */
+.dashboard-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 10px;
+  min-height: 400px; /* Adjust card height */
+  padding: 20px; /* Add padding for better spacing inside */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+}
+
+/* Card hover effect */
+.dashboard-card:hover {
+  transform: translateY(-10px); /* Slightly larger translate for a stronger hover effect */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+}
+
+/* Card icon styling */
+.dashboard-card i {
+  font-size: 3rem; /* Increase icon size for better visibility */
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+/* Card text alignment */
+.card-title {
+  font-size: 1.5rem; /* Larger title text */
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+}
+
+/* Button styling */
+.dashboard-card .btn {
+  font-size: 1rem;
+  padding: 10px 20px;
+}
+
+/* Footer styles */
+footer {
+  background-color: #343a40;
+  color: white;
+  padding: 20px 0;
+}
+
+footer a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}

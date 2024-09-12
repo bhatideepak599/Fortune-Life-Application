@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import Navbar from "../../sharedComponents/CommonNavbarFooter/Navbar";
 import { getPoliciesByCustomerId } from "../../../services/CustomerService";
 import { toast } from "react-toastify";
-import { getLoggedInUser } from "../../../services/authService";
+import { getLoggedInUser, verifyUser } from "../../../services/authService";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { sanitizedData } from "../../../utils/SanitizeData";
 import Pagination from "../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../utils/Modals/Modal";
 import ClaimModal from "../CustomerClaim/ClaimModal";
 import SharedTable from "../SharedTable/SharedTable";
+import Navbar from "../LandingPage/Navbar/Navbar";
 
 const CustomerPolicies = () => {
   const [sanitizedPolicies, setSanitizedPolicies] = useState([]);
@@ -29,6 +29,34 @@ const CustomerPolicies = () => {
     schemeName: urlSearchParams.get("schemeName") || "",
     policyStatus: urlSearchParams.get("policyStatus") || "",
   });
+
+  const [isVerified, setIsVerified] = useState(false);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    const verifyToken = async () => {
+      if (accessToken) {
+        try {
+          const isValid = await verifyUser(accessToken, "customer");
+          if (isValid) {
+            setIsVerified(true);
+          } else {
+            toast.error("Please Login to access this resource");
+            navigate("/");
+          }
+        } catch (error) {
+          toast.error("Verification failed. Please login again.");
+          navigate("/");
+        }
+      } else {
+        toast.error("Please Login to access this resource");
+        navigate("/");
+      }
+    };
+
+    verifyToken();
+  }, [navigate]);
 
   useEffect(() => {
     const getCustomer = async () => {
@@ -179,6 +207,10 @@ const CustomerPolicies = () => {
     getAllPolicies();
   };
 
+  if (!isVerified) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Navbar />
@@ -207,18 +239,11 @@ const CustomerPolicies = () => {
               <button type="reset" className="btn btn-secondary ms-2" onClick={handleReset}>
                 Reset
               </button>
-              <button type="reset" className="btn btn-secondary ms-2" onClick={() => navigate("/customer-dashboard")}>
-                Back
-              </button>
             </div>
           </div>
         </form>
 
-        <div className="card inner-card mt-1">
-          <div className="card-body">
-            <SharedTable data={sanitizedPolicies} actions={actions} />
-          </div>
-        </div>
+        <SharedTable data={sanitizedPolicies} actions={actions} />
 
         {sanitizedPolicies?.length > 0 && (
           <div className="d-flex align-items-center justify-content-between mt-5">
@@ -226,7 +251,7 @@ const CustomerPolicies = () => {
           </div>
         )}
 
-        <Modal isOpen={isClaimModalOpen} onClose={() => setIsClaimModalOpen(false)} width="60%" height="70%">
+        <Modal isOpen={isClaimModalOpen} onClose={() => setIsClaimModalOpen(false)} width="60%" height="100%">
           <ClaimModal
             policyId={selectedPolicy}
             onClose={() => {

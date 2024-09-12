@@ -1,5 +1,6 @@
 import React from "react";
-import "./SharedTable.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./SharedTable.css"; // Add this file for custom styles
 
 const SharedTable = ({ data, actions }) => {
   if (!data || !data.length) return <div>No data available</div>;
@@ -8,41 +9,42 @@ const SharedTable = ({ data, actions }) => {
   const primaryKey = headers[0];
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          {headers.map((header) => (
-            <th key={header}>{formatHeader(header)}</th>
-          ))}
-          {actions && <th>Actions</th>}
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((row, index) => (
-          <tr key={index}>
+    <div className="table-responsive">
+      <table className="table custom-table">
+        <thead className="custom-table-header">
+          <tr>
             {headers.map((header) => (
-              <td key={header}>{header === "active" ? (row[header] ? "Active" : "Inactive") : header === "claimId" && row[header] === null ? "N/A" : typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header]}</td>
+              <th key={header}>{formatHeader(header)}</th>
             ))}
-            {actions && (
-              <td>
-                {actions.payment && (
-                  <button className="btn btn-primary me-1" onClick={() => actions.payment(row[primaryKey])} style={{ backgroundColor: "hsl(245, 67%, 59%)" }}>
-                    Payment
-                  </button>
-                )}
-
-                {/* Enable claim button if policy status is ACTIVE or COMPLETE and either there is no claimId, or the claim was REJECTED */}
-                {actions.claim && (
-                  <button className="btn btn-secondary" onClick={() => actions.claim(row[primaryKey])} disabled={!(row.policyStatus === "ACTIVE" || row.policyStatus === "COMPLETE") || (row.claimId && row.claimStatus !== "REJECT")}>
-                    Claim
-                  </button>
-                )}
-              </td>
-            )}
+            {actions && <th>Actions</th>}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.map((row, index) => (
+            <tr key={index}>
+              {headers.map((header) => (
+                <td key={header}>{header === "active" ? (row[header] ? "Active" : "Inactive") : header === "claimId" && row[header] === null ? "N/A" : typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header]}</td>
+              ))}
+              {actions && (
+                <td>
+                  {actions.payment && (
+                    <button className="btn custom-btn me-1" onClick={() => actions.payment(row[primaryKey])} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
+                      Payment
+                    </button>
+                  )}
+
+                  {actions.claim && (
+                    <button className="btn btn-secondary custom-claim-btn" onClick={() => actions.claim(row[primaryKey])} disabled={!(row.policyStatus === "ACTIVE" || row.policyStatus === "COMPLETE") || (row.claimId && row.claimStatus !== "REJECT")}>
+                      Claim
+                    </button>
+                  )}
+                </td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

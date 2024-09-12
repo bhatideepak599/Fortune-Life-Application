@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  Navbar,
-  Nav,
-  Container,
-  Row,
-  Col,
-  Image,
-  Button,
-} from "react-bootstrap";
+import { Navbar, Nav, Container, Row, Col, Image, Button } from "react-bootstrap";
 import profileImage from "../../images/profile.jpg"; // Adjust the path as necessary
 import Sidebar from "./adminFunctionComponents/Sidebar";
 import MainContent from "./adminFunctionComponents/MainContent";
 import { getAdmin, logout, verifyUser } from "../../services/authService";
 import { errorToast, successToast, warnToast } from "../../utils/Toast";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
   const [activeItem, setActiveItem] = useState("Manage City/State");
@@ -23,6 +16,34 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const accessToken = localStorage.getItem("accessToken");
+
+  const [isVerified, setIsVerified] = useState(false);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    const verifyToken = async () => {
+      if (accessToken) {
+        try {
+          const isValid = await verifyUser(accessToken, "admin");
+          if (isValid) {
+            setIsVerified(true);
+          } else {
+            toast.error("Please Login to access this resource");
+            navigate("/");
+          }
+        } catch (error) {
+          toast.error("Verification failed. Please login again.");
+          navigate("/");
+        }
+      } else {
+        toast.error("Please Login to access this resource");
+        navigate("/");
+      }
+    };
+
+    verifyToken();
+  }, [navigate]);
 
   const validateAdmin = () => {
     if (!accessToken || !verifyUser(accessToken, "admin")) {
@@ -34,26 +55,26 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-   validateAdmin();
+    validateAdmin();
 
-   
-   { fetchAdmin()};
+    {
+      fetchAdmin();
+    }
 
     // Retrieve the active item from localStorage or query parameters
-    const savedActiveItem = localStorage.getItem("activeItem");
+    // const savedActiveItem = localStorage.getItem("activeItem");
     const queryParams = new URLSearchParams(location.search);
-    const initialActiveItem = queryParams.get("activeItem");
+    // const initialActiveItem = queryParams.get("activeItem");
 
     // Set the active item state, preferring query parameter if available
-   // setActiveItem(initialActiveItem ||savedActiveItem || "Manage City/State");
+    // setActiveItem(initialActiveItem ||savedActiveItem || "Manage City/State");
   }, [accessToken, navigate, location.search]);
 
   useEffect(() => {
-   //localStorage.setItem("activeItem", activeItem);
+    //localStorage.setItem("activeItem", activeItem);
   }, [activeItem]);
 
   const fetchAdmin = async () => {
-   
     try {
       const response = await getAdmin();
       setAdminDetails(response.data);
@@ -66,7 +87,7 @@ const AdminDashboard = () => {
   const handleChange = (item) => {
     if (!validateAdmin()) return;
 
-    if (item === 'Manage Tax and Scheme Deductions') {
+    if (item === "Manage Tax and Scheme Deductions") {
       setShow(true);
     } else {
       setShow(false);
@@ -84,11 +105,15 @@ const AdminDashboard = () => {
     navigate("/admin-profile", { state: { adminDetails } });
   };
 
+  if (!isVerified) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #f3f4f6, #dcdbe1)"
+        background: "linear-gradient(135deg, #f3f4f6, #dcdbe1)",
       }}
     >
       {/* Navbar */}
@@ -97,17 +122,10 @@ const AdminDashboard = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link
-                onClick={handleProfile}
-                className="text-light d-flex align-items-center"
-              >
+              <Nav.Link onClick={handleProfile} className="text-light d-flex align-items-center">
                 Profile
               </Nav.Link>
-              <Nav.Link
-                onClick={handleProfile}
-                className="d-flex align-items-center"
-                style={{ marginLeft: "0px" }}
-              >
+              <Nav.Link onClick={handleProfile} className="d-flex align-items-center" style={{ marginLeft: "0px" }}>
                 <Image
                   src={profileImage} // Replace with the actual image URL
                   roundedCircle
@@ -144,13 +162,8 @@ const AdminDashboard = () => {
             </div>
           </Col>
           {/* Main Content */}
-          <Col
-            md={{ span: 9, offset: 3 }}
-            style={{ padding: "20px", marginLeft: "22%" }}
-          >
-            {validateAdmin() && (
-              <MainContent activeItem={activeItem} show={show} setShow={setShow} setActiveItem={setActiveItem} />
-            )}
+          <Col md={{ span: 9, offset: 3 }} style={{ padding: "20px", marginLeft: "22%" }}>
+            {validateAdmin() && <MainContent activeItem={activeItem} show={show} setShow={setShow} setActiveItem={setActiveItem} />}
           </Col>
         </Row>
       </Container>

@@ -43,6 +43,32 @@ export const buyNewPolicy = async ({ customerId, schemeId, dataToSend }) => {
   }
 };
 
+export const buyNewPolicyByAgent = async ({ customerId, schemeId, agentId, dataToSend }) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/fortuneLife/customer/${customerId}/Insurance-Scheme/${schemeId}/agent/${agentId}/policy`,
+      {
+        premiumType: dataToSend.premiumType,
+        policyAmount: dataToSend.policyAmount,
+        time: dataToSend.time,
+        premiumAmount: dataToSend.premiumAmount,
+        nomineeName: dataToSend.nomineeName,
+        relationStatusWithNominee: dataToSend.relationStatusWithNominee,
+        submittedDocumentsDto: dataToSend.submittedDocumentsDto,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const updateCustomer = async ({ userDto, addressDto }) => {
   try {
     const response = await axios.put(
@@ -63,7 +89,6 @@ export const updateCustomer = async ({ userDto, addressDto }) => {
       {
         headers: {
           Authorization: token,
-          
         },
       }
     );
@@ -187,22 +212,20 @@ export const getClaimByClaimId = async (claimId) => {
 };
 
 export const applyForClaim = async (customerId, policyId, claimDto, claimAmount) => {
-  console.log(customerId + " " + policyId + " " + claimDto + " " + claimAmount);
-
   try {
     const response = await axios.post(
       `${API_BASE_URL}/fortuneLife/claim/customer/${customerId}/Insurance-policy/${policyId}`,
       {
-        claimAmount, // Pass the claimAmount directly
+        claimAmount,
         bankName: claimDto.bankName || null,
         branchName: claimDto.branchName || null,
         bankAccountNumber: claimDto.bankAccountNumber || null,
         ifscCode: claimDto.ifscCode || null,
-        remarks: claimDto.remarks || null, // Make sure to pass customer remarks if any
+        remarks: claimDto.remarks || null,
       },
       {
         headers: {
-          Authorization: token, // Ensure token is valid
+          Authorization: token,
         },
       }
     );
@@ -210,6 +233,40 @@ export const applyForClaim = async (customerId, policyId, claimDto, claimAmount)
     return response.data;
   } catch (error) {
     console.log("Error in applyForClaim:", error.response); // Log error response for more details
+    throw error;
+  }
+};
+
+export const addnewCustomer = async (userDto, addressDto) => {
+  try {
+    console.log(userDto);
+    console.log(addressDto);
+
+    const response = await axios.post(
+      `${API_BASE_URL}/fortuneLife/customer`,
+      {
+        firstName: userDto.firstName ? userDto.firstName : null,
+        lastName: userDto.lastName ? userDto.lastName : null,
+        username: userDto.username ? userDto.username : null,
+        password: userDto.password ? userDto.password : null,
+        email: userDto.email ? userDto.email : null,
+        mobileNumber: userDto.mobileNumber ? userDto.mobileNumber : null,
+        gender: userDto.gender ? userDto.gender : null,
+        dateOfBirth: userDto.dateOfBirth ? userDto.dateOfBirth : null,
+        addressDto: addressDto ? addressDto : null,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+        params: {
+          role: "customer",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
     throw error;
   }
 };
