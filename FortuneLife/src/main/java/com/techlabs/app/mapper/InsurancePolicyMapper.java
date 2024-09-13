@@ -42,6 +42,7 @@ public class InsurancePolicyMapper {
 		response.setPremiumType(policy.getPremiumType());
 		response.setSumAssured(policy.getSumAssured());
 		response.setSchemeName(policy.getInsuranceScheme().getSchemeName());
+		response.setVerified(policy.getVerified());
 		response.setPaymentList(paymentMapper.getDtoList(policy.getPayments()));
 		response.setTotalPolicyAmount(policy.getTotalPolicyAmount());
 		response.setTotalAmountPaidTillDate(policy.getPaidPolicyAmountTillDate());

@@ -1,0 +1,14 @@
+.modal-title{
+    margin-left: 14rem;
+    color: white;
+}
+
+.modal-header{
+    background-color: hsl(245, 67%, 59%);
+    border-radius: 10px;
+}
+
+.modal-footer{
+    display: flex;
+    justify-content: start;
+}

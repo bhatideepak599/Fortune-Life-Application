@@ -1,5 +1,7 @@
 package com.techlabs.app.service;
 
+import com.techlabs.app.config.EmailSender;
+import com.techlabs.app.dto.EmailDTO;
 import com.techlabs.app.dto.QueryDto;
 import com.techlabs.app.entity.Query;
 import com.techlabs.app.enums.ResponseStatus;
@@ -22,6 +24,9 @@ public class QueryServiceImpl implements QueryService {
 
     @Autowired
     private QueryMapper queryMapper;
+
+    @Autowired
+    private EmailSender emailSender;
 
 
     @Override
@@ -65,6 +70,12 @@ public class QueryServiceImpl implements QueryService {
             query.setQueryResponse(ResponseStatus.PENDING.name());
         }
         Query updatedQuery = queryRepository.save(query);
+
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setTo(queryDto.getEmail());
+        emailDTO.setSubject("RE : "+queryDto.getTitle());
+        emailDTO.setBody(queryDto.getQueryResponse());
+        emailSender.sendMailWithAttachement(emailDTO);
 
         return queryMapper.entityToDto(updatedQuery);
     }
@@ -118,13 +129,32 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
-    public List<QueryDto> getAllQueriesByCustomerMail(String customerEmail) {
-        List<Query> queries = queryRepository.findAllByEmail(customerEmail);
+    public PageResponse<QueryDto> getAllQueriesByCustomerMail(
+            String customerEmail,
+            Long id,
+            String title,
+            String question,
+            String answer,
+            Boolean active,
+            String queryResponse,
+            int page,
+            int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Query> queryPage = queryRepository.findByCustomerEmailAndCriteria(
+                customerEmail, id, title, question, answer, active, queryResponse, pageable
+        );
 
-        if (queries.isEmpty()) {
-            throw new FortuneLifeException("There are no queries found for customer with mail ID : " + customerEmail);
-        }
-
-        return queryMapper.getDtoList(queries);
+        List<QueryDto> queryDtoList = queryMapper.getDtoList(queryPage.getContent());
+        return new PageResponse<>(
+                queryDtoList,
+                queryPage.getNumber(),
+                queryPage.getNumberOfElements(),
+                queryPage.getTotalElements(),
+                queryPage.getTotalPages(),
+                queryPage.isLast()
+        );
     }
+
+
 }

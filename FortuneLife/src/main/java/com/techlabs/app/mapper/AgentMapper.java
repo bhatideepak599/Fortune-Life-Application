@@ -42,8 +42,10 @@ public class AgentMapper {
 		agentDto.setActive(agent.getActive());
 		agentDto.setTotalCommission(agent.getTotalCommission());
 		agentDto.setVerified(agent.getVerified());
-		if(agent.getImage()!=null)
-		agentDto.setImage(agent.getImage());
+
+		if(agent.getImage()!=null){
+			agentDto.setImage(agent.getImage());
+		}
 		UserDto userDto = userMapper.entityToDto(agent.getUser());
 		agentDto.setUserDto(userDto);
 		return agentDto;

@@ -139,7 +139,7 @@ const LoginForm = () => {
               Forget Password?
             </a>
             {role !== "Admin" && role !== "Employee" && (
-              <a href="#register" className="text-muted">
+              <a href="/register" className="text-muted">
                 Register
               </a>
             )}

@@ -88,12 +88,26 @@ public class QueryController {
         return ResponseEntity.ok(message);
     }
 
-    @Operation(summary = "GEt all queries by customer mail ID")
+    @Operation(summary = "Get all queries by customer mail ID")
     @GetMapping("/{customerEmail}")
-    public ResponseEntity<List<QueryDto>> getAllQueriesOfParticularCustomer(@PathVariable(name = "customerEmail") String customerEmail) {
-        logger.info("Fetching all queries of customer with mail : {}", customerEmail);
-        List<QueryDto> queries = queryService.getAllQueriesByCustomerMail(customerEmail);
+    public ResponseEntity<PageResponse<QueryDto>> getAllQueriesOfParticularCustomer(
+            @PathVariable(name = "customerEmail") String customerEmail,
+            @RequestParam(name = "id", required = false) Long id,
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "question", required = false) String question,
+            @RequestParam(name = "answer", required = false) String answer,
+            @RequestParam(name = "active", required = false) Boolean active,
+            @RequestParam(name = "queryResponse", required = false) String queryResponse,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        logger.info("Fetching all queries of customer with email: {}", customerEmail);
+        PageResponse<QueryDto> queries = queryService.getAllQueriesByCustomerMail(
+                customerEmail, id, title, question, answer, active, queryResponse, page, size
+        );
 
         return new ResponseEntity<>(queries, HttpStatus.OK);
     }
+
+
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./SharedTable.css"; // Add this file for custom styles
+import "./SharedTable.module.css";
 
 const SharedTable = ({ data, actions }) => {
   if (!data || !data.length) return <div>No data available</div>;
@@ -10,7 +10,7 @@ const SharedTable = ({ data, actions }) => {
 
   return (
     <div className="table-responsive">
-      <table className="table custom-table">
+      <table className="table table-striped table-bordered custom-table">
         <thead className="custom-table-header">
           <tr>
             {headers.map((header) => (
@@ -28,13 +28,20 @@ const SharedTable = ({ data, actions }) => {
               {actions && (
                 <td>
                   {actions.payment && (
-                    <button className="btn custom-btn me-1" onClick={() => actions.payment(row[primaryKey])} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
+                    <button
+                      className="btn custom-btn btn-sm my-1"
+                      onClick={() => actions.payment(row[primaryKey])}
+                      style={{
+                        backgroundColor: "hsl(245, 67%, 59%)",
+                        color: "white",
+                      }}
+                    >
                       Payment
                     </button>
                   )}
 
                   {actions.claim && (
-                    <button className="btn btn-secondary custom-claim-btn" onClick={() => actions.claim(row[primaryKey])} disabled={!(row.policyStatus === "ACTIVE" || row.policyStatus === "COMPLETE") || (row.claimId && row.claimStatus !== "REJECT")}>
+                    <button className="btn btn-secondary btn-sm custom-claim-btn my-1" onClick={() => actions.claim(row[primaryKey])} disabled={!(row.policyStatus === "ACTIVE" || row.policyStatus === "COMPLETE") || (row.claimId && row.claimStatus !== "REJECT")}>
                       Claim
                     </button>
                   )}
@@ -49,6 +56,7 @@ const SharedTable = ({ data, actions }) => {
 };
 
 const formatHeader = (header) => {
+  if (header === "totalAmountPaidTillDate") return "Amount Paid";
   return header
     .replace(/([a-z])([A-Z])/g, "$1 $2") // Convert camelCase to words
     .replace(/_/g, " ") // Replace underscores with spaces

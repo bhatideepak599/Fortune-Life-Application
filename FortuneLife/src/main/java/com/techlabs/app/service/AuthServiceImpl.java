@@ -192,6 +192,8 @@ public class AuthServiceImpl implements AuthService {
             Agent agent = new Agent();
             agent.setId(savedUser.getId());
             agent.setUser(savedUser);
+            agent.setImage(registerDto.getAgentImage());
+            agent.setVerified(false);
             agent.setClaims(claims);
             agent.setCommissions(commissions);
             agentRepository.save(agent);

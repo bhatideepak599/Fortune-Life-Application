@@ -1,21 +1,52 @@
-/* RegistrationForm.css */
-.registration-form {
-  border: 1px solid #ddd;
-  padding: 20px;
+.registerContainer {
+  margin-top: 50px;
+  background-color: #ffffff;
   border-radius: 8px;
-  background: #f8f9fa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0;
 }
 
-.registration-form .btn-primary {
-  background-color: #3498db; /* A nice blue */
-  border-color: #3498db; /* Consistent border color */
+.registerImage {
+  height: 80%;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
-.registration-form .form-label {
-  color: #34495e; /* Dark grey color for the text labels */
+.registrationForm {
+  max-width: 100%;
 }
 
-.registration-form input[type="date"] {
-  color: #333; /* Make sure text is visible in date picker */
+@media (max-width: 767.98px) {
+  .registerContainer {
+    margin-top: 20px;
+  }
+
+  .formContainer {
+    padding: 20px;
+  }
+
+  .registerImage {
+    display: none;
+  }
+}
+
+.w-45 {
+  width: 45%;
+}
+
+.btn-primary {
+  background-color: hsl(245, 67%, 59%) !important;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: hsl(245, 67%, 50%) !important;
+}
+
+.form-check-label {
+  margin-left: 5px;
+}
+
+.form-check-input {
+  margin-top: 0.3em;
 }

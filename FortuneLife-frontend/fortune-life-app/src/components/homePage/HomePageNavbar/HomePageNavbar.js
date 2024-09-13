@@ -111,7 +111,7 @@ const HomePageNavbar = () => {
               </ul>
             </div>
 
-            <a href="#" className="header-action-link ms-3" onClick={handleRegisterClick}>
+            <a href="/register" className="header-action-link ms-3" onClick={handleRegisterClick}>
               Register
             </a>
           </div>

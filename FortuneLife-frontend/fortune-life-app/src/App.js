@@ -28,6 +28,7 @@ import CommissionSettings from "./components/adminDashboard/adminFunctionCompone
 import ManageCityAndState from "./components/adminDashboard/adminFunctionComponents/manageCityAndState/ManageCityAndState";
 import { AllWithdrawals } from "./components/adminDashboard/adminFunctionComponents/withdrawal/AllWithdrawals";
 import { AllQueries } from "./components/sharedComponents/allQueries/AllQueries";
+import CustomerQueries from "./components/customerDashBoard/CustomerQueries/CustomerQueries";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route exact path="/fortuneLife/plan/:planId" element={<InsuranceSchemes />} />
         <Route exact path="/fortuneLife/plan/:planId/scheme-details/:schemeId" element={<InsuranceSchemeDetails />} />
         <Route exact path="/fortuneLife/policy" element={<CustomerPolicies />} />
+        <Route exact path="/fortunrLife/customer/queries" element={<CustomerQueries />} />
         <Route exact path="/fortuneLife/policy/:policyId/payment-details" element={<PolicyPaymentDetails />} />
         <Route exact path="/all-withdrawals" element={<Withdrawal />} />
         <Route exact path="/employee-dashboard" element={<EmployeeDashboard />} />

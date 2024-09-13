@@ -51,6 +51,10 @@ public class ClaimServiceImpl implements ClaimService {
             throw new FortuneLifeException("Policy Is Not Completed or Inactive");
         }
 
+        if(!insurancePolicy.getVerified()){
+            throw new FortuneLifeException("Cannot apply for claim, Policy Not verified yet");
+        }
+
         Claim claim = claimMapper.dtoToEntity(claimDto);
         if (claim.getClaimAmount() > insurancePolicy.getSumAssured()) {
             throw new FortuneLifeException("Amount Should be less than Assured Amount!.");

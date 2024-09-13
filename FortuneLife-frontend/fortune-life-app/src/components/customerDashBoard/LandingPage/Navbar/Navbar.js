@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Navbar.module.css";
+import styles from "./Navbar.module.css";
 import logoImg from "../../../../images/fortunelife-high-resolution-logo-black-transparent.png";
 import { useNavigate } from "react-router-dom";
 import { getAllInsurancePlans } from "../../../../services/commonService";
@@ -9,12 +9,14 @@ import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
 import { logout } from "../../../../services/authService";
 import maleAvatar from "../../../../images/undraw_male_avatar_g98d.svg";
 import { toast } from "react-toastify";
+import QueryModal from "../../CustomerQueries/QueryModal";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [insurancePlans, setInsurancePlans] = useState([]);
   const [showDropDown, setShowDropDown] = useState(false);
   const [showCustomerModal, setShowCustomerModal] = useState(false);
+  const [showQueryModal, setShowQueryModal] = useState(false);
 
   useEffect(() => {
     if (showDropDown) {
@@ -46,6 +48,18 @@ const Navbar = () => {
     } catch (error) {
       errorToast(error);
     }
+  };
+
+  const handleMyPolicies = () => {
+    navigate("/fortuneLife/policy");
+  };
+
+  const handleMyQueries = () => {
+    navigate("/fortunrLife/customer/queries");
+  };
+
+  const handleCreateQuery = () => {
+    setShowQueryModal(true);
   };
 
   return (
@@ -88,14 +102,14 @@ const Navbar = () => {
               </li>
 
               <li className="ms-4">
-                <a href="/fortuneLife/policy" className="fs-5 nav-link px-2 link-body-emphasis">
+                <a href="/fortuneLife/policy" className="fs-5 nav-link px-2 link-body-emphasis" onClick={handleMyPolicies}>
                   My Policies
                 </a>
               </li>
 
               <li className="ms-4">
-                <a href="/" className="fs-5 nav-link px-2 link-body-emphasis">
-                  Contact
+                <a href="/fortunrLife/customer/queries" className="fs-5 nav-link px-2 link-body-emphasis" onClick={handleMyQueries}>
+                  My Queries
                 </a>
               </li>
             </ul>
@@ -106,18 +120,18 @@ const Navbar = () => {
               </a>
               <ul className="dropdown-menu text-small">
                 <li>
-                  <a className="dropdown-item edit-profile" onClick={handleEditProfile}>
+                  <a href="#" className="dropdown-item edit-profile" onClick={handleEditProfile}>
                     My profile
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/">
+                  <a className="dropdown-item" href="#">
                     Change Password
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/">
-                    Customer Query
+                  <a className="dropdown-item" href="#" onClick={handleCreateQuery}>
+                    Query
                   </a>
                 </li>
                 <hr className="dropdown-divider" />
@@ -132,6 +146,10 @@ const Navbar = () => {
         </div>
         <Modal isOpen={showCustomerModal} onClose={() => setShowCustomerModal(false)}>
           <UserProfile onClose={() => setShowCustomerModal(false)} />
+        </Modal>
+
+        <Modal isOpen={showQueryModal} onClose={() => setShowQueryModal(false)}>
+          <QueryModal onClose={() => setShowQueryModal(false)} />
         </Modal>
       </header>
     </>

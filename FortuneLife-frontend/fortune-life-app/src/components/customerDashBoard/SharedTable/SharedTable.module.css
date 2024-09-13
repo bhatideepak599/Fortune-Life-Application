@@ -1,0 +1,39 @@
+/* SharedTable.module.css */
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+  table-layout: fixed; /* Fix column widths */
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 4px 8px; /* Reduce padding */
+  font-size: 12px; /* Reduce font size */
+  word-wrap: break-word; /* Wrap content */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+}
+
+.custom-table th {
+  font-weight: bold;
+}
+
+.custom-table-header {
+  background-color: #f9f9f9;
+}
+
+.btn {
+  padding: 2px 6px; /* Reduce button padding */
+  font-size: 12px; /* Reduce button font size */
+}
+
+@media (max-width: 768px) {
+  .custom-table th,
+  .custom-table td {
+    font-size: 10px; /* Further reduce font size on smaller screens */
+  }
+}

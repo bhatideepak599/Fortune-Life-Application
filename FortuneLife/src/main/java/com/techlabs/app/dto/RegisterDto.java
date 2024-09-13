@@ -40,6 +40,8 @@ public class RegisterDto {
     @NotBlank
     private String gender;
 
+    private String agentImage;
+
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;

@@ -18,5 +18,5 @@ public interface QueryService {
 
     String activateQuery(Long id);
 
-    List<QueryDto> getAllQueriesByCustomerMail(String customerEmail);
+    PageResponse<QueryDto> getAllQueriesByCustomerMail(String customerEmail, Long id, String title, String question, String answer, Boolean active, String queryResponse, int page, int size);
 }

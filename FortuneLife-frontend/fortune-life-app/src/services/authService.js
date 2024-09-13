@@ -66,7 +66,7 @@ export const getAdmin = async () => {
 
     if (response) return response;
   } catch (error) {
-   // throw error;
+    // throw error;
   }
 };
 
@@ -81,7 +81,7 @@ export const verifyUser = async (accessToken, userRole) => {
       },
     });
     
-    if(response.data==false){
+    if(response.data===false){
       localStorage.clear();
     }
     
@@ -134,22 +134,9 @@ export const getLoggedInUser = async () => {
 
 export const registerUser = async (registerDto, role) => {
   try {
-    const response = await axios.post(
-      `${API_BASE_URL}/fortuneLife/auth/register`,
-      {
-        firstName: registerDto.firstName ? registerDto.firstName : null,
-        lastName: registerDto.lastName ? registerDto.lastName : null,
-        username: registerDto.username ? registerDto.username : null,
-        password: registerDto.password ? registerDto.password : null,
-        email: registerDto.email ? registerDto.email : null,
-        mobileNumber: registerDto.mobileNumber ? registerDto.mobileNumber : null,
-        gender: registerDto.gender ? registerDto.gender : null,
-        dateOfBirth: registerDto.dateOfBirth ? registerDto.dateOfBirth : null,
-      },
-      {
-        params: role,
-      }
-    );
+    const response = await axios.post(`${API_BASE_URL}/fortuneLife/auth/register`, registerDto, {
+      params: { tempRole: role },
+    });
 
     return response.data;
   } catch (error) {

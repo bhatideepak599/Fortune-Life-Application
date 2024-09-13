@@ -270,3 +270,41 @@ export const addnewCustomer = async (userDto, addressDto) => {
     throw error;
   }
 };
+
+export const getQueriesByCustomerEmail = async (params) => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  try {
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/query/${params.customerEmail}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        id: params.id || null,
+        title: params.title || null,
+        page: params.pageNumber,
+        size: params.size,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || "Error fetching queries.";
+  }
+};
+
+export const addNewQuery = async (queryData) => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  try {
+    const response = await axios.post(`${API_BASE_URL}/fortuneLife/query`, queryData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || "Error creating new query.";
+  }
+};

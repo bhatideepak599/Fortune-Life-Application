@@ -31,6 +31,7 @@ public class InsurancePolicyResponseDto {
     private Double totalPolicyAmount;
     private Double totalAmountPaidTillDate;
     private List<String> nomineeNameAndRelation;
+    private Boolean verified;
     private Set<SubmittedDocumentDto> submittedDocumentsDto = new HashSet<>();
 
 }

@@ -9,9 +9,12 @@ import Modal from "../../../utils/Modals/Modal";
 import ClaimModal from "../CustomerClaim/ClaimModal";
 import SharedTable from "../SharedTable/SharedTable";
 import Navbar from "../LandingPage/Navbar/Navbar";
+import { getPolicyByPolicyId } from "../../../services/commonService";
+import "./CustomerPolicies.module.css";
 
 const CustomerPolicies = () => {
   const [sanitizedPolicies, setSanitizedPolicies] = useState([]);
+  const [loading, setLoading] = useState(true); // Added loading state
   const [urlSearchParams, setUrlSearchParams] = useSearchParams();
   const [pageSize, setPageSize] = useState(Number(urlSearchParams.get("pageSize")) || 5);
   const [pageNumber, setPageNumber] = useState(Number(urlSearchParams.get("pageNumber")) || 0);
@@ -20,6 +23,7 @@ const CustomerPolicies = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [selectedPolicy, setSelectedPolicy] = useState("");
   const [isClaimModalOpen, setIsClaimModalOpen] = useState(false);
+  const [selectedCurrentPolicy, setSelectedCurrentPolicy] = useState(null);
 
   const searchRef = useRef();
   const navigate = useNavigate();
@@ -144,7 +148,7 @@ const CustomerPolicies = () => {
       console.error("User is not defined or doesn't have an ID.");
       return;
     }
-
+    setLoading(true); // Start loading
     try {
       const response = await getPoliciesByCustomerId({
         customerId: currentUser.id,
@@ -153,7 +157,7 @@ const CustomerPolicies = () => {
       });
 
       if (response.content) {
-        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "claimId", "claimStatus"];
+        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalAmountPaidTillDate", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "claimId", "claimStatus"];
         const sanitized = sanitizedData({ data: response.content, keysTobeSelected });
 
         setSanitizedPolicies(sanitized);
@@ -163,10 +167,13 @@ const CustomerPolicies = () => {
     } catch (error) {
       console.error(error);
       toast.error(error.message);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
   const searchPolicies = async () => {
+    setLoading(true); // Start loading
     try {
       const response = await getPoliciesByCustomerId({
         ...searchParams,
@@ -176,7 +183,7 @@ const CustomerPolicies = () => {
       });
 
       if (response.content) {
-        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "claimId", "claimStatus"];
+        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalAmountPaidTillDate", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "claimId", "claimStatus"];
         const sanitized = sanitizedData({ data: response.content, keysTobeSelected });
 
         setSanitizedPolicies(sanitized);
@@ -186,12 +193,24 @@ const CustomerPolicies = () => {
     } catch (error) {
       console.error(error);
       toast.error(error.message);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
-  const handleClaim = (policyId) => {
+  const handleClaim = async (policyId) => {
     setSelectedPolicy(policyId);
     setIsClaimModalOpen(true);
+
+    try {
+      const response = await getPolicyByPolicyId(policyId);
+      if (response) {
+        console.log(response);
+        setSelectedCurrentPolicy(response);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handlePayment = (policyId) => {
@@ -209,6 +228,17 @@ const CustomerPolicies = () => {
 
   if (!isVerified) {
     return <div>Loading...</div>;
+  }
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="container mt-4">
+          <div>Loading...</div>
+        </div>
+      </>
+    );
   }
 
   return (
@@ -243,22 +273,45 @@ const CustomerPolicies = () => {
           </div>
         </form>
 
-        <SharedTable data={sanitizedPolicies} actions={actions} />
+        {sanitizedPolicies.length === 0 ? (
+          <div>No policies found.</div>
+        ) : (
+          <>
+            <SharedTable data={sanitizedPolicies} actions={actions} />
 
-        {sanitizedPolicies?.length > 0 && (
-          <div className="d-flex align-items-center justify-content-between mt-5">
-            <Pagination pager={pageObject} onPageChange={onPageChange} />
-          </div>
+            {sanitizedPolicies.length > 0 && (
+              <div className="d-flex align-items-center justify-content-between mt-5">
+                <Pagination pager={pageObject} onPageChange={onPageChange} />
+              </div>
+            )}
+          </>
         )}
 
-        <Modal isOpen={isClaimModalOpen} onClose={() => setIsClaimModalOpen(false)} width="60%" height="100%">
-          <ClaimModal
-            policyId={selectedPolicy}
-            onClose={() => {
-              setIsClaimModalOpen(false);
-              refetchPolicies();
-            }}
-          />
+        <Modal
+          isOpen={isClaimModalOpen}
+          onClose={() => {
+            setIsClaimModalOpen(false);
+            setSelectedCurrentPolicy(null);
+          }}
+          width="60%"
+          height="100%"
+        >
+          {selectedCurrentPolicy === null ? (
+            <div>Loading...</div>
+          ) : selectedCurrentPolicy.verified === true ? (
+            <ClaimModal
+              policyId={selectedPolicy}
+              onClose={() => {
+                setIsClaimModalOpen(false);
+                setSelectedCurrentPolicy(null);
+                refetchPolicies();
+              }}
+            />
+          ) : (
+            <div className="modal-message-container py-5 border-5 my-5 ms-5">
+              <h1>Policy not verified yet, cannot claim</h1>
+            </div>
+          )}
         </Modal>
       </div>
     </>

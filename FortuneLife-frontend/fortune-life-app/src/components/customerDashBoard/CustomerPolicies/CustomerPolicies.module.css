@@ -1,0 +1,10 @@
+.modal-message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.modal-message-container h1 {
+  text-align: center;
+}

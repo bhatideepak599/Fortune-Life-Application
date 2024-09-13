@@ -1,0 +1,8 @@
+.heading{
+    background-color: hsl(245, 67%, 59%);
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 20px;
+    color: white;
+    border-radius: 10px;
+}
