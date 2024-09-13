@@ -81,6 +81,9 @@ export const verifyUser = async (accessToken, userRole) => {
       },
     });
     
+    if(response.data==false){
+      localStorage.clear();
+    }
     
     return response.data;
   } catch (error) {

@@ -186,10 +186,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/state/activate/{id}").hasRole("ADMIN")
 
                         // Query endpoints
-                        .requestMatchers(HttpMethod.GET, "/fortuneLife/query").hasAnyRole("ADMIN,EMPLOYEE")
+                        //.requestMatchers(HttpMethod.GET, "/fortuneLife/query").hasAnyRole("ADMIN,EMPLOYEE")
                         .requestMatchers(HttpMethod.POST, "/fortuneLife/query").hasAnyRole("CUSTOMER")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/query/edit").hasRole("CUSTOMER")
-                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/query/answer").hasAnyRole("ADMIN,EMPLOYEE")
+                        //.requestMatchers(HttpMethod.PUT, "/fortuneLife/query/answer").hasAnyRole("ADMIN,EMPLOYEE")
                         .requestMatchers(HttpMethod.DELETE, "/fortuneLife/query/{id}").hasAnyRole("ADMIN,CUSTOMER")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/query/activate/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/query/{customerEmail}")

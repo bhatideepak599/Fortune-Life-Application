@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Main.css";
+import "./Main.css"
 import { FaUserPlus, FaShoppingCart, FaMoneyCheckAlt } from "react-icons/fa";
 import Modal from "../../../../utils/Modals/Modal";
 import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";

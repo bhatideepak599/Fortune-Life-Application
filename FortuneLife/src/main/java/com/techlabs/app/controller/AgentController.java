@@ -58,8 +58,8 @@ public class AgentController {
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
 		logger.info("Fetching All The Agents");
-		PageResponse<AgentDto> agents = agentService.getAllAgents(id, userName, name, mobileNumber, email, verified,
-				active, page, size);
+		PageResponse<AgentDto> agents = agentService.getAllAgents(id, userName, name, mobileNumber, email,
+				active,verified, page, size);
 
 		return new ResponseEntity<>(agents, HttpStatus.OK);
 	}

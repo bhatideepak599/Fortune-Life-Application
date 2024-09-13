@@ -54,7 +54,6 @@ const CustomerReport = () => {
         id: queryParams.get("id"),
         name: queryParams.get("name") || "",
         username: queryParams.get("username") || "",
-        active: queryParams.get("active") || "",
         mobileNumber: queryParams.get("mobileNumber") || "",
         email: queryParams.get("email") || "",
         active: queryParams.get("active") || "",

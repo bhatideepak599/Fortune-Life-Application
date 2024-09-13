@@ -166,10 +166,11 @@ public class AgentServiceImpl implements AgentService {
 		Agent agent = agentRepository.findById(id)
 				.orElseThrow(() -> new AgentRelatedException("No Agent Found With Agent ID:" + id));
 
-		if (agent.getActive())
-			throw new AgentRelatedException("Agent Is Already Active");
+		if (agent.getActive() && agent.getVerified())
+			throw new AgentRelatedException("Agent Is Already Active & Verified");
 
 		agent.setActive(true);
+		agent.setVerified(true);
 		agent = agentRepository.save(agent);
 
 		return "Agent Activated Successfully.";

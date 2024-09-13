@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { sanitizedData } from "../../../../utils/SanitizeData";
-import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
+import { errorToast, warnToast } from "../../../../utils/Toast";
 import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
 import Modal from "../../../sharedComponents/modal/Modal";
 import {Dropdown ,Button } from "react-bootstrap";
@@ -11,6 +11,7 @@ import UpdateAgent from "./updateAgent/UpdateAgent";
 import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const AgentReport = () => {
   const location = useLocation();
@@ -25,7 +26,6 @@ const AgentReport = () => {
   const [pageSize, setPageSize] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
   const [searchParams, setSearchParams] = useState({
     id: "",
     username: "",
@@ -66,12 +66,11 @@ const AgentReport = () => {
 
   const fetchAgents = async () => {
    
-    
     try {
       const response = await getAllAgents(pageSize,
         pageNumber,
         searchParams);
-      setAgentsList(response.content); // Set the response content to AgentsList
+      setAgentsList(response.content); 
       setTotalPages(response.totalPages);
 
       const keys = [
@@ -82,14 +81,14 @@ const AgentReport = () => {
         "active",
         "userDto.email",
         "userDto.username",
+        "verified"
       ];
-
       const newSanitizedData = sanitizedData({
         data: response.content,
         keysTobeSelected: keys,
       });
-
-      //console.log("Sanitized Data:", newSanitizedData);
+      console.log(newSanitizedData);
+      
       setAgents(newSanitizedData);
       setTotalPages(response.totalPages);
       const queryParams = new URLSearchParams();
@@ -138,7 +137,7 @@ const AgentReport = () => {
     try{
       const response=await activateAgent(id);
       if(response){
-        successToast("Agent Activated.")
+        toast.success("Agent Activated.")
         setFlag(!flag)
       }
     }catch(error){
@@ -177,16 +176,12 @@ const AgentReport = () => {
         throw new Error("The downloaded file is empty");
       }
   
-    
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
       link.download = fileName;
       link.click();
   
-     
       window.URL.revokeObjectURL(link.href);
-  
-      
      // successToast(`${format.toUpperCase()} Downloaded Successfully`);
     } catch (error) {
       console.error("Error during download:", error);
@@ -212,7 +207,6 @@ const AgentReport = () => {
     setSearchType("");
     setPageNumber(0);
     setPageSize(5);
-
     fetchAgents();
   };
 
@@ -229,17 +223,29 @@ const AgentReport = () => {
       [e.target.name]: e.target.value
     });
   };
+  const handleVerifyClick=async(id)=>{
+    try{
+      const response=await activateAgent(id);
+      if(response){
+        toast.info("Agent Verified.")
+        setFlag(!flag)
+      }
+    }catch(error){
+      errorToast(error.response?.data?.message)
+    }
+    
+  }
   const actions = {
     activate: handleActivateClick,
     delete: handleDeleteClick,
     update: handleUpdateClick,
+    verify:handleVerifyClick
   };
   const styles = {
     container: {
       display: 'flex',
       justifyContent: 'center',
       marginTop: '20px',
-       // Adjust as needed
     },
   };
 
@@ -268,12 +274,8 @@ const AgentReport = () => {
             </Dropdown.Menu>
           </Dropdown>
           <FaDownload size={18} className="ms-2" onClick={handleDownload} />
-         
           </div>
       </div>
-
-      
-     
       <CommonTable data={agents} actions={actions} />
       <div className="table-footer">
         <Pagination

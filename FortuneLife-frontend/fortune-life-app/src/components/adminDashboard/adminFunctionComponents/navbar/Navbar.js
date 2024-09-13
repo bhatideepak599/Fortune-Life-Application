@@ -61,6 +61,9 @@ const Navbar = () => {
   const handleCityAndStateClick = () => {
     navigate("/city-states");
   };
+  const handleViewQuries=()=>{
+    navigate("/view-queries");
+  }
   return (
     <>
       <nav className="agent-navbar">
@@ -70,6 +73,9 @@ const Navbar = () => {
         <ul className="nav-links">
           <li>
             <a href="/admin-dashboard">Home</a>
+          </li>
+          <li>
+            <a href="#" onClick={handleViewQuries}>View Queries</a>
           </li>
           <li className="dropdown">
             <a className="dropbtn">Manage</a>
@@ -102,16 +108,16 @@ const Navbar = () => {
               Policies
             </a>
           </li>
-          <li className="dropdown">
+          {/* <li className="dropdown">
             <a href="#" className="dropbtn">
-              Commission
+              
             </a>
             <div className="dropdown-content">
               <a href="#">Total</a>
               <a href="#">Commission</a>
               <a href="#">Withdrawal</a>
             </div>
-          </li>
+          </li> */}
           <li className="dropdown">
             <a href="#" className="dropbtn">
               {name}

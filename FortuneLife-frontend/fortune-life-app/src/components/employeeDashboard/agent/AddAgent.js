@@ -3,7 +3,7 @@ import { Form, Button, Container, Row, Col, Card, Image } from "react-bootstrap"
 import { addAgent } from "../../../services/agentService";
 import { errorToast, successToast } from "../../../utils/Toast";
 import { uploadFile } from "../../../services/fileServices";
-import './AddAgent.css'; // Import the custom CSS file
+import './AddAgent.css';
 
 const AddAgent = ({ onlyAgent }) => {
   const [schemeImage, setSchemeImage] = useState("");
@@ -127,8 +127,7 @@ const AddAgent = ({ onlyAgent }) => {
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Row className="w-100 justify-content-center">
         <Col md={10} lg={8}> {/* Increased the width */}
-          <Card className="shadow-sm">
-            <Card.Body>
+          
               <h2 className="text-center mb-4">Add Agent</h2>
               <Form onSubmit={handleSubmit}>
                 <Row>
@@ -371,8 +370,7 @@ const AddAgent = ({ onlyAgent }) => {
                   Add Agent
                 </Button>
               </Form>
-            </Card.Body>
-          </Card>
+           
         </Col>
       </Row>
     </Container>

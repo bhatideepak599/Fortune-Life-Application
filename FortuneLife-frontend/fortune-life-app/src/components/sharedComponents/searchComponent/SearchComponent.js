@@ -55,14 +55,26 @@ const SearchComponent = ({
               {searchParams.customerName=="" && <Dropdown.Item onClick={() => handleSearchTypeChange("customerName")}>
               customerName
               </Dropdown.Item>}
+              { searchParams.queryResponse=="" &&  <Dropdown.Item onClick={() => handleSearchTypeChange("queryResponse")}>
+                Query Response
+              </Dropdown.Item>}
+              { searchParams.answer=="" &&  <Dropdown.Item onClick={() => handleSearchTypeChange("answer")}>
+                Answer
+              </Dropdown.Item>}
+              { searchParams.question=="" &&  <Dropdown.Item onClick={() => handleSearchTypeChange("question")}>
+                Question
+              </Dropdown.Item>}
+              { searchParams.title=="" &&  <Dropdown.Item onClick={() => handleSearchTypeChange("title")}>
+              Title
+              </Dropdown.Item>}
+              
             </Dropdown.Menu>
           </Dropdown>
         </Col>
-        {/* id: "",
-        policyId: "",
-        agentId: "",
-        commissionType: "",
-        customerName: "", */}
+        {/* title: "",
+        question: "",
+        answer: "",
+        queryResponse: "", */}
 
         <Col md={3}>
           <Form.Group controlId="searchField">

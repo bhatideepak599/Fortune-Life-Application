@@ -3,12 +3,17 @@ import styles from "./Navbar.module.css";
 import fortunelife from "../../../../images/fortunelife-high-resolution-logo-white-transparent.png";
 import Modal from "../../../sharedComponents/modal/Modal";
 import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ handleProfileClick, onLogoutClick, user }) => {
+  const navigate = useNavigate();
   const [changePasswordModal, setChangePasswordModal] = useState(false);
   const handleChangePassword = () => {
     setChangePasswordModal(true);
   };
+  const handleViewQuries=()=>{
+    navigate("/view-queries");
+  }
   return (
     <>
       <nav
@@ -45,6 +50,9 @@ const Navbar = ({ handleProfileClick, onLogoutClick, user }) => {
                   Home
                 </a>
               </li>
+              <li>
+            <a href="#" onClick={handleViewQuries}>View Queries</a>
+          </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
                   View Clients

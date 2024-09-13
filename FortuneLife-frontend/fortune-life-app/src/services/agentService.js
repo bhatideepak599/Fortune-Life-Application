@@ -45,7 +45,6 @@ export const updateAgentByAdmin = async (agentDto) => {
 
     return response.data;
   } catch (error) {
-    //console.error("Error updating agent:", error);
     throw error;
   }
 };
@@ -56,7 +55,7 @@ export const getAllAgents = async (pageSize,
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/agent`, {
       headers: {
-        Authorization: accessToken, // Add the correct authorization format
+        Authorization: accessToken, 
       },
       params:{
         id: searchParams.id!==""?searchParams.id:null, 

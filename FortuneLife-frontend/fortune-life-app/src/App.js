@@ -27,6 +27,7 @@ import InsuranceAccountReport from "./components/adminDashboard/adminFunctionCom
 import CommissionSettings from "./components/adminDashboard/adminFunctionComponents/commissionSettings/CommissionSettings";
 import ManageCityAndState from "./components/adminDashboard/adminFunctionComponents/manageCityAndState/ManageCityAndState";
 import { AllWithdrawals } from "./components/adminDashboard/adminFunctionComponents/withdrawal/AllWithdrawals";
+import { AllQueries } from "./components/sharedComponents/allQueries/AllQueries";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
         <Route exact path="/plans-schemes" element={<CommissionSettings/>}/>
         <Route exact path="/city-states" element={<ManageCityAndState/>}/>
         <Route exact path="/all-withDrawals" element={<AllWithdrawals/>}/>
+        <Route exact path="/view-queries" element={<AllQueries/>}/>
       </Routes>
     </>
   );
