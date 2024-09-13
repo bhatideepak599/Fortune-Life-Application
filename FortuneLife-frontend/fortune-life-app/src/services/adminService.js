@@ -10,10 +10,10 @@ export const setTaxGlobally = async (tax) => {
 
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/fortuneLife/tax/set-tax`,{},
+      `${API_BASE_URL}/fortuneLife/tax/set-tax`,
+      {},
 
       {
-       
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -29,9 +29,7 @@ export const setTaxGlobally = async (tax) => {
   }
 };
 
-
 export const getTax = async () => {
- 
   try {
     const response = await axios.get(
       `${API_BASE_URL}/fortuneLife/tax/get-tax`,
@@ -46,6 +44,49 @@ export const getTax = async () => {
     return response.data;
   } catch (error) {
     console.error("Error updating agent:", error);
+    throw error;
+  }
+};
+
+export const getAllClaims = async ({ claimId, bankAccountNumber, claimStatus, page, size }) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/claim`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        id: claimId || "",
+        bankAccountNumber: bankAccountNumber || "",
+        claimStatus: claimStatus || "",
+        page,
+        size,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const claimApproval = async ({ claimId, claimReply, remarks }) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/fortuneLife/claim/approve/${claimId}`,
+      {}, // No body content
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          operation: claimReply,
+          message: remarks,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
     throw error;
   }
 };

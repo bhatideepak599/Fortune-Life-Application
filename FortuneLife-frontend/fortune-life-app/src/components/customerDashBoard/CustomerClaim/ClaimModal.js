@@ -3,6 +3,7 @@ import { applyForClaim, getClaimByClaimId } from "../../../services/CustomerServ
 import { toast } from "react-toastify";
 import { getLoggedInUser } from "../../../services/authService";
 import { getPolicyByPolicyId } from "../../../services/commonService";
+import { getTax } from "../../../services/adminService";
 
 const ClaimModal = ({ policyId, onClose }) => {
   const [claimDto, setClaimDto] = useState({});
@@ -11,6 +12,7 @@ const ClaimModal = ({ policyId, onClose }) => {
   const [claimAmount, setClaimAmount] = useState("");
   const [claimId, setClaimId] = useState(null);
   const [currentClaim, setCurrentClaim] = useState(null);
+  const [deductionTax, setDeductionTax] = useState(null);
 
   useEffect(() => {
     const getCustomer = async () => {
@@ -60,9 +62,25 @@ const ClaimModal = ({ policyId, onClose }) => {
   }, [claimId]);
 
   useEffect(() => {
+    const getDeductionTax = async () => {
+      try {
+        const response = await getTax();
+        if (response) {
+          setDeductionTax(response.deductionRate);
+        }
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+
+    getDeductionTax();
+  }, [deductionTax]);
+
+  useEffect(() => {
     if (currentPolicy) {
       if (currentPolicy.policyStatus === "ACTIVE") {
-        setClaimAmount(currentPolicy.totalAmountPaidTillDate);
+        const finalAmount = currentPolicy.totalAmountPaidTillDate * (deductionTax / 100);
+        setClaimAmount(finalAmount);
       } else if (currentPolicy.policyStatus === "COMPLETE") {
         setClaimAmount(currentPolicy.sumAssured);
       } else {

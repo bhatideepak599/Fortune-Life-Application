@@ -10,6 +10,7 @@ const Sidebar = ({ activeItem, onItemClick }) => {
     "Add Employee and Agent",
     "Manage Insurance Plans & Schemes",
     "Withdrawal approval",
+    "Claim Approvals"
   ];
 
   const reports = [

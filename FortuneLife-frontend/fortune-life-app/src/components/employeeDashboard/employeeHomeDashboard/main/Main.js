@@ -79,7 +79,7 @@ const Main = () => {
   handleProfileClick={handleProfileClick}
   onLogoutClick={handleLogout}
   />
-    <div className="agent-main-section">
+    <div className="agent-main-section mt-5">
       <div className="card">
         <div className="card-icon">
           <FaUserPlus size={40} />

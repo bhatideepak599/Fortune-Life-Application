@@ -245,8 +245,13 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
   };
 
   const handleRegister = () => {
-    setIsModalOpen(false);
-    setNewRegisterModal(true);
+    if (localStorage.getItem("role") === "ROLE_AGENT") {
+      setIsModalOpen(false);
+      setNewRegisterModal(true);
+    } else {
+      setIsModalOpen(false);
+      navigate("/register");
+    }
   };
 
   return (

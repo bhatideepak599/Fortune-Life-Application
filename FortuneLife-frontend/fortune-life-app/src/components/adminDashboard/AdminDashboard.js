@@ -58,6 +58,9 @@ const AdminDashboard = () => {
     if (!validateAdmin()) return;
 
     const savedActiveItem = localStorage.getItem("activeItem");
+
+    // Retrieve the active item from localStorage or query parameters
+    // const savedActiveItem = localStorage.getItem("activeItem");
     const queryParams = new URLSearchParams(location.search);
     const initialActiveItem = queryParams.get("activeItem");
 

@@ -11,6 +11,7 @@ import AgentwiseCommissionReport from "./agentwiseCommissionReport/AgentwiseComm
 import { Withdrawal } from "./withdrawal/Withdrawal";
 import InsuranceAccountReport from "./insuranceAccountReport/InsuranceAccountReport";
 import ManageCityAndState from "./manageCityAndState/ManageCityAndState";
+import ClaimApproval from "./claimApproval/ClaimApproval";
 // Import other components here
 // import AgentReport from './AgentReport';
 // import InsurancePlanMaster from './InsurancePlanMaster';
@@ -44,6 +45,8 @@ const MainContent = ({ activeItem, show, setShow }) => {
         return <AgentwiseCommissionReport />;
       case "Withdrawal approval":
         return <Withdrawal />;
+        case "Claim Approvals" :
+          return <ClaimApproval/>
       case "Insurance account report":
         return <InsuranceAccountReport />;
 
