@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -98,9 +99,11 @@ public class AgentController {
 	}
 
 	@Operation(summary = "Claim For Withdrawal ")
-	@PostMapping("/withdrawal/{agentId}")
+	@PutMapping("/withdrawal/{agentId}")
 	public ResponseEntity<WithdrawalDto> claimWithdrawal(@PathVariable("agentId") Long id,
 			@RequestParam(name = "amount") Double amount, @RequestBody AgentDto agentDto) {
+		System.out.println(agentDto+"===========================================");
+		
 		logger.info("Claiming For Withdrawal");
 
 		WithdrawalDto withdrawalDto = withdrawalService.claimWithdrawal(id, amount,agentDto);
@@ -175,7 +178,7 @@ public class AgentController {
 		return new ResponseEntity<>(allWidrawals, HttpStatus.OK);
 	}
 	@Secured("AGENT")
-	@Operation(summary = "Fetch Agent By Id")
+	@Operation(summary = "Fetch Logged Agent  ")
 	@GetMapping("/loggedAgent")
 	public ResponseEntity<AgentDto> getLoggedAgent(HttpServletRequest request) {
 		logger.info("Fetching A Logged Agent");

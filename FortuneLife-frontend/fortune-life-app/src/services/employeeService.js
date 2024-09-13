@@ -61,7 +61,7 @@ export const addEmployee = async (employeeDto) => {
 };
 
 export const validateEmployee = (accessToken1) => {
-  if (!accessToken1 || !verifyUser(accessToken1, "employee")) {
+  if (!accessToken1 || !  verifyUser(accessToken1, "employee")) {
     return false;
   }
   return true;

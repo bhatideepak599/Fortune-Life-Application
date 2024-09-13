@@ -101,8 +101,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/employee/{id}").hasAnyRole("ADMIN", "EMPLOYEE")
 
                         // Agent Endpoints
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/agent/**").hasAnyRole("ADMIN", "EMPLOYEE")
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/agent/withdrawal/{agentId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/fortuneLife/agent").hasAnyRole("ADMIN", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/withdrawal/{agentId}").hasRole("AGENT")
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/agent/withdrawal-requests").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/agent/allwithdrawal").hasRole("AGENT")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/withdrawal/approve/{id}").hasRole("ADMIN")

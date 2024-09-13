@@ -24,7 +24,7 @@ const CommissionReport = () => {
   });
 
   useEffect(() => {
-    if (validateEmployee()) {
+    if (  validateEmployee()) {
       warnToast("Unauthorized Access! Login First");
       navigate("/");
       return;
@@ -49,6 +49,30 @@ const CommissionReport = () => {
   }, []);
 
   useEffect(() => {
+    const fetchCommissions = async () => {
+      try {
+        const response = await getAllCommissions(
+          pageSize,
+          pageNumber,
+          searchParams
+        );
+        setCommissions(response.content);
+        setTotalPages(response.totalPages);
+        const queryParams = new URLSearchParams();
+        queryParams.set("pageSize", pageSize);
+        queryParams.set("pageNumber", pageNumber);
+  
+        Object.keys(searchParams).forEach((key) => {
+          if (searchParams[key]) queryParams.set(key, searchParams[key]);
+        });
+  
+        navigate({ search: queryParams.toString() }, { replace: true });
+      } catch (error) {
+        errorToast(
+          error.response?.data?.message || "Failed to fetch commissions"
+        );
+      }
+    };
     fetchCommissions();
   }, [pageSize, pageNumber]);
 

@@ -1,59 +1,58 @@
 .table-container {
-    width: 100%; /* Set to 100% for full-width responsiveness */
-    overflow-x: auto; /* Keeps horizontal scrolling if content overflows */
-    margin: 10px; /* Simplified margin */
-    padding: 5px; /* Optional: adds some padding for better appearance */
-    box-sizing: border-box; /* Ensures width includes padding and border */
-    background-color: #f9f9f9; /* Optional: adds a background for the container */
-    border-radius: 8px; /* Optional: adds rounded corners */
-  }
-  
-  /* Adjusted table styles for better fit and aesthetics */
-  .styled-table {
-    width: 100%; /* Ensures the table takes full available width */
-    border-collapse: collapse;
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
-  }
-  
-  .styled-table thead tr {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
-  }
-  
-  .styled-table th,
-  .styled-table td {
-    padding: 12px 15px;
-    border: 1px solid #dddddd;
-    white-space: nowrap; /* Prevents text from wrapping, ensuring clean columns */
-  }
-  
-  .styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-  }
-  
-  .styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-  }
-  
-  .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-  }
-  
-  .styled-table tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .styled-table th {
-    cursor: pointer;
-    user-select: none;
-  }
-  
-  .table-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
+  width: 100%; /* Set to 100% for full-width responsiveness */
+  overflow-x: auto; /* Keeps horizontal scrolling if content overflows */
+  margin: 10px; /* Simplified margin */
+  padding: 5px; /* Optional: adds some padding for better appearance */
+  box-sizing: border-box; /* Ensures width includes padding and border */
+  background-color: #ffffff; /* Sets a plain white background for the container */
+  border-radius: 8px; /* Optional: adds rounded corners */
+}
+
+/* Adjusted table styles for better fit and aesthetics */
+.styled-table {
+  width: 100%; /* Ensures the table takes full available width */
+  border-collapse: collapse;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+}
+
+.styled-table thead tr {
+  background-color: #f0f0f0; /* Light gray for header background */
+  color: #000000; /* Black text color for headers */
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border: 1px solid #cccccc; /* Light gray border for cells */
+  white-space: nowrap; /* Prevents text from wrapping, ensuring clean columns */
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #cccccc; /* Light gray border for rows */
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f9f9f9; /* Very light gray for even rows */
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #cccccc; /* Light gray border for the last row */
+}
+
+.styled-table tbody tr:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+}
+
+.styled-table th {
+  cursor: pointer;
+  user-select: none;
+}
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}

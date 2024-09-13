@@ -85,3 +85,32 @@ export const approveWithdrawal = async (id) => {
     }
   };
   
+
+  export const claimAmount = async (agentId,amount,agentDto) => {
+    console.log(agentId);
+    console.log(amount);
+    console.log(agentDto);
+    
+    if (!accessToken) {
+      return null;
+    }
+  
+    try {
+      const response = await axios.put(
+        `${API_BASE_URL}/fortuneLife/agent/withdrawal/${agentId}`,
+        agentDto,
+        {
+          headers: {
+            Authorization: accessToken,
+          
+          },
+          params: {
+            amount: amount,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };

@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 import Modal from "../../../../utils/Modals/Modal";
 import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
 import { getLoggedInUser, logout } from "../../../../services/authService";
+import { getLoggedAgent } from "../../../../services/agentService";
+import Amount from "../amount/Amount";
+import WithDrawAmount from "../withDrawAmount/WithDrawAmount";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -14,6 +17,9 @@ const Navbar = () => {
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [agent, setAgent] = useState(null);
   const [name, setName] = useState("");
+  
+  const [totalModal,setTotalModal]=useState(false)
+  const [withdrawAmount,setWithdrawAmount]=useState(false)
 
   useEffect(() => {
     fetchAgent();
@@ -46,9 +52,9 @@ const Navbar = () => {
   };
 
   const fetchAgent = async () => {
-    const response = await getLoggedInUser();
+    const response = await getLoggedAgent();
 
-    setName(response.firstName + " " + response.lastName);
+    setName(response.userDto.firstName + " " + response.userDto.lastName);
     setAgent(response);
   };
 
@@ -58,6 +64,9 @@ const Navbar = () => {
 
   const handleAllWithdrawalsClick = () => {
     navigate("/withdrawal-history");
+  };
+  const handleTotalClick = () => {
+    setTotalModal(true)
   };
 
   return (
@@ -92,28 +101,25 @@ const Navbar = () => {
           <li>
             <a href="#">Policies</a>
           </li>
-          <li className={`dropdown ${styles.dropdown}`}>
-            <a href="#">Commission</a>
-            <div className={`dropdown-content ${styles.dropdownContent}`}>
-              <a href="#">Total Commission</a>
-              <a href="#" onClick={handleHistoryClick}>
-                Commission History
-              </a>
-              <a href="#" onClick={handleAllWithdrawalsClick}>
-                Withdrawal History
-              </a>
+          <li class="dropdown">
+            <a href="#" class="dropbtn">
+              Commission
+            </a>
+            <div class="dropdown-content">
+             
+              <a href="#" onClick={handleTotalClick}>Total </a>
+              <a href="#" onClick={handleHistoryClick}>Commission</a>
+              <a href="#" onClick={handleAllWithdrawalsClick}>Withdrawal</a>
             </div>
           </li>
-          <li className={`dropdown ${styles.dropdown}`}>
-            <a href="#">{name}</a>
-            <div className={`dropdown-content ${styles.dropdownContent}`}>
-              <a href="#" onClick={handleEditProfile}>
-                My Profile
-              </a>
-              <a href="#">Change Password</a>
-              <a href="#" onClick={handleLogout}>
-                Logout
-              </a>
+          <li class="dropdown">
+            <a href="#" class="dropbtn">
+              {name}
+            </a>
+            <div class="dropdown-content">
+              <a href="#">Profile</a>
+              <a href="#">Change password</a>
+              <a href="#" onClick={handleLogout}>Logout</a>
             </div>
           </li>
         </ul>
@@ -122,6 +128,27 @@ const Navbar = () => {
       <Modal isOpen={showCustomerModal} onClose={() => setShowCustomerModal(false)}>
         <UserProfile onClose={() => setShowCustomerModal(false)} />
       </Modal>
+      
+      <Modal
+          isOpen={totalModal}
+          onClose={() => setTotalModal(false)}
+        width={"30%"}>
+          <Amount
+          agent={agent}
+       
+          setWithdrawAmount={setWithdrawAmount}
+            onClose={() => setTotalModal(false)}
+          />
+        </Modal>
+        <Modal
+          isOpen={withdrawAmount}
+          onClose={() => setWithdrawAmount(false)}
+        >
+          <WithDrawAmount
+          agent={agent}
+            onClose={() => setWithdrawAmount(false)}
+          />
+        </Modal>
     </>
   );
 };

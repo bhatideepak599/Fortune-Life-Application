@@ -19,17 +19,13 @@ const CommonTable = ({ data, actions ,viewPayments}) => {
           </tr>
         </thead>
         <tbody
-          style={{
-            background: "linear-gradient(135deg, #f3f4f6, #af92ca69)",
-          }}
+          
         >
           {data.map((row, index) => (
             <tr key={index}>
               {headers.map((header) => (
                 <td
-                  style={{
-                    background: "linear-gradient(135deg, #f3f4f6, #af92ca69)",
-                  }}
+                 
                   key={header}
                 >
                   {header === "active" ? (row[header] ? "Active" : "Inactive") : typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header]}

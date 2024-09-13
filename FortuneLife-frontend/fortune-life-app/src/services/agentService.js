@@ -113,3 +113,22 @@ export const activateAgent = async (id) => {
   }
 };
 
+export const getLoggedAgent = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (accessToken == null) {
+    return null;
+  }
+
+  try {
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/agent/loggedAgent`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

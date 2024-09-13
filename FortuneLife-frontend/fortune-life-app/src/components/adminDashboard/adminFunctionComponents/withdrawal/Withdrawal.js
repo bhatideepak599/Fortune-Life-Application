@@ -177,6 +177,7 @@ export const Withdrawal = () => {
         const response= await approveWithdrawal(id);
         if(response){
             successToast("WithDrawal Approved")
+            setFlag(!flag)
         }
     }catch (error) {
         errorToast(error.response?.data?.message);
@@ -187,6 +188,7 @@ export const Withdrawal = () => {
     try{
         const response= await rejectWithdrawal(id);
         if(response){
+            setFlag(!flag)
             warnToast("WithDrawal Rejected")
         }
     }catch (error) {
