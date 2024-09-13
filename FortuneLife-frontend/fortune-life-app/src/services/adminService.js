@@ -55,14 +55,15 @@ export const getAllClaims = async ({ claimId, bankAccountNumber, claimStatus, pa
         Authorization: `Bearer ${accessToken}`,
       },
       params: {
-        id: claimId || "",
-        bankAccountNumber: bankAccountNumber || "",
-        claimStatus: claimStatus || "",
+        id: claimId || null,
+        bankAccountNumber: bankAccountNumber || null,
+        claimStatus: claimStatus || null,
         page,
         size,
       },
     });
-
+    console.log(response.data);
+    
     return response.data;
   } catch (error) {
     throw error;
@@ -73,7 +74,7 @@ export const claimApproval = async ({ claimId, claimReply, remarks }) => {
   try {
     const response = await axios.put(
       `${API_BASE_URL}/fortuneLife/claim/approve/${claimId}`,
-      {}, // No body content
+      {},
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

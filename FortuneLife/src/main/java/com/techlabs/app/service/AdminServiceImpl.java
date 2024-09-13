@@ -89,7 +89,7 @@ public class AdminServiceImpl implements AdminService {
         adminDto.setActive(savedAdmin.getActive());
 
         UserDto savedUserDto = userMapper.entityToDto(savedUser);
-        adminDto.setUser(savedUserDto);
+        adminDto.setUserDto(savedUserDto);
 
         return adminDto;
 
@@ -114,7 +114,7 @@ public class AdminServiceImpl implements AdminService {
             AdminDto adminDto = new AdminDto();
             adminDto.setId(admin.getId());
             adminDto.setActive(admin.getActive());
-            adminDto.setUser(userMapper.entityToDto(userDetails));
+            adminDto.setUserDto(userMapper.entityToDto(userDetails));
             response.add(adminDto);
         }
 
@@ -165,7 +165,7 @@ public class AdminServiceImpl implements AdminService {
         adminDto.setId(userDto.getId());
         adminDto.setActive(true);
         UserDto savedUserDto = userMapper.entityToDto(userForUpdate);
-        adminDto.setUser(savedUserDto);
+        adminDto.setUserDto(savedUserDto);
 
         return adminDto;
     }
@@ -216,7 +216,7 @@ public class AdminServiceImpl implements AdminService {
         AdminDto adminDto = new AdminDto();
         adminDto.setId(userDto.getId());
         adminDto.setActive(admin.get().getActive());
-        adminDto.setUser(userDto);
+        adminDto.setUserDto(userDto);
         return adminDto;
     }
 
@@ -236,7 +236,7 @@ public class AdminServiceImpl implements AdminService {
         AdminDto adminDto = new AdminDto();
         adminDto.setId(userDto.getId());
         adminDto.setActive(admin.getActive());
-        adminDto.setUser(userDto);
+        adminDto.setUserDto(userDto);
         return adminDto;
 
     }

@@ -6,7 +6,7 @@ export const getAllWithdrawals = async (pageSize, pageNumber, searchParams) => {
     const params = {
       id: searchParams.id || undefined,
       agentId: searchParams.agentId || undefined,
-      status: searchParams.status || undefined,
+      status: searchParams.status ||undefined,
       page: pageNumber,
       size: pageSize
     };

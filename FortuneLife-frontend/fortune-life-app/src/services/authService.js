@@ -153,3 +153,31 @@ export const registerUser = async (registerDto, role) => {
     throw error;
   }
 };
+
+export const changePassword = async (userDto) => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (accessToken == null) {
+    return null;
+  }
+
+  try {
+    const response = await axios.put(`${API_BASE_URL}/fortuneLife/auth/change-Password`, userDto, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+
+      if (response) {
+       // const expirationTime = new Date().getTime() + 30 * 60 * 1000;
+        localStorage.setItem("accessToken", response.data.accessToken);
+        //localStorage.setItem("role", response.data.role);
+       // localStorage.setItem("expirationTime", expirationTime);
+      }
+      return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

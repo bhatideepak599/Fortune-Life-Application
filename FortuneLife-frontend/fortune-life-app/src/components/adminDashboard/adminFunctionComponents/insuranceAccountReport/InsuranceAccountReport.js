@@ -19,6 +19,7 @@ import { getAllPolicies } from "../../../../services/policyService";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../sharedComponents/modal/Modal";
 import { ViewPayment } from "./viewPayment/ViewPayment";
+import Navbar from "../navbar/Navbar";
 
 const InsuranceAccountReport = () => {
   const location = useLocation();
@@ -202,6 +203,8 @@ const InsuranceAccountReport = () => {
     view: handleViewClick,
   };
   return (
+    <>
+    <Navbar/>
     <div>
       <h2 className="text-center mb-4">Insurance Accounts</h2>
 
@@ -248,6 +251,7 @@ const InsuranceAccountReport = () => {
         />
       </Modal>
     </div>
+    </>
   );
 };
 

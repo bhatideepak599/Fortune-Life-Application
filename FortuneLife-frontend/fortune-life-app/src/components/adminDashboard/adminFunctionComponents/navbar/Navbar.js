@@ -4,22 +4,28 @@ import { useNavigate } from "react-router-dom";
 import { getAdmin, logout } from "../../../../services/authService";
 import fortunelife from "../../../../images/fortunelife-high-resolution-logo-white-transparent.png";
 import { successToast, errorToast } from "../../../../utils/Toast";
+import ManageTaxAndDeductions from "../manageTaxAndDeduction/ManageTaxAndDeductions";
+import Modal from "../../../sharedComponents/modal/Modal";
+import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
+import AdminProfile from "../adminprofile/AdminProfile";
+
 const Navbar = () => {
   const [adminDetails, setAdminDetails] = useState(null);
   const [name, setName] = useState("");
-  const [totalModal, setTotalModal] = useState(false);
-  const [withdrawAmount, setWithdrawAmount] = useState(false);
+  const [taxModal, setTaxModal] = useState(false);
+  const [changePasswordModal, setChangePasswordModal] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchAdmin();
-  }, []); // Fetch admin details once on mount
+  }, []);
 
   const fetchAdmin = async () => {
     try {
       const response = await getAdmin();
       setAdminDetails(response.data);
-      setName(response.data.user.firstName);
+      setName(response.data.userDto.firstName);
     } catch (error) {
       errorToast("Failed to fetch admin details.");
     }
@@ -30,11 +36,31 @@ const Navbar = () => {
     successToast("Logged Out.");
     navigate("/");
   };
-
-  const handleProfile = () => {
-    navigate("/admin-profile", { state: { adminDetails } });
+  const handleTax = () => {
+    setTaxModal(true);
   };
-
+  const handleChangePassword = () => {
+    setChangePasswordModal(true);
+  };
+  const handleProfile = () => {
+    // navigate("/admin-profile", { state: { adminDetails } });
+    setShowProfileModal(true);
+  };
+  const handlePlansAndSchemes = () => {
+    navigate("/plans-schemes");
+  };
+  const handleInsuranceAccouht = () => {
+    navigate("/insurance-accounts");
+  };
+  const handleClaimApprovalClick = () => {
+    navigate("/claim-approval");
+  };
+  const handlePolicyClick = () => {
+    navigate("/insurance-accounts");
+  };
+  const handleCityAndStateClick = () => {
+    navigate("/city-states");
+  };
   return (
     <>
       <nav className="agent-navbar">
@@ -43,22 +69,47 @@ const Navbar = () => {
         </div>
         <ul className="nav-links">
           <li>
-            <a href="/agent-dashboard">Home</a>
+            <a href="/admin-dashboard">Home</a>
+          </li>
+          <li className="dropdown">
+            <a className="dropbtn">Manage</a>
+            <div className="dropdown-content">
+              <a href="#" onClick={handleTax}>
+                Manage Tax
+              </a>
+              <a href="#" onClick={handlePlansAndSchemes}>
+                Plans & Schemes
+              </a>
+              <a href="#" onClick={handleCityAndStateClick}>
+                City & States
+              </a>
+            </div>
+          </li>
+          <li className="dropdown">
+            <a href="#" className="dropbtn">
+              Claim
+            </a>
+            <div className="dropdown-content">
+              <a href="#" onClick={handleClaimApprovalClick}>
+                Claims For Approval
+              </a>
+              <a href="#">All Claims</a>
+              <a href="#">Rejected Claims</a>
+            </div>
           </li>
           <li>
-            <a href="#">View Clients</a>
-          </li>
-          <li>
-            <a href="#">Policies</a>
+            <a href="#" onClick={handlePolicyClick}>
+              Policies
+            </a>
           </li>
           <li className="dropdown">
             <a href="#" className="dropbtn">
               Commission
             </a>
             <div className="dropdown-content">
-              <a href="#" onClick={() => setTotalModal(true)}>Total</a>
+              <a href="#">Total</a>
               <a href="#">Commission</a>
-              <a href="#" onClick={() => setWithdrawAmount(true)}>Withdrawal</a>
+              <a href="#">Withdrawal</a>
             </div>
           </li>
           <li className="dropdown">
@@ -66,28 +117,43 @@ const Navbar = () => {
               {name}
             </a>
             <div className="dropdown-content">
-              <a href="#" onClick={handleProfile}>Profile</a>
-              <a href="#">Change password</a>
-              <a href="#" onClick={handleLogout}>Logout</a>
+              <a href="#" onClick={handleProfile}>
+                Profile
+              </a>
+              <a href="#" onClick={handleChangePassword}>
+                Change password
+              </a>
+              <a href="#" onClick={handleLogout}>
+                Logout
+              </a>
             </div>
           </li>
         </ul>
       </nav>
-      
-      {/* <Modal isOpen={totalModal} onClose={() => setTotalModal(false)} width={"30%"}>
-        <Amount
-          agent={adminDetails} // Update this to use the correct agent or admin details
-          setWithdrawAmount={setWithdrawAmount}
-          onClose={() => setTotalModal(false)}
+
+      <Modal isOpen={taxModal} onClose={() => setTaxModal(false)} width={"30%"}>
+        <ManageTaxAndDeductions onClose={() => setTaxModal(false)} />
+      </Modal>
+
+      <Modal
+        isOpen={changePasswordModal}
+        onClose={() => setChangePasswordModal(false)}
+      >
+        <ChangePassword
+          user={adminDetails}
+          onClose={() => setChangePasswordModal(false)}
         />
       </Modal>
-      
-      <Modal isOpen={withdrawAmount} onClose={() => setWithdrawAmount(false)}>
-        <WithDrawAmount
-          agent={adminDetails} // Update this to use the correct agent or admin details
-          onClose={() => setWithdrawAmount(false)}
+
+      <Modal
+        isOpen={showProfileModal}
+        onClose={() => setShowProfileModal(false)}
+      >
+        <AdminProfile
+          admin={adminDetails}
+          onClose={() => setShowProfileModal(false)}
         />
-      </Modal> */}
+      </Modal>
     </>
   );
 };

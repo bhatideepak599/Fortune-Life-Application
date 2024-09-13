@@ -4,6 +4,7 @@ import { errorToast } from "../../../../utils/Toast";
 import { getAllPlans } from "../../../../services/schemeService";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Col } from "react-bootstrap";
+import Navbar from "../navbar/Navbar";
 
 const CommissionSettings = ({setActiveItem}) => {
   const [plans, setPlans] = useState([]);
@@ -28,6 +29,7 @@ const CommissionSettings = ({setActiveItem}) => {
 
 
   return (
+    <><Navbar/>
     <div
       style={{
         padding: "20px",
@@ -40,6 +42,7 @@ const CommissionSettings = ({setActiveItem}) => {
       <PlanCards plans={plans} change={change} setChange={setChange} handleClick={handleClick} setActiveItem={setActiveItem} />
       
     </div>
+    </>
   );
 };
 

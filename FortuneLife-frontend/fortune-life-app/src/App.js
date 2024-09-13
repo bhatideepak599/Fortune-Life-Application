@@ -22,6 +22,11 @@ import AgentHome from "./components/agentDashboard/AgentHome/AgentHome";
 import CommissionHistory from "./components/agentDashboard/landingPage/commissionHistory/CommissionHistory";
 import WithdrawalHistory from "./components/agentDashboard/landingPage/withdrawalHistory/WithdrawalHistory";
 import RegisterForm from "./components/authComponents/Register/RegisterForm";
+import ClaimApproval from "./components/adminDashboard/adminFunctionComponents/claimApproval/ClaimApproval";
+import InsuranceAccountReport from "./components/adminDashboard/adminFunctionComponents/insuranceAccountReport/InsuranceAccountReport";
+import CommissionSettings from "./components/adminDashboard/adminFunctionComponents/commissionSettings/CommissionSettings";
+import ManageCityAndState from "./components/adminDashboard/adminFunctionComponents/manageCityAndState/ManageCityAndState";
+import { AllWithdrawals } from "./components/adminDashboard/adminFunctionComponents/withdrawal/AllWithdrawals";
 
 function App() {
   return (
@@ -49,6 +54,11 @@ function App() {
         <Route exact path="/agent-dashboard" element={<AgentHome />} />
         <Route exact path="/commission-history" element={<CommissionHistory />} />
         <Route exact path="/withdrawal-history" element={<WithdrawalHistory />} />
+        <Route exact path="/claim-approval" element={<ClaimApproval />} />
+        <Route exact path="/insurance-accounts" element={<InsuranceAccountReport />} />
+        <Route exact path="/plans-schemes" element={<CommissionSettings/>}/>
+        <Route exact path="/city-states" element={<ManageCityAndState/>}/>
+        <Route exact path="/all-withDrawals" element={<AllWithdrawals/>}/>
       </Routes>
     </>
   );

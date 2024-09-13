@@ -10,6 +10,7 @@ import { getLoggedInUser, logout } from "../../../../services/authService";
 import { getLoggedAgent } from "../../../../services/agentService";
 import Amount from "../amount/Amount";
 import WithDrawAmount from "../withDrawAmount/WithDrawAmount";
+import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -17,9 +18,10 @@ const Navbar = () => {
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [agent, setAgent] = useState(null);
   const [name, setName] = useState("");
-  
-  const [totalModal,setTotalModal]=useState(false)
-  const [withdrawAmount,setWithdrawAmount]=useState(false)
+
+  const [totalModal, setTotalModal] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState(false);
+  const [changePasswordModal, setChangePasswordModal] = useState(false);
 
   useEffect(() => {
     fetchAgent();
@@ -57,7 +59,9 @@ const Navbar = () => {
     setName(response.userDto.firstName + " " + response.userDto.lastName);
     setAgent(response);
   };
-
+  const handleChangePassword = () => {
+    setChangePasswordModal(true);
+  };
   const handleHistoryClick = () => {
     navigate("/commission-history");
   };
@@ -66,14 +70,18 @@ const Navbar = () => {
     navigate("/withdrawal-history");
   };
   const handleTotalClick = () => {
-    setTotalModal(true)
+    setTotalModal(true);
   };
 
   return (
     <>
       <nav className={styles.agentNavbar}>
         <div className={styles.navLogo}>
-          <img src={fortunelife} alt="company-logo" className={styles.logoImage} />
+          <img
+            src={fortunelife}
+            alt="company-logo"
+            className={styles.logoImage}
+          />
         </div>
         <ul className={styles.navLinks}>
           <li>
@@ -106,10 +114,15 @@ const Navbar = () => {
               Commission
             </a>
             <div class="dropdown-content">
-             
-              <a href="#" onClick={handleTotalClick}>Total </a>
-              <a href="#" onClick={handleHistoryClick}>Commission</a>
-              <a href="#" onClick={handleAllWithdrawalsClick}>Withdrawal</a>
+              <a href="#" onClick={handleTotalClick}>
+                Total{" "}
+              </a>
+              <a href="#" onClick={handleHistoryClick}>
+                Commission
+              </a>
+              <a href="#" onClick={handleAllWithdrawalsClick}>
+                Withdrawal
+              </a>
             </div>
           </li>
           <li class="dropdown">
@@ -118,37 +131,50 @@ const Navbar = () => {
             </a>
             <div class="dropdown-content">
               <a href="#">Profile</a>
-              <a href="#">Change password</a>
-              <a href="#" onClick={handleLogout}>Logout</a>
+              <a href="#" onClick={handleChangePassword}>
+                Change password
+              </a>
+              <a href="#" onClick={handleLogout}>
+                Logout
+              </a>
             </div>
           </li>
         </ul>
       </nav>
 
-      <Modal isOpen={showCustomerModal} onClose={() => setShowCustomerModal(false)}>
+      <Modal
+        isOpen={showCustomerModal}
+        onClose={() => setShowCustomerModal(false)}
+      >
         <UserProfile onClose={() => setShowCustomerModal(false)} />
       </Modal>
-      
+
       <Modal
-          isOpen={totalModal}
-          onClose={() => setTotalModal(false)}
-        width={"30%"}>
-          <Amount
+        isOpen={totalModal}
+        onClose={() => setTotalModal(false)}
+        width={"30%"}
+      >
+        <Amount
           agent={agent}
-       
           setWithdrawAmount={setWithdrawAmount}
-            onClose={() => setTotalModal(false)}
-          />
-        </Modal>
-        <Modal
-          isOpen={withdrawAmount}
-          onClose={() => setWithdrawAmount(false)}
-        >
-          <WithDrawAmount
+          onClose={() => setTotalModal(false)}
+        />
+      </Modal>
+      <Modal isOpen={withdrawAmount} onClose={() => setWithdrawAmount(false)}>
+        <WithDrawAmount
           agent={agent}
-            onClose={() => setWithdrawAmount(false)}
-          />
-        </Modal>
+          onClose={() => setWithdrawAmount(false)}
+        />
+      </Modal>
+      <Modal
+        isOpen={changePasswordModal}
+        onClose={() => setChangePasswordModal(false)}
+      >
+        <ChangePassword
+          user={agent}
+          onClose={() => setChangePasswordModal(false)}
+        />
+      </Modal>
     </>
   );
 };

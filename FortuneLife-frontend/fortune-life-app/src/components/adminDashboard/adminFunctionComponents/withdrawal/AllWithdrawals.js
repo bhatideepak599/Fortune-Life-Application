@@ -17,7 +17,7 @@ import {
 } from "../../../../services/reportsService";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
 
-export const Withdrawal = () => {
+export const AllWithdrawals = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [withdrawals, setWithdrawals] = useState([]);
@@ -31,7 +31,7 @@ export const Withdrawal = () => {
   const [searchParams, setSearchParams] = useState({
     id: "",
     agentId: "",
-    status: "PENDING",
+    status: "",
   });
 
   useEffect(() => {
@@ -175,38 +175,9 @@ export const Withdrawal = () => {
     });
   };
 
-  const handleApproveClick = async (id) => {
-    try {
-      const response = await approveWithdrawal(id);
-      if (response) {
-        successToast("Withdrawal Approved");
-        setFlag(!flag);
-      }
-    } catch (error) {
-      errorToast(error.response?.data?.message);
-    }
-  };
-
-  const handleRejectClick = async (id) => {
-    try {
-      const response = await rejectWithdrawal(id);
-      if (response) {
-        setFlag(!flag);
-        warnToast("Withdrawal Rejected");
-      }
-    } catch (error) {
-      errorToast(error.response?.data?.message);
-    }
-  };
-
-  const actions = {
-    approve: handleApproveClick,
-    reject: handleRejectClick,
-  };
-
   return (
     <div>
-      <h2 className="text-center mb-4">Withdrawals For Approval</h2>
+      <h2 className="text-center mb-4">All Withdrawals</h2>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <SearchComponent
           searchType={searchType}
@@ -232,7 +203,7 @@ export const Withdrawal = () => {
       </div>
 
       
-      <CommonTable data={withdrawals} actions={actions} />
+      <CommonTable data={withdrawals}  />
 
       <div className="d-flex justify-content-center mt-0">
         <Pagination

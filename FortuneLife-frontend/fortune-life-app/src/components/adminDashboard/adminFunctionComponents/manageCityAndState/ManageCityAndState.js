@@ -8,6 +8,7 @@ import AddOrRemoveCity from "./addOrRemoveCity/AddOrRemoveCity";
 import ViewCities from "./viewCities/ViewCities";
 import { verifyUser } from "../../../../services/authService";
 import { useLocation, useNavigate } from "react-router-dom";
+import Navbar from "../navbar/Navbar";
 
 const ManageCityAndState = () => {
   const [allSchemes, setAllSchemes] = useState([]);
@@ -89,8 +90,10 @@ const handleView=(scheme)=>{
   };
 
   return (
+    <><Navbar/>
     <div>
-      <h2>Manage Schemes</h2>
+       <h2 className="text-center mb-4">City Wise Scheme</h2>
+     
       <Table striped bordered hover style={tableStyles}>
   <thead>
     <tr>
@@ -189,6 +192,7 @@ const handleView=(scheme)=>{
 </Modal.Footer>
       </Modal>
     </div>
+    </>
   );
 };
 

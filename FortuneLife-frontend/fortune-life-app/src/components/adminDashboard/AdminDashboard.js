@@ -58,9 +58,6 @@ const AdminDashboard = () => {
     if (!validateAdmin()) return;
 
     const savedActiveItem = localStorage.getItem("activeItem");
-
-    // Retrieve the active item from localStorage or query parameters
-    // const savedActiveItem = localStorage.getItem("activeItem");
     const queryParams = new URLSearchParams(location.search);
     const initialActiveItem = queryParams.get("activeItem");
 
@@ -79,36 +76,27 @@ const AdminDashboard = () => {
     }
     setActiveItem(item);
   };
-
-  const handleLogout = () => {
-    logout();
-    successToast("Logged Out.");
-    navigate("/");
-  };
-
-  const handleProfile = () => {
-    navigate("/admin-profile", { state: { adminDetails } });
-  };
-
   if (!isVerified) {
     return <div>Loading...</div>;
   }
 
   return (
+    <>
+      <Navbar />
     <div
       style={{
         minHeight: "100vh",
         background: "linear-gradient(135deg, #f3f4f6, #dcdbe1)",
       }}
     >
-      <Navbar />
+    
       <Container fluid style={{ padding: "20px", marginTop: "51px" }}>
         <Row>
           <Col md={3} style={{ padding: 0 }}>
             <div
               style={{
                 position: "fixed",
-                top: "51px",
+                top: "80px",
                 left: 0,
                 width: "22%",
                 height: "70vh",
@@ -119,7 +107,7 @@ const AdminDashboard = () => {
           </Col>
           <Col
             md={{ span: 9, offset: 3 }}
-            style={{ padding: "20px", marginLeft: "22%" }}
+            style={{ padding: "20px", marginLeft: "22%" ,marginTop:"-3%" }}
           >
             {validateAdmin() && (
               <MainContent
@@ -133,6 +121,7 @@ const AdminDashboard = () => {
         </Row>
       </Container>
     </div>
+    </>
   );
 };
 

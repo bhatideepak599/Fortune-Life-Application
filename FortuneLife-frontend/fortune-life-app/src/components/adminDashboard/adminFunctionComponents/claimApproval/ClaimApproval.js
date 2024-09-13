@@ -1,5 +1,3 @@
-// ClaimApproval.js
-
 import React, { useEffect, useState, useRef } from "react";
 import { getAllClaims, claimApproval } from "../../../../services/adminService";
 import { toast } from "react-toastify";
@@ -8,6 +6,7 @@ import { sanitizedData } from "../../../../utils/SanitizeData";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../../utils/Modals/Modal";
 import ClaimTable from "./ClaimTable";
+import Navbar from "../navbar/Navbar";
 
 const ClaimApproval = () => {
   const [claims, setClaims] = useState([]);
@@ -50,7 +49,7 @@ const ClaimApproval = () => {
         setTotalPages(response.totalPages);
       }
     } catch (error) {
-      console.error(error);
+      //console.error(error);
       toast.error("Error fetching claims");
     }
   };
@@ -141,6 +140,8 @@ const ClaimApproval = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="container mt-4">
       <h2>Claim Approval</h2>
       <form className="mb-4" ref={searchRef} onSubmit={handleSearch}>
@@ -203,6 +204,7 @@ const ClaimApproval = () => {
         </Modal>
       )}
     </div>
+    </>
   );
 };
 

@@ -1,7 +1,5 @@
-// ClaimTable.js
-
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 
 const ClaimTable = ({ data, actions }) => {
   if (!data || !data.length) return <div>No data available</div>;

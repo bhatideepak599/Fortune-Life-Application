@@ -281,4 +281,40 @@ public class AuthServiceImpl implements AuthService {
 		return "Password has been changed.";
 	}
 
+	@Override
+	public JWTAuthResponse changePassword(UserDto userDto) {
+		User user = userRepository
+                .findUserByUsernameOrEmail(userDto.getUsername(), userDto.getEmail())
+                .orElseThrow(() -> new UserRelatedException(
+                        "User with username or email " + userDto.getUsername() + " cannot be found"));
+		if (!user.getActive()) {
+            throw new UserRelatedException("User is not active");
+        }
+		boolean check=passwordEncoder.matches(userDto.getFirstName(),user.getPassword());
+		
+		if(!check) {
+			throw new UserRelatedException("Wrong Current Password!");
+		}
+		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		userRepository.save(user);
+		
+		 Authentication authentication = authenticationManager
+	                .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), userDto.getPassword()));
+
+	        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+	        String token = jwtTokenProvider.generateToken(authentication);
+	        saveToken(user, token);
+	        JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+	        jwtAuthResponse.setAccessToken(token);
+
+	        for (Role newRole : user.getRoles()) {
+	            jwtAuthResponse.setRole(newRole.getRoleName());
+	            break;
+	        }
+
+	        return jwtAuthResponse;
+		
+	}
+
 }

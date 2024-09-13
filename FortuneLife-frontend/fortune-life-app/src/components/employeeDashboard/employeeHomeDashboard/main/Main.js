@@ -15,6 +15,7 @@ const Main = () => {
     const [addAgentModal, setAddAgentModal] = useState(false);
     const [showEmployeeProfileModal, setShowEmployeeProfileModal] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
+    const [employee, setEmployee] = useState();
     const [name, setName] = useState("");
     const accessToken = localStorage.getItem("accessToken");
   
@@ -26,10 +27,17 @@ const Main = () => {
       }
       fetchEmployee();
     }, [navigate]);
+    useEffect(()=>{
+      
+      
+    },[employee])
   
     const fetchEmployee = async () => {
       try {
         const response = await getEmployee();
+        setEmployee(response.data)
+       
+        
         setName(response.data.userDto.firstName);
       } catch (error) {
         errorToast(error.response?.data?.message);
@@ -76,6 +84,7 @@ const Main = () => {
 
   return (<> 
   <Navbar
+  user={employee}
   handleProfileClick={handleProfileClick}
   onLogoutClick={handleLogout}
   />

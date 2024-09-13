@@ -245,9 +245,18 @@ const AgentReport = () => {
 
   return (
     <div>
+      <h2 className="text-center mb-4">Agents List</h2>
       <div className="d-flex justify-content-center align-items-center mb-4">
-        <div className="d-flex align-items-center">
-         
+       
+      <SearchComponent
+       searchType={searchType}
+       searchParams={searchParams}
+       handleSearchTypeChange={handleSearchTypeChange}
+       handleSearchChange={handleSearchChange}
+       handleSearch={handleSearch}
+       handleReset={handleReset}
+      /> 
+         <div className="d-flex align-items-center">
           <Dropdown onSelect={handleFormatChange}>
             <Dropdown.Toggle  id="dropdown-basic">
               {format.toUpperCase()}
@@ -260,18 +269,11 @@ const AgentReport = () => {
           </Dropdown>
           <FaDownload size={18} className="ms-2" onClick={handleDownload} />
          
-        </div>
+          </div>
       </div>
 
-      <h2 className="text-center mb-4">Agents List</h2>
-      <SearchComponent
-       searchType={searchType}
-       searchParams={searchParams}
-       handleSearchTypeChange={handleSearchTypeChange}
-       handleSearchChange={handleSearchChange}
-       handleSearch={handleSearch}
-       handleReset={handleReset}
-      />
+      
+     
       <CommonTable data={agents} actions={actions} />
       <div className="table-footer">
         <Pagination

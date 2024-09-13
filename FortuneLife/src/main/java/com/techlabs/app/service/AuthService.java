@@ -16,4 +16,6 @@ public interface AuthService {
     UserDto getLoggedUser(HttpServletRequest request);
 
 	String forgetPassWord(String userName, String passWord);
+
+	JWTAuthResponse changePassword(UserDto userDto);
 }

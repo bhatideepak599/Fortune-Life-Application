@@ -4,7 +4,7 @@ import { Navbar, Form, Button, Container, Row, Col, Nav } from "react-bootstrap"
 import { logout, updateAdminDetails, verifyUser } from "../../../../services/authService";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 
-const AdminProfile = ({admin}) => {
+const AdminProfile = ({ admin }) => {
   const [adminDetails, setAdminDetails] = useState(admin);
 
   const navigate = useNavigate();
@@ -58,11 +58,10 @@ const AdminProfile = ({admin}) => {
       errorToast(error.response?.data?.message);
     }
   };
+
   const handleLogout = () => {
     try {
       const response = logout();
-      console.log("response" + response);
-
       if (response) {
         successToast("Logged Out Successfully.");
       } else warnToast("Login First!");
@@ -71,6 +70,7 @@ const AdminProfile = ({admin}) => {
       errorToast(error.response?.data?.message);
     }
   };
+
   const handleDiscardChanges = () => {
     setFormData({
       id: adminDetails.userDto?.id || "",
@@ -119,10 +119,12 @@ const AdminProfile = ({admin}) => {
       }));
     }
   };
+
   return (
     <div
       style={{
         minHeight: "100vh",
+        background: "linear-gradient(135deg, #f3f4f6, #222b38)",
         paddingTop: "70px",
       }}
     >
@@ -152,13 +154,13 @@ const AdminProfile = ({admin}) => {
               <Col md={6}>
                 <Form.Group controlId="id">
                   <Form.Label>Admin ID</Form.Label>
-                  <Form.Control type="Number" defaultValue={adminDetails.id} readOnly />
+                  <Form.Control type="number" defaultValue={adminDetails.id} readOnly />
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group controlId="status">
                   <Form.Label>Status</Form.Label>
-                  <Form.Control type="Text" defaultValue={adminDetails.id ? "Active" : "Inactive"} readOnly />
+                  <Form.Control type="text" defaultValue={adminDetails.active ? "Active" : "Inactive"} readOnly />
                 </Form.Group>
               </Col>
             </Row>
@@ -173,7 +175,13 @@ const AdminProfile = ({admin}) => {
               <Col md={6}>
                 <Form.Group controlId="firstName">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} disabled={!isEditing} />
+                  <Form.Control
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -182,7 +190,13 @@ const AdminProfile = ({admin}) => {
               <Col md={6}>
                 <Form.Group controlId="lastName">
                   <Form.Label>Last Name</Form.Label>
-                  <Form.Control type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} disabled={!isEditing} />
+                  <Form.Control
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                  />
                 </Form.Group>
               </Col>
               <Col md={6}>
@@ -203,7 +217,12 @@ const AdminProfile = ({admin}) => {
               <Col md={6}>
                 <Form.Group controlId="mobileNumber">
                   <Form.Label>Mobile Number</Form.Label>
-                  <Form.Control type="text" name="mobileNumber" defaultValue={formData.mobileNumber} readOnly />
+                  <Form.Control
+                    type="text"
+                    name="mobileNumber"
+                    defaultValue={formData.mobileNumber}
+                    readOnly
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -214,61 +233,91 @@ const AdminProfile = ({admin}) => {
                   <Form.Label>Address</Form.Label>
                   <Row>
                     <Col md={6}>
-                      <Form.Control type="text" name="addressDto.houseNumber" value={formData.addressDto.houseNumber} onChange={handleInputChange} placeholder="House Number" className="mb-2" disabled={!isEditing} />
+                      <Form.Control
+                        type="text"
+                        name="addressDto.houseNumber"
+                        value={formData.addressDto.houseNumber}
+                        onChange={handleInputChange}
+                        placeholder="House Number"
+                        className="mb-2"
+                        disabled={!isEditing}
+                      />
                     </Col>
                     <Col md={6}>
-                      <Form.Control type="text" name="addressDto.apartment" value={formData.addressDto.apartment} onChange={handleInputChange} placeholder="Apartment" className="mb-2" disabled={!isEditing} />
+                      <Form.Control
+                        type="text"
+                        name="addressDto.apartment"
+                        value={formData.addressDto.apartment}
+                        onChange={handleInputChange}
+                        placeholder="Apartment"
+                        className="mb-2"
+                        disabled={!isEditing}
+                      />
                     </Col>
                   </Row>
                   <Row>
                     <Col md={6}>
-                      <Form.Control type="text" name="addressDto.city" value={formData.addressDto.city} onChange={handleInputChange} placeholder="City" className="mb-2" disabled={!isEditing} />
+                      <Form.Control
+                        type="text"
+                        name="addressDto.city"
+                        value={formData.addressDto.city}
+                        onChange={handleInputChange}
+                        placeholder="City"
+                        className="mb-2"
+                        disabled={!isEditing}
+                      />
                     </Col>
                     <Col md={6}>
-                      <Form.Control type="text" name="addressDto.state" value={formData.addressDto.state} onChange={handleInputChange} placeholder="State" className="mb-2" disabled={!isEditing} />
+                      <Form.Control
+                        type="text"
+                        name="addressDto.state"
+                        value={formData.addressDto.state}
+                        onChange={handleInputChange}
+                        placeholder="State"
+                        className="mb-2"
+                        disabled={!isEditing}
+                      />
                     </Col>
                   </Row>
                   <Row>
-                    <Col md={6}>
-                      <Form.Control type="text" name="addressDto.pinCode" value={formData.addressDto.pinCode} onChange={handleInputChange} placeholder="Pin Code" className="mb-2" disabled={!isEditing} />
+                    <Col md={12}>
+                      <Form.Control
+                        type="text"
+                        name="addressDto.pinCode"
+                        value={formData.addressDto.pinCode}
+                        onChange={handleInputChange}
+                        placeholder="Pin Code"
+                        className="mb-2"
+                        disabled={!isEditing}
+                      />
                     </Col>
                   </Row>
                 </Form.Group>
               </Col>
             </Row>
 
-            <div className="d-flex justify-content-center mt-4">
-              {!isEditing ? (
-                <>
-                  <Button variant="info" onClick={handleUpdate} className="me-2 ">
-                    Update
-                  </Button>
-                  <Button variant="secondary" onClick={handleBack} className="me-2">
-                    Back
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button variant="info" onClick={handleSaveChanges} className="me-2 ">
-                    Save Changes
-                  </Button>
-                  <Button variant="danger" onClick={handleDiscardChanges} className="me-2">
-                    Discard Changes
-                  </Button>
-                  <Button variant="secondary" onClick={handleBack}>
-                    Back
-                  </Button>
-                </>
-              )}
-            </div>
+            {isEditing ? (
+              <div className="d-flex justify-content-end">
+                <Button variant="secondary" onClick={handleDiscardChanges} className="mr-2">
+                  Discard
+                </Button>
+                <Button variant="primary" onClick={handleSaveChanges}>
+                  Save Changes
+                </Button>
+              </div>
+            ) : (
+              <div className="d-flex justify-content-between">
+                <Button variant="secondary" onClick={handleBack}>
+                  Back
+                </Button>
+                <Button variant="primary" onClick={handleUpdate}>
+                  Edit
+                </Button>
+              </div>
+            )}
           </Form>
         ) : (
-          <div>
-            <p>No admin details available</p>
-            <Button variant="secondary" onClick={handleBack}>
-              Back
-            </Button>
-          </div>
+          <p>No data found.</p>
         )}
       </Container>
     </div>

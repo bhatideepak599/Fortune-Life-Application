@@ -15,5 +15,5 @@ import lombok.ToString;
 public class AdminDto {
 	private Long id;
 	private Boolean active;
-    private UserDto user;
+    private UserDto userDto;
 }

@@ -11,6 +11,7 @@ import { getCustomersExcelReport, getCustomersPdfReport } from "../../../../serv
 import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
+import { toast } from "react-toastify";
 
 const CustomerReport = () => {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const CustomerReport = () => {
     fetchCustomers(
      );
     
-  }, [pageSize, pageNumber, flag]);
+  }, [pageSize, pageNumber, searchParams,flag]);
 
   const fetchCustomers = async () => {
     try {
@@ -107,7 +108,7 @@ const CustomerReport = () => {
 
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
-      errorToast(error.response?.data?.message);
+      toast.error(error.response?.data?.message);
     }
   };
   const handleSearchTypeChange = (type) => {
@@ -251,59 +252,61 @@ const CustomerReport = () => {
   };
   return (
     <div>
-      <div className="d-flex justify-content-center align-items-center mb-4">
-        <div className="d-flex align-items-center">
-         
-          <Dropdown onSelect={handleFormatChange}>
-            <Dropdown.Toggle  id="dropdown-basic">
-              {format.toUpperCase()}
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
-              <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <FaDownload size={18} className="ms-2" onClick={handleDownload} />
-         
-        </div>
-      </div>
-
-      <h2 className="text-center mb-4">Customers List</h2>
+    <h2 className="text-center mb-4">Customers List</h2>
+  
+    <div className="d-flex justify-content-between align-items-center mb-4">
       <SearchComponent
-       searchType={searchType}
-       searchParams={searchParams}
-       handleSearchTypeChange={handleSearchTypeChange}
-       handleSearchChange={handleSearchChange}
-       handleSearch={handleSearch}
-       handleReset={handleReset}
+        searchType={searchType}
+        searchParams={searchParams}
+        handleSearchTypeChange={handleSearchTypeChange}
+        handleSearchChange={handleSearchChange}
+        handleSearch={handleSearch}
+        handleReset={handleReset}
       />
-      <CommonTable data={customers} actions={actions} />
-      <div className="table-footer">
-        <Pagination
-          pager={pageObject}
-          onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
-        />
+  
+      <div className="d-flex align-items-center">
+        <Dropdown onSelect={handleFormatChange}>
+          <Dropdown.Toggle id="dropdown-basic">
+            {format.toUpperCase()}
+          </Dropdown.Toggle>
+  
+          <Dropdown.Menu>
+            <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
+            <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        <FaDownload size={18} className="ms-2" onClick={handleDownload} />
       </div>
-      <div style={styles.container}>
+    </div>
+  
+    <CommonTable data={customers} actions={actions} />
+  
+    <div className="table-footer">
+      <Pagination
+        pager={pageObject}
+        onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
+      />
+    </div>
+  
+    <div style={styles.container}>
       <Button onClick={() => navigate(-1)} variant="secondary">
         Back
       </Button>
     </div>
-      
-      <Modal
-        isOpen={updateCustomerModal}
+  
+    <Modal
+      isOpen={updateCustomerModal}
+      onClose={() => setUpdateCustomerModal(false)}
+    >
+      <UpdateCustomer
+        customer={customerToUpdate}
+        flag={flag}
+        setFlag={setFlag}
         onClose={() => setUpdateCustomerModal(false)}
-      >
-        <UpdateCustomer
-          customer={customerToUpdate}
-          flag={flag}
-          setFlag={setFlag}
-          onClose={() => setUpdateCustomerModal(false)}
-        />
-      </Modal>
-    </div>
-  );
+      />
+    </Modal>
+  </div>
+    );
 };
 
 export default CustomerReport;

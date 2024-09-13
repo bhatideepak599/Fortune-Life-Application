@@ -107,10 +107,18 @@ public class AuthController {
     }
 
    
-    @Operation(summary = "Forget PassWord")
+    @Operation(summary = "Forget Password")
     @PutMapping("/forget-Password")
     public ResponseEntity<String> forgetPassWord(@RequestParam String userName, @RequestParam String passWord){
         String message = authService.forgetPassWord(userName,passWord);
+
+        return new ResponseEntity<>(message,HttpStatus.OK);
+    }
+    
+    @Operation(summary = "Change Password")
+    @PutMapping("/change-Password")
+    public ResponseEntity<JWTAuthResponse> changePassword(@RequestBody UserDto userDto){
+    	JWTAuthResponse message = authService.changePassword(userDto);
 
         return new ResponseEntity<>(message,HttpStatus.OK);
     }

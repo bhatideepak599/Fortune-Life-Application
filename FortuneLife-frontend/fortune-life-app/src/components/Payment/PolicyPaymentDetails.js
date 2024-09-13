@@ -69,6 +69,8 @@ const PolicyPaymentDetails = () => {
   const refreshPolicyData = async () => {
     try {
       const response = await getPolicyByPolicyId(policyId);
+      console.log(response);
+      
       setPolicy(response);
     } catch (error) {
       toast.error(error.message || "Failed to load policy.");
@@ -93,7 +95,7 @@ const PolicyPaymentDetails = () => {
     return <div>Loading...</div>;
   }
 
-  const { issueDate, maturityDate, premiumType, premiumAmount, paymentList } = policy;
+  const { issueDate, maturityDate, premiumType, premiumAmount, paymentList ,policyStatus} = policy;
 
   const calculateInstallments = () => {
     const installments = [];
@@ -120,6 +122,13 @@ const PolicyPaymentDetails = () => {
 
     for (let i = 0; i < countPaid; i++) {
       installments[i].isPaid = "Paid";
+    }
+
+    if(policyStatus!="ACTIVE"){
+      if (countPaid > 0 && countPaid <= installments.length) {
+        return installments.slice(0, countPaid);
+    }
+    return [];
     }
 
     for (let i = countPaid + 1; i < numberOfInstallments * time; i++) {

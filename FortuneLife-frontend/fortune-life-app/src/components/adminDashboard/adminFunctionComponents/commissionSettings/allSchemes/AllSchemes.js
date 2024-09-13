@@ -5,13 +5,13 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Navbar, Nav } from "react-bootstrap";
 import { errorToast, successToast, warnToast } from "../../../../../utils/Toast";
 import { activateScheme, deleteASchemeUnderAPlan, getAllSchemesOfUnderAPlan } from "../../../../../services/schemeService";
 import Modal from "../../../../sharedComponents/modal/Modal";
 import ManageCommission from "./manageCommission/ManageCommission";
 import { logout } from "../../../../../services/authService";
 import AddScheme from "../addScheme/AddScheme";
+import Navbar from "../../navbar/Navbar";
 
 const AllSchemes = () => {
   const { id } = useParams();
@@ -93,39 +93,7 @@ const AllSchemes = () => {
   }
   return (
     <>
-      <Navbar
-        bg="dark"
-        variant="dark"
-        expand="lg"
-        fixed="top"
-        className="justify-content-between"
-        style={{ width: "100%", margin: "0 auto", borderRadius: "5px" }}
-      >
-        <Container fluid>
-          {/* Back Button on the left */}
-          <Button
-            variant="outline-light"
-            onClick={handleHome}
-            className="me-auto"
-          >
-            Home
-          </Button>
-          <Navbar.Brand className="mx-auto text-center" href="#schemes">
-            All Schemes
-          </Navbar.Brand>
-
-          {/* Logout Button on the right */}
-          <Nav>
-            <Button
-              variant="outline-light"
-              onClick={handleLogout}
-              className="ms-auto"
-            >
-              Logout
-            </Button>
-          </Nav>
-        </Container>
-      </Navbar>
+      <Navbar/>
       <div
         style={{
           padding: "20px",
