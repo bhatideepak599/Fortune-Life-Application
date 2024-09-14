@@ -151,7 +151,7 @@ public class AuthServiceImpl implements AuthService {
                     "Customer with the Username : " + registerDto.getUsername() + " already exists");
         }
 
-        if(role.equals("ROLE_EMPLOYEE")){
+        if (role.equals("ROLE_EMPLOYEE")) {
             throw new FortuneLifeException("Employee cannot register himself");
         }
 
@@ -240,7 +240,7 @@ public class AuthServiceImpl implements AuthService {
             return false;
         Set<Role> roles = byUsername.get().getRoles();
         for (Role role : roles) {
-        	System.out.println(role.getRoleName()+"==========================================================ROLENAME"+forrole);
+            System.out.println(role.getRoleName() + "==========================================================ROLENAME" + forrole);
             if (role.getRoleName().equalsIgnoreCase(forrole))
                 return true;
         }
@@ -267,9 +267,9 @@ public class AuthServiceImpl implements AuthService {
         return userMapper.entityToDto(user);
     }
 
-	@Override
-	public String forgetPassWord(String userName,String passWord) {
-		User user = userRepository
+    @Override
+    public String forgetPassWord(String userName, String passWord) {
+        User user = userRepository
                 .findUserByUsernameOrEmail(userName, userName)
                 .orElseThrow(() -> new UserRelatedException(
                         "User with username or email " + userName + " cannot be found"));
@@ -277,46 +277,48 @@ public class AuthServiceImpl implements AuthService {
         if (!user.getActive()) {
             throw new UserRelatedException("User is not active");
         }
-        
+
         user.setPassword(passwordEncoder.encode(passWord));
         userRepository.save(user);
-		return "Password has been changed.";
-	}
+        return "Password has been changed.";
+    }
 
-	@Override
-	public JWTAuthResponse changePassword(UserDto userDto) {
-		User user = userRepository
+    @Override
+    public JWTAuthResponse changePassword(UserDto userDto) {
+        User user = userRepository
                 .findUserByUsernameOrEmail(userDto.getUsername(), userDto.getEmail())
                 .orElseThrow(() -> new UserRelatedException(
                         "User with username or email " + userDto.getUsername() + " cannot be found"));
-		if (!user.getActive()) {
+        if (!user.getActive()) {
             throw new UserRelatedException("User is not active");
         }
-		boolean check=passwordEncoder.matches(userDto.getFirstName(),user.getPassword());
-		
-		if(!check) {
-			throw new UserRelatedException("Wrong Current Password!");
-		}
-		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		userRepository.save(user);
-		
-		 Authentication authentication = authenticationManager
-	                .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), userDto.getPassword()));
 
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //First name coming here is actually entered current password set in front end
+        boolean check = passwordEncoder.matches(userDto.getFirstName(), user.getPassword());
 
-	        String token = jwtTokenProvider.generateToken(authentication);
-	        saveToken(user, token);
-	        JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
-	        jwtAuthResponse.setAccessToken(token);
+        if (!check) {
+            throw new UserRelatedException("Wrong Current Password!");
+        }
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userRepository.save(user);
 
-	        for (Role newRole : user.getRoles()) {
-	            jwtAuthResponse.setRole(newRole.getRoleName());
-	            break;
-	        }
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), userDto.getPassword()));
 
-	        return jwtAuthResponse;
-		
-	}
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String token = jwtTokenProvider.generateToken(authentication);
+        saveToken(user, token);
+        JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
+
+        for (Role newRole : user.getRoles()) {
+            jwtAuthResponse.setRole(newRole.getRoleName());
+            break;
+        }
+
+        return jwtAuthResponse;
+
+    }
 
 }

@@ -132,7 +132,7 @@ public class SecurityConfig {
                         .hasAnyRole("ADMIN", "CUSTOMER", "AGENT", "EMPLOYEE")
 
                         // Payment endpoint
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/payments/charge").hasAnyRole("AGENT", "CUSTOMER")
+                        .requestMatchers(HttpMethod.POST, "/fortuneLife/payments/charge").permitAll()
                         .requestMatchers(HttpMethod.POST, "/fortuneLife/stripe/webhook").permitAll()
 
                         // File endpoints

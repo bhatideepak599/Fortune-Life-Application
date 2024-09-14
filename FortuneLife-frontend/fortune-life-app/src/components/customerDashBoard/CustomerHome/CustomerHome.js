@@ -21,14 +21,17 @@ function CustomerHome() {
           if (isValid) {
             setIsVerified(true);
           } else {
+            localStorage.clear();
             toast.error("Please Login to access this resource");
             navigate("/");
           }
         } catch (error) {
+          localStorage.clear();
           toast.error("Verification failed. Please login again.");
           navigate("/");
         }
       } else {
+        localStorage.clear();
         toast.error("Please Login to access this resource");
         navigate("/");
       }

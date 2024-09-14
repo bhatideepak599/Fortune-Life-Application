@@ -114,7 +114,7 @@ const PolicyPaymentDetails = () => {
       installments.push({
         serialNo: i + 1,
         premiumAmount,
-        dueDate: dueDate.toISOString().split("T")[0], // format as YYYY-MM-DD
+        dueDate: dueDate.toISOString().split("T")[0],
         isPaid,
       });
     }
@@ -124,7 +124,7 @@ const PolicyPaymentDetails = () => {
       installments[i].isPaid = "Paid";
     }
 
-    if(policyStatus!="ACTIVE"){
+    if(policyStatus!=="ACTIVE" && countPaid!==0){
       if (countPaid > 0 && countPaid <= installments.length) {
         return installments.slice(0, countPaid);
     }

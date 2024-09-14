@@ -95,6 +95,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
             commission.setCommissionType(CommissionType.INSTALMENT.name());
             commission.setAmount(commissionAmount);
             commission.setAgent(agent);
+            commission.setPolicyId(policy.getId());
             Commission savedCommission = commissionRepository.save(commission);
             commissions.add(savedCommission);
 

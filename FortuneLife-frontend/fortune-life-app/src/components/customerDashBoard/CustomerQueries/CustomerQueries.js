@@ -30,7 +30,7 @@ const CustomerQueries = () => {
     title: urlSearchParams.get("title") || "",
   });
 
-  // New state to control search
+
   const [shouldSearch, setShouldSearch] = useState(false);
 
   useEffect(() => {
@@ -43,14 +43,17 @@ const CustomerQueries = () => {
           if (isValid) {
             setIsVerified(true);
           } else {
+            localStorage.clear();
             toast.error("Please Login to access this resource");
             navigate("/");
           }
         } catch (error) {
+          localStorage.clear();
           toast.error("Verification failed. Please login again.");
           navigate("/");
         }
       } else {
+        localStorage.clear();
         toast.error("Please Login to access this resource");
         navigate("/");
       }

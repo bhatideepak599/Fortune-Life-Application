@@ -26,10 +26,8 @@ const CommonTable = ({ data, actions, viewPayments }) => {
                 <td key={header}>
                   {header === "active" || header === "verified" ? (
                     <>
-                      {header === "active" &&
-                        (row.active ? "Active" : "Inactive")}
-                      {header === "verified" &&
-                        (row.verified ? "Verified" : "Unverified")}
+                      {header === "active" && (row.active ? "Active" : "Inactive")}
+                      {header === "verified" && (row.verified ? "Verified" : "Unverified")}
                     </>
                   ) : typeof row[header] === "object" ? (
                     JSON.stringify(row[header])
@@ -56,16 +54,10 @@ const CommonTable = ({ data, actions, viewPayments }) => {
                 <td>
                   {row.status === "PENDING" && (
                     <>
-                      <button
-                        className="btn btn-success me-2"
-                        onClick={() => actions.approve(row[primaryKey])}
-                      >
+                      <button className="btn me-2" onClick={() => actions.approve(row[primaryKey])} style={{ backgroundColor: "#1abc9c", color: "white" }}>
                         Approve
                       </button>
-                      <button
-                        className="btn btn-danger me-2"
-                        onClick={() => actions.reject(row[primaryKey])}
-                      >
+                      <button className="btn  me-2" onClick={() => actions.reject(row[primaryKey])} style={{ backgroundColor: "#FF597B", color: "white" }}>
                         Reject
                       </button>
                     </>
@@ -74,18 +66,12 @@ const CommonTable = ({ data, actions, viewPayments }) => {
                     <>
                       {actions.update && (
                         <>
-                          {row.verified===false ? (
-                            <button
-                              className="btn btn-warning me-2"
-                              onClick={() => actions.verify(row[primaryKey])}
-                            >
+                          {row.verified === false ? (
+                            <button className="btn me-2" onClick={() => actions.verify(row[primaryKey])} style={{ backgroundColor: "#55AD9B", color: "white" }}>
                               Verify
                             </button>
                           ) : (
-                            <button
-                              className="btn btn-success me-2"
-                              onClick={() => actions.update(row[primaryKey])}
-                            >
+                            <button className="btn me-2" onClick={() => actions.update(row[primaryKey])} style={{ backgroundColor: "#627254", color: "white" }}>
                               Update
                             </button>
                           )}
@@ -93,36 +79,24 @@ const CommonTable = ({ data, actions, viewPayments }) => {
                       )}
 
                       {actions.delete && (
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => actions.delete(row[primaryKey])}
-                        >
+                        <button className="btn" onClick={() => actions.delete(row[primaryKey])} style={{ backgroundColor: "#0B666A", color: "white" }}>
                           Delete
                         </button>
                       )}
                       {actions.create && (
-                        <button
-                          className="btn btn-primary"
-                          onClick={() => actions.create(row[primaryKey])}
-                        >
+                        <button className="btn btn-primary" onClick={() => actions.create(row[primaryKey])} style={{ backgroundColor: "#164B60", color: "white" }}>
                           Create
                         </button>
                       )}
                       {actions.view && (
-                        <button
-                          className="btn btn-secondary"
-                          onClick={() => actions.view(row[primaryKey])}
-                        >
+                        <button className="btn btn-secondary" onClick={() => actions.view(row[primaryKey])} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
                           View
                         </button>
                       )}
                     </>
                   ) : (
                     actions.activate && (
-                      <button
-                        className="btn btn-secondary"
-                        onClick={() => actions.activate(row[primaryKey])}
-                      >
+                      <button className="btn btn-secondary" onClick={() => actions.activate(row[primaryKey])}>
                         Activate
                       </button>
                     )

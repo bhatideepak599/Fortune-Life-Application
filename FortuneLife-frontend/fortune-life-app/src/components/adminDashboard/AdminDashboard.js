@@ -39,7 +39,7 @@ const AdminDashboard = () => {
           navigate("/");
         }
       } else {
-         localStorage.clear();
+        localStorage.clear();
         toast.error("Please Login to access this resource");
         navigate("/");
       }
@@ -86,44 +86,33 @@ const AdminDashboard = () => {
   return (
     <>
       <Navbar />
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #f3f4f6, #dcdbe1)",
-      }}
-    >
-    
-      <Container fluid style={{ padding: "20px", marginTop: "51px" }}>
-        <Row>
-          <Col md={3} style={{ padding: 0 }}>
-            <div
-              style={{
-                position: "fixed",
-                top: "80px",
-                left: 0,
-                width: "22%",
-                height: "70vh",
-              }}
-            >
-              <Sidebar activeItem={activeItem} onItemClick={handleChange} />
-            </div>
-          </Col>
-          <Col
-            md={{ span: 9, offset: 3 }}
-            style={{ padding: "20px", marginLeft: "22%" ,marginTop:"-3%" }}
-          >
-            {validateAdmin() && (
-              <MainContent
-                activeItem={activeItem}
-                show={show}
-                setShow={setShow}
-                setActiveItem={setActiveItem}
-              />
-            )}
-          </Col>
-        </Row>
-      </Container>
-    </div>
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #f3f4f6, #dcdbe1)",
+        }}
+      >
+        <Container fluid style={{ padding: "20px" }}>
+          <Row>
+            <Col md={3} style={{ padding: 0 }}>
+              <div
+                style={{
+                  position: "fixed",
+                  top: "80px",
+                  left: 0,
+                  width: "22%",
+                  height: "70vh",
+                }}
+              >
+                <Sidebar activeItem={activeItem} onItemClick={handleChange} />
+              </div>
+            </Col>
+            <Col md={{ span: 9, offset: 3 }} style={{ padding: "20px", marginLeft: "22%", marginTop: "-3%" }}>
+              {validateAdmin() && <MainContent activeItem={activeItem} show={show} setShow={setShow} setActiveItem={setActiveItem} />}
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </>
   );
 };

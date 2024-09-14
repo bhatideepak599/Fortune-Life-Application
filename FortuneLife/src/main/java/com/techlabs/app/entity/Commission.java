@@ -41,6 +41,7 @@ public class Commission {
 	
 	@Column(nullable=false)
 	private Long policyId;
+
 	@ManyToOne(cascade = { CascadeType.ALL})
 	@JoinColumn(name = "agentId")
 	private Agent agent; 

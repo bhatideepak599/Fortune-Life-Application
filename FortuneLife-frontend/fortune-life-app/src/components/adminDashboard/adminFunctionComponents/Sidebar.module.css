@@ -1,0 +1,51 @@
+/* Sidebar.module.css */
+
+.sidebarContainer {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  height: 90vh;
+  overflow-y: auto;
+  position: fixed; /* Fix the sidebar to the left */
+  top: 60px; /* Adjust this to match the height of the navbar */
+  width: 250px; /* Set a fixed width for the sidebar */
+  z-index: 900;
+}
+
+.adminActionsTitle {
+  color: #343a40; /* Equivalent to Bootstrap's text-dark */
+  margin-bottom: 10px;
+}
+
+.listGroupItem {
+  cursor: pointer;
+  padding: 10px;
+  transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+.listGroupItem:hover {
+  background-color: #e0e0e0; /* Light gray background on hover */
+}
+
+.listGroupItemActive {
+  background-color: hsl(245, 67%, 59%); /* Set to the new color */
+  color: white; /* Change text color to ensure visibility */
+}
+
+.reportsTitle {
+  margin-top: 20px;
+}
+
+.reportsCollapse {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebarContainer {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 0;
+  }
+}

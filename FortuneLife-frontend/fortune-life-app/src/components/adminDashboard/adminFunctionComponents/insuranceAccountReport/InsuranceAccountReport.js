@@ -6,15 +6,8 @@ import SearchComponent from "../../../sharedComponents/searchComponent/SearchCom
 import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
 import { Dropdown } from "react-bootstrap";
 import { FaDownload } from "react-icons/fa";
-import {
-  approveWithdrawal,
-  getAllWithdrawals,
-  rejectWithdrawal,
-} from "../../../../services/withdrawalService";
-import {
-  getWithdrawalsExcelReport,
-  getWithdrawalsPdfReport,
-} from "../../../../services/reportsService";
+import { approveWithdrawal, getAllWithdrawals, rejectWithdrawal } from "../../../../services/withdrawalService";
+import { getWithdrawalsExcelReport, getWithdrawalsPdfReport } from "../../../../services/reportsService";
 import { getAllPolicies } from "../../../../services/policyService";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../sharedComponents/modal/Modal";
@@ -73,16 +66,7 @@ const InsuranceAccountReport = () => {
       setpolicyList(response.content);
       setTotalPages(response.totalPages);
 
-      const keys = [
-        "id",
-        "customerDto.userDto.firstName",
-        "schemeName",
-        "totalPolicyAmount",
-        "totalAmountPaidTillDate",
-        "policyStatus",
-        "premiumType",
-        "premiumAmount",
-      ];
+      const keys = ["id", "customerDto.userDto.firstName", "schemeName", "totalPolicyAmount", "totalAmountPaidTillDate", "policyStatus", "premiumType", "premiumAmount"];
 
       const newSanitizedData = sanitizedData({
         data: response.content,
@@ -204,53 +188,39 @@ const InsuranceAccountReport = () => {
   };
   return (
     <>
-    <Navbar/>
-    <div>
-      <h2 className="text-center mb-4">Insurance Accounts</h2>
+      <Navbar />
+      <div>
+        <h2 className="text-center mb-4">Insurance Accounts</h2>
 
-      <div className="d-flex justify-content-between mb-0 align-items-center">
-        <div className="d-flex flex-grow-1 me-3">
-          <SearchComponent
-            searchType={searchType}
-            searchParams={searchParams}
-            handleSearchTypeChange={handleSearchTypeChange}
-            handleSearchChange={handleSearchChange}
-            handleSearch={handleSearch}
-            handleReset={handleReset}
-          />
+        <div className="d-flex justify-content-around mb-0 align-items-center">
+          <div className="me-3">
+            <SearchComponent searchType={searchType} searchParams={searchParams} handleSearchTypeChange={handleSearchTypeChange} handleSearchChange={handleSearchChange} handleSearch={handleSearch} handleReset={handleReset} />
+          </div>
+
+          <div className="d-flex align-items-center">
+            <Dropdown onSelect={handleFormatChange}>
+              <Dropdown.Toggle id="dropdown-basic"></Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
+                <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <FaDownload size={18} className="ms-2" onClick={handleDownload} />
+          </div>
         </div>
 
-        <div className="d-flex align-items-center">
-          <Dropdown onSelect={handleFormatChange}>
-            <Dropdown.Toggle id="dropdown-basic"></Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
-              <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <FaDownload size={18} className="ms-2" onClick={handleDownload} />
+        <div className="container mt-0">
+          <CommonTable data={policies} viewPayments={actions} />
         </div>
-      </div>
 
-      <div className="mt-0">
-        <CommonTable data={policies} viewPayments={actions} />
+        <div className="container table-footer mt-3">
+          <Pagination pager={pageObject} onPageChange={(newPage) => pageObject.setPageNumber(newPage)} />
+        </div>
+        <Modal isOpen={paymentModal} onClose={() => setPaymentModal(false)} width={"2000px"}>
+          <ViewPayment payments={viewPayment} onClose={() => setPaymentModal(false)} />
+        </Modal>
       </div>
-
-      <div className="table-footer mt-3">
-        <Pagination
-          pager={pageObject}
-          onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
-        />
-      </div>
-      <Modal isOpen={paymentModal} onClose={() => setPaymentModal(false)}
-        width={"2000px"}>
-        <ViewPayment
-          payments={viewPayment}
-          onClose={() => setPaymentModal(false)}
-        />
-      </Modal>
-    </div>
     </>
   );
 };

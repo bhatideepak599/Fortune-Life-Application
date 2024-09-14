@@ -118,7 +118,7 @@ export const AllQueries = () => {
   };
 
   return (
-    <>
+    <div className="container">
       <Navbar />
       <h2 className="text-center mb-4">Query List</h2>
 
@@ -133,7 +133,6 @@ export const AllQueries = () => {
         />
       </div>
 
-      {/* Table integrated directly within the AllQueries component */}
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -183,6 +182,6 @@ export const AllQueries = () => {
           onClose={() => setShowQueryModal(false)}
         />
       </Modal>
-    </>
+    </div>
   );
 };

@@ -6,10 +6,11 @@ import { getAllInsurancePlans } from "../../../../services/commonService";
 import { errorToast } from "../../../../utils/Toast";
 import Modal from "../../../../utils/Modals/Modal";
 import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
-import { logout } from "../../../../services/authService";
+import { getLoggedInUser, logout } from "../../../../services/authService";
 import maleAvatar from "../../../../images/undraw_male_avatar_g98d.svg";
 import { toast } from "react-toastify";
 import QueryModal from "../../CustomerQueries/QueryModal";
+import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -17,6 +18,23 @@ const Navbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [showQueryModal, setShowQueryModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [changePasswordModal, setChangePasswordModal] = useState(false);
+
+  useEffect(() => {
+    const getCustomer = async () => {
+      try {
+        const response = await getLoggedInUser();
+        console.log(response);
+
+        setCurrentUser(response);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+
+    getCustomer();
+  }, [navigate]);
 
   useEffect(() => {
     if (showDropDown) {
@@ -60,6 +78,10 @@ const Navbar = () => {
 
   const handleCreateQuery = () => {
     setShowQueryModal(true);
+  };
+
+  const handleChangePassword = () => {
+    setChangePasswordModal(true);
   };
 
   return (
@@ -125,7 +147,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#" onClick={handleChangePassword}>
                     Change Password
                   </a>
                 </li>
@@ -150,6 +172,10 @@ const Navbar = () => {
 
         <Modal isOpen={showQueryModal} onClose={() => setShowQueryModal(false)}>
           <QueryModal onClose={() => setShowQueryModal(false)} />
+        </Modal>
+
+        <Modal isOpen={changePasswordModal} onClose={() => setChangePasswordModal(false)}>
+          <ChangePassword user={{ id: 0, userDto: currentUser }} onClose={() => setChangePasswordModal(false)} />
         </Modal>
       </header>
     </>

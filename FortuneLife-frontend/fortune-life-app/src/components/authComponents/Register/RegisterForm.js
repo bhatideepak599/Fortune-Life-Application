@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styles from "./RegisterForm.module.css";
 import { registerUser } from "../../../services/authService";
 import { toast } from "react-toastify";
@@ -8,6 +8,9 @@ import registerImg from "../../../images/undraw_security_re_a2rk.svg";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const role = queryParams.get("role");
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -18,7 +21,7 @@ const RegisterForm = () => {
     mobileNumber: "",
     gender: "",
     dateOfBirth: "",
-    role: "Customer",
+    role: role || "Customer",
     agentImage: "",
   });
 
@@ -211,28 +214,8 @@ const RegisterForm = () => {
                 </div>
               </div>
 
-              {/* Role Selection */}
-              <div className="mb-3">
-                <label className="form-label">Role</label>
-                <div>
-                  <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" id="customer" name="role" value="Customer" checked={formData.role === "Customer"} onChange={handleChange} />
-                    <label className="form-check-label" htmlFor="customer">
-                      Customer
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" id="agent" name="role" value="Agent" checked={formData.role === "Agent"} onChange={handleChange} />
-                    <label className="form-check-label" htmlFor="agent">
-                      Agent
-                    </label>
-                  </div>
-                </div>
-                {errors.role && <div className="text-danger mt-1">{errors.role}</div>}
-              </div>
-
               {/* Upload File Section (only if role is Agent) */}
-              {formData.role === "Agent" && (
+              {role === "Agent" && (
                 <div className="mb-3">
                   <label htmlFor="agentDocument" className="form-label">
                     Upload Document

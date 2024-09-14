@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import { getTax, setTaxGlobally } from "../../../../services/adminService";
 import { verifyUser } from "../../../../services/authService";
@@ -12,25 +11,16 @@ const ManageTaxAndDeductions = () => {
     taxRate: "",
   });
   const navigate = useNavigate();
-  const validateAdmin = () => {
+  const [isEditable, setIsEditable] = useState(false);
+
+  useEffect(() => {
     if (!accessToken || !verifyUser(accessToken, "admin")) {
       warnToast("Unauthorized Access! Login First");
       navigate("/");
-      return false;
+    } else {
+      fetchTax();
     }
-    return true;
-  };
-
-  useEffect(() => {
-    //console.log(accessToken+"========================");
-    
-    if (!validateAdmin()) return;
   }, [accessToken, navigate]);
-  const [isEditable, setIsEditable] = useState(false); 
-
-  useEffect(() => {
-    fetchTax();
-  }, []);
 
   const fetchTax = async () => {
     try {
@@ -50,82 +40,61 @@ const ManageTaxAndDeductions = () => {
   };
 
   const handleUpdate = () => {
-    setIsEditable(true); // Enable editing
+    setIsEditable(true);
   };
 
   const handleSaveChanges = async () => {
     try {
       await setTaxGlobally(tax);
       successToast("Tax updated successfully");
-      setIsEditable(false); // Disable editing after saving
+      setIsEditable(false);
     } catch (error) {
       errorToast(error.response?.data?.message || "Error updating tax");
     }
   };
 
   const handleBack = () => {
-    setIsEditable(false); // Disable editing and go back to initial state
+    setIsEditable(false);
   };
 
   return (
-    <Container
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "50vh" }}
-    >
-      <Row className="w-50">
-        <Col>
-          <h2 className="text-center mb-4">Manage Tax and Deductions</h2>
-          <Form>
-            <Form.Group controlId="deductionRate" className="mb-3">
-              <Form.Label style={{ fontWeight: "bold" }}>
+    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "60vh", maxWidth: "900px" }}>
+      <div className="row w-100">
+        <div className="col">
+          <h4 className="text-center mb-4">Manage Tax and Deductions</h4>
+          <form>
+            <div className="mb-3">
+              <label htmlFor="deductionRate" className="form-label" style={{ fontWeight: "bold" }}>
                 Deduction Rate
-              </Form.Label>
-              <Form.Control
-                type="number"
-                name="deductionRate"
-                value={tax.deductionRate}
-                onChange={handleChange}
-                placeholder="0.00"
-                style={{ fontSize: "0.8rem" }} // Smaller placeholder text
-                disabled={!isEditable} // Disable input if not editable
-              />
-            </Form.Group>
-            <Form.Group controlId="taxRate" className="mb-3">
-              <Form.Label style={{ fontWeight: "bold" }}>Tax Rate</Form.Label>
-              <Form.Control
-                type="number"
-                name="taxRate"
-                value={tax.taxRate}
-                onChange={handleChange}
-                placeholder="0.00"
-                style={{ fontSize: "0.8rem" }} // Smaller placeholder text
-                disabled={!isEditable} // Disable input if not editable
-              />
-            </Form.Group>
+              </label>
+              <input type="number" name="deductionRate" id="deductionRate" value={tax.deductionRate} onChange={handleChange} placeholder="0.00" className="form-control form-control-sm" disabled={!isEditable} style={{ fontSize: "0.8rem" }} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="taxRate" className="form-label" style={{ fontWeight: "bold" }}>
+                Tax Rate
+              </label>
+              <input type="number" name="taxRate" id="taxRate" value={tax.taxRate} onChange={handleChange} placeholder="0.00" className="form-control form-control-sm" disabled={!isEditable} style={{ fontSize: "0.8rem" }} />
+            </div>
             <div className="text-center">
               {!isEditable ? (
-                <Button variant="info" onClick={handleUpdate}>
+                <button type="button" className="btn btn-info" onClick={handleUpdate} style={{ backgroundColor: "#1abc9c", color: "white" }}>
                   Update Tax
-                </Button>
+                </button>
               ) : (
                 <>
-                  <Button
-                    variant="success"
-                    onClick={handleSaveChanges}
-                    className="me-2"
-                  >
+                  <button type="button" className="btn me-2" onClick={handleSaveChanges} style={{ backgroundColor: "#1abc9c", color: "white" }}> 
                     Save Changes
-                  </Button>
-                  <Button variant="secondary" onClick={handleBack}>
+                  </button>
+                  <button type="button" className="btn btn-secondary" onClick={handleBack}>
                     Back
-                  </Button>
+                  </button>
                 </>
               )}
             </div>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

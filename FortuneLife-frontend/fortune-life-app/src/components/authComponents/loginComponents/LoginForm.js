@@ -98,6 +98,13 @@ const LoginForm = () => {
     setValidated(true);
   };
 
+  const handleRegister = () => {
+    // if(role==="Agent"){
+    //   navigate("/register", role)
+    // }else if(role==="customer"){
+    // }
+  };
+
   const images = {
     Admin: admin,
     Agent: agent,
@@ -139,7 +146,7 @@ const LoginForm = () => {
               Forget Password?
             </a>
             {role !== "Admin" && role !== "Employee" && (
-              <a href="/register" className="text-muted">
+              <a href={`/register?role=${role}`} className="text-muted" onClick={handleRegister}>
                 Register
               </a>
             )}

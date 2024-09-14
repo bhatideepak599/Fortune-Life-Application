@@ -1,0 +1,25 @@
+.claimContainer {
+  margin-top: 6rem;
+}
+
+.viewRemarks h4 {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: hsl(245, 67%, 59%);
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.claimDecision h4 {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: hsl(245, 67%, 59%);
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

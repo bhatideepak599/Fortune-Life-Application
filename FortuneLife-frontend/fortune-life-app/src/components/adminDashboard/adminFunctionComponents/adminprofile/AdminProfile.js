@@ -4,7 +4,7 @@ import { Navbar, Form, Button, Container, Row, Col, Nav } from "react-bootstrap"
 import { logout, updateAdminDetails, verifyUser } from "../../../../services/authService";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 
-const AdminProfile = ({admin}) => {
+const AdminProfile = ({ admin }) => {
   const [adminDetails, setAdminDetails] = useState(admin);
 
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const AdminProfile = ({admin}) => {
     if (!accessToken || !verifyUser(accessToken, "admin")) {
       navigate("/");
     }
-    setAdminDetails(admin);  
+    setAdminDetails(admin);
   }, [accessToken, navigate, admin]);
 
   const handleSaveChanges = async () => {

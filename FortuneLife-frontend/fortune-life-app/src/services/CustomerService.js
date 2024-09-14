@@ -69,8 +69,11 @@ export const buyNewPolicyByAgent = async ({ customerId, schemeId, agentId, dataT
   }
 };
 
+
 export const updateCustomer = async ({ userDto, addressDto }) => {
   try {
+    const token = localStorage.getItem("accessToken");
+
     const response = await axios.put(
       `${API_BASE_URL}/fortuneLife/customer`,
       {
@@ -88,7 +91,7 @@ export const updateCustomer = async ({ userDto, addressDto }) => {
       },
       {
         headers: {
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -98,6 +101,7 @@ export const updateCustomer = async ({ userDto, addressDto }) => {
     throw error;
   }
 };
+
 
 export const updateCustomerByAdmin = async (customer) => {
   const accessToken = localStorage.getItem("accessToken");

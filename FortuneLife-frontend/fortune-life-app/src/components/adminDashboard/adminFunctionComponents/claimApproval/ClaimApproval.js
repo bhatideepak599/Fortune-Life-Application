@@ -7,6 +7,7 @@ import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../../utils/Modals/Modal";
 import ClaimTable from "./ClaimTable";
 import Navbar from "../navbar/Navbar";
+import styles from "./ClaimApproval.module.css"
 
 const ClaimApproval = () => {
   const [claims, setClaims] = useState([]);
@@ -142,7 +143,7 @@ const ClaimApproval = () => {
   return (
     <>
     <Navbar/>
-    <div className="container mt-4">
+    <div className={`container ${styles.claimContainer}`}>
       <h2>Claim Approval</h2>
       <form className="mb-4" ref={searchRef} onSubmit={handleSearch}>
         <div className="row">
@@ -161,7 +162,7 @@ const ClaimApproval = () => {
             </select>
           </div>
           <div className="col-md-3">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
               Search
             </button>
             <button type="reset" className="btn btn-secondary ms-2" onClick={handleReset}>
@@ -182,18 +183,15 @@ const ClaimApproval = () => {
       {modalOpen && (
         <Modal isOpen={modalOpen} onClose={handleModalClose}>
           {modalMode === "view" ? (
-            <div>
+            <div className={styles.viewRemarks}>
               <h4>View Remarks</h4>
               <p>{remarks}</p>
-              <button className="btn btn-secondary" onClick={handleModalClose}>
-                Close
-              </button>
             </div>
           ) : (
-            <div>
+            <div className={styles.claimDecision}>
               <h4>{modalMode === "approve" ? "Approve Claim" : "Reject Claim"}</h4>
               <textarea className="form-control" value={remarks} onChange={(e) => setRemarks(e.target.value)} placeholder="Enter remarks" rows={4}></textarea>
-              <button className="btn btn-primary mt-2" onClick={handleSubmit}>
+              <button className="btn btn-primary mt-2" onClick={handleSubmit} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
                 OK
               </button>
               <button className="btn btn-secondary mt-2 ms-2" onClick={handleModalClose}>

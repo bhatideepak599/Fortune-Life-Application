@@ -1,67 +1,34 @@
-import React, { useState } from "react";
-import { ListGroup, Collapse } from "react-bootstrap";
+import React from "react";
+import { ListGroup } from "react-bootstrap";
+import styles from "./Sidebar.module.css";
 
 const Sidebar = ({ activeItem, onItemClick }) => {
-  const [openReports, setOpenReports] = useState(false);
+  const actions = ["Add Employee and Agent", "Withdrawal approval"];
+  const reports = ["Customer report", "Agent report", "Agent wise commission report", "Commission withdrawal report"];
 
-  const actions = [
-    "Add Employee and Agent",
-    "Withdrawal approval",
-  ];
-
-  const reports = [
-    "Customer report",
-    "Agent report",
-    "Agent wise commission report",
-    "Commission withdrawal report",
-  ];
-
-  const handleReportsClick = () => setOpenReports(!openReports);
+  const handleItemClick = (item) => {
+    onItemClick(item);
+    if (item === "Withdrawal approval" || reports.includes(item)) {
+      window.location.reload();
+    }
+  };
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        borderRadius: "10px",
-        backgroundColor: "#fff",
-        height: "90vh",
-        overflow: "auto",
-      }}
-    >
-      <h5 className="text-dark">Admin Actions</h5>
+    <div className={`mt-2 ${styles.sidebarContainer}`}>
+      <h5 className={styles.adminActionsTitle}>Admin Actions</h5>
       <ListGroup variant="flush">
         {actions.map((item, index) => (
-          <ListGroup.Item
-            key={index}
-            active={item === activeItem}
-            onClick={() => onItemClick(item)}
-            style={{ cursor: "pointer" }}
-          >
+          <ListGroup.Item key={index} onClick={() => handleItemClick(item)} className={`${styles.listGroupItem} ${item === activeItem ? styles.listGroupItemActive : ""}`}>
             {item}
           </ListGroup.Item>
         ))}
 
-        <ListGroup.Item
-          onClick={handleReportsClick}
-          style={{ cursor: "pointer" }}
-        >
-          Reports {openReports ? "▲" : "▼"}
-        </ListGroup.Item>
-
-        <Collapse in={openReports}>
-          <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-            {reports.map((item, index) => (
-              <ListGroup.Item
-                key={index}
-                active={item === activeItem}
-                onClick={() => onItemClick(item)}
-                style={{ cursor: "pointer", paddingLeft: "20px" }}
-              >
-                {item}
-              </ListGroup.Item>
-            ))}
-          </div>
-        </Collapse>
+        <h5 className={`mt-3 ${styles.reportsTitle}`}>Reports</h5>
+        {reports.map((item, index) => (
+          <ListGroup.Item key={index} onClick={() => handleItemClick(item)} className={`${styles.listGroupItem} ${item === activeItem ? styles.listGroupItemActive : ""}`} style={{ paddingLeft: "20px" }}>
+            {item}
+          </ListGroup.Item>
+        ))}
       </ListGroup>
     </div>
   );

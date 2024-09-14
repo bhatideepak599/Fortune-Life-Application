@@ -24,22 +24,13 @@ const ClaimTable = ({ data, actions }) => {
               ))}
               {actions && (
                 <td>
-                  <button
-                    className="btn btn-success btn-sm me-1"
-                    onClick={() => actions.approve(row)}
-                  >
+                  <button className="btn btn-sm me-1" onClick={() => actions.approve(row)} style={{ backgroundColor: "#1abc9c", color: "white" }}>
                     Approve
                   </button>
-                  <button
-                    className="btn btn-danger btn-sm me-1"
-                    onClick={() => actions.reject(row)}
-                  >
+                  <button className="btn btn-sm me-1" onClick={() => actions.reject(row)} style={{ backgroundColor: "#FF597B", color: "white" }}>
                     Reject
                   </button>
-                  <button
-                    className="btn btn-info btn-sm"
-                    onClick={() => actions.view(row)}
-                  >
+                  <button className="btn btn-sm" onClick={() => actions.view(row)} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
                     View Remarks
                   </button>
                 </td>
