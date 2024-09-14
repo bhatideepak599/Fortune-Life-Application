@@ -32,6 +32,8 @@ public class Commission {
 	@Column(nullable = false)
 	private String commissionType;
 
+
+
 	@Column(nullable = false)
 	private LocalDateTime issueDate=LocalDateTime.now();
 

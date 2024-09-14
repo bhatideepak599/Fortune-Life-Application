@@ -65,7 +65,7 @@ export const AllWithdrawals = () => {
         "withdrawalId",
         "agentDto.id",
         "agentDto.userDto.firstName",
-        "agentDto.totalCommission",
+        "leftCommission",
         "withdrawalDate",
         "amount",
         "status",
@@ -102,7 +102,7 @@ export const AllWithdrawals = () => {
   const handleFormatChange = (eventKey) => {
     setFormat(eventKey);
   };
-
+ 
   const handleDownload = async () => {
     try {
       let response;

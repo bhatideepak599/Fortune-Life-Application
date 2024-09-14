@@ -29,6 +29,7 @@ import ManageCityAndState from "./components/adminDashboard/adminFunctionCompone
 import { AllWithdrawals } from "./components/adminDashboard/adminFunctionComponents/withdrawal/AllWithdrawals";
 import { AllQueries } from "./components/sharedComponents/allQueries/AllQueries";
 import CustomerQueries from "./components/customerDashBoard/CustomerQueries/CustomerQueries";
+import AllClaims from "./components/adminDashboard/adminFunctionComponents/claimApproval/allClaims/AllClaims";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
         <Route exact path="/commission-history" element={<CommissionHistory />} />
         <Route exact path="/withdrawal-history" element={<WithdrawalHistory />} />
         <Route exact path="/claim-approval" element={<ClaimApproval />} />
+        <Route exact path="/all-claims" element={<AllClaims />} />
         <Route exact path="/insurance-accounts" element={<InsuranceAccountReport />} />
         <Route exact path="/plans-schemes" element={<CommissionSettings/>}/>
         <Route exact path="/city-states" element={<ManageCityAndState/>}/>

@@ -125,6 +125,7 @@ export const getLoggedInUser = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+console.log(response.data);
 
     return response.data;
   } catch (error) {

@@ -24,7 +24,7 @@ public class Withdrawal {
 
     @Column(nullable = false)
     private Double amount;
-
+    private Double leftCommission;
     @Column(nullable = false)
     private String status; 
 

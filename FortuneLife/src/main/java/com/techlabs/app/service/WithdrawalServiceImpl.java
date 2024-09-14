@@ -65,7 +65,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 		
 		withdrawal.setAgent(agent);
 		withdrawal.setWithdrawalDate(LocalDateTime.now());
-
+		withdrawal.setLeftCommission(agent.getTotalCommission());
 		withdrawal = withdrawalRepository.save(withdrawal);
 
 		return entityToDto(withdrawal);
@@ -76,6 +76,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 		withdrawalDto.setAmount(withdrawal.getAmount());
 		withdrawalDto.setWithdrawalId(withdrawal.getId());
 		withdrawalDto.setStatus(withdrawal.getStatus());
+		withdrawalDto.setLeftCommission(withdrawal.getLeftCommission());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
 		String formattedDate = withdrawal.getWithdrawalDate().format(formatter);
@@ -125,6 +126,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 		withdrawal.setStatus("REJECTED");
 		Agent agent=withdrawal.getAgent();
 		agent.setTotalCommission(agent.getTotalCommission()+withdrawal.getAmount());
+		withdrawal.setLeftCommission(agent.getTotalCommission());
 		withdrawalRepository.save(withdrawal);
 		agentRepository.save(agent);
 		return "WithDrawal Rejected";

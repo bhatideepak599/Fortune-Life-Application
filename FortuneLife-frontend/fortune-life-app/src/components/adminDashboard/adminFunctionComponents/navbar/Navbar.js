@@ -90,10 +90,10 @@ const Navbar = () => {
               <a href="#" onClick={handleTax}>
                 Manage Tax
               </a>
-              <a href="#" onClick={handlePlansAndSchemes}>
+              <a href="/plans-schemes" onClick={handlePlansAndSchemes}>
                 Plans & Schemes
               </a>
-              <a href="#" onClick={handleCityAndStateClick}>
+              <a href="/city-states" onClick={handleCityAndStateClick}>
                 City & States
               </a>
             </div>
@@ -106,12 +106,12 @@ const Navbar = () => {
               <a href="/claim-approval" onClick={handleClaimApprovalClick}>
                 Claims For Approval
               </a>
-              <a href="#">All Claims</a>
+              <a href="/all-claims">All Claims</a>
               <a href="#">Rejected Claims</a>
             </div>
           </li>
           <li>
-            <a href="#" onClick={handlePolicyClick}>
+            <a href="/insurance-accounts" onClick={handlePolicyClick}>
               Policies
             </a>
           </li>

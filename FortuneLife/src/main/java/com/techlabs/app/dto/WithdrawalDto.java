@@ -18,6 +18,6 @@ public class WithdrawalDto {
 	private Double amount;
 
 	private String status;
-
+	private Double leftCommission;
 	private AgentDto agentDto;
 }

@@ -13,6 +13,7 @@ import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../sharedComponents/modal/Modal";
 import { ViewPayment } from "./viewPayment/ViewPayment";
 import Navbar from "../navbar/Navbar";
+import Loader from "../../../sharedComponents/loader/Loader";
 
 const InsuranceAccountReport = () => {
   const location = useLocation();
@@ -36,6 +37,7 @@ const InsuranceAccountReport = () => {
     customerName: "",
     policyStatus: "",
   });
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -56,12 +58,14 @@ const InsuranceAccountReport = () => {
     setSearchType(initialSearchType);
     setSearchParams(initialSearchParams);
   }, []);
+
   useEffect(() => {
     fetchAllPolicies();
   }, [pageSize, pageNumber, flag]);
 
   const fetchAllPolicies = async () => {
     try {
+      setLoading(true); 
       const response = await getAllPolicies(pageSize, pageNumber, searchParams);
       setpolicyList(response.content);
       setTotalPages(response.totalPages);
@@ -73,22 +77,23 @@ const InsuranceAccountReport = () => {
         keysTobeSelected: keys,
       });
 
-      //console.log("Sanitized Data:", newSanitizedData);
       setPolicies(newSanitizedData);
       setTotalPages(response.totalPages);
+      
       const queryParams = new URLSearchParams();
       queryParams.set("pageSize", pageSize);
       queryParams.set("pageNumber", pageNumber);
-
       Object.keys(searchParams).forEach((key) => {
         if (searchParams[key]) queryParams.set(key, searchParams[key]);
       });
-
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
       errorToast(error.response?.data?.message);
+    } finally {
+      setLoading(false); // End loading
     }
   };
+
   const handleSearch = () => {
     setPolicies([]);
     setPageNumber(0);
@@ -131,10 +136,7 @@ const InsuranceAccountReport = () => {
       link.href = window.URL.createObjectURL(blob);
       link.download = fileName;
       link.click();
-
       window.URL.revokeObjectURL(link.href);
-
-      // successToast(`${format.toUpperCase()} Downloaded Successfully`);
     } catch (error) {
       errorToast(error.message || "Error downloading the file");
     }
@@ -144,6 +146,7 @@ const InsuranceAccountReport = () => {
     setSearchType(type);
     setSearchParams((prevParams) => ({ ...prevParams, [type]: "" }));
   };
+
   const handleReset = () => {
     setSearchParams({
       id: "",
@@ -157,7 +160,6 @@ const InsuranceAccountReport = () => {
     setSearchType("");
     setPageNumber(0);
     setPageSize(5);
-
     fetchAllPolicies();
   };
 
@@ -168,12 +170,14 @@ const InsuranceAccountReport = () => {
     setPageSize,
     totalPages,
   };
+
   const handleSearchChange = (e) => {
     setSearchParams({
       ...searchParams,
       [e.target.name]: e.target.value,
     });
   };
+
   const getPaymentByIdFromList = (id) => {
     return policyList.find((policy) => policy.id === id);
   };
@@ -186,6 +190,7 @@ const InsuranceAccountReport = () => {
   const actions = {
     view: handleViewClick,
   };
+
   return (
     <>
       <Navbar />
@@ -200,7 +205,6 @@ const InsuranceAccountReport = () => {
           <div className="d-flex align-items-center">
             <Dropdown onSelect={handleFormatChange}>
               <Dropdown.Toggle id="dropdown-basic"></Dropdown.Toggle>
-
               <Dropdown.Menu>
                 <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
                 <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>

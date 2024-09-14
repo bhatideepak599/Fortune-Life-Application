@@ -31,7 +31,7 @@ export const Withdrawal = () => {
   const [searchParams, setSearchParams] = useState({
     id: "",
     agentId: "",
-    status: "PENDING",
+    status: "PENDING", // Default set to PENDING
   });
 
   useEffect(() => {
@@ -42,14 +42,13 @@ export const Withdrawal = () => {
     const initialSearchParams = {
       id: queryParams.get("id"),
       agentId: queryParams.get("agentId") || "",
-      status: queryParams.get("status") || ""
-      
+      status: "PENDING", // Always ensure status is PENDING
     };
     setPageSize(initialPageSize);
     setPageNumber(initialPageNumber);
     setSearchType(initialSearchType);
     setSearchParams(initialSearchParams);
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     fetchWithdrawals();
@@ -65,7 +64,7 @@ export const Withdrawal = () => {
         "withdrawalId",
         "agentDto.id",
         "agentDto.userDto.firstName",
-        "agentDto.totalCommission",
+        "leftCommission",
         "withdrawalDate",
         "amount",
         "status",
@@ -151,7 +150,7 @@ export const Withdrawal = () => {
     setSearchParams({
       id: "",
       agentId: "",
-      status: "",
+      status: "PENDING", // Reset status to PENDING on reset
     });
     setSearchType("");
     setPageNumber(0);
@@ -172,6 +171,7 @@ export const Withdrawal = () => {
     setSearchParams({
       ...searchParams,
       [e.target.name]: e.target.value,
+      status: "PENDING", // Ensure status stays PENDING on search
     });
   };
 
@@ -231,7 +231,6 @@ export const Withdrawal = () => {
         </div>
       </div>
 
-      
       <CommonTable data={withdrawals} actions={actions} />
 
       <div className="d-flex justify-content-center mt-0">

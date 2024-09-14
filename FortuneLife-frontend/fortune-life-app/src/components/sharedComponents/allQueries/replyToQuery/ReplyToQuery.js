@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { answerQuery } from '../../../../services/queryService';
+import Loader from '../../loader/Loader';
 
 
 const ReplyToQuery = ({ query, setQuery, onClose }) => {
   const [response, setResponse] = useState(query.answer || '');
+  const [loading, setLoading] = useState(false); // Loader state
 
   const handleChange = (e) => {
     setResponse(e.target.value);
@@ -12,15 +14,18 @@ const ReplyToQuery = ({ query, setQuery, onClose }) => {
 
   const handleSubmit = async () => {
     try {
-        const updatedQuery = { ...query, answer: response };
-        await setQuery(updatedQuery);
-        const newResponse = await answerQuery(updatedQuery);
-      if(newResponse){
-        toast.info("Reply sent.")
+      setLoading(true); // Start loader
+      const updatedQuery = { ...query, answer: response };
+      await setQuery(updatedQuery);
+      const newResponse = await answerQuery(updatedQuery);
+      if (newResponse) {
+        toast.info('Reply sent.');
       }
       onClose();
     } catch (error) {
       toast.error('Failed to update query response');
+    } finally {
+      setLoading(false); // Stop loader
     }
   };
 
@@ -89,33 +94,39 @@ const ReplyToQuery = ({ query, setQuery, onClose }) => {
     backgroundColor: '#5a6268',
   };
 
+  // Conditionally render Loader or Form content
   return (
     <div style={containerStyle}>
-      <h3 style={headingStyle}>Reply to Query</h3>
-      <div style={detailsStyle}>
-        <p><strong>Title:</strong> {query.title}</p>
-        <p><strong>Question:</strong> {query.question}</p>
-      </div>
-      <div>
-        <textarea
-          style={textAreaStyle}
-          value={response}
-          onChange={handleChange}
-          rows="6"
-          placeholder="Type your answer here..."
-        />
-        <div style={buttonGroupStyle}>
-          <button
-            onClick={handleSubmit}
-            style={btnPrimaryStyle}
-            onMouseOver={(e) => e.currentTarget.style.backgroundColor = btnPrimaryHoverStyle.backgroundColor}
-            onMouseOut={(e) => e.currentTarget.style.backgroundColor = btnPrimaryStyle.backgroundColor}
-          >
-            Send
-          </button>
-        
-        </div>
-      </div>
+      {loading ? (
+        <Loader /> 
+      ) : (
+        <>
+          <h3 style={headingStyle}>Reply to Query</h3>
+          <div style={detailsStyle}>
+            <p><strong>Title:</strong> {query.title}</p>
+            <p><strong>Question:</strong> {query.question}</p>
+          </div>
+          <div>
+            <textarea
+              style={textAreaStyle}
+              value={response}
+              onChange={handleChange}
+              rows="6"
+              placeholder="Type your answer here..."
+            />
+            <div style={buttonGroupStyle}>
+              <button
+                onClick={handleSubmit}
+                style={btnPrimaryStyle}
+                onMouseOver={(e) => (e.currentTarget.style.backgroundColor = btnPrimaryHoverStyle.backgroundColor)}
+                onMouseOut={(e) => (e.currentTarget.style.backgroundColor = btnPrimaryStyle.backgroundColor)}
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

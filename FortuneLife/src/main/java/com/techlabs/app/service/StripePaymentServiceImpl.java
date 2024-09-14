@@ -92,6 +92,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         if (agent != null && agent.getActive() && agent.getVerified()) {
             List<Commission> commissions = agent.getCommissions();
             Commission commission = new Commission();
+            commission.setPolicyId(policy.getId());
             commission.setCommissionType(CommissionType.INSTALMENT.name());
             commission.setAmount(commissionAmount);
             commission.setAgent(agent);

@@ -1,29 +1,21 @@
 import React, { useEffect, useState, useRef } from "react";
-import { getAllClaims, claimApproval } from "../../../../services/adminService";
 import { toast } from "react-toastify";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { sanitizedData } from "../../../../utils/SanitizeData";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
-import Modal from "../../../../utils/Modals/Modal";
-import ClaimTable from "./ClaimTable";
-import Navbar from "../navbar/Navbar";
-import styles from "./ClaimApproval.module.css"
+import { useSearchParams } from "react-router-dom";
+import {  getAllClaims } from "../../../../../services/adminService";
+import { sanitizedData } from "../../../../../utils/SanitizeData";
+import Pagination from "../../../../sharedComponents/Pagination/Pagination";
+import ClaimTable from "../ClaimTable";
+import Navbar from "../../navbar/Navbar";
+;
 
-const ClaimApproval = () => {
+const AllClaims = () => {
   const [claims, setClaims] = useState([]);
   const [urlSearchParams] = useSearchParams();
   const [pageSize, setPageSize] = useState(Number(urlSearchParams.get("pageSize")) || 5);
   const [pageNumber, setPageNumber] = useState(Number(urlSearchParams.get("pageNumber")) || 0);
   const [totalPages, setTotalPages] = useState(0);
   const [searchActive, setSearchActive] = useState(false);
-
-  const [selectedClaim, setSelectedClaim] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState("");
-  const [remarks, setRemarks] = useState("");
-
   const searchRef = useRef();
-  const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useState({
     claimId: urlSearchParams.get("claimId") || "",
@@ -33,21 +25,13 @@ const ClaimApproval = () => {
 
   useEffect(() => {
     fetchClaims();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [pageNumber, pageSize, searchActive]);
 
   const fetchClaims = async () => {
-    const updatedSearchParams = {
-      ...searchParams,
-      claimStatus: "PENDING", 
-      page: pageNumber,
-      size: pageSize,
-    };
-
-    
     try {
       const response = await getAllClaims({
-        ...updatedSearchParams,
+        ...searchParams,
         page: pageNumber,
         size: pageSize,
       });
@@ -58,8 +42,8 @@ const ClaimApproval = () => {
         setTotalPages(response.totalPages);
       }
     } catch (error) {
-      //console.error(error);
-      toast.warn("No Claims for approval");
+
+      toast.error("Error fetching claims");
     }
   };
 
@@ -97,62 +81,12 @@ const ClaimApproval = () => {
     setPageNumber(newPageNumber);
   };
 
-  const handleApprove = (claim) => {
-    setSelectedClaim(claim);
-    setModalMode("approve");
-    setRemarks("");
-    setModalOpen(true);
-  };
-
-  const handleReject = (claim) => {
-    setSelectedClaim(claim);
-    setModalMode("reject");
-    setRemarks("");
-    setModalOpen(true);
-  };
-
-  const handleView = (claim) => {
-    setSelectedClaim(claim);
-    setModalMode("view");
-    setRemarks(claim.remarks || "No remarks available.");
-    setModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-    setSelectedClaim(null);
-    setRemarks("");
-    setModalMode("");
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const operation = modalMode === "approve" ? "APPROVED" : "REJECT";
-      await claimApproval({
-        claimId: selectedClaim.id,
-        claimReply: operation,
-        remarks,
-      });
-      toast.success(`Claim ${operation.toLowerCase()} successfully`);
-      fetchClaims();
-      handleModalClose();
-    } catch (error) {
-      console.error(error);
-      toast.error("Error processing claim");
-    }
-  };
-
-  const actions = {
-    approve: handleApprove,
-    reject: handleReject,
-    view: handleView,
-  };
 
   return (
     <>
     <Navbar/>
-    <div className={`container ${styles.claimContainer}`}>
-      <h2>Claim Approval</h2>
+    <div className="container mt-4">
+      <h2 className="text-center mb-4">All Claims</h2>
       <form className="mb-4" ref={searchRef} onSubmit={handleSearch}>
         <div className="row">
           <div className="col-md-3">
@@ -170,7 +104,7 @@ const ClaimApproval = () => {
             </select>
           </div>
           <div className="col-md-3">
-            <button type="submit" className="btn btn-primary" style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
+            <button type="submit" className="btn btn-primary">
               Search
             </button>
             <button type="reset" className="btn btn-secondary ms-2" onClick={handleReset}>
@@ -179,8 +113,7 @@ const ClaimApproval = () => {
           </div>
         </div>
       </form>
-
-      <ClaimTable data={claims} actions={actions} />
+      <ClaimTable data={claims}  />
 
       {claims?.length > 0 && (
         <div className="d-flex align-items-center justify-content-between mt-5">
@@ -188,30 +121,10 @@ const ClaimApproval = () => {
         </div>
       )}
 
-      {modalOpen && (
-        <Modal isOpen={modalOpen} onClose={handleModalClose}>
-          {modalMode === "view" ? (
-            <div className={styles.viewRemarks}>
-              <h4>View Remarks</h4>
-              <p>{remarks}</p>
-            </div>
-          ) : (
-            <div className={styles.claimDecision}>
-              <h4>{modalMode === "approve" ? "Approve Claim" : "Reject Claim"}</h4>
-              <textarea className="form-control" value={remarks} onChange={(e) => setRemarks(e.target.value)} placeholder="Enter remarks" rows={4}></textarea>
-              <button className="btn btn-primary mt-2" onClick={handleSubmit} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
-                OK
-              </button>
-              <button className="btn btn-secondary mt-2 ms-2" onClick={handleModalClose}>
-                Cancel
-              </button>
-            </div>
-          )}
-        </Modal>
-      )}
+     
     </div>
     </>
   );
 };
 
-export default ClaimApproval;
+export default AllClaims;
