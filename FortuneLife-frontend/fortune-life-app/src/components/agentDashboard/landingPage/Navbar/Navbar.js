@@ -56,14 +56,19 @@ const Navbar = () => {
   };
 
   const fetchAgent = async () => {
-    const response = await getLoggedAgent();
-
-    setName(response.userDto.firstName + " " + response.userDto.lastName);
-    setAgent(response);
+    try {
+      const response = await getLoggedAgent();
+      setName(`${response.userDto.firstName} ${response.userDto.lastName}`);
+      setAgent(response);
+    } catch (error) {
+      toast.error("Failed to fetch agent information.");
+    }
   };
+
   const handleChangePassword = () => {
     setChangePasswordModal(true);
   };
+
   const handleHistoryClick = () => {
     navigate("/commission-history");
   };
@@ -71,6 +76,7 @@ const Navbar = () => {
   const handleAllWithdrawalsClick = () => {
     navigate("/withdrawal-history");
   };
+
   const handleTotalClick = () => {
     setTotalModal(true);
   };
@@ -109,9 +115,9 @@ const updateProfile=async(userDto,addressDto)=>{
           <li>
             <a href="/agent-dashboard">Home</a>
           </li>
-          <li className={`dropdown ${styles.dropdown}`}>
+          <li className={styles.dropdown}>
             <a href="#">Popular Insurance Plans</a>
-            <div className={`dropdown-content ${styles.dropdownContent}`}>
+            <div className={styles.dropdownContent}>
               {insurancePlans.length > 0 ? (
                 insurancePlans
                   .filter((plan) => plan.active)
@@ -131,13 +137,11 @@ const updateProfile=async(userDto,addressDto)=>{
           <li>
             <a href="#">Policies</a>
           </li>
-          <li class="dropdown">
-            <a href="#" class="dropbtn">
-              Commission
-            </a>
-            <div class="dropdown-content">
+          <li className={styles.dropdown}>
+            <button className={styles.dropbtn}>Commission</button>
+            <div className={styles.dropdownContent}>
               <a href="#" onClick={handleTotalClick}>
-                Total{" "}
+                Total
               </a>
               <a href="/commission-history" onClick={handleHistoryClick}>
                 Commission
@@ -147,11 +151,9 @@ const updateProfile=async(userDto,addressDto)=>{
               </a>
             </div>
           </li>
-          <li class="dropdown">
-            <a href="#" class="dropbtn">
-              {name}
-            </a>
-            <div class="dropdown-content">
+          <li className={styles.dropdown}>
+            <button className={styles.dropbtn}>{name}</button>
+            <div className={styles.dropdownContent}>
               <a href="#" onClick={handleEditProfile}>
                 Profile
               </a>

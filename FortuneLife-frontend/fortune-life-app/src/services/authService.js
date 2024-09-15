@@ -80,11 +80,11 @@ export const verifyUser = async (accessToken, userRole) => {
         role: userRole,
       },
     });
-    
-    if(response.data===false){
+
+    if (response.data === false) {
       localStorage.clear();
     }
-    
+
     return response.data;
   } catch (error) {
     throw error;
@@ -125,7 +125,7 @@ export const getLoggedInUser = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-console.log(response.data);
+    console.log(response.data);
 
     return response.data;
   } catch (error) {
@@ -160,15 +160,24 @@ export const changePassword = async (userDto) => {
       },
     });
 
-
-      if (response) {
-       // const expirationTime = new Date().getTime() + 30 * 60 * 1000;
-        localStorage.setItem("accessToken", response.data.accessToken);
-        //localStorage.setItem("role", response.data.role);
-       // localStorage.setItem("expirationTime", expirationTime);
-      }
-      return response.data;
+    if (response) {
+      // const expirationTime = new Date().getTime() + 30 * 60 * 1000;
+      localStorage.setItem("accessToken", response.data.accessToken);
+      //localStorage.setItem("role", response.data.role);
+      // localStorage.setItem("expirationTime", expirationTime);
+    }
+    return response.data;
   } catch (error) {
     throw error;
   }
+};
+
+export const sendOtp = async (sourceType, sourceValue) => {
+  const response = await axios.get(`${API_BASE_URL}/fortuneLife/auth/send-otp`, { params: { sourceType, sourceValue } });
+  return response.data;
+};
+
+export const submitNewPassword = async (data) => {
+  const response = await axios.put(`${API_BASE_URL}/fortuneLife/auth/forget-Password`, data);
+  return response.data;
 };

@@ -84,6 +84,7 @@ public class AuthController {
 
         return "OTP has been sent.";
     }
+
     @Operation(summary = "Get Logged user")
     @GetMapping("/loggedUser")
     public ResponseEntity<UserDto> getLoggedUser(HttpServletRequest request){

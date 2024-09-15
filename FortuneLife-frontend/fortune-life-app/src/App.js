@@ -32,7 +32,7 @@ import AllClaims from "./components/adminDashboard/adminFunctionComponents/claim
 import { AllQueries } from "./components/adminDashboard/adminFunctionComponents/allQueries/AllQueries";
 import { AllQueriesForEmployee } from "./components/employeeDashboard/allQueries/AllQueriesForEmployee";
 import { ViewClients } from "./components/agentDashboard/landingPage/viewClients/ViewClients";
-
+import ForgotPassword from "./components/sharedComponents/ForgotPassword/ForgotPassword";
 
 function App() {
   return (
@@ -64,13 +64,13 @@ function App() {
         <Route exact path="/claim-approval" element={<ClaimApproval />} />
         <Route exact path="/all-claims" element={<AllClaims />} />
         <Route exact path="/insurance-accounts" element={<InsuranceAccountReport />} />
-        <Route exact path="/plans-schemes" element={<CommissionSettings/>}/>
-        <Route exact path="/city-states" element={<ManageCityAndState/>}/>
-        <Route exact path="/all-withDrawals" element={<AllWithdrawals/>}/>
-        <Route exact path="/view-queries" element={<AllQueries/>}/>
-        <Route exact path="/view-queries-employee" element={<AllQueriesForEmployee/>}/>
-        <Route exact path="/view-clients" element={<ViewClients  />}/>
-        
+        <Route exact path="/plans-schemes" element={<CommissionSettings />} />
+        <Route exact path="/city-states" element={<ManageCityAndState />} />
+        <Route exact path="/all-withDrawals" element={<AllWithdrawals />} />
+        <Route exact path="/view-queries" element={<AllQueries />} />
+        <Route exact path="/view-queries-employee" element={<AllQueriesForEmployee />} />
+        <Route exact path="/view-clients" element={<ViewClients />} />
+        <Route exact path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </>
   );

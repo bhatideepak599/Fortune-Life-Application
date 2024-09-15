@@ -142,7 +142,7 @@ const LoginForm = () => {
           </Form>
 
           <div className="d-flex justify-content-between mt-3">
-            <a href="#forgot-password" className="text-muted">
+            <a href="/forgot-password" className="text-muted">
               Forget Password?
             </a>
             {role !== "Admin" && role !== "Employee" && (
