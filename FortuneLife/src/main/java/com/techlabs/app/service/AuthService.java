@@ -1,10 +1,7 @@
 package com.techlabs.app.service;
 
-import com.techlabs.app.dto.JWTAuthResponse;
-import com.techlabs.app.dto.LoginDto;
-import com.techlabs.app.dto.RegisterDto;
+import com.techlabs.app.dto.*;
 
-import com.techlabs.app.dto.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface AuthService {
@@ -15,7 +12,7 @@ public interface AuthService {
 
     UserDto getLoggedUser(HttpServletRequest request);
 
-	String forgetPassWord(String userName, String passWord);
-
 	JWTAuthResponse changePassword(UserDto userDto);
+
+    String forgetPassWord(ForgetPassword forgetPassword);
 }

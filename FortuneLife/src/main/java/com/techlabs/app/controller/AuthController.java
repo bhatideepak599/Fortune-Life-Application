@@ -1,14 +1,12 @@
 package com.techlabs.app.controller;
 
-import com.techlabs.app.dto.JWTAuthResponse;
-import com.techlabs.app.dto.LoginDto;
-import com.techlabs.app.dto.RegisterDto;
-import com.techlabs.app.dto.UserDto;
+import com.techlabs.app.dto.*;
 import com.techlabs.app.exception.UserRelatedException;
 import com.techlabs.app.service.AuthService;
 import com.techlabs.app.service.OtpService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,24 +78,12 @@ public class AuthController {
 
     @Operation(summary = "Send OTP")
     @GetMapping("/send-otp")
-    public String sendOtp(@RequestParam String phoneNumber) {
-        String otp = otpService.generateOtp(phoneNumber);
-        otpService.sendOtp(phoneNumber, otp);
+    public String sendOtp(@RequestParam String sourceType,@RequestParam String sourceValue) throws MessagingException {
 
-        return "OTP has been sent to your phone number.";
+        otpService.sendOtp(sourceType,sourceValue);
+
+        return "OTP has been sent.";
     }
-
-    @Operation(summary = "Verify OTP")
-    @PostMapping("/verify-otp")
-    public String verifyOtp(@RequestParam String phoneNumber, @RequestParam String otpProvided) {
-        boolean isValid = otpService.validateOtp(phoneNumber, otpProvided);
-        if (isValid) {
-            return "OTP verified successfully!";
-        } else {
-            return "Invalid or expired OTP. Please try again.";
-        }
-    }
-
     @Operation(summary = "Get Logged user")
     @GetMapping("/loggedUser")
     public ResponseEntity<UserDto> getLoggedUser(HttpServletRequest request){
@@ -109,8 +95,8 @@ public class AuthController {
    
     @Operation(summary = "Forget Password")
     @PutMapping("/forget-Password")
-    public ResponseEntity<String> forgetPassWord(@RequestParam String userName, @RequestParam String passWord){
-        String message = authService.forgetPassWord(userName,passWord);
+    public ResponseEntity<String> forgetPassword(@RequestBody ForgetPassword forgetPassword){
+        String message = authService.forgetPassWord(forgetPassword);
 
         return new ResponseEntity<>(message,HttpStatus.OK);
     }

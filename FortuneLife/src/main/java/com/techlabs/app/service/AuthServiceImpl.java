@@ -1,9 +1,6 @@
 package com.techlabs.app.service;
 
-import com.techlabs.app.dto.JWTAuthResponse;
-import com.techlabs.app.dto.LoginDto;
-import com.techlabs.app.dto.RegisterDto;
-import com.techlabs.app.dto.UserDto;
+import com.techlabs.app.dto.*;
 import com.techlabs.app.entity.*;
 import com.techlabs.app.enums.Gender;
 import com.techlabs.app.enums.TokenType;
@@ -45,24 +42,22 @@ public class AuthServiceImpl implements AuthService {
     private CustomerRepository customerRepository;
     private AddressRepository addressRepository;
     private TokenRepository tokenRepository;
+    private OtpRepository otpRepository;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-                           JwtTokenProvider jwtTokenProvider, RoleRepository roleRepository, UserRepository userRepository,
-                           AdminRepository adminRepository, EmployeeRepository employeeRepository, AgentRepository agentRepository,
-                           CustomerRepository customerRepository, AddressRepository addressRepository,
-                           TokenRepository tokenRepository) {
-        super();
-        this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
-        this.adminRepository = adminRepository;
-        this.employeeRepository = employeeRepository;
-        this.agentRepository = agentRepository;
-        this.customerRepository = customerRepository;
-        this.addressRepository = addressRepository;
+    public AuthServiceImpl(OtpRepository otpRepository, TokenRepository tokenRepository, AddressRepository addressRepository, CustomerRepository customerRepository, AgentRepository agentRepository, EmployeeRepository employeeRepository, AdminRepository adminRepository, UserRepository userRepository, RoleRepository roleRepository, JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserMapper userMapper) {
+        this.otpRepository = otpRepository;
         this.tokenRepository = tokenRepository;
+        this.addressRepository = addressRepository;
+        this.customerRepository = customerRepository;
+        this.agentRepository = agentRepository;
+        this.employeeRepository = employeeRepository;
+        this.adminRepository = adminRepository;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -240,7 +235,7 @@ public class AuthServiceImpl implements AuthService {
             return false;
         Set<Role> roles = byUsername.get().getRoles();
         for (Role role : roles) {
-            System.out.println(role.getRoleName() + "==========================================================ROLENAME" + forrole);
+            //System.out.println(role.getRoleName() + "==========================================================ROLENAME" + forrole);
             if (role.getRoleName().equalsIgnoreCase(forrole))
                 return true;
         }
@@ -266,19 +261,45 @@ public class AuthServiceImpl implements AuthService {
 
         return userMapper.entityToDto(user);
     }
-
     @Override
-    public String forgetPassWord(String userName, String passWord) {
+    public String forgetPassWord(ForgetPassword forgetPassword) {
         User user = userRepository
-                .findUserByUsernameOrEmail(userName, userName)
+                .findUserByUsernameOrEmail(forgetPassword.getUserName(), forgetPassword.getUserName())
                 .orElseThrow(() -> new UserRelatedException(
-                        "User with username or email " + userName + " cannot be found"));
+                        "User with username or email " + forgetPassword.getUserName() + " cannot be found"));
 
         if (!user.getActive()) {
             throw new UserRelatedException("User is not active");
         }
+        if(forgetPassword.getSourceType().equalsIgnoreCase("mobileNumber")){
+            String mobileNumber= forgetPassword.getSourceValue().substring(3);
+            if(!user.getMobileNumber().equalsIgnoreCase(mobileNumber))
+                throw new FortuneLifeException("No User Found With Mobile Number:"+mobileNumber);
+        }
 
-        user.setPassword(passwordEncoder.encode(passWord));
+        if(forgetPassword.getSourceType().equalsIgnoreCase("email")){
+            String email= forgetPassword.getSourceValue();
+            if(!user.getEmail().equalsIgnoreCase(email))
+                throw new FortuneLifeException("No User Found With Email: "+email);
+        }
+        Otp otp=otpRepository.findById(forgetPassword.getSourceValue())
+                        .orElseThrow(()-> new FortuneLifeException("Invalid Email or Phone Number"));
+        boolean check = otp.getOtpCode().equalsIgnoreCase(forgetPassword.getOtpRecieved());
+        if(!check) {
+            otpRepository.delete(otp);
+            throw new FortuneLifeException("Invalid Otp");
+        }
+        if(otp.hasExceededMaxAttempts()){
+            otpRepository.delete(otp);
+            throw new FortuneLifeException("Limit Exceeded For Verification, Send Otp again");
+        }
+        if(otp.isExpired()){
+            otpRepository.delete(otp);
+            throw new FortuneLifeException("Otp Expired");
+        }
+        otp.incrementAttemptCount();
+        otpRepository.delete(otp);
+        user.setPassword(passwordEncoder.encode(forgetPassword.getPassword()));
         userRepository.save(user);
         return "Password has been changed.";
     }
