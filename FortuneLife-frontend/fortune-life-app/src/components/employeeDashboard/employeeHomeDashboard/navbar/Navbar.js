@@ -1,18 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 import fortunelife from "../../../../images/fortunelife-high-resolution-logo-white-transparent.png";
 import Modal from "../../../sharedComponents/modal/Modal";
 import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
 import { useNavigate } from "react-router-dom";
+import { getEmployee, updateEmployee, validateEmployee } from "../../../../services/employeeService";
+import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
+import { logout } from "../../../../services/authService";
+import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
 
-const Navbar = ({ handleProfileClick, onLogoutClick, user }) => {
+const Navbar = () => {
   const navigate = useNavigate();
+  const [showEmployeeProfileModal, setShowEmployeeProfileModal] = useState(false);
+  const [employee, setEmployee] = useState();
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [name, setName] = useState("");
+  const accessToken = localStorage.getItem("accessToken");
+  useEffect(() => {
+    if (!validateEmployee(accessToken)) {
+      warnToast("Unauthorized Access! Login First");
+      navigate("/");
+      return;
+    }
+    fetchEmployee();
+  }, [navigate]);
+  useEffect(()=>{
+    
+    
+  },[employee])
+
+  const fetchEmployee = async () => {
+    try {
+      const response = await getEmployee();
+      setEmployee(response.data)
+     
+      
+      setName(response.data.userDto.firstName);
+    } catch (error) {
+      errorToast(error.response?.data?.message);
+    }
+  };
+
+  const updateProfile = async (userDto, addressDto) => {
+    let id = userDto.id;
+    try {
+      const response = await updateEmployee(id, userDto, addressDto);
+      //successToast("Profile Updated Successfully");
+    } catch (error) {
+      errorToast(error.response?.data?.message);
+    }
+  };
+const handleProfileClick = () => {
+    setIsUpdate(true);
+    setShowEmployeeProfileModal(true);
+  };
+
+  const handleLogout = () => {
+    logout();
+    successToast("Logged Out.");
+    navigate("/");
+  };
   const [changePasswordModal, setChangePasswordModal] = useState(false);
   const handleChangePassword = () => {
     setChangePasswordModal(true);
   };
   const handleViewQuries=()=>{
-    navigate("/view-queries");
+    navigate("/view-queries-employee");
   }
   return (
     <>
@@ -96,7 +149,7 @@ const Navbar = ({ handleProfileClick, onLogoutClick, user }) => {
                     <a
                       className="dropdown-item"
                       href="#"
-                      onClick={onLogoutClick}
+                      onClick={handleLogout}
                     >
                       Logout
                     </a>
@@ -107,13 +160,22 @@ const Navbar = ({ handleProfileClick, onLogoutClick, user }) => {
           </div>
         </div>
       </nav>
-
+      <Modal
+        isOpen={showEmployeeProfileModal}
+        onClose={() => setShowEmployeeProfileModal(false)}
+      >
+        <UserProfile
+          isUpdate={isUpdate}
+          updateProfile={updateProfile}
+          onClose={() => setShowEmployeeProfileModal(false)}
+        />
+      </Modal>
       <Modal
         isOpen={changePasswordModal}
         onClose={() => setChangePasswordModal(false)}
       >
         <ChangePassword
-          user={user}
+          user={employee}
           onClose={() => setChangePasswordModal(false)}
         />
       </Modal>

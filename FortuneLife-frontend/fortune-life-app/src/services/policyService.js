@@ -86,3 +86,29 @@ export const getAllCommissionsOfLoggedAdmin = async (
     throw error;
   }
 };
+
+export const getAllClient = async (pageSize, pageNumber, searchParams) => {
+  try {
+    const accessToken1 = `Bearer ${localStorage.getItem("accessToken")}`;
+    const params = {
+      id: searchParams.id || undefined,
+      customerId: searchParams.customerId || undefined,
+      name: searchParams.name || undefined,
+      policyStatus: searchParams.policyStatus || undefined,
+      page: pageNumber,
+      size: pageSize,
+    };
+    console.log("aya");
+    
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy/all-clients`, {
+      headers: {
+        Authorization: accessToken1,
+      },
+      params,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

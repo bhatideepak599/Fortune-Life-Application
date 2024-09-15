@@ -141,16 +141,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		if (employee.getActive() == false)
 			new EmployeeRelatedExcetption("No Employee Found With Employee Id :" + employeeDto.getId());
-
-		User user = userMapper.dtoToEntity(employeeDto.getUserDto());
+		User user=employee.getUser();
+		User updatedUser = userMapper.dtoToEntity(employeeDto.getUserDto());
 		Address address = user.getAddress();
+		if(user.getAddress()!=null)
+			address.setId(user.getAddress().getId());
 		address = addressRepository.save(address);
 		user.setAddress(address);
-		user.setPassword(employee.getUser().getPassword());
-		user.setId(employee.getUser().getId());
+		user.setFirstName(updatedUser.getFirstName());
+		user.setLastName(updatedUser.getLastName());
+		user.setDateOfBirth(updatedUser.getDateOfBirth());
+		user.setMobileNumber(updatedUser.getMobileNumber());
+		user.setGender(updatedUser.getGender());
 		user = userRepository.save(user);
-
-		employee.setSalary(employee.getSalary());
+		if(employeeDto.getSalary()!=null)
+		employee.setSalary(employeeDto.getSalary());
 
 		employee = employeeRepository.save(employee);
 

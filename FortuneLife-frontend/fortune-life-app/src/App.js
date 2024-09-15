@@ -27,9 +27,12 @@ import InsuranceAccountReport from "./components/adminDashboard/adminFunctionCom
 import CommissionSettings from "./components/adminDashboard/adminFunctionComponents/commissionSettings/CommissionSettings";
 import ManageCityAndState from "./components/adminDashboard/adminFunctionComponents/manageCityAndState/ManageCityAndState";
 import { AllWithdrawals } from "./components/adminDashboard/adminFunctionComponents/withdrawal/AllWithdrawals";
-import { AllQueries } from "./components/sharedComponents/allQueries/AllQueries";
 import CustomerQueries from "./components/customerDashBoard/CustomerQueries/CustomerQueries";
 import AllClaims from "./components/adminDashboard/adminFunctionComponents/claimApproval/allClaims/AllClaims";
+import { AllQueries } from "./components/adminDashboard/adminFunctionComponents/allQueries/AllQueries";
+import { AllQueriesForEmployee } from "./components/employeeDashboard/allQueries/AllQueriesForEmployee";
+import { ViewClients } from "./components/agentDashboard/landingPage/viewClients/ViewClients";
+
 
 function App() {
   return (
@@ -65,6 +68,9 @@ function App() {
         <Route exact path="/city-states" element={<ManageCityAndState/>}/>
         <Route exact path="/all-withDrawals" element={<AllWithdrawals/>}/>
         <Route exact path="/view-queries" element={<AllQueries/>}/>
+        <Route exact path="/view-queries-employee" element={<AllQueriesForEmployee/>}/>
+        <Route exact path="/view-clients" element={<ViewClients  />}/>
+        
       </Routes>
     </>
   );

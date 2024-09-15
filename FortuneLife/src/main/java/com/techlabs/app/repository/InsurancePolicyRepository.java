@@ -24,7 +24,7 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
             "AND (:customerId IS NULL OR c.id = :customerId) " +
             "AND (:agentId IS NULL OR i.agent.id = :agentId) " +
             "AND (:schemeId IS NULL OR s.id = :schemeId) " +
-            "AND (:customerName IS NULL OR LOWER(CONCAT(u.firstName, ' ', u.lastName)) LIKE LOWER(CONCAT('%', :customerName, '%'))) " +
+            "AND (:name IS NULL OR LOWER(CONCAT(u.firstName, ' ', u.lastName)) LIKE LOWER(CONCAT('%', :name, '%'))) " +
             "AND (:schemeName IS NULL OR LOWER(s.schemeName) LIKE LOWER(CONCAT('%', :schemeName, '%'))) " +
             "AND (:policyStatus IS NULL OR i.policyStatus = :policyStatus)")
     Page<InsurancePolicy> findAllPoliciesBasedOnSearch(@Param("id") Long id,
@@ -32,9 +32,10 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
                                                        @Param("agentId") Long agentId,
                                                        @Param("schemeId") Long schemeId,
                                                        @Param("schemeName") String schemeName,
-                                                       @Param("customerName") String customerName,
+                                                       @Param("name") String name,
                                                        @Param("policyStatus") String policyStatus,
                                                        Pageable pageable);
+
 
 
 

@@ -6,8 +6,8 @@ import { getAllInsurancePlans } from "../../../../services/commonService";
 import { toast } from "react-toastify";
 import Modal from "../../../../utils/Modals/Modal";
 import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
-import { getLoggedInUser, logout } from "../../../../services/authService";
-import { getLoggedAgent } from "../../../../services/agentService";
+import {  logout } from "../../../../services/authService";
+import { getLoggedAgent, updateAgentByAdmin } from "../../../../services/agentService";
 import Amount from "../amount/Amount";
 import WithDrawAmount from "../withDrawAmount/WithDrawAmount";
 import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
@@ -18,6 +18,7 @@ const Navbar = () => {
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [agent, setAgent] = useState(null);
   const [name, setName] = useState("");
+  const[isUpdate,setIsUpdate]=useState(false)
 
   const [totalModal, setTotalModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState(false);
@@ -40,6 +41,7 @@ const Navbar = () => {
   }, []);
 
   const handleEditProfile = () => {
+    setIsUpdate(true)
     setShowCustomerModal(true);
   };
 
@@ -72,7 +74,31 @@ const Navbar = () => {
   const handleTotalClick = () => {
     setTotalModal(true);
   };
+const updateProfile=async(userDto,addressDto)=>{
+  const updatedAddressDto = {
+    ...agent.userDto.addressDto, 
+    ...addressDto, 
+  };
+  const updatedUserDto = {
+    ...agent.userDto, 
+    ...userDto, 
+    addressDto: updatedAddressDto, 
+  };
+  const updatedAgentDto = {
+    ...agent, 
+    userDto: updatedUserDto, 
+  };
+  
 
+  try{
+      const response=await updateAgentByAdmin(updatedAgentDto);
+      if(response){
+        //toast.success("Details Updated.")
+      }
+  }catch(error){
+      toast.error(error.response?.data?.message)
+  }
+}
   return (
     <>
       <nav className={styles.agentNavbar}>
@@ -100,7 +126,7 @@ const Navbar = () => {
             </div>
           </li>
           <li>
-            <a href="#">View Clients</a>
+            <a href="/view-clients">View Clients</a>
           </li>
           <li>
             <a href="#">Policies</a>
@@ -141,7 +167,10 @@ const Navbar = () => {
       </nav>
 
       <Modal isOpen={showCustomerModal} onClose={() => setShowCustomerModal(false)}>
-        <UserProfile onClose={() => setShowCustomerModal(false)} />
+        <UserProfile 
+        isUpdate={isUpdate}
+        updateProfile={updateProfile}
+        onClose={() => setShowCustomerModal(false)} />
       </Modal>
 
       <Modal isOpen={totalModal} onClose={() => setTotalModal(false)} width={"30%"}>

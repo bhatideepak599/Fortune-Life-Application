@@ -26,5 +26,8 @@ public interface InsurancePolicyService {
 	public PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, Long policyId, String commissionType, int page, int size, HttpServletRequest
 			 request) ;
 
+	PageResponse<InsurancePolicyResponseDto> getAllPoliciesUnderAnAgent(Long id, Long customerId, String name,
+			String policyStatus, int page, int size, HttpServletRequest request);
+
 
 }

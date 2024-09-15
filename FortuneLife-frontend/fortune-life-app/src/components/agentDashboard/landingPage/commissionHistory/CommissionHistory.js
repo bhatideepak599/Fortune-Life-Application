@@ -6,11 +6,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import { toast } from "react-toastify";
+import Loader from "../../../sharedComponents/loader/Loader"; 
 
 const CommissionHistory = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [commissions, setCommissions] = useState([]);
+  const [loading, setLoading] = useState(true); // State to manage loading
   const [searchType, setSearchType] = useState("");
   const [pageSize, setPageSize] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
@@ -42,6 +44,7 @@ const CommissionHistory = () => {
   }, [pageNumber, pageSize, searchParams]);
 
   const fetchHistory = async () => {
+    setLoading(true); // Start loading
     try {
       const response = await getAllCommissionsOfLoggedAdmin(
         pageSize,
@@ -55,6 +58,7 @@ const CommissionHistory = () => {
         setCommissions([]); // Clear commissions if no data is found
         setTotalPages(0); // Reset totalPages
       }
+
       const queryParams = new URLSearchParams();
       queryParams.set("pageSize", pageSize);
       queryParams.set("pageNumber", pageNumber);
@@ -64,7 +68,14 @@ const CommissionHistory = () => {
       });
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
-      toast.error(error.response?.data?.message);
+      if (error.response?.status === 404) {
+        //toast.error("No data found.");
+        setCommissions([]); // Clear the data if 404 error
+      } else {
+        toast.error(error.response?.data?.message || "An error occurred.");
+      }
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -121,7 +132,9 @@ const CommissionHistory = () => {
             handleReset={handleReset}
           />
         </div>
-        {commissions.length > 0 ? (
+        {loading ? ( // Show loader while loading
+          <Loader />
+        ) : commissions.length > 0 ? (
           <>
             <Table striped bordered hover>
               <thead>

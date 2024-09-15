@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { getAllQueries } from "../../../services/queryService";
-import Navbar from "../../adminDashboard/adminFunctionComponents/navbar/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
-import Pagination from "../Pagination/Pagination";
-import SearchComponent from "../searchComponent/SearchComponent";
 import { Table, Button } from "react-bootstrap";
-import Modal from "../../../utils/Modals/Modal";
 import ReplyToQuery from "./replyToQuery/ReplyToQuery";
+import Modal from "../../../sharedComponents/modal/Modal";
+import { getAllQueries } from "../../../../services/queryService";
+import Navbar from "../navbar/Navbar";
+import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
+import Pagination from "../../../sharedComponents/Pagination/Pagination";
 
 export const AllQueries = () => {
   const navigate = useNavigate();

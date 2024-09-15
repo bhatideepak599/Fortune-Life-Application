@@ -78,4 +78,20 @@ public class PolicyController {
 		return new ResponseEntity<>(commissions, HttpStatus.OK);
 	}
 
+	@Secured("AGENT")
+	@Operation(summary = "Get All Claints Of An Agent")
+	@GetMapping("/all-clients")
+	public ResponseEntity<PageResponse<InsurancePolicyResponseDto>> getAllPoliciesUnderAnAgent(
+			@RequestParam(required = false) Long id, @RequestParam(required = false) Long customerId,
+			@RequestParam(required = false) String name, @RequestParam(required = false) String policyStatus,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size,
+			HttpServletRequest request) {
+		logger.info("Fetching All The Policies");
+		PageResponse<InsurancePolicyResponseDto> policies = policyService.getAllPoliciesUnderAnAgent(id, customerId, name,
+				policyStatus, page, size,request);
+
+		return new ResponseEntity<>(policies, HttpStatus.OK);
+	}
+
 }

@@ -97,7 +97,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/agent/allwithdrawal").hasRole("AGENT")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/withdrawal/approve/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/withdrawal/reject/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent").hasAnyRole("ADMIN","AGENT","EMPLOYEE")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/agent/activate/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/fortuneLife/agent/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/agent").hasAnyRole("ADMIN", "EMPLOYEE")

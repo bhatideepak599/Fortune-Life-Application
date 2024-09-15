@@ -150,6 +150,9 @@ const LoginForm = () => {
                 Register
               </a>
             )}
+            <a href="/" className="text-muted">
+            Back To Homepage
+          </a>
           </div>
         </Col>
       </Row>

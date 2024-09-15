@@ -30,14 +30,14 @@ export const addAgent = async (agentDto) => {
 
 export const updateAgentByAdmin = async (agentDto) => {
  
-
+  const accessToken = localStorage.getItem("accessToken");
   try {
     const response = await axios.put(
       `${API_BASE_URL}/fortuneLife/agent`,agentDto,
       
       {
         headers: {
-          Authorization: accessToken,
+          Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'application/json'
         },
       }

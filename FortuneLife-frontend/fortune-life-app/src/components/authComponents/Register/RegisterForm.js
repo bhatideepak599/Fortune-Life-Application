@@ -230,7 +230,7 @@ const RegisterForm = () => {
                   Register
                 </button>
                 <button type="button" className="btn btn-secondary w-50" onClick={() => navigate("/")}>
-                  Cancel
+                Back To Homepage
                 </button>
               </div>
             </form>

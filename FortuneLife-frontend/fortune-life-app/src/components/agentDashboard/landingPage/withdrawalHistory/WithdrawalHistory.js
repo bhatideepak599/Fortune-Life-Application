@@ -6,6 +6,7 @@ import SearchComponent from "../../../sharedComponents/searchComponent/SearchCom
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import { toast } from "react-toastify";
 import { getAllWithdrawalOfAnAgent } from "../../../../services/withdrawalService";
+import Loader from "../../../sharedComponents/loader/Loader"; 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -21,6 +22,7 @@ const WithdrawalHistory = () => {
     id: "",
     status: "",
   });
+  const [loading, setLoading] = useState(false); // State for loading
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -42,6 +44,7 @@ const WithdrawalHistory = () => {
   }, [pageNumber, pageSize, searchParams]);
 
   const fetchHistory = async () => {
+    setLoading(true); // Start loading
     try {
       const response = await getAllWithdrawalOfAnAgent(
         pageSize,
@@ -52,8 +55,8 @@ const WithdrawalHistory = () => {
         setWithdrawals(response.content);
         setTotalPages(response.totalPages);
       } else {
-        setWithdrawals([]); // Clear withdrawals if no data is found
-        setTotalPages(0); // Reset totalPages
+        setWithdrawals([]);
+        setTotalPages(0);
       }
       const queryParams = new URLSearchParams();
       queryParams.set("pageSize", pageSize);
@@ -64,7 +67,15 @@ const WithdrawalHistory = () => {
       });
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
-      toast.error(error.response?.data?.message);
+      if (error.response?.status === 404) {
+        // Handle 404 error: No data found
+        setWithdrawals([]); // Clear the data
+        setTotalPages(0); // Reset pagination
+      } else {
+        toast.error(error.response?.data?.message);
+      }
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -141,12 +152,15 @@ const WithdrawalHistory = () => {
             handleReset={handleReset}
           />
           <div className="d-flex justify-content-between mt-5 ms-1">
-          <Button variant="primary" onClick={downloadPDF}>
-            Download
-          </Button>
+            <Button variant="primary" onClick={downloadPDF}>
+              Download
+            </Button>
           </div>
         </div>
-        {withdrawals.length > 0 ? (
+
+        {loading ? (
+          <Loader /> // Show loader while fetching data
+        ) : withdrawals.length > 0 ? (
           <>
             <Table striped bordered hover>
               <thead>
@@ -171,7 +185,9 @@ const WithdrawalHistory = () => {
                     >
                       {withdrawal.status}
                     </td>
-                    <td><strong>{withdrawal.amount}</strong></td>
+                    <td>
+                      <strong>{withdrawal.amount}</strong>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -150,40 +150,24 @@ public class CustomerServiceImpl implements CustomerService {
         if (customerById.isEmpty() || !customerById.get().getActive()) {
             throw new CustomerRelatedException("No Customer Found for Id " + userDto.getId());
         }
+        Customer customer=customerById.get();
+        User user=customerById.get().getUser();
+        User updatedUser = userMapper.dtoToEntity(userDto);
 
-        // Check if the user exists
-        Optional<User> user = userRepository.findById(userDto.getId());
-        if (user.isEmpty() || !user.get().getActive()) {
-            throw new CustomerRelatedException("No Customer Found for Id " + userDto.getId());
-        }
-
-        User userForUpdate = userMapper.dtoToEntity(userDto);
-        userForUpdate.setId(userDto.getId());
-
-        // Preserve roles and password from the existing user
-        userForUpdate.setRoles(user.get().getRoles());
-        userForUpdate.setPassword(user.get().getPassword());
-
-        // Check if AddressDto contains an ID or if it's a new address
         if (userDto.getAddressDto() != null && userDto.getAddressDto().getId() != null) {
-            // Existing address, update it
-            Optional<Address> addressById = addressRepository.findById(userDto.getAddressDto().getId());
-            if (addressById.isEmpty()) {
+            Address address=user.getAddress();
+            if (address==null) {
                 throw new CustomerRelatedException("No Address Found for Address Id " + userDto.getAddressDto().getId());
             }
-
-            Address address = addressById.get();
-            // Update the address fields from the DTO
             address.setHouseNumber(userDto.getAddressDto().getHouseNumber());
             address.setApartment(userDto.getAddressDto().getApartment());
             address.setCity(userDto.getAddressDto().getCity());
             address.setState(userDto.getAddressDto().getState());
             address.setPinCode(userDto.getAddressDto().getPinCode());
-            addressRepository.save(address);  // Save the updated address
-            userForUpdate.setAddress(address);
+            addressRepository.save(address);
+            user.setAddress(address);
 
         } else {
-            // No address ID provided, create a new address
             Address newAddress = new Address();
             newAddress.setHouseNumber(userDto.getAddressDto().getHouseNumber());
             newAddress.setApartment(userDto.getAddressDto().getApartment());
@@ -193,17 +177,15 @@ public class CustomerServiceImpl implements CustomerService {
 
             // Save the new address
             newAddress = addressRepository.save(newAddress);
-            userForUpdate.setAddress(newAddress); // Set the new address to the user
+            user.setAddress(newAddress); // Set the new address to the user
         }
-
-        // Save the updated user
-        userForUpdate = userRepository.save(userForUpdate);
-
-        // Update the customer with the updated user
-        Customer customer = customerById.get();
-        customer.setUser(userForUpdate);
-
-        // Return the updated customer DTO
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        user.setDateOfBirth(updatedUser.getDateOfBirth());
+        user.setMobileNumber(updatedUser.getMobileNumber());
+        user.setGender(updatedUser.getGender());
+        user = userRepository.save(user);
+        customer.setUser(user);
         return customerMapper.entityToDto(customer);
     }
 

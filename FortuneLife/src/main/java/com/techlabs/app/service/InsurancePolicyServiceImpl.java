@@ -261,4 +261,25 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 				commissions.getTotalElements(), commissions.getTotalPages(), commissions.isLast());
 	}
 
+	@Override
+	public PageResponse<InsurancePolicyResponseDto> getAllPoliciesUnderAnAgent(Long id, Long customerId, String name,
+			String policyStatus, int page, int size,HttpServletRequest request) {
+		 UserDto user = authService.getLoggedUser(request);
+		 Long agentId=user.getId();
+		Pageable pageable = PageRequest.of(page, size);
+		Page<InsurancePolicy> policies = insurancePolicyRepository.findAllPoliciesBasedOnSearch(id, customerId, agentId,
+				null, null, name, policyStatus, pageable);
+
+		
+		if (policies.isEmpty()) {
+			throw new FortuneLifeException("No Policies Found!");
+		}
+
+		List<InsurancePolicyResponseDto> response = policies.getContent().stream()
+				.map(insurancePolicyMapper::entityToDto).collect(Collectors.toList());
+
+		return new PageResponse<>(response, policies.getNumber(), policies.getNumberOfElements(),
+				policies.getTotalElements(), policies.getTotalPages(), policies.isLast());
+	}
+
 }

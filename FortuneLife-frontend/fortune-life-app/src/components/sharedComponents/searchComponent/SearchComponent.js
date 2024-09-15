@@ -28,6 +28,9 @@ const SearchComponent = ({ searchType, searchParams, handleSearchTypeChange, han
               {searchParams.answer === "" && <Dropdown.Item onClick={() => handleSearchTypeChange("answer")}>Answer</Dropdown.Item>}
               {searchParams.question === "" && <Dropdown.Item onClick={() => handleSearchTypeChange("question")}>Question</Dropdown.Item>}
               {searchParams.title === "" && <Dropdown.Item onClick={() => handleSearchTypeChange("title")}>Title</Dropdown.Item>}
+              {searchParams.customerId === "" && <Dropdown.Item onClick={() => handleSearchTypeChange("customerId")}>Customer Id</Dropdown.Item>}
+              {searchParams.policyStatus === "" && <Dropdown.Item onClick={() => handleSearchTypeChange("policyStatus")}>Policy Status</Dropdown.Item>}
+    
             </Dropdown.Menu>
           </Dropdown>
         </Col>
