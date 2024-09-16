@@ -6,6 +6,7 @@ import "./EmployeeDashboard.module.css";
 
 import Footer from "../../sharedComponents/CommonNavbarFooter/Footer";
 import Main from "./main/Main";
+import Navbar from "./navbar/Navbar";
 
 const EmployeeDashboard = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const EmployeeDashboard = () => {
 
   return (
     <>
+      <Navbar />
       <Main />
       <Footer />
     </>

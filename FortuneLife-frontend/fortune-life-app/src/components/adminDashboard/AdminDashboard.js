@@ -7,14 +7,16 @@ import { errorToast, successToast, warnToast } from "../../utils/Toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./adminFunctionComponents/navbar/Navbar";
 import { toast } from "react-toastify";
-import { Revenue } from "./revenue/Revenue";
 
 const AdminDashboard = () => {
-  const [activeItem, setActiveItem] = useState("");
+  const [activeItem, setActiveItem] = useState("Manage City/State");
+  const [adminDetails, setAdminDetails] = useState(null);
+  const [name, setName] = useState("");
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const accessToken = localStorage.getItem("accessToken");
+
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const AdminDashboard = () => {
     const queryParams = new URLSearchParams(location.search);
     const initialActiveItem = queryParams.get("activeItem");
 
-    setActiveItem(initialActiveItem || savedActiveItem );
+    setActiveItem(initialActiveItem || savedActiveItem || "Manage City/State");
   }, [accessToken, navigate, location.search]);
 
   useEffect(() => {
@@ -105,9 +107,7 @@ const AdminDashboard = () => {
                 <Sidebar activeItem={activeItem} onItemClick={handleChange} />
               </div>
             </Col>
-
             <Col md={{ span: 9, offset: 3 }} style={{ padding: "20px", marginLeft: "22%", marginTop: "-3%" }}>
-            {(activeItem=="null") && <Revenue/>}
               {validateAdmin() && <MainContent activeItem={activeItem} show={show} setShow={setShow} setActiveItem={setActiveItem} />}
             </Col>
           </Row>

@@ -104,7 +104,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="mb-0" style={{ backgroundColor: "#F5F7F8" }}>
+      <header className="mb-0" style={{ backgroundColor: "#E9EFEC" }}>
         <div className="container p-0">
           <div className="p-0 d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" className="me-5 d-flex align-items-center mb-0 link-body-emphasis text-decoration-none">

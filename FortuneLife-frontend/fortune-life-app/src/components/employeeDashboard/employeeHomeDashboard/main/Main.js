@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
-import "./Main.css";
+import styles from "./Main.module.css"; // Ensure this import path is correct
 import { FaUserPlus, FaShoppingCart, FaMoneyCheckAlt } from "react-icons/fa";
 import Modal from "../../../../utils/Modals/Modal";
 import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
 import { useNavigate } from "react-router-dom";
-import {
-  getEmployee,
-  updateEmployee,
-  validateEmployee,
-} from "../../../../services/employeeService";
+import { getEmployee, updateEmployee, validateEmployee } from "../../../../services/employeeService";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import { logout } from "../../../../services/authService";
 import AddAgent from "../../agent/AddAgent";
 import Navbar from "../navbar/Navbar";
+import { toast } from "react-toastify";
 
 const Main = () => {
   const navigate = useNavigate();
   const [addAgentModal, setAddAgentModal] = useState(false);
-  const [showEmployeeProfileModal, setShowEmployeeProfileModal] =useState(false);
+  const [showEmployeeProfileModal, setShowEmployeeProfileModal] = useState(false);
   const [isUpdate, setIsUpdate] = useState(true);
   const [employee, setEmployee] = useState();
   const [name, setName] = useState("");
@@ -32,13 +29,11 @@ const Main = () => {
     }
     fetchEmployee();
   }, [navigate, flag]);
-  useEffect(() => {}, [employee]);
 
   const fetchEmployee = async () => {
     try {
       const response = await getEmployee();
       setEmployee(response.data);
-
       setName(response.data.userDto.firstName);
     } catch (error) {
       errorToast(error.response?.data?.message);
@@ -49,7 +44,9 @@ const Main = () => {
     let id = userDto.id;
     try {
       const response = await updateEmployee(id, userDto, addressDto);
-      //successToast("Profile Updated Successfully");
+      if (response) {
+        toast.success("Profile Updated successfully");
+      }
     } catch (error) {
       errorToast(error.response?.data?.message);
     }
@@ -78,81 +75,58 @@ const Main = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="agent-main-section mt-5">
-        <div className="card">
-          <div className="card-icon">
+      
+      <div className={styles["agent-main-section"]}>
+        <div className={styles["card"]}>
+          <div className={styles["card-icon"]}>
             <FaUserPlus size={40} />
           </div>
           <h3>Agent Registration</h3>
           <p>Register a new agent to the company.</p>
-          <button className="card-btn" onClick={handleAddAgentClick}>
+          <button className={styles["card-btn"]} onClick={handleAddAgentClick}>
             Register Agent
           </button>
         </div>
 
-        <div className="card">
-          <div className="card-icon">
+        {/* <div className={styles["card"]}>
+          <div className={styles["card-icon"]}>
             <FaShoppingCart size={40} />
           </div>
           <h3>Manage Profile</h3>
           <p>Update and manage your profile details.</p>
-          <button className="card-btn" onClick={handleProfileClick}>
+          <button className={styles["card-btn"]} onClick={handleProfileClick}>
             Manage Profile
           </button>
-        </div>
+        </div> */}
 
-        <div className="card">
-          <div className="card-icon">
+        <div className={styles["card"]}>
+          <div className={styles["card-icon"]}>
             <FaMoneyCheckAlt size={40} />
           </div>
           <h3>Edit Customer Details</h3>
           <p>Edit and update customer details.</p>
-          <button className="card-btn" onClick={handleEditCustomer}>
+          <button className={styles["card-btn"]} onClick={handleEditCustomer}>
             Edit Customer
           </button>
         </div>
 
-        <div className="card">
-          <div className="card-icon">
+        <div className={styles["card"]}>
+          <div className={styles["card-icon"]}>
             <FaMoneyCheckAlt size={40} />
           </div>
           <h3>View Commission Reports</h3>
           <p>View reports on agent commissions.</p>
-          <button className="card-btn" onClick={handleViewCommissionReport}>
+          <button className={styles["card-btn"]} onClick={handleViewCommissionReport}>
             View Reports
           </button>
-        </div>
-
-        <div className="card">
-          <div className="card-icon">
-            <FaMoneyCheckAlt size={40} />
-          </div>
-          <h3>Dummy</h3>
-          <p>Manage and view your commission earnings.</p>
-          <button className="card-btn">View Commissions</button>
-        </div>
-
-        <div className="card">
-          <div className="card-icon">
-            <FaMoneyCheckAlt size={40} />
-          </div>
-          <h3>Dummy</h3>
-          <p>Manage and view your commission earnings.</p>
-          <button className="card-btn">View Commissions</button>
         </div>
 
         <Modal isOpen={addAgentModal} onClose={() => setAddAgentModal(false)}>
           <AddAgent onClose={() => setAddAgentModal(false)} />
         </Modal>
 
-        <Modal
-          isOpen={showEmployeeProfileModal}
-          onClose={() => setShowEmployeeProfileModal(false)}
-        >
-          <UserProfile
-           isUpdate={true} updateProfile={updateProfile} onClose={() => setShowEmployeeProfileModal(false)}
-          />
+        <Modal isOpen={showEmployeeProfileModal} onClose={() => setShowEmployeeProfileModal(false)}>
+          <UserProfile isUpdate={true} updateProfile={updateProfile} onClose={() => setShowEmployeeProfileModal(false)} />
         </Modal>
       </div>
     </>

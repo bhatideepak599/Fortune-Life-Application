@@ -1,8 +1,10 @@
 package com.techlabs.app.controller;
 
 import com.techlabs.app.dto.AdminDto;
+import com.techlabs.app.dto.ReportsDto;
 import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.service.AdminService;
+import com.techlabs.app.service.ReportsService;
 import com.techlabs.app.util.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +24,9 @@ public class AdminController {
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private ReportsService reportsService;
 
     @Operation(summary = "Add A New Admin ")
     @PostMapping
@@ -86,5 +92,15 @@ public class AdminController {
         String message = adminService.deleteAdminById(id);
 
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @Secured("ADMIN")
+    @Operation(summary = "Count Report")
+    @GetMapping("/count")
+    public ResponseEntity<ReportsDto> getAllCount(){
+        logger.info("Getting counts of customers, policies, agents, employees");
+        ReportsDto reportsDto = reportsService.getAllReportCount();
+
+        return new ResponseEntity<>(reportsDto, HttpStatus.OK);
     }
 }

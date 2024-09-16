@@ -1,29 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { getPolociesReport } from "../../../services/policyService";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
+import { getReportCount } from "../../../services/reportsService";
+import { toast } from "react-toastify";
+import styles from "./Revenue.module.css";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export const Revenue = () => {
   const [policyData, setPolicyData] = useState([]);
+  const [report, setReport] = useState(null);
 
   useEffect(() => {
     const fetchPolicyData = async () => {
@@ -36,6 +23,19 @@ export const Revenue = () => {
     };
 
     fetchPolicyData();
+  }, []);
+
+  useEffect(() => {
+    const fetchReportCounts = async () => {
+      try {
+        const response = await getReportCount();
+        setReport(response);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+
+    fetchReportCounts();
   }, []);
 
   const policyBuyGraphData = {
@@ -99,16 +99,76 @@ export const Revenue = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px', paddingTop: '80px' }}>
-      <div style={{ flex: '1', minWidth: '300px', height: '200px' }}>
-        <h2>Policies Bought Over Time</h2>
-        <Line data={policyBuyGraphData} options={chartOptions} />
-      </div>
+    <>
+      <div className="container mt-5">
+        {report && (
+          <>
+            <div className="card text-center">
+              <div className="card-body">
+                <h5 className="card-title">Customers</h5>
+                <div className="d-flex justify-content-center align-items-center">
+                  <i className="fas fa-user fa-3x"></i>
+                  <span className="ml-3 h4">{report.customerCount}</span>
+                </div>
+              </div>
+            </div>
 
-      <div style={{ flex: '1', minWidth: '300px', height: '200px' }}>
-        <h2>Revenue Generated Over Time</h2>
-        <Line data={revenueGraphData} options={chartOptions} />
+            <div className="card text-center mt-5">
+              <div className="card-body">
+                <h5 className="card-title">Agents</h5>
+                <div className="d-flex justify-content-center align-items-center">
+                  <i className="fas fa-user fa-3x"></i>
+                  <span className="ml-3 h4">{report.agentCount}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="card text-center mt-5">
+              <div className="card-body">
+                <h5 className="card-title">Employees</h5>
+                <div className="d-flex justify-content-center align-items-center">
+                  <i className="fas fa-user fa-3x"></i>
+                  <span className="ml-3 h4">{report.employeeCount}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="card text-center mt-5">
+              <div className="card-body">
+                <h5 className="card-title">Policies</h5>
+                <div className="d-flex justify-content-center align-items-center">
+                  <i className="fas fa-user fa-3x"></i>
+                  <span className="ml-3 h4">{report.policyCount}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="card text-center mt-5">
+              <div className="card-body">
+                <h5 className="card-title">Policies Per Customer</h5>
+                <div className="d-flex justify-content-center align-items-center">
+                  <i className="fas fa-user fa-3x"></i>
+                  <span className="ml-3 h4">{report.customerPolicyRatio}</span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between", gap: "20px", paddingTop: "80px" }}>
+              <div style={{ flex: "1", minWidth: "300px", height: "200px" }}>
+                <h2>Policies Bought Over Time</h2>
+                <Line data={policyBuyGraphData} options={chartOptions} />
+              </div>
+
+              <div style={{ flex: "1", minWidth: "300px", height: "200px" }}>
+                <h2>Revenue Generated Over Time</h2>
+                <Line data={revenueGraphData} options={chartOptions} />
+              </div>
+            </div>
+          </>
+        )}
       </div>
-    </div>
+    </>
   );
 };
+
+export default Revenue;

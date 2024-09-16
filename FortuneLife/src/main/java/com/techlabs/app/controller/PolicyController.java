@@ -8,6 +8,7 @@ import com.techlabs.app.util.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

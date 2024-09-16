@@ -11,10 +11,11 @@ import SharedTable from "../SharedTable/SharedTable";
 import Navbar from "../LandingPage/Navbar/Navbar";
 import { getPolicyByPolicyId } from "../../../services/commonService";
 import "./CustomerPolicies.module.css";
+import ViewDocumentForm from "./DocumentForm/ViewDocumentForm";
 
 const CustomerPolicies = () => {
   const [sanitizedPolicies, setSanitizedPolicies] = useState([]);
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true);
   const [urlSearchParams, setUrlSearchParams] = useSearchParams();
   const [pageSize, setPageSize] = useState(Number(urlSearchParams.get("pageSize")) || 5);
   const [pageNumber, setPageNumber] = useState(Number(urlSearchParams.get("pageNumber")) || 0);
@@ -24,6 +25,7 @@ const CustomerPolicies = () => {
   const [selectedPolicy, setSelectedPolicy] = useState("");
   const [isClaimModalOpen, setIsClaimModalOpen] = useState(false);
   const [selectedCurrentPolicy, setSelectedCurrentPolicy] = useState(null);
+  const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
 
   const searchRef = useRef();
   const navigate = useNavigate();
@@ -220,9 +222,25 @@ const CustomerPolicies = () => {
     navigate(`${policyId}/payment-details`);
   };
 
+  const handleViewRejectedDocs = async (policyId) => {
+    setSelectedPolicy(policyId);
+    setIsDocumentModalOpen(true);
+
+    try {
+      const response = await getPolicyByPolicyId(policyId);
+      if (response) {
+        console.log(response);
+        setSelectedCurrentPolicy(response);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   const actions = {
     claim: handleClaim,
     payment: handlePayment,
+    view: handleViewRejectedDocs,
   };
 
   const refetchPolicies = () => {
@@ -313,6 +331,33 @@ const CustomerPolicies = () => {
           ) : (
             <div className="modal-message-container py-5 border-5 my-5 ms-5">
               <h1>Policy not verified yet, cannot claim</h1>
+            </div>
+          )}
+        </Modal>
+
+        <Modal
+          isOpen={isDocumentModalOpen}
+          onClose={() => {
+            setIsDocumentModalOpen(false);
+            setSelectedCurrentPolicy(null);
+          }}
+          width="60%"
+          height="100%"
+        >
+          {selectedCurrentPolicy === null ? (
+            <div>Loading...</div>
+          ) : selectedCurrentPolicy.verified === false ? (
+            <ViewDocumentForm
+              policyId={selectedPolicy}
+              onClose={() => {
+                setIsDocumentModalOpen(false);
+                setSelectedCurrentPolicy(null);
+                refetchPolicies();
+              }}
+            />
+          ) : (
+            <div className="modal-message-container py-5 border-5 my-5 ms-5">
+              <h1>Policy already verified , no unverfied documents</h1>
             </div>
           )}
         </Modal>

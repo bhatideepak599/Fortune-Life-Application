@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { sendOtp, submitNewPassword } from "../../../services/authService";
 import styles from "./ForgotPassowrd.module.css";
+import Navbar from "../CommonNavbarFooter/Navbar";
 
 const ForgotPassword = () => {
   const [state, setState] = useState({
@@ -52,12 +53,11 @@ const ForgotPassword = () => {
 
     try {
       // Append country code to the mobile number with a space
-      const fullPhoneNumber =
-        state.sourceType === "phoneNumber" ? `${state.countryCode} ${state.sourceValue}` : state.sourceValue;
+      const fullPhoneNumber = state.sourceType === "phoneNumber" ? `${state.countryCode} ${state.sourceValue}` : state.sourceValue;
 
       const message = await sendOtp(state.sourceType, fullPhoneNumber);
       toast.info(message);
-      setOtpSent(true); 
+      setOtpSent(true);
       setStep(2);
     } catch (error) {
       toast.error(error.message);
@@ -89,80 +89,69 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Forgot Password</h2>
-      <div className={styles.formGroup}>
-        <label className={styles.label}>Username:</label>
-        <input type="text" className={styles.input} name="userName" value={state.userName} onChange={handleChange} />
-      </div>
-      <div className={styles.formGroup}>
-        <label className={styles.label}>Send OTP via:</label>
-        <select className={styles.select} name="sourceType" value={state.sourceType} onChange={handleChange}>
-          <option value="">Select Method</option>
-          <option value="email">Email</option>
-          <option value="phoneNumber">Mobile Number</option>
-        </select>
-      </div>
-      {state.sourceType && !otpSent && (
+    <>
+      <Navbar />
+      <div className={styles.container}>
+        <h2 className={styles.title}>Forgot Password</h2>
         <div className={styles.formGroup}>
-          {state.sourceType === "phoneNumber" && (
-            <>
-              <label className={styles.label}>Mobile Number:</label>
-              <div className={styles.inlineGroup}>
-                <select className={styles.selectCountryCode} name="countryCode" value={state.countryCode} onChange={handleChange}>
-                  <option value="+1">+1 (USA)</option>
-                  <option value="+44">+44 (UK)</option>
-                  <option value="+91">+91 (India)</option>
-                  {/* Add more country codes as needed */}
-                </select>
-                <input
-                  type="text"
-                  className={styles.input}
-                  name="sourceValue"
-                  placeholder="Mobile Number"
-                  value={state.sourceValue}
-                  onChange={handleChange}
-                />
-                <button className={styles.button} onClick={handleSendOtp}>
-                  {otpSent ? "Resend OTP" : "Send OTP"}
-                </button>
-              </div>
-            </>
-          )}
-          {state.sourceType === "email" && (
-            <>
-              <label className={styles.label}>Email:</label>
-              <div className={styles.inlineGroup}>
-                <input
-                  type="text"
-                  className={styles.input}
-                  name="sourceValue"
-                  placeholder="Email"
-                  value={state.sourceValue}
-                  onChange={handleChange}
-                />
-                <button className={styles.button} onClick={handleSendOtp}>
-                  {otpSent ? "Resend OTP" : "Send OTP"}
-                </button>
-              </div>
-            </>
-          )}
+          <label className={styles.label}>Username:</label>
+          <input type="text" className={styles.input} name="userName" value={state.userName} onChange={handleChange} />
         </div>
-      )}
-      {step === 2 && (
         <div className={styles.formGroup}>
-          <label className={styles.label}>OTP:</label>
-          <input type="text" className={styles.input} name="otpReceived" value={state.otpReceived} onChange={handleChange} />
-          <label className={styles.label}>New Password:</label>
-          <input type="password" className={styles.input} name="password" value={state.password} onChange={handleChange} />
-          <label className={styles.label}>Confirm New Password:</label>
-          <input type="password" className={styles.input} name="confirmPassword" value={state.confirmPassword} onChange={handleChange} />
-          <button className={styles.button} onClick={handleVerifyOtpAndResetPassword}>
-            Reset Password
-          </button>
+          <label className={styles.label}>Send OTP via:</label>
+          <select className={styles.select} name="sourceType" value={state.sourceType} onChange={handleChange}>
+            <option value="">Select Method</option>
+            <option value="email">Email</option>
+            <option value="phoneNumber">Mobile Number</option>
+          </select>
         </div>
-      )}
-    </div>
+        {state.sourceType && !otpSent && (
+          <div className={styles.formGroup}>
+            {state.sourceType === "phoneNumber" && (
+              <>
+                <label className={styles.label}>Mobile Number:</label>
+                <div className={styles.inlineGroup}>
+                  <select className={styles.selectCountryCode} name="countryCode" value={state.countryCode} onChange={handleChange}>
+                    <option value="+1">+1 (USA)</option>
+                    <option value="+44">+44 (UK)</option>
+                    <option value="+91">+91 (India)</option>
+                    {/* Add more country codes as needed */}
+                  </select>
+                  <input type="text" className={styles.input} name="sourceValue" placeholder="Mobile Number" value={state.sourceValue} onChange={handleChange} />
+                  <button className={styles.button} onClick={handleSendOtp}>
+                    {otpSent ? "Resend OTP" : "Send OTP"}
+                  </button>
+                </div>
+              </>
+            )}
+            {state.sourceType === "email" && (
+              <>
+                <label className={styles.label}>Email:</label>
+                <div className={styles.inlineGroup}>
+                  <input type="text" className={styles.input} name="sourceValue" placeholder="Email" value={state.sourceValue} onChange={handleChange} />
+                  <button className={styles.button} onClick={handleSendOtp}>
+                    {otpSent ? "Resend OTP" : "Send OTP"}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+        {step === 2 && (
+          <div className={styles.formGroup}>
+            <label className={styles.label}>OTP:</label>
+            <input type="text" className={styles.input} name="otpReceived" value={state.otpReceived} onChange={handleChange} />
+            <label className={styles.label}>New Password:</label>
+            <input type="password" className={styles.input} name="password" value={state.password} onChange={handleChange} />
+            <label className={styles.label}>Confirm New Password:</label>
+            <input type="password" className={styles.input} name="confirmPassword" value={state.confirmPassword} onChange={handleChange} />
+            <button className={styles.button} onClick={handleVerifyOtpAndResetPassword}>
+              Reset Password
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

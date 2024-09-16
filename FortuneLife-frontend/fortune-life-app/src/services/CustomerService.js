@@ -69,7 +69,6 @@ export const buyNewPolicyByAgent = async ({ customerId, schemeId, agentId, dataT
   }
 };
 
-
 export const updateCustomer = async ({ userDto, addressDto }) => {
   try {
     const token = localStorage.getItem("accessToken");
@@ -101,7 +100,6 @@ export const updateCustomer = async ({ userDto, addressDto }) => {
     throw error;
   }
 };
-
 
 export const updateCustomerByAdmin = async (customer) => {
   const accessToken = localStorage.getItem("accessToken");
@@ -312,3 +310,4 @@ export const addNewQuery = async (queryData) => {
     throw error.response?.data || "Error creating new query.";
   }
 };
+

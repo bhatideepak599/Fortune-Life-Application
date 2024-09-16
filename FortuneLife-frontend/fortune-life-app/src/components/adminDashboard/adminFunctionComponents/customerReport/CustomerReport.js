@@ -5,8 +5,8 @@ import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
 import UpdateCustomer from "./updateCustomer/UpdateCustomer";
 import Modal from "../../../sharedComponents/modal/Modal";
-import {Button, Dropdown } from "react-bootstrap";
-import { FaDownload } from 'react-icons/fa';
+import { Button, Dropdown } from "react-bootstrap";
+import { FaDownload } from "react-icons/fa";
 import { getCustomersExcelReport, getCustomersPdfReport } from "../../../../services/reportsService";
 import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
@@ -41,60 +41,46 @@ const CustomerReport = () => {
     mobileNumber: "",
     email: "",
     active: "",
-    verified: ""
+    verified: "",
   });
 
-  useEffect(()=>{
-   
-      const queryParams = new URLSearchParams(location.search);
-      const initialPageSize = parseInt(queryParams.get("pageSize")) || 5;
-      const initialPageNumber = parseInt(queryParams.get("pageNumber")) || 0;
-      const initialSearchType = queryParams.get("searchType") || "Search By:";
-      const initialSearchParams = {
-        id: queryParams.get("id"),
-        name: queryParams.get("name") || "",
-        username: queryParams.get("username") || "",
-        mobileNumber: queryParams.get("mobileNumber") || "",
-        email: queryParams.get("email") || "",
-        active: queryParams.get("active") || "",
-        verified: queryParams.get("verified") || "",
-      };
-      setPageSize(initialPageSize);
-      setPageNumber(initialPageNumber);
-      setSearchType(initialSearchType);
-      setSearchParams(initialSearchParams);
-  
-  },[])
   useEffect(() => {
-    fetchCustomers(
-     );
-    
-  }, [pageSize, pageNumber, searchParams,flag]);
+    const queryParams = new URLSearchParams(location.search);
+    const initialPageSize = parseInt(queryParams.get("pageSize")) || 5;
+    const initialPageNumber = parseInt(queryParams.get("pageNumber")) || 0;
+    const initialSearchType = queryParams.get("searchType") || "Search By:";
+    const initialSearchParams = {
+      id: queryParams.get("id"),
+      name: queryParams.get("name") || "",
+      username: queryParams.get("username") || "",
+      mobileNumber: queryParams.get("mobileNumber") || "",
+      email: queryParams.get("email") || "",
+      active: queryParams.get("active") || "",
+      verified: queryParams.get("verified") || "",
+    };
+    setPageSize(initialPageSize);
+    setPageNumber(initialPageNumber);
+    setSearchType(initialSearchType);
+    setSearchParams(initialSearchParams);
+  }, []);
+  useEffect(() => {
+    fetchCustomers();
+  }, [pageSize, pageNumber, searchParams, flag]);
 
   const fetchCustomers = async () => {
     try {
-      const response = await getAllCustomers( pageSize,
-        pageNumber,
-        searchParams);
+      const response = await getAllCustomers(pageSize, pageNumber, searchParams);
       setCustomersList(response.content); // Set the response content to customersList
       setTotalPages(response.totalPages);
 
-      const keys = [
-        "id",
-        "userDto.firstName",
-        "userDto.lastName",
-        "userDto.mobileNumber",
-        "active",
-        "userDto.email",
-        "userDto.username",
-      ];
+      const keys = ["id", "userDto.firstName", "userDto.lastName", "userDto.mobileNumber", "active", "userDto.email", "userDto.username"];
 
       const newSanitizedData = sanitizedData({
         data: response.content,
         keysTobeSelected: keys,
       });
 
-     // console.log("Sanitized Data:", newSanitizedData);
+      // console.log("Sanitized Data:", newSanitizedData);
       setCustomers(newSanitizedData);
       setTotalPages(response.totalPages);
       const queryParams = new URLSearchParams();
@@ -115,8 +101,8 @@ const CustomerReport = () => {
     setSearchParams((prevParams) => ({ ...prevParams, [type]: "" }));
   };
   const handleSearch = () => {
-    setCustomers([])
-    setPageNumber(0); 
+    setCustomers([]);
+    setPageNumber(0);
     fetchCustomers();
   };
 
@@ -128,7 +114,7 @@ const CustomerReport = () => {
       mobileNumber: "",
       email: "",
       active: "",
-      verified: ""
+      verified: "",
     });
     setSearchType("");
     setPageNumber(0);
@@ -147,14 +133,12 @@ const CustomerReport = () => {
   const handleSearchChange = (e) => {
     setSearchParams({
       ...searchParams,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
   const getCustomerByIdFromList = (id) => {
     return customersList.find((customer) => customer.id === id);
   };
-
-
 
   const handleUpdateClick = (id) => {
     const customer = getCustomerByIdFromList(id);
@@ -163,26 +147,26 @@ const CustomerReport = () => {
   };
 
   const handleDeleteClick = async (id) => {
-    try{
-      const response=await deleteCustomer(id);
-      if(response){
-        warnToast("Customer Deleted.")
-        setFlag(!flag)
+    try {
+      const response = await deleteCustomer(id);
+      if (response) {
+        warnToast("Customer Deleted.");
+        setFlag(!flag);
       }
-    }catch(error){
-      errorToast(error.response?.data?.message)
+    } catch (error) {
+      errorToast(error.response?.data?.message);
     }
   };
 
-  const handleActivateClick =async (id) => {
-    try{
-      const response=await activateCustomer(id);
-      if(response){
-        successToast("Customer Activated.")
-        setFlag(!flag)
+  const handleActivateClick = async (id) => {
+    try {
+      const response = await activateCustomer(id);
+      if (response) {
+        successToast("Customer Activated.");
+        setFlag(!flag);
       }
-    }catch(error){
-      errorToast(error.response?.data?.message)
+    } catch (error) {
+      errorToast(error.response?.data?.message);
     }
   };
 
@@ -195,7 +179,7 @@ const CustomerReport = () => {
       let response;
       let blob;
       let fileName;
-  
+
       if (format === "pdf") {
         response = await getCustomersPdfReport();
         if (!response || !response.data) {
@@ -211,31 +195,25 @@ const CustomerReport = () => {
         blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
         fileName = "customers_report.xlsx";
       }
-  
-      
+
       if (response.data.byteLength === 0) {
         throw new Error("The downloaded file is empty");
       }
-  
-    
-      const link = document.createElement('a');
+
+      const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = fileName;
       link.click();
-  
-     
+
       window.URL.revokeObjectURL(link.href);
-  
-      
-     // successToast(`${format.toUpperCase()} Downloaded Successfully`);
+
+      // successToast(`${format.toUpperCase()} Downloaded Successfully`);
     } catch (error) {
       console.error("Error during download:", error);
       errorToast(error.message || "Error downloading the file");
     }
   };
-  
-  
-  
+
   const actions = {
     activate: handleActivateClick,
     delete: handleDeleteClick,
@@ -243,69 +221,49 @@ const CustomerReport = () => {
   };
   const styles = {
     container: {
-      display: 'flex',
-      justifyContent: 'center',
-      marginTop: '20px',
-       // Adjust as needed
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "20px",
+      // Adjust as needed
     },
   };
   return (
-    <div>
-    <h2 className="text-center mb-4">Customers List</h2>
-  
-    <div className="d-flex justify-content-between align-items-center mb-4">
-      <SearchComponent
-        searchType={searchType}
-        searchParams={searchParams}
-        handleSearchTypeChange={handleSearchTypeChange}
-        handleSearchChange={handleSearchChange}
-        handleSearch={handleSearch}
-        handleReset={handleReset}
-      />
-  
-      <div className="d-flex align-items-center">
-        <Dropdown onSelect={handleFormatChange}>
-          <Dropdown.Toggle id="dropdown-basic">
-            {format.toUpperCase()}
-          </Dropdown.Toggle>
-  
-          <Dropdown.Menu>
-            <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
-            <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        <FaDownload size={18} className="ms-2" onClick={handleDownload} />
+    <div className="container">
+      <h2 className="text-center mb-4">Customers List</h2>
+
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <SearchComponent searchType={searchType} searchParams={searchParams} handleSearchTypeChange={handleSearchTypeChange} handleSearchChange={handleSearchChange} handleSearch={handleSearch} handleReset={handleReset} />
+
+        <div className="d-flex align-items-center">
+          <Dropdown onSelect={handleFormatChange}>
+            <Dropdown.Toggle id="dropdown-basic">{format.toUpperCase()}</Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
+              <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <FaDownload size={18} className="ms-2" onClick={handleDownload} />
+        </div>
       </div>
+
+      <CommonTable data={customers} actions={actions} />
+
+      <div className="table-footer">
+        <Pagination pager={pageObject} onPageChange={(newPage) => pageObject.setPageNumber(newPage)} />
+      </div>
+
+      <div style={styles.container}>
+        <Button onClick={() => navigate(-1)} variant="secondary">
+          Back
+        </Button>
+      </div>
+
+      <Modal isOpen={updateCustomerModal} onClose={() => setUpdateCustomerModal(false)}>
+        <UpdateCustomer customer={customerToUpdate} flag={flag} setFlag={setFlag} onClose={() => setUpdateCustomerModal(false)} />
+      </Modal>
     </div>
-  
-    <CommonTable data={customers} actions={actions} />
-  
-    <div className="table-footer">
-      <Pagination
-        pager={pageObject}
-        onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
-      />
-    </div>
-  
-    <div style={styles.container}>
-      <Button onClick={() => navigate(-1)} variant="secondary">
-        Back
-      </Button>
-    </div>
-  
-    <Modal
-      isOpen={updateCustomerModal}
-      onClose={() => setUpdateCustomerModal(false)}
-    >
-      <UpdateCustomer
-        customer={customerToUpdate}
-        flag={flag}
-        setFlag={setFlag}
-        onClose={() => setUpdateCustomerModal(false)}
-      />
-    </Modal>
-  </div>
-    );
+  );
 };
 
 export default CustomerReport;

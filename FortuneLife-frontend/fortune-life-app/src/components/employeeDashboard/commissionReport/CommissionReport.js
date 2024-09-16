@@ -24,7 +24,7 @@ const CommissionReport = () => {
   });
 
   useEffect(() => {
-    if (  validateEmployee()) {
+    if (validateEmployee()) {
       warnToast("Unauthorized Access! Login First");
       navigate("/");
       return;
@@ -39,7 +39,6 @@ const CommissionReport = () => {
         agentId: queryParams.get("agentId") || "",
         commissionType: queryParams.get("commissionType") || "",
         customerName: queryParams.get("customerName") || "",
-       
       };
       setPageSize(initialPageSize);
       setPageNumber(initialPageNumber);
@@ -51,26 +50,20 @@ const CommissionReport = () => {
   useEffect(() => {
     const fetchCommissions = async () => {
       try {
-        const response = await getAllCommissions(
-          pageSize,
-          pageNumber,
-          searchParams
-        );
+        const response = await getAllCommissions(pageSize, pageNumber, searchParams);
         setCommissions(response.content);
         setTotalPages(response.totalPages);
         const queryParams = new URLSearchParams();
         queryParams.set("pageSize", pageSize);
         queryParams.set("pageNumber", pageNumber);
-  
+
         Object.keys(searchParams).forEach((key) => {
           if (searchParams[key]) queryParams.set(key, searchParams[key]);
         });
-  
+
         navigate({ search: queryParams.toString() }, { replace: true });
       } catch (error) {
-        errorToast(
-          error.response?.data?.message || "Failed to fetch commissions"
-        );
+        errorToast(error.response?.data?.message || "Failed to fetch commissions");
       }
     };
     fetchCommissions();
@@ -78,11 +71,7 @@ const CommissionReport = () => {
 
   const fetchCommissions = async () => {
     try {
-      const response = await getAllCommissions(
-        pageSize,
-        pageNumber,
-        searchParams
-      );
+      const response = await getAllCommissions(pageSize, pageNumber, searchParams);
       setCommissions(response.content);
       setTotalPages(response.totalPages);
       const queryParams = new URLSearchParams();
@@ -95,9 +84,7 @@ const CommissionReport = () => {
 
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
-      errorToast(
-        error.response?.data?.message || "Failed to fetch commissions"
-      );
+      errorToast(error.response?.data?.message || "Failed to fetch commissions");
     }
   };
 
@@ -109,20 +96,20 @@ const CommissionReport = () => {
     setSearchParams((prevParams) => ({ ...prevParams, [type]: "" }));
   };
   const handleSearch = () => {
-    setCommissions([])
-    setPageNumber(0); 
+    setCommissions([]);
+    setPageNumber(0);
     fetchCommissions();
   };
 
   const handleReset = () => {
     setSearchParams({
-        id: "",
-        policyId: "",
-        agentId: "",
-        commissionType: "",
-        customerName: "",
+      id: "",
+      policyId: "",
+      agentId: "",
+      commissionType: "",
+      customerName: "",
     });
-     setSearchType("");
+    setSearchType("");
     setPageNumber(0);
     setPageSize(5);
 
@@ -139,20 +126,14 @@ const CommissionReport = () => {
   const handleSearchChange = (e) => {
     setSearchParams({
       ...searchParams,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   return (
-    <div>
+    <div className="container">
       <h2 style={{ textAlign: "center" }}>Commission Report</h2>
-     <SearchComponent
-      searchType={searchType}
-      searchParams={searchParams}
-      handleSearchTypeChange={handleSearchTypeChange}
-      handleSearchChange={handleSearchChange}
-      handleSearch={handleSearch}
-      handleReset={handleReset}/>
+      <SearchComponent searchType={searchType} searchParams={searchParams} handleSearchTypeChange={handleSearchTypeChange} handleSearchChange={handleSearchChange} handleSearch={handleSearch} handleReset={handleReset} />
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -187,16 +168,12 @@ const CommissionReport = () => {
           )}
         </tbody>
       </Table>
-      <Pagination
-        pager={pageObject}
-        onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
-      />
+      <Pagination pager={pageObject} onPageChange={(newPage) => pageObject.setPageNumber(newPage)} />
       <div className="d-flex justify-content-center mt-3">
         <Button onClick={() => navigate(-1)} variant="secondary">
           Back
         </Button>
       </div>
-
     </div>
   );
 };

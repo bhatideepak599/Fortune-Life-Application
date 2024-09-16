@@ -212,7 +212,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<InsurancePolicy> policies = insurancePolicyRepository.findAllPoliciesBasedOnSearch(id, customerId, agentId,
 				schemeId, schemeName, customerName, policyStatus, pageable);
-//	    
+//
 //	    Page<InsurancePolicy> policies = insurancePolicyRepository.findPoliciesWithJoins(id, pageable);
 		if (policies.isEmpty()) {
 			throw new FortuneLifeException("No Policies Found!");
@@ -270,7 +270,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 		Page<InsurancePolicy> policies = insurancePolicyRepository.findAllPoliciesBasedOnSearch(id, customerId, agentId,
 				null, null, name, policyStatus, pageable);
 
-		
+
 		if (policies.isEmpty()) {
 			throw new FortuneLifeException("No Policies Found!");
 		}
@@ -285,4 +285,40 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 	public List<PolicyReport> getPolicyReport() {
 		return insurancePolicyRepository.getPolicyReport();
 	}
+
+//	@Override
+//	public InsurancePolicyResponseDto verifyPolicy(InsurancePolicyResponseDto policyResponseDto) {
+//		InsurancePolicy insurancePolicy = insurancePolicyRepository.findById(policyResponseDto.getId())
+//				.orElseThrow(() -> new FortuneLifeException("Policy with ID : " + policyResponseDto.getId() + " cannot be found"));
+//
+//		if (insurancePolicy.getVerified()) {
+//			throw new FortuneLifeException("Policy Already verified");
+//		}
+//
+//		Set<SubmittedDocumentDto> submittedDocumentDtos = policyResponseDto.getSubmittedDocumentsDto();
+//		Set<SubmittedDocument> submittedDocuments = insurancePolicy.getSubmittedDocuments();
+//
+//		for (SubmittedDocumentDto submittedDocumentDto : submittedDocumentDtos) {
+//			submittedDocuments.stream()
+//					.filter(submittedDocument -> submittedDocument.getId().equals(submittedDocumentDto.getId()))
+//					.forEach(submittedDocument -> {
+//						submittedDocument.setDocumentImage(submittedDocumentDto.getDocumentImage());
+//						submittedDocument.setDocumentStatus(submittedDocumentDto.getDocumentStatus());
+//					});
+//		}
+//
+//		boolean allApproved = submittedDocuments.stream()
+//				.noneMatch(doc -> doc.getDocumentStatus().equalsIgnoreCase("REJECTED"));
+//
+//		insurancePolicy.setVerified(allApproved);
+//		insurancePolicy.setSubmittedDocuments(submittedDocuments);
+//
+//		insurancePolicy = insurancePolicyRepository.save(insurancePolicy);
+//
+//		return insurancePolicyMapper.entityToDto(insurancePolicy);
+//	}
+
+
+
+
 }
