@@ -98,7 +98,7 @@ export const getAllClient = async (pageSize, pageNumber, searchParams) => {
       page: pageNumber,
       size: pageSize,
     };
-    console.log("aya");
+
     
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy/all-clients`, {
       headers: {
@@ -112,3 +112,21 @@ export const getAllClient = async (pageSize, pageNumber, searchParams) => {
     throw error;
   }
 };
+
+export const getPolociesReport=async()=>{
+  try {
+    const accessToken1 = `Bearer ${localStorage.getItem("accessToken")}`;
+   
+    
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy/policy-report`, {
+      headers: {
+        Authorization: accessToken1,
+      }
+     
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

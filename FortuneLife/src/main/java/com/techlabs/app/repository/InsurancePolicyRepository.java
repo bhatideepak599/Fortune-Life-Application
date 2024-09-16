@@ -1,6 +1,7 @@
 package com.techlabs.app.repository;
 
 
+import com.techlabs.app.dto.PolicyReport;
 import com.techlabs.app.entity.InsurancePolicy;
 import com.techlabs.app.entity.InsuranceScheme;
 
@@ -10,6 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy, Long> {
@@ -36,7 +39,9 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
                                                        @Param("policyStatus") String policyStatus,
                                                        Pageable pageable);
 
-
+    @Query("SELECT p.issueDate AS date, COUNT(p) AS policiesBought, SUM(p.premiumAmount) AS totalRevenue " +
+            "FROM InsurancePolicy p GROUP BY p.issueDate ORDER BY p.issueDate ASC")
+    List<PolicyReport> getPolicyReport();
 
 
 

@@ -7,7 +7,7 @@ public class ForgetPassword {
     private String userName;
     private String sourceType;
     private String sourceValue;
-    private String otpRecieved;
+    private String otpReceived;
     private String password;
 
 }

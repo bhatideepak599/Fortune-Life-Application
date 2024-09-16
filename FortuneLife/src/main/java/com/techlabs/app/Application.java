@@ -26,8 +26,6 @@ public class Application {
 		http.csrf(csrf -> csrf.disable())
 				.cors(withDefaults());  // Use the CORS configuration defined below
 
-		// Other security configurations (like authentication, authorization) can go here
-
 		return http.build();
 	}
 

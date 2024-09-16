@@ -2,6 +2,7 @@ package com.techlabs.app.controller;
 
 import com.techlabs.app.dto.CommissionDto;
 import com.techlabs.app.dto.InsurancePolicyResponseDto;
+import com.techlabs.app.dto.PolicyReport;
 import com.techlabs.app.service.InsurancePolicyService;
 import com.techlabs.app.util.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/fortuneLife/policy")
@@ -93,5 +96,12 @@ public class PolicyController {
 
 		return new ResponseEntity<>(policies, HttpStatus.OK);
 	}
-
+	@Secured("ADMIN")
+	@Operation(summary = "Get Policy Report")
+	@GetMapping("/policy-report")
+	public ResponseEntity<List<PolicyReport> >getPolicyReport() {
+		logger.info("Fetching Policies report");
+		List<PolicyReport> policyReport = policyService.getPolicyReport();
+		return new ResponseEntity<>(policyReport, HttpStatus.OK);
+	}
 }

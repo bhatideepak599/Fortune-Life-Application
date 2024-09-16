@@ -263,6 +263,8 @@ public class AuthServiceImpl implements AuthService {
     }
     @Override
     public String forgetPassWord(ForgetPassword forgetPassword) {
+
+        System.out.println(forgetPassword+"====================================");
         User user = userRepository
                 .findUserByUsernameOrEmail(forgetPassword.getUserName(), forgetPassword.getUserName())
                 .orElseThrow(() -> new UserRelatedException(
@@ -272,7 +274,7 @@ public class AuthServiceImpl implements AuthService {
             throw new UserRelatedException("User is not active");
         }
         if(forgetPassword.getSourceType().equalsIgnoreCase("mobileNumber")){
-            String mobileNumber= forgetPassword.getSourceValue().substring(3);
+            String mobileNumber= forgetPassword.getSourceValue();
             if(!user.getMobileNumber().equalsIgnoreCase(mobileNumber))
                 throw new FortuneLifeException("No User Found With Mobile Number:"+mobileNumber);
         }
@@ -284,9 +286,10 @@ public class AuthServiceImpl implements AuthService {
         }
         Otp otp=otpRepository.findById(forgetPassword.getSourceValue())
                         .orElseThrow(()-> new FortuneLifeException("Invalid Email or Phone Number"));
-        boolean check = otp.getOtpCode().equalsIgnoreCase(forgetPassword.getOtpRecieved());
+        boolean check = otp.getOtpCode().equalsIgnoreCase(forgetPassword.getOtpReceived());
         if(!check) {
-            otpRepository.delete(otp);
+            otp.incrementAttemptCount();
+           // otpRepository.delete(otp);
             throw new FortuneLifeException("Invalid Otp");
         }
         if(otp.hasExceededMaxAttempts()){

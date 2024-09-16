@@ -6,6 +6,7 @@ import AgentReport from "./agentReport/AgentReport";
 import AgentwiseCommissionReport from "./agentwiseCommissionReport/AgentwiseCommissionReport";
 import { Withdrawal } from "./withdrawal/Withdrawal";
 import { AllWithdrawals } from "./withdrawal/AllWithdrawals";
+import { Revenue } from "../revenue/Revenue";
 
 const MainContent = ({ activeItem }) => {
   const renderSection = () => {
@@ -25,7 +26,7 @@ const MainContent = ({ activeItem }) => {
       case "Commission withdrawal report":
         return <AllWithdrawals />;
       default:
-        return <h2>Select a section</h2>;
+        return <Revenue/>;
     }
   };
 

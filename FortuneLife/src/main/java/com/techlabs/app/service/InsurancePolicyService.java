@@ -4,9 +4,12 @@ import com.techlabs.app.dto.CommissionDto;
 import com.techlabs.app.dto.InsurancePolicyDto;
 import com.techlabs.app.dto.InsurancePolicyResponseDto;
 
+import com.techlabs.app.dto.PolicyReport;
 import com.techlabs.app.util.PageResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 public interface InsurancePolicyService {
 
@@ -28,6 +31,8 @@ public interface InsurancePolicyService {
 
 	PageResponse<InsurancePolicyResponseDto> getAllPoliciesUnderAnAgent(Long id, Long customerId, String name,
 			String policyStatus, int page, int size, HttpServletRequest request);
+
+	 List<PolicyReport> getPolicyReport();
 
 
 }

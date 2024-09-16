@@ -56,7 +56,7 @@ public class OtpService {
             String subject = "Your OTP for Password Reset Request";
             mailService.mailWithAttachment(sourceValue, subject, messageBody);
         } else if (sourceType.equalsIgnoreCase("phoneNumber")) {
-
+            otp.setSource(sourceValue.substring(4));
             Message message = Message.creator(
                     new PhoneNumber(sourceValue),
                     new PhoneNumber(twilioPhoneNumber),

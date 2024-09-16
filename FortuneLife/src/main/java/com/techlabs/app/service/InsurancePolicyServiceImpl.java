@@ -281,5 +281,8 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 		return new PageResponse<>(response, policies.getNumber(), policies.getNumberOfElements(),
 				policies.getTotalElements(), policies.getTotalPages(), policies.isLast());
 	}
-
+	@Override
+	public List<PolicyReport> getPolicyReport() {
+		return insurancePolicyRepository.getPolicyReport();
+	}
 }
