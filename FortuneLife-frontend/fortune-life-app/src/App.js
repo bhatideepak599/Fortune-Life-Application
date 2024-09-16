@@ -33,6 +33,7 @@ import { AllQueries } from "./components/adminDashboard/adminFunctionComponents/
 import { AllQueriesForEmployee } from "./components/employeeDashboard/allQueries/AllQueriesForEmployee";
 import { ViewClients } from "./components/agentDashboard/landingPage/viewClients/ViewClients";
 import ForgotPassword from "./components/sharedComponents/ForgotPassword/ForgotPassword";
+import AllPolicies from "./components/employeeDashboard/AllPolicies/AllPolicies";
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
         <Route exact path="/view-queries-employee" element={<AllQueriesForEmployee />} />
         <Route exact path="/view-clients" element={<ViewClients />} />
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
+        <Route exact path="/all-policies" element={<AllPolicies />} />
       </Routes>
     </>
   );

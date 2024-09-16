@@ -56,7 +56,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    successToast("Logged Out.");
+    toast.success("Logged Out.");
     navigate("/");
   };
 
@@ -66,6 +66,10 @@ const Navbar = () => {
 
   const handleViewQuries = () => {
     navigate("/view-queries-employee");
+  };
+
+  const handlePolicies = () => {
+    navigate("/all-policies");
   };
 
   return (
@@ -79,13 +83,17 @@ const Navbar = () => {
             <a href="/employee-dashboard">Home</a>
           </li>
           <li>
-            <a href="#" onClick={handleViewQuries}>View Queries</a>
+            <a href="#" onClick={handleViewQuries}>
+              View Queries
+            </a>
           </li>
           <li>
-            <a href="#">Policies</a>
+            <a href="/all-policies" onClick={handlePolicies}>
+              Policies
+            </a>
           </li>
           <li className={styles.dropdown}>
-            <a href="#">More</a>
+            <a href="#">{name}</a>
             <div className={styles.dropdownContent}>
               <a href="#" onClick={handleProfileClick}>
                 Profile

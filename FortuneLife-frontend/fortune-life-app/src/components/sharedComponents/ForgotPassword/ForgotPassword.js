@@ -12,7 +12,7 @@ const ForgotPassword = () => {
     otpReceived: "",
     password: "",
     confirmPassword: "",
-    countryCode: "+1", // Default country code
+    countryCode: "+1",
   });
   const [step, setStep] = useState(1);
   const [otpSent, setOtpSent] = useState(false);
@@ -20,12 +20,11 @@ const ForgotPassword = () => {
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
 
-    // Reset OTP state and clear the sourceValue if sourceType changes
     if (e.target.name === "sourceType") {
       setOtpSent(false);
       setState((prevState) => ({
         ...prevState,
-        sourceValue: "", // Clear the email or mobile input when sourceType changes
+        sourceValue: "",
       }));
     }
   };
@@ -52,7 +51,6 @@ const ForgotPassword = () => {
     }
 
     try {
-      // Append country code to the mobile number with a space
       const fullPhoneNumber = state.sourceType === "phoneNumber" ? `${state.countryCode} ${state.sourceValue}` : state.sourceValue;
 
       const message = await sendOtp(state.sourceType, fullPhoneNumber);
@@ -73,7 +71,7 @@ const ForgotPassword = () => {
       const message = await submitNewPassword(state);
       toast.success(message);
       setStep(1);
-      setOtpSent(false); // Reset OTP state
+      setOtpSent(false);
       setState({
         userName: "",
         sourceType: "",
@@ -118,7 +116,7 @@ const ForgotPassword = () => {
                     {/* Add more country codes as needed */}
                   </select>
                   <input type="text" className={styles.input} name="sourceValue" placeholder="Mobile Number" value={state.sourceValue} onChange={handleChange} />
-                  <button className={styles.button} onClick={handleSendOtp}>
+                  <button className={styles.button} onClick={handleSendOtp} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
                     {otpSent ? "Resend OTP" : "Send OTP"}
                   </button>
                 </div>
@@ -129,7 +127,7 @@ const ForgotPassword = () => {
                 <label className={styles.label}>Email:</label>
                 <div className={styles.inlineGroup}>
                   <input type="text" className={styles.input} name="sourceValue" placeholder="Email" value={state.sourceValue} onChange={handleChange} />
-                  <button className={styles.button} onClick={handleSendOtp}>
+                  <button className={styles.button} onClick={handleSendOtp} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
                     {otpSent ? "Resend OTP" : "Send OTP"}
                   </button>
                 </div>
@@ -145,7 +143,7 @@ const ForgotPassword = () => {
             <input type="password" className={styles.input} name="password" value={state.password} onChange={handleChange} />
             <label className={styles.label}>Confirm New Password:</label>
             <input type="password" className={styles.input} name="confirmPassword" value={state.confirmPassword} onChange={handleChange} />
-            <button className={styles.button} onClick={handleVerifyOtpAndResetPassword}>
+            <button className={styles.button} onClick={handleVerifyOtpAndResetPassword} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
               Reset Password
             </button>
           </div>

@@ -45,6 +45,12 @@ const SharedTable = ({ data, actions }) => {
                       Claim
                     </button>
                   )}
+
+                  {actions.view && (
+                    <button className="btn btn-secondary btn-sm custom-claim-btn my-1" onClick={() => actions.view(row[primaryKey])}>
+                      View Documents
+                    </button>
+                  )}
                 </td>
               )}
             </tr>
@@ -57,6 +63,7 @@ const SharedTable = ({ data, actions }) => {
 
 const formatHeader = (header) => {
   if (header === "totalAmountPaidTillDate") return "Amount Paid";
+  if (header === "verified") return "Verification Status";
   return header
     .replace(/([a-z])([A-Z])/g, "$1 $2") // Convert camelCase to words
     .replace(/_/g, " ") // Replace underscores with spaces

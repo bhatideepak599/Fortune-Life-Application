@@ -1,6 +1,6 @@
 import React from "react";
 import "../CommonNavbarFooter/Navbar.css";
-import logoImg from "../../../images/fortunelife.png";
+import logoImg from "../../../images/fortunelife-high-resolution-logo-black-transparent.png";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="p-3 mb-0">
+      <header className="p-3 mb-0" style={{backgroundColor : "#E9EFEC"}}>
         <div className="container p-0 d-flex justify-content-between align-items-center">
           <button type="button" onClick={handleBack} className="btn p-0">
             <ion-icon name="play-back" style={{ fontSize: "25px" }}></ion-icon>

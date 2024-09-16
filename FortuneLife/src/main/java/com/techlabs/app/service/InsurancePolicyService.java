@@ -1,10 +1,7 @@
 package com.techlabs.app.service;
 
-import com.techlabs.app.dto.CommissionDto;
-import com.techlabs.app.dto.InsurancePolicyDto;
-import com.techlabs.app.dto.InsurancePolicyResponseDto;
+import com.techlabs.app.dto.*;
 
-import com.techlabs.app.dto.PolicyReport;
 import com.techlabs.app.util.PageResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -21,7 +18,7 @@ public interface InsurancePolicyService {
     InsurancePolicyResponseDto getPolicyById(Long policyId);
 
     PageResponse<InsurancePolicyResponseDto> getAllPolicies(Long id, Long customerId, Long agentId, Long schemeId,
-                                                            String schemeName, String customerName, String policyStatus, int page, int size);
+                                                            String schemeName, String customerName, String policyStatus, Boolean verified, int page, int size);
 
     PageResponse<CommissionDto> getAllCommissions(Long id, Long policyId, Long agentId, String commissionType,
                                                   String customerName, int page, int size);
@@ -35,4 +32,7 @@ public interface InsurancePolicyService {
 	 List<PolicyReport> getPolicyReport();
 
 
+    InsurancePolicyResponseDto updateSubmittedDocuments(Long policyId, List<SubmittedDocumentDto> documentDtos);
+
+    InsurancePolicyResponseDto verifyPolicyDocuments(Long policyId, List<SubmittedDocumentDto> documentDtos);
 }

@@ -3,6 +3,7 @@ package com.techlabs.app.controller;
 import com.techlabs.app.dto.CommissionDto;
 import com.techlabs.app.dto.InsurancePolicyResponseDto;
 import com.techlabs.app.dto.PolicyReport;
+import com.techlabs.app.dto.SubmittedDocumentDto;
 import com.techlabs.app.service.InsurancePolicyService;
 import com.techlabs.app.util.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,18 +40,24 @@ public class PolicyController {
 	@Operation(summary = "Get All Policies based on Search Criteria")
 	@GetMapping
 	public ResponseEntity<PageResponse<InsurancePolicyResponseDto>> getAllPolicies(
-			@RequestParam(required = false) Long id, @RequestParam(required = false) Long customerId,
-			@RequestParam(required = false) Long agentId, @RequestParam(required = false) Long schemeId,
-			@RequestParam(required = false) String schemeName, @RequestParam(required = false) String agentName,
+			@RequestParam(required = false) Long id,
+			@RequestParam(required = false) Long customerId,
+			@RequestParam(required = false) Long agentId,
+			@RequestParam(required = false) Long schemeId,
+			@RequestParam(required = false) String schemeName,
+			@RequestParam(required = false) String agentName,
 			@RequestParam(required = false) String policyStatus,
+			@RequestParam(required = false) Boolean verified,  // New parameter
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
+
 		logger.info("Fetching All The Policies");
-		PageResponse<InsurancePolicyResponseDto> policies = policyService.getAllPolicies(id, customerId, agentId,
-				schemeId, schemeName, agentName, policyStatus, page, size);
+		PageResponse<InsurancePolicyResponseDto> policies = policyService.getAllPolicies(
+				id, customerId, agentId, schemeId, schemeName, agentName, policyStatus, verified, page, size);
 
 		return new ResponseEntity<>(policies, HttpStatus.OK);
 	}
+
 
 	@Secured({ "EMPLOYEE", "ADMIN" })
 	@Operation(summary = "Get All Commission based on Search Criteria")
@@ -97,6 +104,7 @@ public class PolicyController {
 
 		return new ResponseEntity<>(policies, HttpStatus.OK);
 	}
+
 	@Secured("ADMIN")
 	@Operation(summary = "Get Policy Report")
 	@GetMapping("/policy-report")
@@ -105,4 +113,22 @@ public class PolicyController {
 		List<PolicyReport> policyReport = policyService.getPolicyReport();
 		return new ResponseEntity<>(policyReport, HttpStatus.OK);
 	}
+
+	@Operation(summary = "Update documents by customer")
+	@PutMapping("/{id}/update-document")
+	public ResponseEntity<InsurancePolicyResponseDto> updateDocumnets(@PathVariable(name = "id")Long policyId,
+																	  @RequestBody List<SubmittedDocumentDto> documentDtos){
+		InsurancePolicyResponseDto response = policyService.updateSubmittedDocuments(policyId, documentDtos);
+		return ResponseEntity.ok(response);
+	}
+
+	@Operation(summary = "Verify Policy by Employee")
+	@PutMapping("/{id}/verify-policy")
+	public ResponseEntity<InsurancePolicyResponseDto> verifyPolicy(@PathVariable(name = "id")Long policyId,
+																	  @RequestBody List<SubmittedDocumentDto> documentDtos){
+		InsurancePolicyResponseDto response = policyService.verifyPolicyDocuments(policyId, documentDtos);
+		return ResponseEntity.ok(response);
+	}
+
+
 }

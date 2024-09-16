@@ -41,15 +41,12 @@ export const getAllCommissions = async (pageSize, pageNumber, searchParams) => {
       size: pageSize,
     };
 
-    const response = await axios.get(
-      `${API_BASE_URL}/fortuneLife/policy/commission`,
-      {
-        headers: {
-          Authorization: accessToken,
-        },
-        params,
-      }
-    );
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy/commission`, {
+      headers: {
+        Authorization: accessToken,
+      },
+      params,
+    });
 
     return response.data;
   } catch (error) {
@@ -57,11 +54,7 @@ export const getAllCommissions = async (pageSize, pageNumber, searchParams) => {
   }
 };
 
-export const getAllCommissionsOfLoggedAdmin = async (
-  pageSize,
-  pageNumber,
-  searchParams
-) => {
+export const getAllCommissionsOfLoggedAdmin = async (pageSize, pageNumber, searchParams) => {
   try {
     const params = {
       id: searchParams.id || undefined,
@@ -71,15 +64,12 @@ export const getAllCommissionsOfLoggedAdmin = async (
       size: pageSize,
     };
 
-    const response = await axios.get(
-      `${API_BASE_URL}/fortuneLife/policy/all-commission`,
-      {
-        headers: {
-          Authorization: accessToken,
-        },
-        params,
-      }
-    );
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy/all-commission`, {
+      headers: {
+        Authorization: accessToken,
+      },
+      params,
+    });
 
     return response.data;
   } catch (error) {
@@ -99,7 +89,6 @@ export const getAllClient = async (pageSize, pageNumber, searchParams) => {
       size: pageSize,
     };
 
-    
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy/all-clients`, {
       headers: {
         Authorization: accessToken1,
@@ -113,20 +102,57 @@ export const getAllClient = async (pageSize, pageNumber, searchParams) => {
   }
 };
 
-export const getPolociesReport=async()=>{
+export const getPolociesReport = async () => {
   try {
     const accessToken1 = `Bearer ${localStorage.getItem("accessToken")}`;
-   
-    
+
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy/policy-report`, {
       headers: {
         Authorization: accessToken1,
-      }
-     
+      },
     });
 
     return response.data;
   } catch (error) {
     throw error;
   }
-}
+};
+
+export const verifyPolicy = async (policyId, documentDtos) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/fortuneLife/policy/${policyId}/verify-policy`, documentDtos, {
+      headers: {
+        Authorization: accessToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getAllPoliciesByEmployee = async (pageSize, pageNumber, searchParams) => {
+  try {
+    const params = {
+      id: searchParams.policyId || undefined,
+      customerId: searchParams.customerId || undefined,
+      agentId: searchParams.agentId || undefined,
+      schemeName: searchParams.schemeName || undefined,
+      policyStatus: searchParams.policyStatus || undefined,
+      verified: searchParams.verificationStatus || undefined,
+      page: pageNumber,
+      size: pageSize,
+    };
+
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy`, {
+      headers: {
+        Authorization: accessToken,
+      },
+      params,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

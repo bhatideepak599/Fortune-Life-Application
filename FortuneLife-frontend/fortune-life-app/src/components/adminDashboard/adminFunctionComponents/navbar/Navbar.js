@@ -8,6 +8,7 @@ import ManageTaxAndDeductions from "../manageTaxAndDeduction/ManageTaxAndDeducti
 import Modal from "../../../sharedComponents/modal/Modal";
 import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
 import AdminProfile from "../adminprofile/AdminProfile";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [adminDetails, setAdminDetails] = useState(null);
@@ -33,7 +34,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    successToast("Logged Out.");
+    toast.success("Logged Out.");
     navigate("/");
   };
 
@@ -77,7 +78,9 @@ const Navbar = () => {
         </div>
         <ul className={styles.navLinks}>
           <li>
-            <a href="/admin-dashboard" onClick={localStorage.setItem("activeItem","null")}>Home</a>
+            <a href="/admin-dashboard" onClick={localStorage.setItem("activeItem", "null")}>
+              Home
+            </a>
           </li>
           <li>
             <a href="/view-queries" onClick={handleViewQuries}>
