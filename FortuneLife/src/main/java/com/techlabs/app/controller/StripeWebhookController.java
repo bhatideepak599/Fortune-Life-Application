@@ -25,10 +25,10 @@ public class StripeWebhookController {
         String payload = request.getReader().lines().collect(Collectors.joining());
         String sigHeader = request.getHeader("Stripe-Signature");
 
-        System.out.println(payload);
-        System.out.println(sigHeader);
+//        System.out.println(payload);
+//        System.out.println(sigHeader);
 
-        System.out.println("Its getting inside");
+        //System.out.println("Its getting inside");
 
         try {
             Event event = Webhook.constructEvent(payload, sigHeader, endpointSecret);

@@ -14,8 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +35,7 @@ public class PaymentController {
 
     @PostMapping("/charge")
     public ResponseEntity<Object> chargeCard(@Valid @RequestBody PaymentDto paymentDto) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      //  System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         Payment payment = new Payment();
         try {
 
@@ -68,4 +70,12 @@ public class PaymentController {
         return new ResponseEntity<>(paymentDtos, HttpStatus.OK);
     }
 
+    @Secured("ADMIN")
+    @GetMapping("/revenue")
+    public Double getRevenue(@RequestParam("startDate") String startDateStr, @RequestParam("endDate") String endDateStr) {
+        LocalDateTime startDate = LocalDateTime.parse(startDateStr);
+        LocalDateTime endDate = LocalDateTime.parse(endDateStr);
+
+        return paymentService.calculateTotalRevenue(startDate, endDate);
+    }
 }

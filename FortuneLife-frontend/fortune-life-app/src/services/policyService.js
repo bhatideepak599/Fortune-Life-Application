@@ -130,3 +130,28 @@ export const getPolociesReport=async()=>{
     throw error;
   }
 }
+
+export const getRevenueReport=async(startDate,endDate)=>{
+  try {
+    const accessToken1 = `Bearer ${localStorage.getItem("accessToken")}`;
+   
+    
+    const response = await axios.get(`${API_BASE_URL}/fortuneLife/payments/revenue`, {
+      headers: {
+        Authorization: accessToken1,
+      },
+     
+        params: {
+          startDate: startDate,
+          endDate: endDate
+        }
+      
+     
+    });
+console.log(response);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

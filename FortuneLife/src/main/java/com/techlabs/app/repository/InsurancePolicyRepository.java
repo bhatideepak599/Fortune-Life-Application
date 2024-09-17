@@ -39,7 +39,7 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
                                                        @Param("policyStatus") String policyStatus,
                                                        Pageable pageable);
 
-    @Query("SELECT p.issueDate AS date, COUNT(p) AS policiesBought, SUM(p.premiumAmount) AS totalRevenue " +
+    @Query("SELECT p.issueDate AS date, COUNT(p) AS policiesBought, SUM(p.paidPolicyAmountTillDate) AS totalRevenue " +
             "FROM InsurancePolicy p GROUP BY p.issueDate ORDER BY p.issueDate ASC")
     List<PolicyReport> getPolicyReport();
 

@@ -112,6 +112,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
 
     @Override
     public List<PaymentDto> getPaymentsByPolicyId(Long policyId) {
+
         InsurancePolicy policy = policyRepository.findById(policyId)
                 .orElseThrow(() -> new FortuneLifeException("No Policy Found With ID: " + policyId));
 
@@ -119,6 +120,15 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         return payments.stream()
                 .map(paymentMapper::entityToDto)
                 .collect(Collectors.toList());
+
+    }
+
+    public Double calculateTotalRevenue(LocalDateTime startDate, LocalDateTime endDate) {
+        return paymentRepository.getTotalRevenue(startDate, endDate);
+    }
+
+    public List<Payment> getPaymentsWithinDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        return paymentRepository.findPaymentsWithinDateRange(startDate, endDate);
     }
 
 }

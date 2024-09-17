@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { getPolociesReport } from "../../../services/policyService";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import { getReportCount } from "../../../services/reportsService";
 import { toast } from "react-toastify";
-import styles from "./Revenue.module.css";
+import { getPolociesReport, getRevenueReport } from "../../../services/policyService";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import styles from "./Revenue.module.css"; // Assuming you have some CSS for styling
+import { Card } from "react-bootstrap";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export const Revenue = () => {
   const [policyData, setPolicyData] = useState([]);
+  const [revenueData, setRevenueData] = useState([]);
   const [report, setReport] = useState(null);
 
+  // Fetch policy data
   useEffect(() => {
     const fetchPolicyData = async () => {
       try {
@@ -25,19 +37,43 @@ export const Revenue = () => {
     fetchPolicyData();
   }, []);
 
+  // Fetch report counts
   useEffect(() => {
     const fetchReportCounts = async () => {
       try {
         const response = await getReportCount();
         setReport(response);
       } catch (error) {
-        toast.error(error);
+        toast.error("Failed to fetch report counts");
       }
     };
 
     fetchReportCounts();
   }, []);
 
+  // Fetch revenue data
+  useEffect(() => {
+    const fetchRevenueData = async () => {
+      try {
+        const startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
+        const endDate = new Date().toISOString();
+        const response = await getRevenueReport(startDate, endDate);
+
+        setRevenueData([
+          {
+            date: new Date().toLocaleDateString(),
+            totalRevenue: response,
+          },
+        ]);
+      } catch (error) {
+        console.error("Error fetching revenue data:", error);
+      }
+    };
+
+    fetchRevenueData();
+  }, []);
+
+  // Data for policy bought graph
   const policyBuyGraphData = {
     labels: policyData.map((data) => data.date),
     datasets: [
@@ -51,12 +87,27 @@ export const Revenue = () => {
     ],
   };
 
+  // Data for revenue graph
   const revenueGraphData = {
     labels: policyData.map((data) => data.date),
     datasets: [
       {
         label: "Revenue Generated",
         data: policyData.map((data) => data.totalRevenue),
+        borderColor: "rgba(153, 102, 255, 1)",
+        backgroundColor: "rgba(153, 102, 255, 0.2)",
+        fill: true,
+      },
+    ],
+  };
+
+  // Data for revenue graph using revenueData
+  const revenueGraphData1 = {
+    labels: revenueData.map((data) => data.date),
+    datasets: [
+      {
+        label: "Revenue Generated",
+        data: revenueData.map((data) => data.totalRevenue),
         borderColor: "rgba(153, 102, 255, 1)",
         backgroundColor: "rgba(153, 102, 255, 0.2)",
         fill: true,
@@ -99,75 +150,39 @@ export const Revenue = () => {
   };
 
   return (
-    <>
-      <div className="container mt-5">
-        {report && (
-          <>
-            <div className="card text-center">
-              <div className="card-body">
-                <h5 className="card-title">Customers</h5>
-                <div className="d-flex justify-content-center align-items-center">
-                  <i className="fas fa-user fa-3x"></i>
-                  <span className="ml-3 h4">{report.customerCount}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="card text-center mt-5">
-              <div className="card-body">
-                <h5 className="card-title">Agents</h5>
-                <div className="d-flex justify-content-center align-items-center">
-                  <i className="fas fa-user fa-3x"></i>
-                  <span className="ml-3 h4">{report.agentCount}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="card text-center mt-5">
-              <div className="card-body">
-                <h5 className="card-title">Employees</h5>
-                <div className="d-flex justify-content-center align-items-center">
-                  <i className="fas fa-user fa-3x"></i>
-                  <span className="ml-3 h4">{report.employeeCount}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="card text-center mt-5">
-              <div className="card-body">
-                <h5 className="card-title">Policies</h5>
-                <div className="d-flex justify-content-center align-items-center">
-                  <i className="fas fa-user fa-3x"></i>
-                  <span className="ml-3 h4">{report.policyCount}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="card text-center mt-5">
-              <div className="card-body">
-                <h5 className="card-title">Policies Per Customer</h5>
-                <div className="d-flex justify-content-center align-items-center">
-                  <i className="fas fa-user fa-3x"></i>
-                  <span className="ml-3 h4">{report.customerPolicyRatio}</span>
-                </div>
-              </div>
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between", gap: "20px", paddingTop: "80px" }}>
-              <div style={{ flex: "1", minWidth: "300px", height: "200px" }}>
-                <h2>Policies Bought Over Time</h2>
-                <Line data={policyBuyGraphData} options={chartOptions} />
-              </div>
-
-              <div style={{ flex: "1", minWidth: "300px", height: "200px" }}>
-                <h2>Revenue Generated Over Time</h2>
-                <Line data={revenueGraphData} options={chartOptions} />
-              </div>
-            </div>
-          </>
-        )}
+    <div className="container mt-5">
+      {/* Cards to display report counts */}
+      <div className="row mb-4">
+        <div className="col-md-4">
+          <Card className="text-center">
+            <Card.Body>
+              <Card.Title>Number of Customers</Card.Title>
+              <Card.Text>{/* Assuming you fetch and display customer count here */}</Card.Text>
+            </Card.Body>
+          </Card>
+        </div>
+        <div className="col-md-4">
+          <Card className="text-center">
+            <Card.Body>
+              <Card.Title>Total Reports</Card.Title>
+              <Card.Text>{report}</Card.Text>
+            </Card.Body>
+          </Card>
+        </div>
       </div>
-    </>
+
+      {/* Graphs for policy and revenue */}
+      <div className="row">
+        <div className="col-md-6">
+          <h2>Policies Bought Over Time</h2>
+          <Line data={policyBuyGraphData} options={chartOptions} />
+        </div>
+        <div className="col-md-6">
+          <h2>Revenue Generated Over Time</h2>
+          <Line data={revenueGraphData1} options={chartOptions} />
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -3,8 +3,10 @@ import { toast } from "react-toastify";
 import { sendOtp, submitNewPassword } from "../../../services/authService";
 import styles from "./ForgotPassowrd.module.css";
 import Navbar from "../CommonNavbarFooter/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
+  const navigate=useNavigate()
   const [state, setState] = useState({
     userName: "",
     sourceType: "",
@@ -72,6 +74,7 @@ const ForgotPassword = () => {
     try {
       const message = await submitNewPassword(state);
       toast.success(message);
+      navigate(-1);
       setStep(1);
       setOtpSent(false); // Reset OTP state
       setState({
@@ -96,6 +99,48 @@ const ForgotPassword = () => {
         <div className={styles.formGroup}>
           <label className={styles.label}>Username:</label>
           <input type="text" className={styles.input} name="userName" value={state.userName} onChange={handleChange} />
+          {state.sourceType === "phoneNumber" && (
+            <>
+              <label className={styles.label}>Mobile Number:</label>
+              <div className={styles.inlineGroup}>
+                <select className={styles.selectCountryCode} name="countryCode" value={state.countryCode} onChange={handleChange}>
+                  <option value="+1">+1 (USA)</option>
+                  <option value="+44">+44 (UK)</option>
+                  <option value="+91">+91 (India)</option>
+                 
+                </select>
+                <input
+                  type="text"
+                  className={styles.input}
+                  name="sourceValue"
+                  placeholder="Mobile Number"
+                  value={state.sourceValue}
+                  onChange={handleChange}
+                />
+                <button className={styles.button} onClick={handleSendOtp}>
+                  {otpSent ? "Resend OTP" : "Send OTP"}
+                </button>
+              </div>
+            </>
+          )}
+          {state.sourceType === "email" && (
+            <>
+              <label className={styles.label}>Email:</label>
+              <div className={styles.inlineGroup}>
+                <input
+                  type="text"
+                  className={styles.input}
+                  name="sourceValue"
+                  placeholder="Email"
+                  value={state.sourceValue}
+                  onChange={handleChange}
+                />
+                <button className={styles.button} onClick={handleSendOtp}>
+                  {otpSent ? "Resend OTP" : "Send OTP"}
+                </button>
+              </div>
+            </>
+          )}
         </div>
         <div className={styles.formGroup}>
           <label className={styles.label}>Send OTP via:</label>

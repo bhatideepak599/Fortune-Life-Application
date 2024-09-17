@@ -77,7 +77,7 @@ const Navbar = () => {
         </div>
         <ul className={styles.navLinks}>
           <li>
-            <a href="/admin-dashboard" onClick={localStorage.setItem("activeItem","null")}>Home</a>
+            <a href="/admin-dashboard" onClick={()=> {localStorage.setItem("activeItem","null")}}>Home</a>
           </li>
           <li>
             <a href="/view-queries" onClick={handleViewQuries}>
