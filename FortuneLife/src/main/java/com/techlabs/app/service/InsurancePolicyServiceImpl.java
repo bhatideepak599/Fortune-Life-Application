@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.techlabs.app.entity.Agent;
@@ -119,6 +120,30 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
         insurancePolicy.setCustomer(customer);
         insurancePolicy = insurancePolicyRepository.save(insurancePolicy);
 
+        Set<SubmittedDocument> submittedDocuments = insurancePolicy.getSubmittedDocuments();
+        Set<SubmittedDocument> verificationDocuments = new HashSet<>();
+        for (SubmittedDocument submittedDocument : submittedDocuments) {
+            if (insurancePolicy.getAgent() != null && insurancePolicy.getAgent().getId() != null) {
+                submittedDocument.setDocumentStatus(DocumentStatus.APPROVED.name());
+            } else {
+                submittedDocument.setDocumentStatus(DocumentStatus.PENDING.name());
+            }
+            verificationDocuments.add(documentRepository.save(submittedDocument));
+        }
+
+        boolean allApproved = verificationDocuments.stream()
+                .allMatch(doc -> "APPROVED".equalsIgnoreCase(doc.getDocumentStatus()));
+
+
+        insurancePolicy.setVerified(allApproved);
+
+        if (insurancePolicy.getVerified()) {
+            insurancePolicy.setPolicyStatus(PolicyStatus.ACTIVE.name());
+        } else {
+            insurancePolicy.setPolicyStatus(PolicyStatus.PENDING.name());
+        }
+
+
         Double registrationCommission = insuranceScheme.getSchemeDetails().getRegistrationCommissionRatio();
 
         Commission commission = new Commission();
@@ -209,8 +234,10 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
     @Override
     public PageResponse<InsurancePolicyResponseDto> getAllPolicies(Long id, Long customerId, Long agentId,
                                                                    Long schemeId, String schemeName, String customerName,
-                                                                   String policyStatus, Boolean verified, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+                                                                   String policyStatus, Boolean verified, int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
 
         // Update repository call to include 'verified' in the search criteria
         Page<InsurancePolicy> policies = insurancePolicyRepository.findAllPoliciesBasedOnCritaria(
@@ -299,37 +326,37 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
         Set<SubmittedDocument> existingDocuments = insurancePolicy.getSubmittedDocuments();
 
-        // Create a map for easy access to existing documents
+
         Map<Long, SubmittedDocument> documentMap = existingDocuments.stream()
                 .collect(Collectors.toMap(SubmittedDocument::getId, document -> document));
 
-        // Update documents or add new ones if not found
+
         Set<SubmittedDocument> updatedDocuments = new HashSet<>();
         for (SubmittedDocumentDto dto : documentDtos) {
             SubmittedDocument document;
             if (dto.getId() != null && documentMap.containsKey(dto.getId())) {
-                // Update existing document
+
                 document = documentMap.get(dto.getId());
                 document.setDocumentName(dto.getDocumentName());
                 document.setDocumentStatus(dto.getDocumentStatus());
                 document.setDocumentImage(dto.getDocumentImage());
             } else {
-                // Add new document
+
                 document = new SubmittedDocument();
                 document.setDocumentName(dto.getDocumentName());
                 document.setDocumentStatus(dto.getDocumentStatus());
                 document.setDocumentImage(dto.getDocumentImage());
             }
-            // Save or update the document in the repository
+
             document = documentRepository.save(document);
             updatedDocuments.add(document);
         }
 
-        // Set the updated documents to the policy and save
+
         insurancePolicy.setSubmittedDocuments(updatedDocuments);
         insurancePolicy = insurancePolicyRepository.save(insurancePolicy);
 
-        // Return the updated policy response DTO
+
         return insurancePolicyMapper.entityToDto(insurancePolicy);
     }
 
@@ -367,6 +394,12 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
 
         insurancePolicy.setVerified(allApproved);
+
+        if (insurancePolicy.getVerified()) {
+            insurancePolicy.setPolicyStatus(PolicyStatus.ACTIVE.name());
+        } else {
+            insurancePolicy.setPolicyStatus(PolicyStatus.PENDING.name());
+        }
 
 
         insurancePolicy = insurancePolicyRepository.save(insurancePolicy);

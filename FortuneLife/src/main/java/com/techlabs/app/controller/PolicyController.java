@@ -49,11 +49,14 @@ public class PolicyController {
 			@RequestParam(required = false) String policyStatus,
 			@RequestParam(required = false) Boolean verified,  // New parameter
 			@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "size", defaultValue = "10") int size) {
+			@RequestParam(name = "size", defaultValue = "10") int size,
+			@RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
+			@RequestParam(name = "direction", defaultValue = "asc") String direction) {
 
 		logger.info("Fetching All The Policies");
 		PageResponse<InsurancePolicyResponseDto> policies = policyService.getAllPolicies(
-				id, customerId, agentId, schemeId, schemeName, agentName, policyStatus, verified, page, size);
+				id, customerId, agentId, schemeId, schemeName, agentName, policyStatus, verified, page, size, sortBy,
+				direction);
 
 		return new ResponseEntity<>(policies, HttpStatus.OK);
 	}

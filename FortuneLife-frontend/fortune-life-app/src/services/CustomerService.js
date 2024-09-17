@@ -213,21 +213,26 @@ export const getClaimByClaimId = async (claimId) => {
   }
 };
 
-export const applyForClaim = async (customerId, policyId, claimDto, claimAmount) => {
+export const applyForClaim = async (customerId, policyId, payload, claimAmount) => {
+  console.log(claimAmount);
+  console.log(payload);
+
   try {
     const response = await axios.post(
       `${API_BASE_URL}/fortuneLife/claim/customer/${customerId}/Insurance-policy/${policyId}`,
       {
+        id: payload.id || null, // Correct: Lowercase 'id'
         claimAmount,
-        bankName: claimDto.bankName || null,
-        branchName: claimDto.branchName || null,
-        bankAccountNumber: claimDto.bankAccountNumber || null,
-        ifscCode: claimDto.ifscCode || null,
-        remarks: claimDto.remarks || null,
+        bankName: payload.bankName || null,
+        branchName: payload.branchName || null,
+        bankAccountNumber: payload.bankAccountNumber || null,
+        ifscCode: payload.ifscCode || null,
+        remarks: payload.remarks || null,
       },
       {
         headers: {
-          Authorization: token,
+          Authorization: token, // Ensure token is correctly formatted
+          "Content-Type": "application/json", // Explicitly set Content-Type
         },
       }
     );

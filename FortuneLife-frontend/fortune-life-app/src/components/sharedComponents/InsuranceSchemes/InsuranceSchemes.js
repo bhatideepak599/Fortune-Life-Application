@@ -8,6 +8,8 @@ import { getSchemesByPlanId } from "../../../services/commonService";
 import { fetchFile } from "../../../services/fileServices";
 import "./InsuranceSchemes.css";
 import Footer from "../CommonNavbarFooter/Footer";
+import { getLoggedInUser } from "../../../services/authService";
+import { toast } from "react-toastify";
 
 const InsuranceSchemes = () => {
   const { planId } = useParams();
@@ -16,6 +18,7 @@ const InsuranceSchemes = () => {
   const [schemes, setSchemes] = useState([]);
   const [schemeImages, setSchemeImages] = useState({});
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const fetchAllSchemesById = async () => {
@@ -26,6 +29,8 @@ const InsuranceSchemes = () => {
 
         const images = {};
         for (const scheme of response) {
+          console.log(scheme);
+
           const name = scheme.schemeDetails.schemeImage;
           const imageUrl = await fetchFile(name);
           images[scheme.id] = imageUrl;
@@ -38,6 +43,23 @@ const InsuranceSchemes = () => {
 
     fetchAllSchemesById();
   }, [planId, navigate]);
+
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      try {
+        const response = await getLoggedInUser();
+        if (response) {
+          console.log(response);
+
+          setCurrentUser(response);
+        }
+      } catch (error) {
+        toast.error("Error fetching user details.");
+      }
+    };
+
+    getCurrentUser();
+  }, [navigate, setCurrentUser]);
 
   const handleViewDetails = (schemeId) => {
     //console.log("Scheme ID:", schemeId);

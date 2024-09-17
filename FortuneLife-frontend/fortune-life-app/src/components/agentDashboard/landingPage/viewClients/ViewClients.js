@@ -145,8 +145,8 @@ export const ViewClients = () => {
               <th>Issue Date</th>
               <th>Policy Amount</th>
               <th>Policy Status</th>
-              <th>Policy Verification</th>
               <th>Claim Status</th>
+              <th>Policy Verification</th>
             </tr>
           </thead>
           <tbody>
@@ -160,7 +160,7 @@ export const ViewClients = () => {
                   <td>{client.totalPolicyAmount}</td>
                   <td>{client.policyStatus}</td>
                   <td>
-                    {client.claimStatus == "N/A"
+                    {client.claimStatus === "N/A"
                       ? "Not Claimed"
                       : client.claimStatus}
                   </td>

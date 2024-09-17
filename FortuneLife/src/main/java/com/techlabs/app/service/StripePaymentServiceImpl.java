@@ -72,7 +72,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         payment.setInsurancePolicy(policy);
         double totalAmountPaidTillDate = paymentDto.getAmount() + policy.getPaidPolicyAmountTillDate();
         policy.setPaidPolicyAmountTillDate(totalAmountPaidTillDate);
-        policy.setPolicyStatus(PolicyStatus.ACTIVE.name());
+
 
         if(policy.getTotalPolicyAmount()<policy.getPaidPolicyAmountTillDate()){
             throw new FortuneLifeException("Paid amount till date exceeds total policy amount");

@@ -120,7 +120,7 @@ const CommissionHistory = () => {
   return (
     <>
       <Navbar />
-      <div>
+      <div className="container">
         <h2 style={{ textAlign: "center" }}>Commission Earned</h2>
         <div className="d-flex justify-content-end mb-3">
           <SearchComponent

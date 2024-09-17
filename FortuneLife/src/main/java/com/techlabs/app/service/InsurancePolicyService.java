@@ -18,7 +18,7 @@ public interface InsurancePolicyService {
     InsurancePolicyResponseDto getPolicyById(Long policyId);
 
     PageResponse<InsurancePolicyResponseDto> getAllPolicies(Long id, Long customerId, Long agentId, Long schemeId,
-                                                            String schemeName, String customerName, String policyStatus, Boolean verified, int page, int size);
+                                                            String schemeName, String customerName, String policyStatus, Boolean verified, int page, int size, String sortBy, String direction);
 
     PageResponse<CommissionDto> getAllCommissions(Long id, Long policyId, Long agentId, String commissionType,
                                                   String customerName, int page, int size);

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class ClaimDto {
-    private Long Id;
+    private Long id;
     @PositiveOrZero(message = "Amount Should be Greater than Zero")
     private Double claimAmount;
     @NotBlank

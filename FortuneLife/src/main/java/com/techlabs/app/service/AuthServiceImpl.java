@@ -172,6 +172,12 @@ public class AuthServiceImpl implements AuthService {
         roles.add(newRole);
         user.setRoles(roles);
 
+        Address address = new Address();
+        address.setPinCode(0);
+        address.setCity("Please update your city");
+        address.setState("Select State");
+        user.setAddress(address);
+
         User savedUser = userRepository.save(user);
 
         if (role.equals("ROLE_ADMIN")) {
@@ -261,10 +267,11 @@ public class AuthServiceImpl implements AuthService {
 
         return userMapper.entityToDto(user);
     }
+
     @Override
     public String forgetPassWord(ForgetPassword forgetPassword) {
 
-        System.out.println(forgetPassword+"====================================");
+        System.out.println(forgetPassword + "====================================");
         User user = userRepository
                 .findUserByUsernameOrEmail(forgetPassword.getUserName(), forgetPassword.getUserName())
                 .orElseThrow(() -> new UserRelatedException(
@@ -273,30 +280,30 @@ public class AuthServiceImpl implements AuthService {
         if (!user.getActive()) {
             throw new UserRelatedException("User is not active");
         }
-        if(forgetPassword.getSourceType().equalsIgnoreCase("mobileNumber")){
-            String mobileNumber= forgetPassword.getSourceValue();
-            if(!user.getMobileNumber().equalsIgnoreCase(mobileNumber))
-                throw new FortuneLifeException("No User Found With Mobile Number:"+mobileNumber);
+        if (forgetPassword.getSourceType().equalsIgnoreCase("mobileNumber")) {
+            String mobileNumber = forgetPassword.getSourceValue();
+            if (!user.getMobileNumber().equalsIgnoreCase(mobileNumber))
+                throw new FortuneLifeException("No User Found With Mobile Number:" + mobileNumber);
         }
 
-        if(forgetPassword.getSourceType().equalsIgnoreCase("email")){
-            String email= forgetPassword.getSourceValue();
-            if(!user.getEmail().equalsIgnoreCase(email))
-                throw new FortuneLifeException("No User Found With Email: "+email);
+        if (forgetPassword.getSourceType().equalsIgnoreCase("email")) {
+            String email = forgetPassword.getSourceValue();
+            if (!user.getEmail().equalsIgnoreCase(email))
+                throw new FortuneLifeException("No User Found With Email: " + email);
         }
-        Otp otp=otpRepository.findById(forgetPassword.getSourceValue())
-                        .orElseThrow(()-> new FortuneLifeException("Invalid Email or Phone Number"));
+        Otp otp = otpRepository.findById(forgetPassword.getSourceValue())
+                .orElseThrow(() -> new FortuneLifeException("Invalid Email or Phone Number"));
         boolean check = otp.getOtpCode().equalsIgnoreCase(forgetPassword.getOtpReceived());
-        if(!check) {
+        if (!check) {
             otp.incrementAttemptCount();
-           // otpRepository.delete(otp);
+            // otpRepository.delete(otp);
             throw new FortuneLifeException("Invalid Otp");
         }
-        if(otp.hasExceededMaxAttempts()){
+        if (otp.hasExceededMaxAttempts()) {
             otpRepository.delete(otp);
             throw new FortuneLifeException("Limit Exceeded For Verification, Send Otp again");
         }
-        if(otp.isExpired()){
+        if (otp.isExpired()) {
             otpRepository.delete(otp);
             throw new FortuneLifeException("Otp Expired");
         }

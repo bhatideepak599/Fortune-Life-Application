@@ -95,7 +95,7 @@ const RegisterForm = () => {
         const role = formData.role === "Agent" ? "agent" : "customer";
         await registerUser(registrationData, role);
         toast.success("Registration successful!");
-        navigate("/");
+        navigate(-1);
       } catch (error) {
         console.error("Registration failed: ", error.response);
         toast.error(error.response?.data?.message || "Registration failed. Please check your input.");
@@ -230,7 +230,7 @@ const RegisterForm = () => {
                   Register
                 </button>
                 <button type="button" className="btn btn-secondary w-50" onClick={() => navigate("/")}>
-                Back To Homepage
+                  Back To Homepage
                 </button>
               </div>
             </form>

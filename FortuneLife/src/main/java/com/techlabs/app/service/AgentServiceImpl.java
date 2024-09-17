@@ -139,7 +139,7 @@ public class AgentServiceImpl implements AgentService {
         Agent agent = agentRepository.findById(agentDto.getId())
                 .orElseThrow(() -> new AgentRelatedException("No Agent Found With Agent ID:" + agentDto.getId()));
 
-        if (agent.getActive() == false)
+        if (!agent.getActive())
             throw new AgentRelatedException("No Agent Found With Agent ID:" + agentDto.getId());
 
         User user = agent.getUser();

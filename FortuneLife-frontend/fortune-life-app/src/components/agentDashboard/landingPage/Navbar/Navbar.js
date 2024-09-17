@@ -134,9 +134,6 @@ const updateProfile=async(userDto,addressDto)=>{
           <li>
             <a href="/view-clients">View Clients</a>
           </li>
-          <li>
-            <a href="#">Policies</a>
-          </li>
           <li className={styles.dropdown}>
             <button className={styles.dropbtn}>Commission</button>
             <div className={styles.dropdownContent}>

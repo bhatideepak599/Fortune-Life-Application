@@ -42,9 +42,9 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 	@Override
 	public WithdrawalDto claimWithdrawal(Long id, Double amount,AgentDto agentDto) {
 		Agent agent = agentRepository.findById(id).orElseThrow(() -> new AgentRelatedException("No Agent Found!."));
-		if (agent.getActive() == false)
+		if (!agent.getActive())
 			throw new AgentRelatedException("No Agent Found!.");
-		if (agent.getVerified() == false)
+		if (!agent.getVerified())
 			throw new AgentRelatedException("Agent is Not Active!.");
 
 		if (agent.getTotalCommission() < amount)

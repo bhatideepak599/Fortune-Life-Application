@@ -140,7 +140,7 @@ const WithdrawalHistory = () => {
   return (
     <>
       <Navbar />
-      <div>
+      <div className="container">
         <h2 style={{ textAlign: "center" }}>Withdrawal History</h2>
         <div className="d-flex justify-content-end me-5">
           <SearchComponent

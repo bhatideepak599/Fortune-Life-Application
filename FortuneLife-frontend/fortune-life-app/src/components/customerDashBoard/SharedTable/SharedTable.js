@@ -23,7 +23,7 @@ const SharedTable = ({ data, actions }) => {
           {data.map((row, index) => (
             <tr key={index}>
               {headers.map((header) => (
-                <td key={header}>{header === "active" ? (row[header] ? "Active" : "Inactive") : header === "claimId" && row[header] === null ? "N/A" : typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header]}</td>
+                <td key={header}>{header === "verified" ? (row[header] ? "Verified" : "Unverified") : header === "active" ? (row[header] ? "Active" : "Inactive") : header === "claimId" && row[header] === null ? "N/A" : typeof row[header] === "object" ? JSON.stringify(row[header]) : row[header]}</td>
               ))}
               {actions && (
                 <td>
@@ -41,7 +41,7 @@ const SharedTable = ({ data, actions }) => {
                   )}
 
                   {actions.claim && (
-                    <button className="btn btn-secondary btn-sm custom-claim-btn my-1" onClick={() => actions.claim(row[primaryKey])} disabled={!(row.policyStatus === "ACTIVE" || row.policyStatus === "COMPLETE") || (row.claimId && row.claimStatus !== "REJECT")}>
+                    <button className="btn btn-secondary btn-sm custom-claim-btn my-1" onClick={() => actions.claim(row[primaryKey])} disabled={!(row.policyStatus === "ACTIVE" || row.policyStatus === "COMPLETE") || (row.claimId && row.claimStatus !== "REJECT") || (!row.verified)}>
                       Claim
                     </button>
                   )}
@@ -62,8 +62,8 @@ const SharedTable = ({ data, actions }) => {
 };
 
 const formatHeader = (header) => {
-  if (header === "totalAmountPaidTillDate") return "Amount Paid";
   if (header === "verified") return "Verification Status";
+  if (header === "totalAmountPaidTillDate") return "Amount Paid";
   return header
     .replace(/([a-z])([A-Z])/g, "$1 $2") // Convert camelCase to words
     .replace(/_/g, " ") // Replace underscores with spaces

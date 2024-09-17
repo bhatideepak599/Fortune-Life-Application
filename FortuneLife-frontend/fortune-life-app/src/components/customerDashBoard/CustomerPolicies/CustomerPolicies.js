@@ -162,9 +162,10 @@ const CustomerPolicies = () => {
       });
 
       if (response.content) {
-        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalAmountPaidTillDate", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "claimId", "claimStatus"];
+        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalAmountPaidTillDate", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "verified", "claimId", "claimStatus"];
         const sanitized = sanitizedData({ data: response.content, keysTobeSelected });
-
+        console.log(sanitized);
+        
         setSanitizedPolicies(sanitized);
         setTotalPages(response.totalPages);
         setSearchActive(false);
@@ -188,9 +189,9 @@ const CustomerPolicies = () => {
       });
 
       if (response.content) {
-        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalAmountPaidTillDate", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "claimId", "claimStatus"];
+        const keysTobeSelected = ["id", "schemeName", "premiumAmount", "totalAmountPaidTillDate", "totalPolicyAmount", "issueDate", "maturityDate", "policyStatus", "verified", "claimId", "claimStatus"];
         const sanitized = sanitizedData({ data: response.content, keysTobeSelected });
-
+        
         setSanitizedPolicies(sanitized);
         setTotalPages(response.totalPages);
         setSearchActive(true);

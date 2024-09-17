@@ -334,7 +334,7 @@ const UserProfile = ({ isUpdate,  updateProfile }) => {
               onChange={handleAddressChange}
               required
             >
-              <option value="" disabled>
+              <option value="">
                 Select State
               </option>
               {states.map((state) => (

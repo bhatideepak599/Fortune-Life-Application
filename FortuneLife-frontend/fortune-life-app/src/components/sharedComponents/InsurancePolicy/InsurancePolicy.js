@@ -195,8 +195,8 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
         toast.success("Policy Created Successfully");
         console.log(response);
 
-        const policyId = response.id;
-        window.open(`/policy-payment/${policyId}`, "_blank");
+        // const policyId = response.id;
+        // window.open(`/policy-payment/${policyId}`, "_blank");
       }
     } else if (localStorage.getItem("role") === "ROLE_AGENT") {
       const response = await buyNewPolicyByAgent({ customerId: exCustomerId, schemeId: usedScheme.id, agentId: currentUser.id, dataToSend });

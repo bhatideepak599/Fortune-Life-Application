@@ -2,6 +2,7 @@ package com.techlabs.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.techlabs.app.enums.ClaimStatus;
 import com.techlabs.app.enums.PolicyStatus;
@@ -51,8 +52,19 @@ public class ClaimServiceImpl implements ClaimService {
             throw new FortuneLifeException("Policy Is Not Completed or Inactive");
         }
 
-        if(!insurancePolicy.getVerified()){
+        if (!insurancePolicy.getVerified()) {
             throw new FortuneLifeException("Cannot apply for claim, Policy Not verified yet");
+        }
+
+        if (claimDto.getId() != null) {
+            Optional<Claim> existingClaim = claimRepository.findById(claimDto.getId());
+            if (existingClaim.isPresent()) {
+                Claim changeClaim = existingClaim.get();
+                changeClaim.setRemarks(claimDto.getRemarks());
+                changeClaim.setClaimStatus("PENDING");
+                changeClaim = claimRepository.save(changeClaim);
+                return claimMapper.entityToDto(changeClaim);
+            }
         }
 
         Claim claim = claimMapper.dtoToEntity(claimDto);
