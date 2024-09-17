@@ -16,11 +16,12 @@ const Navbar = () => {
   const [taxModal, setTaxModal] = useState(false);
   const [changePasswordModal, setChangePasswordModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
+  const [flag, setFlag] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchAdmin();
-  }, []);
+  }, [flag]);
 
   const fetchAdmin = async () => {
     try {
@@ -33,6 +34,7 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    //localStorage.clear()
     logout();
     toast.success("Logged Out.");
     navigate("/");
@@ -144,7 +146,7 @@ const Navbar = () => {
       </Modal>
 
       <Modal isOpen={showProfileModal} onClose={() => setShowProfileModal(false)}>
-        <AdminProfile admin={adminDetails} onClose={() => setShowProfileModal(false)} />
+        <AdminProfile admin={adminDetails} flag={flag} setFlag={setFlag} onClose={() => setShowProfileModal(false)} />
       </Modal>
     </>
   );

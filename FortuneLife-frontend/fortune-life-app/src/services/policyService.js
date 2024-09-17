@@ -118,28 +118,26 @@ export const getPolociesReport = async () => {
   }
 }
 
-export const getRevenueReport=async(startDate,endDate)=>{
+export const getRevenueReports = async (startDate, endDate) => {
   try {
-    const accessToken1 = `Bearer ${localStorage.getItem("accessToken")}`;
-   
+    const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
     
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/payments/revenue`, {
       headers: {
-        Authorization: accessToken1,
+        Authorization: accessToken,
       },
-     
-        params: {
-          startDate: startDate,
-          endDate: endDate
-        }
-      
-     
+      params: {
+        startDate: startDate,
+        endDate: endDate,
+      },
     });
-console.log(response);
-}catch (error) {
-  throw new Error(error);
-}
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching revenue report:", error);
+    throw new Error(error);
+  }
 };
+
 
 export const verifyPolicy = async (policyId, documentDtos) => {
   try {

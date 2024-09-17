@@ -87,13 +87,14 @@ export const getWithdrawalsExcelReport = async () => {
 };
 
 export const getReportCount = async () => {
+  const accessToken1 = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const reponse = await axios.get(`${API_BASE_URL}/fortuneLife/admin/count`, {
       headers: {
-        Authorization: token,
+        Authorization: accessToken1,
       },
     });
-
+    console.log(reponse);
     return reponse.data;
   } catch (error) {
     throw error;

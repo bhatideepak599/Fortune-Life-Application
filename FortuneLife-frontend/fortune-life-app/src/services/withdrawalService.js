@@ -1,7 +1,9 @@
 import axios from "axios";
 const API_BASE_URL = `http://localhost:8082`;
 const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
+
 export const getAllWithdrawals = async (pageSize, pageNumber, searchParams) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const params = {
       id: searchParams.id || undefined,
@@ -26,6 +28,7 @@ export const getAllWithdrawals = async (pageSize, pageNumber, searchParams) => {
 
 
 export const approveWithdrawal = async (id) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
     try {
       const response = await axios.put(
         `${API_BASE_URL}/fortuneLife/agent/withdrawal/approve/${id}`,
@@ -44,6 +47,7 @@ export const approveWithdrawal = async (id) => {
     }
   };
   export const rejectWithdrawal = async (id) => {
+    const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
     try {
       const response = await axios.put(
         `${API_BASE_URL}/fortuneLife/agent/withdrawal/reject/${id}`,
@@ -63,6 +67,7 @@ export const approveWithdrawal = async (id) => {
   };
 
   export const getAllWithdrawalOfAnAgent = async (pageSize, pageNumber, searchParams) => {
+    const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
     try {
       const params = {
         id: searchParams.id || undefined,
@@ -87,10 +92,7 @@ export const approveWithdrawal = async (id) => {
   
 
   export const claimAmount = async (agentId,amount,agentDto) => {
-    console.log(agentId);
-    console.log(amount);
-    console.log(agentDto);
-    
+    const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
     if (!accessToken) {
       return null;
     }

@@ -52,10 +52,12 @@ export const updateAgentByAdmin = async (agentDto) => {
 export const getAllAgents = async (pageSize,
   pageNumber,
   searchParams) => {
+    const accessToken1 = `Bearer ${localStorage.getItem("accessToken")}`;
+ 
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/agent`, {
       headers: {
-        Authorization: accessToken, 
+        Authorization: accessToken1, 
       },
       params:{
         id: searchParams.id!==""?searchParams.id:null, 

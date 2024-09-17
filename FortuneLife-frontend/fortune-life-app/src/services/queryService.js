@@ -3,12 +3,13 @@ const API_BASE_URL = `http://localhost:8082`;
 const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
 
 export const getAllQueries = async (pageSize, pageNumber, searchParams) => {
+  const accessToken1 = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
    // console.log("aya");
 
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/query`, {
       headers: {
-        Authorization: accessToken,
+        Authorization: accessToken1,
       },
 
       params: {

@@ -4,7 +4,7 @@ import { Navbar, Form, Button, Container, Row, Col, Nav } from "react-bootstrap"
 import { logout, updateAdminDetails, verifyUser } from "../../../../services/authService";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 
-const AdminProfile = ({ admin }) => {
+const AdminProfile = ({ admin ,flag ,setFlag}) => {
   const [adminDetails, setAdminDetails] = useState(admin);
 
   const navigate = useNavigate();
@@ -52,6 +52,7 @@ const AdminProfile = ({ admin }) => {
           },
         }));
         successToast("Updated Successfully.");
+        setFlag(!flag)
         setIsEditing(false);
       }
     } catch (error) {

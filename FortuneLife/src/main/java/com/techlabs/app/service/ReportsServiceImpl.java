@@ -35,6 +35,6 @@ public class ReportsServiceImpl implements ReportsService {
         } else {
             reportsDto.setCustomerPolicyRatio(0D);
         }
-        return null;
+        return reportsDto;
     }
 }

@@ -16,6 +16,7 @@ import {
   getWithdrawalsPdfReport,
 } from "../../../../services/reportsService";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
+import Loader from "../../../sharedComponents/loader/Loader"; // Importing the Loader
 
 export const Withdrawal = () => {
   const location = useLocation();
@@ -33,6 +34,7 @@ export const Withdrawal = () => {
     agentId: "",
     status: "PENDING", // Default set to PENDING
   });
+  const [loading, setLoading] = useState(false); // Loading state
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -55,6 +57,7 @@ export const Withdrawal = () => {
   }, [pageSize, pageNumber, flag]);
 
   const fetchWithdrawals = async () => {
+    setLoading(true); // Start loader
     try {
       const response = await getAllWithdrawals(pageSize, pageNumber, searchParams);
       setWithdrawalsList(response.content);
@@ -89,6 +92,8 @@ export const Withdrawal = () => {
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
       errorToast(error.response?.data?.message);
+    } finally {
+      setLoading(false); // Stop loader
     }
   };
 
@@ -146,8 +151,8 @@ export const Withdrawal = () => {
     setSearchParams((prevParams) => ({ ...prevParams, [type]: "" }));
   };
 
-  const handleReset = () => {
-    setSearchParams({
+  const handleReset =async () => {
+    await setSearchParams({
       id: "",
       agentId: "",
       status: "PENDING", // Reset status to PENDING on reset
@@ -231,7 +236,14 @@ export const Withdrawal = () => {
         </div>
       </div>
 
-      <CommonTable data={withdrawals} actions={actions} />
+      {/* Show loader while data is being fetched */}
+      {loading ? (
+        <Loader /> // Use the loader component
+      ) : withdrawals.length > 0 ? (
+        <CommonTable data={withdrawals} actions={actions} />
+      ) : (
+        <p className="text-center">No Withdrawals Found</p>
+      )}
 
       <div className="d-flex justify-content-center mt-0">
         <Pagination

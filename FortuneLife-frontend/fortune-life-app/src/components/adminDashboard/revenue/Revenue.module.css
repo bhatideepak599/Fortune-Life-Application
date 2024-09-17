@@ -1,0 +1,27 @@
+.chartContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .chartBox {
+    flex: 1 1 300px;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .lineChart {
+    height: 300px;
+  }
+  
+  .barChart {
+    height: 400px;
+  }
+  

@@ -194,7 +194,7 @@ const AgentReport = () => {
     setSearchType(type);
     setSearchParams((prevParams) => ({ ...prevParams, [type]: "" }));
   };
-  const handleReset = () => {
+  const handleReset = async () => {
     setSearchParams({
       id: "",
       userName: "",
