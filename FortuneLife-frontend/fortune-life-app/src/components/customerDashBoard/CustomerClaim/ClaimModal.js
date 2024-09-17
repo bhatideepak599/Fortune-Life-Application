@@ -80,7 +80,8 @@ const ClaimModal = ({ policyId, onClose }) => {
     if (currentPolicy) {
       if (currentPolicy.policyStatus === "ACTIVE") {
         const finalAmount = currentPolicy.totalAmountPaidTillDate * (deductionTax / 100);
-        setClaimAmount(finalAmount);
+        const claimableAmount = currentPolicy.totalAmountPaidTillDate - finalAmount;
+        setClaimAmount(claimableAmount);
       } else if (currentPolicy.policyStatus === "COMPLETE") {
         setClaimAmount(currentPolicy.sumAssured);
       } else {

@@ -39,7 +39,30 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
                                                        @Param("policyStatus") String policyStatus,
                                                        Pageable pageable);
 
-    @Query("SELECT p.issueDate AS date, COUNT(p) AS policiesBought, SUM(p.paidPolicyAmountTillDate) AS totalRevenue " +
+    @Query("SELECT i FROM InsurancePolicy i " +
+            "JOIN i.customer c " +
+            "JOIN c.user u " +
+            "JOIN i.insuranceScheme s " +
+            "WHERE (:id IS NULL OR i.id = :id) " +
+            "AND (:customerId IS NULL OR c.id = :customerId) " +
+            "AND (:agentId IS NULL OR i.agent.id = :agentId) " +
+            "AND (:schemeId IS NULL OR s.id = :schemeId) " +
+            "AND (:name IS NULL OR LOWER(CONCAT(u.firstName, ' ', u.lastName)) LIKE LOWER(CONCAT('%', :name, '%'))) " +
+            "AND (:schemeName IS NULL OR LOWER(s.schemeName) LIKE LOWER(CONCAT('%', :schemeName, '%'))) " +
+            "AND (:policyStatus IS NULL OR i.policyStatus = :policyStatus) " +
+            "AND (:verified IS NULL OR i.verified = :verified)")
+    Page<InsurancePolicy> findAllPoliciesBasedOnCritaria(@Param("id") Long id,
+                                                       @Param("customerId") Long customerId,
+                                                       @Param("agentId") Long agentId,
+                                                       @Param("schemeId") Long schemeId,
+                                                       @Param("schemeName") String schemeName,
+                                                       @Param("name") String name,
+                                                       @Param("policyStatus") String policyStatus,
+                                                       @Param("verified") Boolean verified,
+                                                       Pageable pageable);
+
+
+    @Query("SELECT p.issueDate AS date, COUNT(p) AS policiesBought, SUM(p.premiumAmount) AS totalRevenue " +
             "FROM InsurancePolicy p GROUP BY p.issueDate ORDER BY p.issueDate ASC")
     List<PolicyReport> getPolicyReport();
 

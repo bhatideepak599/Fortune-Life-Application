@@ -22,80 +22,84 @@ import com.techlabs.app.entity.SubmittedDocument;
 @Component
 public class InsurancePolicyMapper {
 
-	@Autowired
-	private PaymentMapper paymentMapper;
-	@Autowired
-	private CustomerMapper customerMapper;
+    @Autowired
+    private PaymentMapper paymentMapper;
+    @Autowired
+    private CustomerMapper customerMapper;
 
-	public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
-		InsurancePolicyResponseDto response = new InsurancePolicyResponseDto();
-		if (policy.getAgent() != null) {
-			response.setAgentName(policy.getAgent().getUser().getFirstName());
-			response.setAgentId(policy.getAgent().getUser().getId());
-		}
+    public InsurancePolicyResponseDto entityToDto(InsurancePolicy policy) {
+        InsurancePolicyResponseDto response = new InsurancePolicyResponseDto();
 
-		response.setId(policy.getId());
-		response.setIssueDate(policy.getIssueDate());
-		response.setMaturityDate(policy.getMaturityDate());
-		response.setPolicyStatus(policy.getPolicyStatus());
-		response.setPremiumAmount(policy.getPremiumAmount());
-		response.setPremiumType(policy.getPremiumType());
-		response.setSumAssured(policy.getSumAssured());
-		response.setSchemeName(policy.getInsuranceScheme().getSchemeName());
-		response.setVerified(policy.getVerified());
-		response.setPaymentList(paymentMapper.getDtoList(policy.getPayments()));
-		response.setTotalPolicyAmount(policy.getTotalPolicyAmount());
-		response.setTotalAmountPaidTillDate(policy.getPaidPolicyAmountTillDate());
+        if (policy.getAgent() != null && policy.getAgent().getUser() != null) {
+            String firstName = policy.getAgent().getUser().getFirstName() != null ? policy.getAgent().getUser().getFirstName() : "";
+            String lastName = policy.getAgent().getUser().getLastName() != null ? policy.getAgent().getUser().getLastName() : "";
+            response.setAgentName(firstName + " " + lastName);
+            response.setAgentId(policy.getAgent().getUser().getId());
+        }
 
-		if (policy.getClaims() != null) {
-			response.setClaimId(policy.getClaims().getId());
-			response.setClaimStatus(policy.getClaims().getClaimStatus());
-		} else {
-			response.setClaimId(null);
-			response.setClaimStatus("N/A");
-		}
-		response.setCustomerDto(customerMapper.entityToDto(policy.getCustomer()));
 
-		List<String> nominies = new ArrayList<>();
+        response.setId(policy.getId());
+        response.setIssueDate(policy.getIssueDate());
+        response.setMaturityDate(policy.getMaturityDate());
+        response.setPolicyStatus(policy.getPolicyStatus());
+        response.setPremiumAmount(policy.getPremiumAmount());
+        response.setPremiumType(policy.getPremiumType());
+        response.setSumAssured(policy.getSumAssured());
+        response.setSchemeName(policy.getInsuranceScheme().getSchemeName());
+        response.setVerified(policy.getVerified());
+        response.setPaymentList(paymentMapper.getDtoList(policy.getPayments()));
+        response.setTotalPolicyAmount(policy.getTotalPolicyAmount());
+        response.setTotalAmountPaidTillDate(policy.getPaidPolicyAmountTillDate());
 
-		for (Nominee n : policy.getNominees()) {
-			String nameAndRelation = "Name: " + n.getNomineeName() + ", Relation:" + n.getRelationStatus();
-			nominies.add(nameAndRelation);
-		}
-		response.setNomineeNameAndRelation(nominies);
+        if (policy.getClaims() != null) {
+            response.setClaimId(policy.getClaims().getId());
+            response.setClaimStatus(policy.getClaims().getClaimStatus());
+        } else {
+            response.setClaimId(null);
+            response.setClaimStatus("N/A");
+        }
+        response.setCustomerDto(customerMapper.entityToDto(policy.getCustomer()));
 
-		Set<SubmittedDocumentDto> documents = new HashSet<>();
+        List<String> nominies = new ArrayList<>();
 
-		for (SubmittedDocument document : policy.getSubmittedDocuments()) {
+        for (Nominee n : policy.getNominees()) {
+            String nameAndRelation = "Name: " + n.getNomineeName() + ", Relation:" + n.getRelationStatus();
+            nominies.add(nameAndRelation);
+        }
+        response.setNomineeNameAndRelation(nominies);
 
-			SubmittedDocumentDto documentDto = new SubmittedDocumentDto();
+        Set<SubmittedDocumentDto> documents = new HashSet<>();
 
-			documentDto.setDocumentImage(document.getDocumentImage());
-			documentDto.setDocumentName(document.getDocumentName());
-			documentDto.setDocumentStatus(document.getDocumentStatus());
-			documentDto.setId(document.getId());
-			documents.add(documentDto);
-		}
-		response.setSubmittedDocumentsDto(documents);
+        for (SubmittedDocument document : policy.getSubmittedDocuments()) {
 
-		return response;
-	}
+            SubmittedDocumentDto documentDto = new SubmittedDocumentDto();
 
-	public CommissionDto commissionEntityToDto(Commission commission) {
-		CommissionDto commissionDto = new CommissionDto();
-		commissionDto.setId(commission.getId());
-		commissionDto.setAmount(commission.getAmount());
-		commissionDto.setCommissionType(commission.getCommissionType());
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, hh:mm a");
-		String formattedDate = commission.getIssueDate().format(formatter);
-		commissionDto.setIssueDate(formattedDate);
-		
-		commissionDto.setPolicyId(commission.getPolicyId());
-		commissionDto.setAgentId(commission.getAgent().getId());
-		commissionDto.setAgentName(
-				commission.getAgent().getUser().getFirstName()+" " + commission.getAgent().getUser().getFirstName());
+            documentDto.setDocumentImage(document.getDocumentImage());
+            documentDto.setDocumentName(document.getDocumentName());
+            documentDto.setDocumentStatus(document.getDocumentStatus());
+            documentDto.setId(document.getId());
+            documents.add(documentDto);
+        }
+        response.setSubmittedDocumentsDto(documents);
 
-		return commissionDto;
-	}
+        return response;
+    }
+
+    public CommissionDto commissionEntityToDto(Commission commission) {
+        CommissionDto commissionDto = new CommissionDto();
+        commissionDto.setId(commission.getId());
+        commissionDto.setAmount(commission.getAmount());
+        commissionDto.setCommissionType(commission.getCommissionType());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, hh:mm a");
+        String formattedDate = commission.getIssueDate().format(formatter);
+        commissionDto.setIssueDate(formattedDate);
+
+        commissionDto.setPolicyId(commission.getPolicyId());
+        commissionDto.setAgentId(commission.getAgent().getId());
+        commissionDto.setAgentName(
+                commission.getAgent().getUser().getFirstName() + " " + commission.getAgent().getUser().getFirstName());
+
+        return commissionDto;
+    }
 }

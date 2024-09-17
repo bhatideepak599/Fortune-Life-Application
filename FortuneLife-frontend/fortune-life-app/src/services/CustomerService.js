@@ -311,3 +311,15 @@ export const addNewQuery = async (queryData) => {
   }
 };
 
+export const updateSubmittedDocuments = async (policyId, documentDtos) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/fortuneLife/policy/${policyId}/update-document`, documentDtos, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
