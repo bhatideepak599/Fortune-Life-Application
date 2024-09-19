@@ -27,6 +27,49 @@ const AddEmployeeOrAgent = ({ onlyAgent }) => {
     role: "Agent",
   });
 
+  const validateForm = () => {
+    const nameRegex = /^[A-Za-z]+$/;
+    const phoneRegex = /^\d{10}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{6,}$/;
+
+    const today = new Date();
+    const dob = new Date(formData.userDto.dateOfBirth);
+    const joiningDate = new Date(formData.joiningDate);
+
+    if (!nameRegex.test(formData.userDto.firstName) || !nameRegex.test(formData.userDto.lastName)) {
+      errorToast("First name and Last name must contain only alphabets.");
+      return false;
+    }
+
+    if (!phoneRegex.test(formData.userDto.mobileNumber)) {
+      errorToast("Mobile number must be a valid 10-digit number.");
+      return false;
+    }
+
+    if (!passwordRegex.test(formData.userDto.password)) {
+      errorToast("Password must be at least 6 characters, contain an uppercase letter, lowercase letter, number, and special character.");
+      return false;
+    }
+
+    const age = today.getFullYear() - dob.getFullYear();
+    if (age < 18 || (age === 18 && today < new Date(dob.getFullYear() + 18, dob.getMonth(), dob.getDate()))) {
+      errorToast("User must be at least 18 years old.");
+      return false;
+    }
+
+    if (dob > today || joiningDate > today) {
+      errorToast("Date of birth and joining date cannot be in the future.");
+      return false;
+    }
+
+    if (formData.salary <= 0 && formData.role === "Employee") {
+      errorToast("Salary must be a positive number.");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name in formData.userDto) {
@@ -54,6 +97,10 @@ const AddEmployeeOrAgent = ({ onlyAgent }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       if (formData.role === "Employee") {
         const response = await addEmployee(formData);
@@ -100,7 +147,7 @@ const AddEmployeeOrAgent = ({ onlyAgent }) => {
           <form className="p-4 rounded shadow-sm bg-white" onSubmit={handleSubmit} style={{ width: "100%" }}>
             <h2 className="text-center mb-4">Add Details</h2>
 
-            {/* Role Selection using Buttons */}
+            
             <div className="text-center mb-4">
               <div className="btn-group">
                 <button
@@ -229,3 +276,4 @@ const AddEmployeeOrAgent = ({ onlyAgent }) => {
 };
 
 export default AddEmployeeOrAgent;
+

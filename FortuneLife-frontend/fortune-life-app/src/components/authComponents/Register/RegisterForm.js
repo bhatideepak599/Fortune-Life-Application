@@ -30,22 +30,48 @@ const RegisterForm = () => {
 
   const validateForm = () => {
     let tempErrors = {};
-    tempErrors.firstName = formData.firstName ? "" : "First name is required.";
-    tempErrors.lastName = formData.lastName ? "" : "Last name is required.";
+  
+
+    const alphabeticRegex = /^[A-Za-z]+$/;
+    tempErrors.firstName = alphabeticRegex.test(formData.firstName) ? "" : "First name must contain only alphabetic characters.";
+    tempErrors.lastName = alphabeticRegex.test(formData.lastName) ? "" : "Last name must contain only alphabetic characters.";
+  
+
     tempErrors.username = /^(?=.*[A-Za-z0-9@._-]{6,})/.test(formData.username) ? "" : "Username must be at least 6 characters long and can include letters, numbers, and special characters @, ., -, _";
-    tempErrors.password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/.test(formData.password) ? "" : "Password must be between 6-15 characters and include at least one number and one letter.";
+  
+    
+    tempErrors.password = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,15}$/.test(formData.password)
+      ? ""
+      : "Password must be between 8-15 characters, include at least one uppercase letter, one number, and one special symbol.";
+  
+    // Email validation
     tempErrors.email = /^\S+@\S+\.\S+$/.test(formData.email) ? "" : "Email is not valid.";
+  
+    
     tempErrors.mobileNumber = /^[0-9]{10}$/.test(formData.mobileNumber) ? "" : "Mobile number must be a 10-digit number.";
+  
+   
     tempErrors.gender = formData.gender ? "" : "Gender is required.";
-    tempErrors.dateOfBirth = formData.dateOfBirth ? "" : "Date of birth is required.";
+  
+    const today = new Date().toISOString().split("T")[0]; 
+    tempErrors.dateOfBirth = formData.dateOfBirth && formData.dateOfBirth <= today ? "" : "Date of birth cannot be in the future.";
+  
+
     tempErrors.role = formData.role ? "" : "Role is required.";
+ 
     if (formData.role === "Agent") {
       tempErrors.agentImage = file ? "" : "Document upload is required for agents.";
     }
-
+  
+   
+    if (formData.salary !== undefined) {
+      tempErrors.salary = formData.salary >= 0 ? "" : "Salary must be a non-negative value.";
+    }
+  
     setErrors(tempErrors);
     return Object.values(tempErrors).every((x) => x === "");
   };
+  
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];

@@ -66,7 +66,7 @@ const AgentwiseCommissionReport = () => {
       const response = await getAllAgents(pageSize,
         pageNumber,
         searchParams);
-      setAgentsList(response.content); // Set the response content to AgentsList
+      setAgentsList(response.content); 
       setTotalPages(response.totalPages);
 
       const keys = [

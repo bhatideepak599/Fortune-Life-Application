@@ -1,27 +1,38 @@
 import React, { useState } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Container, Alert } from "react-bootstrap";
 import { addNewPlan } from "../../../../../services/schemeService";
 import { errorToast, successToast } from "../../../../../utils/Toast";
 import { useNavigate } from "react-router-dom";
 
-function AddPlan({ change , setChange,onClose }) {
+function AddPlan({ change, setChange, onClose }) {
   const [planName, setPlanName] = useState("");
   const [active, setActive] = useState(true);
+  const [nameError, setNameError] = useState(""); // for validation error
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate if planName is alphanumeric
+    const alphaNumericRegex = /^[a-zA-Z0-9\s]+$/;
+    if (!alphaNumericRegex.test(planName)) {
+      setNameError("Plan name should be alphanumeric only.");
+      return;
+    }
+    setNameError(""); // clear error if validation passes
+
     const newPlan = {
       planName,
       active,
     };
+
     try {
       const response = await addNewPlan(newPlan);
-     if(response){
-        successToast("New Plan Added")
-        setChange(!change)
+      if (response) {
+        successToast("New Plan Added");
+        setChange(!change);
         onClose();
-        
-     }
+      }
     } catch (error) {
       errorToast(error.response?.data?.message);
     }
@@ -40,6 +51,11 @@ function AddPlan({ change , setChange,onClose }) {
             onChange={(e) => setPlanName(e.target.value)}
             required
           />
+          {nameError && (
+            <Alert variant="danger" className="mt-2">
+              {nameError}
+            </Alert>
+          )}
         </Form.Group>
 
         <Form.Group controlId="formActiveStatus">

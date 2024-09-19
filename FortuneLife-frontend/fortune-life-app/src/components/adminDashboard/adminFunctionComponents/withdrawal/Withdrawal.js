@@ -16,7 +16,7 @@ import {
   getWithdrawalsPdfReport,
 } from "../../../../services/reportsService";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
-import Loader from "../../../sharedComponents/loader/Loader"; // Importing the Loader
+import Loader from "../../../sharedComponents/loader/Loader"; 
 
 export const Withdrawal = () => {
   const location = useLocation();
@@ -91,9 +91,10 @@ export const Withdrawal = () => {
 
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
+      if(error.response.status!==404)
       errorToast(error.response?.data?.message);
     } finally {
-      setLoading(false); // Stop loader
+      setLoading(false);
     }
   };
 

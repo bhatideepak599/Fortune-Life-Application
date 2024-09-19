@@ -143,7 +143,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			new EmployeeRelatedExcetption("No Employee Found With Employee Id :" + employeeDto.getId());
 		User user=employee.getUser();
 		User updatedUser = userMapper.dtoToEntity(employeeDto.getUserDto());
-		Address address = user.getAddress();
+		Address address = updatedUser.getAddress();
 		if(user.getAddress()!=null)
 			address.setId(user.getAddress().getId());
 		address = addressRepository.save(address);

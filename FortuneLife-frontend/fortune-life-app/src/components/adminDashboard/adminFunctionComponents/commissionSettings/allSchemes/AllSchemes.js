@@ -20,13 +20,11 @@ const AllSchemes = () => {
   const [schemes, setSchemes] = useState([]);
   const [commissionModal, setCommissionModal] = useState(false);
   const [addSchemeModal, setAddSchemeModal] = useState(false);
-  const [change, setChange] =useState(true);
-    useState(false);
+  const [change, setChange] = useState(true);
+
   useEffect(() => {
     fetchAllSchemes();
-  }, [commissionModal, navigate,schemeForUpdate,change]);
-
- 
+  }, [commissionModal, navigate, schemeForUpdate, change]);
 
   const fetchAllSchemes = async () => {
     try {
@@ -36,64 +34,49 @@ const AllSchemes = () => {
       errorToast(error.response?.data?.message || "An error occurred");
     }
   };
-  const handleAddScheme = () => {
-    setAddSchemeModal(true);
-  };
-  const handleHome = () => {
-    navigate("/admin-dashboard");
-  };
+
+  const handleAddScheme = () => setAddSchemeModal(true);
+  const handleHome = () => navigate("/admin-dashboard");
   const handleLogout = () => {
     logout();
     successToast("Logged Out.");
     navigate("/");
   };
-  const handleClick = (schemeId) => {
-    // Handle the scheme ID click event here
-    console.log("Manage Scheme ID:", schemeId);
-  };
+  const handleClick = (schemeId) => console.log("Manage Scheme ID:", schemeId);
   const handleCommission = (scheme) => {
     setSchemeForUpdate(scheme);
     setCommissionModal(true);
   };
-  
- 
-  const handleView = (scheme) => {
-    //console.log("scheme"+scheme.schemeId);
-    
-    navigate(`/view-update-scheme/${id}`, { state: { scheme } });
-   
+
+  const handleView = (scheme) => navigate(`/view-update-scheme/${id}`, { state: { scheme } });
+
+  const handleDelete = async (scheme) => {
+    try {
+      const response = await deleteASchemeUnderAPlan(id, scheme.id);
+      if (response) {
+        warnToast("Scheme Deleted.");
+        setChange(!change);
+      }
+    } catch (error) {
+      errorToast(error.response?.data?.message || "An error occurred");
+    }
   };
-  const handleDelete=async(scheme)=>{
-    try{
-      const response=await deleteASchemeUnderAPlan(id,scheme.id);
-      if(response){
-        warnToast("Scheme Deleted.")
-        setSchemeForUpdate((prev) => ({
-          ...prev,
-          active: false
-        }));
+
+  const handleActivate = async (scheme) => {
+    try {
+      const response = await activateScheme(id, scheme.id);
+      if (response) {
+        successToast("Scheme Activated.");
+        setChange(!change);
       }
     } catch (error) {
       errorToast(error.response?.data?.message || "An error occurred");
     }
-  }
-  const handleActivate =async(scheme)=>{
-    try{
-      const response=await activateScheme(id,scheme.id);
-      if(response){
-        successToast("Scheme Activated.")
-        setSchemeForUpdate((prev) => ({
-          ...prev,
-          active: true
-        }));
-      }
-    } catch (error) {
-      errorToast(error.response?.data?.message || "An error occurred");
-    }
-  }
+  };
+
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div
         style={{
           padding: "20px",
@@ -107,50 +90,80 @@ const AllSchemes = () => {
             {schemes && schemes.length > 0 ? (
               schemes.map((scheme) => (
                 <Col key={scheme.id} md={4} sm={6} xs={12} className="mb-4">
-                  <Card style={{ width: "100%" }}>
+                  <Card
+                    style={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                      transition: "transform 0.2s",
+                      background: "linear-gradient(135deg, #f3f4f6, #af92ca69)",
+                      padding: "20px",
+                    }}
+                    className="hover-zoom"
+                  >
                     <Card.Body>
-                      <Card.Title>{scheme.schemeName}</Card.Title>
-                      <Card.Text>
+                      <Card.Title
+                        style={{
+                          fontSize: "1.8rem",
+                          color: "#1abc9c",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {scheme.schemeName} <span>📋</span>
+                      </Card.Title>
+                      <Card.Text style={{ fontSize: "1.1rem", color: "#444" }}>
                         Description: {scheme.schemeDetails.description}
                       </Card.Text>
-                      <Card.Text>
-                        <strong>Investment Time: </strong>
-                        {scheme.schemeDetails.minInvestmentTime} to{" "}
-                        {scheme.schemeDetails.maxInvestmentTime} Years
+                      <Card.Text style={{ fontSize: "1.1rem", display: "flex", gap: "10px" }}>
+                        <strong>Investment Time:</strong> {scheme.schemeDetails.minInvestmentTime} to {scheme.schemeDetails.maxInvestmentTime} Years
                       </Card.Text>
-                      <Card.Text>
-                        <strong>Status: </strong>
-                        {scheme.active ? "Active" : "Inactive"}
+                      <Card.Text style={{ fontSize: "1.1rem", display: "flex", gap: "10px" }}>
+                        <strong>Status:</strong> {scheme.active ? <span style={{ color: "green" }}>Active ✅</span> : <span style={{ color: "red" }}>Inactive ❌</span>}
                       </Card.Text>
+                      <div style={{ display: "flex", gap: "15px", marginTop: "15px" }}>
+                        <Button
+                          variant="primary"
+                          onClick={() => handleView(scheme)}
+                          style={{
+                            backgroundColor: "#1abc9c",
+                            borderColor: "#1abc9c",
+                            borderRadius: "8px",
+                            padding: "10px 15px",
+                          }}
+                        >
+                          View 🚀
+                        </Button>
+                        {scheme.active ? (
+                          <Button
+                            variant="danger"
+                            onClick={() => handleDelete(scheme)}
+                            style={{
+                              backgroundColor: "#FF597B",
+                              borderColor: "#FF597B",
+                              borderRadius: "8px",
+                              padding: "10px 15px",
+                            }}
+                          >
+                            Delete ❌
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="warning"
+                            onClick={() => handleActivate(scheme)}
+                            style={{
+                              backgroundColor: "#538392",
+                              borderColor: "#538392",
+                              color: "white",
+                              borderRadius: "8px",
+                              padding: "10px 15px",
+                            }}
+                          >
+                            Activate 🔓
+                          </Button>
+                        )}
+                      </div>
                     </Card.Body>
                   </Card>
-                  <div className="d-flex justify-content-start gap-2 mt-1">
-                    <Button
-                      variant="info"
-                      onClick={() => handleView(scheme)}
-                    >
-                      View
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      onClick={() => handleCommission(scheme)}
-                    >
-                      Commission
-                    </Button>
-                   {scheme.active ? <Button
-                      variant="danger"
-                      onClick={() => handleDelete(scheme)}
-                    >
-                      Delete
-                    </Button> :
-                    <Button
-                    variant="success"
-                    onClick={() => handleActivate(scheme)}
-                  >
-                    Activate
-                  </Button>
-                    }
-                  </div>
                 </Col>
               ))
             ) : (
@@ -161,25 +174,31 @@ const AllSchemes = () => {
 
             {/* Add Scheme Card */}
             <Col md={4} sm={6} xs={12} className="mb-4">
-              <Card style={{ width: "90%", border: "2px dashed #007bff" }}>
-                <Card.Body>
-                  <Card.Title> Add New </Card.Title>
-                  <Card.Text>
-                    <strong>Scheme </strong>
-                  </Card.Text>
-                  <Card.Text>
-                    <strong>Under this Plan </strong>
-                  </Card.Text>
-                  <Card.Text>
-                    <strong>Click here</strong>
-                  </Card.Text>
+              <Card
+                style={{
+                  width: "100%",
+                  border: "2px dashed #007bff",
+                  borderRadius: "15px",
+                  padding: "20px",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <Card.Body className="d-flex flex-column align-items-center">
+                  <Card.Title style={{ fontSize: "1.8rem", color: "#007bff" }}>Add New Scheme</Card.Title>
+                  <Button
+                    variant="success"
+                    onClick={handleAddScheme}
+                    style={{
+                      backgroundColor: "#28a745",
+                      borderColor: "#28a745",
+                      borderRadius: "8px",
+                      padding: "10px 20px",
+                    }}
+                  >
+                    + Add Scheme
+                  </Button>
                 </Card.Body>
               </Card>
-              <div className="d-flex justify-content-center gap-2 mt-1">
-                <Button variant="success" onClick={handleAddScheme}>
-                  +Add Scheme
-                </Button>
-              </div>
             </Col>
           </Row>
         </Container>
@@ -188,26 +207,11 @@ const AllSchemes = () => {
           isOpen={commissionModal}
           onClose={() => setCommissionModal(false)}
         >
-          <ManageCommission
-            scheme={schemeForUpdate}
-            onClose={() => setCommissionModal(false)}
-            setModeloff={setCommissionModal}
-          />
+          <ManageCommission scheme={schemeForUpdate} onClose={() => setCommissionModal(false)} setModeloff={setCommissionModal} />
         </Modal>
-        <Modal
-          //title="Add New Scheme"
-          isOpen={addSchemeModal}
-          onClose={() => setAddSchemeModal(false)}
-        >
-          <AddScheme
-            id={id}
-            change={change}
-            setChange={setChange}
-            onClose={() => setAddSchemeModal(false)}
-            setModeloff={setAddSchemeModal}
-          />
+        <Modal isOpen={addSchemeModal} onClose={() => setAddSchemeModal(false)}>
+          <AddScheme id={id} change={change} setChange={setChange} onClose={() => setAddSchemeModal(false)} setModeloff={setAddSchemeModal} />
         </Modal>
-       
       </div>
     </>
   );

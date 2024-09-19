@@ -47,6 +47,46 @@ const AddScheme = ({ id, change, setChange, onClose }) => {
     
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!schemeName.trim()) {
+      return errorToast("Scheme Name cannot be blank.");
+    }
+    
+    if (minAmount <= 0 || maxAmount <= 0) {
+      return errorToast("Minimum and Maximum Amount must be greater than 0.");
+    }
+    
+    if (minAmount >= maxAmount) {
+      return errorToast("Minimum Amount should be less than Maximum Amount.");
+    }
+  
+    if (minInvestmentTime <= 0 || maxInvestmentTime <= 0) {
+      return errorToast("Investment Time should be greater than 0.");
+    }
+    
+    if (minInvestmentTime >= maxInvestmentTime) {
+      return errorToast("Minimum Investment Time should be less than Maximum Investment Time.");
+    }
+  
+    if (minAge <= 0 || maxAge <= 0) {
+      return errorToast("Minimum and Maximum Age should be greater than 0.");
+    }
+  
+    if (minAge >= maxAge) {
+      return errorToast("Minimum Age should be less than Maximum Age.");
+    }
+  
+    if (profitRatio <= 0) {
+      return errorToast("Profit Ratio must be greater than 0.");
+    }
+  
+    if (registrationCommissionRatio <= 0) {
+      return errorToast("Registration Commission Ratio must be greater than 0.");
+    }
+  
+    if (installmentCommissionRatio <= 0) {
+      return errorToast("Installment Commission Ratio must be greater than 0.");
+    }
+  
 
     try {
       const response = await uploadFile(formData);

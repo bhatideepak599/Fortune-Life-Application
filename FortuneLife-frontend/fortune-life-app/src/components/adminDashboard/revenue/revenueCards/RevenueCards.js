@@ -1,61 +1,61 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { FaUsers, FaUserTie, FaBriefcase, FaFileAlt, FaBalanceScale } from "react-icons/fa"; // Importing relevant icons
+import { FaUsers, FaUserTie, FaBriefcase, FaFileAlt, FaBalanceScale } from "react-icons/fa";
 
 const RevenueCards = ({ report }) => {
   return (
     <div className="row mb-4">
-      <h1 className="text-center mt-5">Reports and Revenue</h1>
+      <h1 className="text-center mt-4" style={headerStyle}>Reports and Revenue</h1>
 
-      <div className="col-md-4 mt-5">
-        <Card className="text-center shadow-sm" style={cardStyle}>
-          <Card.Body>
+      <div className="col-md-4 mt-4">
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #6a11cb, #2575fc)' }}>
+          <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
-              <FaUsers style={iconStyle} />Customers
+              <FaUsers style={iconStyle} /> Customers
             </Card.Title>
             <Card.Text style={textStyle}>{report.customerCount}</Card.Text>
           </Card.Body>
         </Card>
       </div>
 
-      <div className="col-md-4 mt-5">
-        <Card className="text-center shadow-sm" style={cardStyle}>
-          <Card.Body>
+      <div className="col-md-4 mt-4">
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #ff6a00, #ee0979)' }}>
+          <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
-              <FaUserTie style={iconStyle} />Agents
+              <FaUserTie style={iconStyle} /> Agents
             </Card.Title>
             <Card.Text style={textStyle}>{report.agentCount}</Card.Text>
           </Card.Body>
         </Card>
       </div>
 
-      <div className="col-md-4 mt-5">
-        <Card className="text-center shadow-sm" style={cardStyle}>
-          <Card.Body>
+      <div className="col-md-4 mt-4">
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #11998e, #38ef7d)' }}>
+          <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
-              <FaBriefcase style={iconStyle} />Employees
+              <FaBriefcase style={iconStyle} /> Employees
             </Card.Title>
             <Card.Text style={textStyle}>{report.employeeCount}</Card.Text>
           </Card.Body>
         </Card>
       </div>
 
-      <div className="col-md-4 mt-5">
-        <Card className="text-center shadow-sm" style={cardStyle}>
-          <Card.Body>
+      <div className="col-md-4 mt-4">
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #f12711, #f5af19)' }}>
+          <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
-              <FaFileAlt style={iconStyle} />Policies
+              <FaFileAlt style={iconStyle} /> Policies
             </Card.Title>
             <Card.Text style={textStyle}>{report.policyCount}</Card.Text>
           </Card.Body>
         </Card>
       </div>
 
-      <div className="col-md-4 mt-5 ">
-        <Card className="text-center shadow-sm" style={cardStyle}>
-          <Card.Body>
+      <div className="col-md-4 mt-4">
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #a18cd1, #fbc2eb)' }}>
+          <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
-              <FaBalanceScale style={iconStyle} />Policy per Customer
+              <FaBalanceScale style={iconStyle} /> Policy per Customer
             </Card.Title>
             <Card.Text style={textStyle}>{report.customerPolicyRatio}</Card.Text>
           </Card.Body>
@@ -65,30 +65,47 @@ const RevenueCards = ({ report }) => {
   );
 };
 
+const headerStyle = {
+  color: '#333',
+  fontWeight: 'bold',
+  fontSize: '2rem',
+};
+
 const cardStyle = {
-  backgroundColor: '#f8f9fa',
-  borderRadius: '15px',
-  padding: '20px',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  borderRadius: '10px',
+  padding: '15px',
+  boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)',
+  color: '#fff',
+  minHeight: '180px', // Reduced height
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
+
+const cardBodyStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
 };
 
 const titleStyle = {
-  fontSize: '1.5rem',
+  fontSize: '1.25rem', 
   fontWeight: 'bold',
-  color: '#343a40',
-  marginBottom: '10px',
+  marginBottom: '8px',
+  color: '#fff',
 };
 
 const textStyle = {
-  fontSize: '2rem',
+  fontSize: '1.5rem', // Reduced font size
   fontWeight: '600',
-  color: '#009879',
+  color: '#fff',
 };
 
 const iconStyle = {
-  marginRight: '10px',
-  color: '#007bff',
-  fontSize: '2rem',
+  marginRight: '8px',
+  fontSize: '1.75rem', // Reduced icon size
 };
 
 export default RevenueCards;

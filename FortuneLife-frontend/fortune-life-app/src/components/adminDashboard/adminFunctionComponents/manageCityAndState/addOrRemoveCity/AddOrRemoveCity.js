@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { addCityToAState, addSchemeToACity, getAllStates, removeSchemeFromACity } from "../../../../../services/stateAndCityService"; // Verify the import path
 import { errorToast, successToast, warnToast } from "../../../../../utils/Toast"; // Verify the import path
 import { Button, Form, Container } from "react-bootstrap"; // Ensure Bootstrap is installed
+import { toast } from "react-toastify";
 
 const AddOrRemoveCity = ({ scheme, onClose ,flag,setFlag,remove}) => {
   const [allStates, setAllStates] = useState([]);
@@ -96,7 +97,10 @@ const AddOrRemoveCity = ({ scheme, onClose ,flag,setFlag,remove}) => {
         onClose()
       }
     } catch (error) {
-      errorToast(error.response?.data?.message || "An error occurred while adding the city");
+      if(error.response?.status==400){
+          toast.warn("Scheme Is Not Active in this city!.")
+      }else
+      toast.error(error.response?.data?.message || "An error occurred while adding the city");
     }
   };
 

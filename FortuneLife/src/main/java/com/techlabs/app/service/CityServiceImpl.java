@@ -182,7 +182,7 @@ public class CityServiceImpl implements CityService {
 	@Override
 	public String removeSchemeFromCity(Long schemeId, Long pincode) {
 		City city = cityRepository.findByPincode(pincode)
-				.orElseThrow(() -> new FortuneLifeException("City with ID : " + pincode + " is not present "));
+				.orElseThrow(() -> new SchemeRelatedException("City with ID : " + pincode + " is not present "));
 
 		
 		InsuranceScheme insuranceScheme = schemeRepository.findById(schemeId)

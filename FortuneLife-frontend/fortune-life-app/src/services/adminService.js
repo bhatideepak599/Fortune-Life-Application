@@ -3,6 +3,7 @@ const API_BASE_URL = `http://localhost:8082`;
 const accessToken = localStorage.getItem("accessToken");
 
 export const setTaxGlobally = async (tax) => {
+  const accessToken = localStorage.getItem("accessToken");
   if (!accessToken) {
     //    throw ("Access Denied");
     return null;
@@ -30,6 +31,7 @@ export const setTaxGlobally = async (tax) => {
 };
 
 export const getTax = async () => {
+  const accessToken = localStorage.getItem("accessToken");
   try {
     const response = await axios.get(
       `${API_BASE_URL}/fortuneLife/tax/get-tax`,
@@ -49,6 +51,7 @@ export const getTax = async () => {
 };
 
 export const getAllClaims = async ({ claimId, bankAccountNumber, claimStatus, page, size }) => {
+  const accessToken = localStorage.getItem("accessToken");
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/claim`, {
       headers: {
@@ -71,6 +74,7 @@ export const getAllClaims = async ({ claimId, bankAccountNumber, claimStatus, pa
 };
 
 export const claimApproval = async ({ claimId, claimReply, remarks }) => {
+  const accessToken = localStorage.getItem("accessToken");
   try {
     const response = await axios.put(
       `${API_BASE_URL}/fortuneLife/claim/approve/${claimId}`,

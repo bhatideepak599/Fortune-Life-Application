@@ -7,7 +7,8 @@ import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../../utils/Modals/Modal";
 import ClaimTable from "./ClaimTable";
 import Navbar from "../navbar/Navbar";
-import styles from "./ClaimApproval.module.css"
+import styles from "./ClaimApproval.module.css";
+import Loader from "../../../sharedComponents/loader/Loader"; 
 
 const ClaimApproval = () => {
   const [claims, setClaims] = useState([]);
@@ -31,35 +32,40 @@ const ClaimApproval = () => {
     claimStatus: urlSearchParams.get("claimStatus") || "",
   });
 
+  const [loading, setLoading] = useState(false); // Loader state
+
   useEffect(() => {
     fetchClaims();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNumber, pageSize, searchActive]);
 
   const fetchClaims = async () => {
+    setLoading(true); // Show loader
     const updatedSearchParams = {
       ...searchParams,
-      claimStatus: "PENDING", 
+      claimStatus: "PENDING",
       page: pageNumber,
       size: pageSize,
     };
 
-    
     try {
-      const response = await getAllClaims({
-        ...updatedSearchParams,
-        page: pageNumber,
-        size: pageSize,
-      });
+      const response = await getAllClaims(updatedSearchParams);
+      console.log(response.content);
+      
       if (response.content) {
-        const keysToSelect = ["id", "claimAmount", "bankAccountNumber", "claimStatus", "remarks"];
+        const keysToSelect = ["id", "policy.id","claimAmount", "bankAccountNumber", "claimStatus", "remarks"];
         const sanitized = sanitizedData({ data: response.content, keysTobeSelected: keysToSelect });
         setClaims(sanitized);
         setTotalPages(response.totalPages);
+      } else {
+        setClaims([]); // No claims found
       }
     } catch (error) {
-      //console.error(error);
-      toast.warn("No Claims for approval");
+      if (error.response.status !== 404) {
+        toast.warn("Error fetching claims");
+      }
+      setClaims([]); // Handle error and empty claims
+    } finally {
+      setLoading(false); // Hide loader
     }
   };
 
@@ -150,66 +156,107 @@ const ClaimApproval = () => {
 
   return (
     <>
-    <Navbar/>
-    <div className={`container ${styles.claimContainer}`}>
-      <h2>Claim Approval</h2>
-      <form className="mb-4" ref={searchRef} onSubmit={handleSearch}>
-        <div className="row">
-          <div className="col-md-3">
-            <input id="claimId" className="form-control" type="text" placeholder="Search by Claim ID" value={searchParams.claimId || ""} onChange={handleSearchChange} />
-          </div>
-          <div className="col-md-3">
-            <input id="bankAccountNumber" className="form-control" type="text" placeholder="Search by Bank Account Number" value={searchParams.bankAccountNumber || ""} onChange={handleSearchChange} />
-          </div>
-          <div className="col-md-3">
-            <select id="claimStatus" className="form-control" value={searchParams.claimStatus} onChange={handleSearchChange}>
-              <option value="">All Statuses</option>
-              <option value="PENDING">Pending</option>
-              <option value="APPROVED">Approved</option>
-              <option value="REJECT">Rejected</option>
-            </select>
-          </div>
-          <div className="col-md-3">
-            <button type="submit" className="btn btn-primary" style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
-              Search
-            </button>
-            <button type="reset" className="btn btn-secondary ms-2" onClick={handleReset}>
-              Reset
-            </button>
-          </div>
-        </div>
-      </form>
-
-      <ClaimTable data={claims} actions={actions} />
-
-      {claims?.length > 0 && (
-        <div className="d-flex align-items-center justify-content-between mt-5">
-          <Pagination pager={{ pageSize, pageNumber, setPageNumber, setPageSize, totalPages }} onPageChange={onPageChange} />
-        </div>
-      )}
-
-      {modalOpen && (
-        <Modal isOpen={modalOpen} onClose={handleModalClose}>
-          {modalMode === "view" ? (
-            <div className={styles.viewRemarks}>
-              <h4>View Remarks</h4>
-              <p>{remarks}</p>
+      <Navbar />
+      <div className={`container ${styles.claimContainer}`}>
+        <h2>Claim Approval</h2>
+        <form className="mb-4" ref={searchRef} onSubmit={handleSearch}>
+          <div className="row">
+            <div className="col-md-3">
+              <input
+                id="claimId"
+                className="form-control"
+                type="text"
+                placeholder="Search by Claim ID"
+                value={searchParams.claimId || ""}
+                onChange={handleSearchChange}
+              />
             </div>
-          ) : (
-            <div className={styles.claimDecision}>
-              <h4>{modalMode === "approve" ? "Approve Claim" : "Reject Claim"}</h4>
-              <textarea className="form-control" value={remarks} onChange={(e) => setRemarks(e.target.value)} placeholder="Enter remarks" rows={4}></textarea>
-              <button className="btn btn-primary mt-2" onClick={handleSubmit} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
-                OK
+            <div className="col-md-3">
+              <input
+                id="bankAccountNumber"
+                className="form-control"
+                type="text"
+                placeholder="Search by Bank Account Number"
+                value={searchParams.bankAccountNumber || ""}
+                onChange={handleSearchChange}
+              />
+            </div>
+            <div className="col-md-3">
+              <select
+                id="claimStatus"
+                className="form-control"
+                value={searchParams.claimStatus}
+                onChange={handleSearchChange}
+              >
+                <option value="">All Statuses</option>
+                <option value="PENDING">Pending</option>
+                <option value="APPROVED">Approved</option>
+                <option value="REJECT">Rejected</option>
+              </select>
+            </div>
+            <div className="col-md-3">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}
+              >
+                Search
               </button>
-              <button className="btn btn-secondary mt-2 ms-2" onClick={handleModalClose}>
-                Cancel
+              <button type="reset" className="btn btn-secondary ms-2" onClick={handleReset}>
+                Reset
               </button>
             </div>
-          )}
-        </Modal>
-      )}
-    </div>
+          </div>
+        </form>
+
+        {loading ? (
+          <Loader /> // Display loader when loading is true
+        ) : claims?.length > 0 ? (
+          <>
+            <ClaimTable data={claims} actions={actions} />
+            <div className="d-flex align-items-center justify-content-between mt-5">
+              <Pagination
+                pager={{ pageSize, pageNumber, setPageNumber, setPageSize, totalPages }}
+                onPageChange={onPageChange}
+              />
+            </div>
+          </>
+        ) : (
+          <p>No claims for approval</p> // Display message when claims array is empty
+        )}
+
+        {modalOpen && (
+          <Modal isOpen={modalOpen} onClose={handleModalClose}>
+            {modalMode === "view" ? (
+              <div className={styles.viewRemarks}>
+                <h4>View Remarks</h4>
+                <p>{remarks}</p>
+              </div>
+            ) : (
+              <div className={styles.claimDecision}>
+                <h4>{modalMode === "approve" ? "Approve Claim" : "Reject Claim"}</h4>
+                <textarea
+                  className="form-control"
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                  placeholder="Enter remarks"
+                  rows={4}
+                ></textarea>
+                <button
+                  className="btn btn-primary mt-2"
+                  onClick={handleSubmit}
+                  style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}
+                >
+                  OK
+                </button>
+                <button className="btn btn-secondary mt-2 ms-2" onClick={handleModalClose}>
+                  Cancel
+                </button>
+              </div>
+            )}
+          </Modal>
+        )}
+      </div>
     </>
   );
 };

@@ -16,10 +16,7 @@ import com.techlabs.app.repository.SchemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
@@ -81,10 +78,23 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	public SchemeDto createScheme(RequestSchemeDto schemeDto, Long planId) {
 		InsurancePlan insurancePlan = planRepository.findById(planId).orElseThrow(
 				() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+		Optional<InsuranceScheme> check=schemeRepository.findBySchemeName(schemeDto.getSchemeName());
+
+		if(check.isPresent()){
+			throw  new SchemeRelatedException("Scheme with name : " + schemeDto.getSchemeName() + " already exists");
+		}
 
 		if (!insurancePlan.getActive()) {
 			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
 		}
+
+		if(schemeDto.getMinInvestmentTime()>0 && schemeDto.getMinInvestmentTime() <schemeDto.getMaxInvestmentTime()){
+			throw new InsurancePlanException("Minimum time should be less than Maximum Time!");
+		}
+		if(schemeDto.getMinAmount()>0 && schemeDto.getMinAmount() <schemeDto.getMaxAmount()){
+			throw new InsurancePlanException("Minimum Amount should be less than Maximum Amount!");
+		}
+
 
 		InsuranceScheme insuranceScheme = new InsuranceScheme();
 		insuranceScheme.setActive(true);
@@ -145,8 +155,8 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 		insuranceScheme.setSchemeName(schemeDto.getSchemeName());
 
 		SchemeDetails schemeDetails = insuranceScheme.getSchemeDetails();
-		System.out.println(schemeDto.getSchemeImage()
-				+ "=========================================================================================");
+//		System.out.println(schemeDto.getSchemeImage()
+//				+ "=========================================================================================");
 		schemeDetails.setSchemeImage(schemeDto.getSchemeImage());
 		schemeDetails.setDescription(schemeDto.getDescription());
 		schemeDetails.setMinAmount(schemeDto.getMinAmount());

@@ -135,7 +135,7 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     public AgentDto updateAgent(AgentDto agentDto) {
-        // System.out.println("agentDto->"+agentDto+"===========================================================================================================");
+
         Agent agent = agentRepository.findById(agentDto.getId())
                 .orElseThrow(() -> new AgentRelatedException("No Agent Found With Agent ID:" + agentDto.getId()));
 
@@ -144,8 +144,9 @@ public class AgentServiceImpl implements AgentService {
 
         User user = agent.getUser();
         User updatedUser = userMapper.dtoToEntity(agentDto.getUserDto());
-        Address address = user.getAddress();
-        address.setId(agent.getUser().getAddress().getId());
+        Address address = updatedUser.getAddress();
+        if(user.getAddress().getId()!=null)
+        address.setId(user.getAddress().getId());
         address = addressRepository.save(address);
         user.setAddress(address);
         user.setFirstName(updatedUser.getFirstName());

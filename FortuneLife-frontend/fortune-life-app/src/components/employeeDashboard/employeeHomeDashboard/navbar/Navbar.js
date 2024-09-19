@@ -42,7 +42,8 @@ const Navbar = () => {
     try {
       const response = await updateEmployee(userDto.id, userDto, addressDto);
       if (response) {
-        toast.success("Profile Updated successfully");
+        setEmployee(response);
+        setShowEmployeeProfileModal(false)
       }
     } catch (error) {
       errorToast(error.response?.data?.message);

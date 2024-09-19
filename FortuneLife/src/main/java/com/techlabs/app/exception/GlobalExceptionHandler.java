@@ -73,7 +73,6 @@ public class GlobalExceptionHandler extends RuntimeException {
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(UserRelatedException e) {
         logger.error(e.getMessage());

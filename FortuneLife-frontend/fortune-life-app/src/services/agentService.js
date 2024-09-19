@@ -3,6 +3,7 @@ const API_BASE_URL = `http://localhost:8082`;
 const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
 
 export const addAgent = async (agentDto) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
   if (!accessToken) {
     //    throw ("Access Denied");
     return null;
@@ -29,6 +30,7 @@ export const addAgent = async (agentDto) => {
 };
 
 export const updateAgentByAdmin = async (agentDto) => {
+  
  
   const accessToken = localStorage.getItem("accessToken");
   try {
