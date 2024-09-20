@@ -6,8 +6,11 @@ import { updateSubmittedDocuments } from "../../../../services/CustomerService";
 
 const ViewDocumentForm = ({ policyId, onClose }) => {
   const [submittedDocuments, setSubmittedDocuments] = useState([]);
+
   const [fileInputs, setFileInputs] = useState({});
+
   const [selectedPolicy, setSelectedPolicy] = useState(null);
+
   const [rejectedDocuments, setRejectedDocuments] = useState([]);
 
   useEffect(() => {
@@ -16,9 +19,11 @@ const ViewDocumentForm = ({ policyId, onClose }) => {
         const response = await getPolicyByPolicyId(policyId);
         if (response) {
           setSelectedPolicy(response);
-          const rejectedDocuments = response.submittedDocumentsDto?.filter((doc) => doc.documentStatus === "REJECTED") || [];
-          setRejectedDocuments(rejectedDocuments);
-          setSubmittedDocuments(rejectedDocuments);
+
+          setSubmittedDocuments(response.submittedDocumentsDto || []);
+
+          const rejectedDocs = response.submittedDocumentsDto?.filter((doc) => doc.documentStatus === "REJECTED") || [];
+          setRejectedDocuments(rejectedDocs);
         }
       } catch (error) {
         toast.error(error.message || "Failed to load policy.");
@@ -47,31 +52,41 @@ const ViewDocumentForm = ({ policyId, onClose }) => {
 
   const handleFileChange = (id, event) => {
     const file = event.target.files[0];
-    setFileInputs((prev) => ({ ...prev, [id]: file }));
+    if (file) {
+      setFileInputs((prev) => ({ ...prev, [id]: file }));
+    }
   };
 
   const handleSubmitAll = async () => {
     const updates = [];
 
     for (const [documentId, file] of Object.entries(fileInputs)) {
+      const numericId = Number(documentId);
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
 
         try {
           const response = await uploadFile(formData);
-          if (response) {
-            const document = submittedDocuments.find((doc) => doc.id === Number(documentId));
-            const documentName = document?.documentName || "Unknown";
+
+          if (response && response.data && response.data.name) {
+            const document = submittedDocuments.find((doc) => doc.id === numericId);
+            if (!document) {
+              toast.error(`Document with ID ${documentId} not found.`);
+              return;
+            }
 
             updates.push({
-              id: documentId,
+              id: numericId,
               documentImage: response.data.name,
-              documentName: documentName,
               documentStatus: "PENDING",
             });
+          } else {
+            toast.error("Invalid response from upload.");
+            return;
           }
         } catch (error) {
+          console.error("Upload error:", error);
           toast.error("Failed to upload file.");
           return;
         }
@@ -80,10 +95,24 @@ const ViewDocumentForm = ({ policyId, onClose }) => {
 
     if (updates.length > 0) {
       try {
-        await updateSubmittedDocuments(policyId, updates);
+        const updatedDocuments = submittedDocuments.map((doc) => {
+          const update = updates.find((u) => u.id === doc.id);
+          return update ? { ...doc, ...update } : doc;
+        });
+
+        await updateSubmittedDocuments(policyId, updatedDocuments);
         toast.success("Documents updated successfully.");
+
+        setSubmittedDocuments(updatedDocuments);
+
+        const remainingRejected = updatedDocuments.filter((doc) => doc.documentStatus === "REJECTED");
+        setRejectedDocuments(remainingRejected);
+
+        setFileInputs({});
       } catch (error) {
+        console.error("Update error:", error);
         toast.error("Failed to update documents.");
+        return;
       }
     } else {
       toast.info("No documents to update.");
@@ -96,22 +125,26 @@ const ViewDocumentForm = ({ policyId, onClose }) => {
     <div className="container">
       <h1 className="text-center mb-4">Rejected Documents</h1>
       <div className="row justify-content-center">
-        {submittedDocuments.map((doc) => (
-          <div key={doc.id} className="col-md-4 mb-4">
-            <div className="card shadow-sm h-100">
-              <div className="card-body text-center d-flex flex-column justify-content-between">
-                <h5 className="card-title">{doc.documentName}</h5>
-                <button className="btn btn-primary mb-3" onClick={() => handleViewDocument(doc.documentImage)}>
-                  View
-                </button>
-                <input type="file" className="form-control mb-2" onChange={(e) => handleFileChange(doc.id, e)} />
+        {rejectedDocuments.length > 0 ? (
+          rejectedDocuments.map((doc) => (
+            <div key={doc.id} className="col-md-4 mb-4">
+              <div className="card shadow-sm h-100">
+                <div className="card-body text-center d-flex flex-column justify-content-between">
+                  <h5 className="card-title">{doc.documentName}</h5>
+                  <button className="btn btn-primary mb-3" onClick={() => handleViewDocument(doc.documentImage)}>
+                    View
+                  </button>
+                  <input type="file" className="form-control mb-2" onChange={(e) => handleFileChange(doc.id, e)} />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-center">No rejected documents to display.</p>
+        )}
       </div>
       <div className="d-flex justify-content-center mt-4">
-        <button className="btn btn-success me-2" onClick={handleSubmitAll} disabled={selectedPolicy?.verified === true || rejectedDocuments.length <= 0} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
+        <button className="btn btn-success me-2" onClick={handleSubmitAll} disabled={selectedPolicy?.verified === true || rejectedDocuments.length === 0} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
           Submit All Documents
         </button>
       </div>

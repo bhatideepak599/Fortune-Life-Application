@@ -27,13 +27,14 @@ const InsuranceSchemes = () => {
 
         if (customerPincode) {
           const filteredSchemes = activeSchemes.filter((scheme) => scheme.citiesDto.some((city) => city.pincode === customerPincode));
-          if(filteredSchemes.length===0){
-            setSchemes([])
-          }
-          else 
+          if (filteredSchemes.length === 0) {
+            setSchemes([]);
+          } else {
             setSchemes(filteredSchemes);
+          }
+        } else {
+          setSchemes(response);
         }
-        else setSchemes(response) 
 
         // Fetch images for each scheme
         const images = {};
@@ -77,7 +78,6 @@ const InsuranceSchemes = () => {
   };
 
   const role = localStorage.getItem("role");
-
 
   return (
     <>

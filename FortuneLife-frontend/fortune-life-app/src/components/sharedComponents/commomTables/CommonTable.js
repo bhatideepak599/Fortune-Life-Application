@@ -70,11 +70,11 @@ const CommonTable = ({ data, actions, viewPayments }) => {
                       {actions.update && (
                         <>
                           {row.verified === false ? (
-                            <button className="btn me-2" onClick={() => actions.verify(row[primaryKey])} style={{ backgroundColor: "#55AD9B", color: "white" }}>
+                            <button className="btn me-2 px-3" onClick={() => actions.verify(row[primaryKey])} style={{ backgroundColor: "#55AD9B", color: "white" }}>
                               Verify
                             </button>
                           ) : (
-                            <button className="btn me-2" onClick={() => actions.update(row[primaryKey])} style={{ backgroundColor: "#694F8E", color: "white" }}>
+                            <button className="btn me-2 px-2" onClick={() => actions.update(row[primaryKey])} style={{ backgroundColor: "#694F8E", color: "white" }}>
                               Update
                             </button>
                           )}
@@ -82,7 +82,7 @@ const CommonTable = ({ data, actions, viewPayments }) => {
                       )}
 
                       {actions.delete && (
-                        <button className="btn" onClick={() => actions.delete(row[primaryKey])} style={{ backgroundColor: "#FF597B", color: "white" }}>
+                        <button className="btn me-2" onClick={() => actions.delete(row[primaryKey])} style={{ backgroundColor: "#FF597B", color: "white" }}>
                           Delete
                         </button>
                       )}

@@ -190,7 +190,8 @@ const AllPolicies = () => {
                 <option value="">All Statuses</option>
                 <option value="PENDING">Pending</option>
                 <option value="ACTIVE">Active</option>
-                <option value="CLAIMED">Claimed</option>
+                <option value="REJECT">Rejected</option>
+                <option value="DROP">Dropped</option>
                 <option value="COMPLETE">Complete</option>
               </select>
             </div>
