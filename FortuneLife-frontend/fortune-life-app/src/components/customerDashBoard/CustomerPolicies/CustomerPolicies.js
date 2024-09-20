@@ -172,6 +172,7 @@ const CustomerPolicies = () => {
       }
     } catch (error) {
       console.error(error);
+      if(error.response.status!==404)
       toast.error(error.message);
     } finally {
       setLoading(false); // End loading
@@ -198,7 +199,8 @@ const CustomerPolicies = () => {
       }
     } catch (error) {
       console.error(error);
-      toast.error(error.message);
+      if(error.response.status!==404)
+        toast.error(error.message);
     } finally {
       setLoading(false); // End loading
     }
@@ -215,6 +217,7 @@ const CustomerPolicies = () => {
         setSelectedCurrentPolicy(response);
       }
     } catch (error) {
+      if(error.response.status!==404)
       toast.error(error.message);
     }
   };
@@ -234,6 +237,7 @@ const CustomerPolicies = () => {
         setSelectedCurrentPolicy(response);
       }
     } catch (error) {
+      if(error.response.status!==404)
       toast.error(error.message);
     }
   };

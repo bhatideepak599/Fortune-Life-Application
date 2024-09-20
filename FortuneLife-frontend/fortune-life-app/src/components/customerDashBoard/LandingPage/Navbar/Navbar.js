@@ -21,6 +21,8 @@ const Navbar = () => {
   const [showQueryModal, setShowQueryModal] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [changePasswordModal, setChangePasswordModal] = useState(false);
+  const [pincode,setPincode]=useState("")
+  const [pincodeInfo,setPincodeInfo]=useState(true)
 
   useEffect(() => {
     const getCustomer = async () => {
@@ -29,6 +31,11 @@ const Navbar = () => {
         console.log(response);
 
         setCurrentUser(response);
+        console.log(response.addressDto?.pinCode);
+        if(response.addressDto?.pinCode==0){
+          setPincodeInfo(false)
+        }
+        setPincode(response.addressDto?.pinCode)
       } catch (error) {
         toast.error(error);
       }
@@ -102,7 +109,13 @@ const Navbar = () => {
     setChangePasswordModal(true);
   };
 
+if( !pincodeInfo){
+  setPincodeInfo(true)
+  toast.info("Update your address for regional schemes.")
+}
+
   return (
+
     <>
       <header className="mb-0" style={{ backgroundColor: "#E9EFEC" }}>
         <div className="container p-0">

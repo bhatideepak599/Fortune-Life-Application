@@ -2,6 +2,7 @@ package com.techlabs.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.techlabs.app.enums.ClaimStatus;
@@ -31,6 +32,7 @@ public class ClaimServiceImpl implements ClaimService {
     private ClaimRepository claimRepository;
 
     private ClaimMapper claimMapper;
+    private ClaimDto claimDto;
 
     public ClaimServiceImpl(CustomerRepository customerRepository, InsurancePolicyRepository insurancePolicyRepository,
                             ClaimRepository claimRepository, ClaimMapper claimMapper) {
@@ -75,7 +77,7 @@ public class ClaimServiceImpl implements ClaimService {
         claim = claimRepository.save(claim);
         insurancePolicy.setClaims(claim);
         insurancePolicyRepository.save(insurancePolicy);
-        return claimMapper.entityToDto(claim);
+        return claimDto;
     }
 
     @Override
@@ -110,7 +112,14 @@ public class ClaimServiceImpl implements ClaimService {
             return "Claim Rejected";
         }
         claim.setClaimStatus(ClaimStatus.APPROVED.name());
-        claim.getPolicy().setPolicyStatus(PolicyStatus.CLAIMED.name());
+        InsurancePolicy policy = claim.getPolicy();
+        if(Objects.equals(policy.getPaidPolicyAmountTillDate(),(policy.getTotalPolicyAmount())) && policy.getMaturityDate().isBefore(claim.getDate().toLocalDate())){
+            claim.getPolicy().setPolicyStatus(PolicyStatus.COMPLETE.name());
+        }
+        else{
+            claim.getPolicy().setPolicyStatus(PolicyStatus.DROP.name());
+        }
+
         claim.setRemarks(message);
         claimRepository.save(claim);
         return "Claim Approved";

@@ -13,24 +13,31 @@ import { toast } from "react-toastify";
 
 const InsuranceSchemes = () => {
   const { planId } = useParams();
-  console.log(planId);
-
   const [schemes, setSchemes] = useState([]);
   const [schemeImages, setSchemeImages] = useState({});
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
+  const [customerPincode, setCustomerPincode] = useState(null);
 
   useEffect(() => {
     const fetchAllSchemesById = async () => {
       try {
         const response = await getSchemesByPlanId(planId);
         const activeSchemes = response.filter((scheme) => scheme.active);
-        setSchemes(activeSchemes);
 
+        // If customer is logged in, filter schemes by customer's pincode
+        if (customerPincode) {
+          const filteredSchemes = activeSchemes.filter((scheme) => scheme.citiesDto.some((city) => city.pincode === customerPincode));
+          if(filteredSchemes.length==0){
+            setSchemes([])
+          }
+          else 
+            setSchemes(filteredSchemes);
+        } 
+
+        // Fetch images for each scheme
         const images = {};
-        for (const scheme of response) {
-          console.log(scheme);
-
+        for (const scheme of activeSchemes) {
           const name = scheme.schemeDetails.schemeImage;
           const imageUrl = await fetchFile(name);
           images[scheme.id] = imageUrl;
@@ -42,16 +49,20 @@ const InsuranceSchemes = () => {
     };
 
     fetchAllSchemesById();
-  }, [planId, navigate]);
+  }, [planId, customerPincode]);
 
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
         const response = await getLoggedInUser();
         if (response) {
-          console.log(response);
-
           setCurrentUser(response);
+
+          // Set customer pincode if user is logged in as a customer
+          if (localStorage.getItem("role") === "ROLE_CUSTOMER") {
+            const pincode = response.addressDto?.pinCode;
+            setCustomerPincode(pincode);
+          }
         }
       } catch (error) {
         toast.error("Error fetching user details.");
@@ -59,14 +70,14 @@ const InsuranceSchemes = () => {
     };
 
     getCurrentUser();
-  }, [navigate, setCurrentUser]);
+  }, []);
 
   const handleViewDetails = (schemeId) => {
-    //console.log("Scheme ID:", schemeId);
     navigate(`scheme-details/${schemeId}`);
   };
 
   const role = localStorage.getItem("role");
+
 
   return (
     <>
@@ -103,7 +114,7 @@ const InsuranceSchemes = () => {
                     </ul>
 
                     <div className="btn-group col-6 mx-auto">
-                      <button className="btn btn-primary " style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={() => handleViewDetails(scheme.id)}>
+                      <button className="btn btn-primary" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={() => handleViewDetails(scheme.id)}>
                         View Details
                       </button>
                     </div>
@@ -112,7 +123,7 @@ const InsuranceSchemes = () => {
               ))}
             </>
           ) : (
-            <h2 className="h2 section-title">No are schemes available in this plan yet</h2>
+            <h2 className="h2 section-title">No schemes available in this plan yet</h2>
           )}
         </div>
       </section>
