@@ -11,9 +11,9 @@ public interface WithdrawalService {
 
 	PageResponse<WithdrawalDto> getAllWithdrawalRequests(Long id, Long agentId, String status, int page, int size);
 
-	String approveWithdrawal(Long id);
+	String approveWithdrawal(Long id, String remarks);
 
-	String rejectWithdrawal(Long id);
+	String rejectWithdrawal(Long id, String remarks);
 
     PageResponse<WithdrawalDto> getAllWithdrawalsOfAnAgent(Long id, String status, HttpServletRequest request, int page, int size);
 }

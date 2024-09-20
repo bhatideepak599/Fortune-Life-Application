@@ -141,8 +141,9 @@ export const Withdrawal = () => {
   };
 
   const handleApproveClick = async (id) => {
+    setModalOpen(true);
     try {
-      const response = await approveWithdrawal(id);
+      const response = await approveWithdrawal(id, remarks);
       if (response) {
         successToast("Withdrawal Approved");
         setFlag(!flag);
@@ -153,8 +154,9 @@ export const Withdrawal = () => {
   };
 
   const handleRejectClick = async (id) => {
+    setModalOpen(true);
     try {
-      const response = await rejectWithdrawal(id);
+      const response = await rejectWithdrawal(id, remarks);
       if (response) {
         setFlag(!flag);
         warnToast("Withdrawal Rejected");

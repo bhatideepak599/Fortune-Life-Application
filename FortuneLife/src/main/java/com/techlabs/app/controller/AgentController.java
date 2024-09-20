@@ -113,20 +113,20 @@ public class AgentController {
 
 	@Operation(summary = "Approve Withdrawal ")
 	@PutMapping("/withdrawal/approve/{id}")
-	public ResponseEntity<Object> approveWithdrawal(@PathVariable("id") Long id) {
+	public ResponseEntity<Object> approveWithdrawal(@PathVariable("id") Long id, @RequestParam String remarks) {
 		logger.info("Approving  Withdrawal");
 
-		String approve = withdrawalService.approveWithdrawal(id);
+		String approve = withdrawalService.approveWithdrawal(id, remarks);
 
 		return new ResponseEntity<>(approve, HttpStatus.OK);
 	}
 
 	@Operation(summary = "Reject Withdrawal ")
 	@PutMapping("/withdrawal/reject/{id}")
-	public ResponseEntity<Object> rejectWithdrawal(@PathVariable("id") Long id) {
+	public ResponseEntity<Object> rejectWithdrawal(@PathVariable("id") Long id, @RequestParam String remarks) {
 		logger.info("Rejecting  Withdrawal");
 
-		String reject = withdrawalService.rejectWithdrawal(id);
+		String reject = withdrawalService.rejectWithdrawal(id, remarks);
 
 		return new ResponseEntity<>(reject, HttpStatus.OK);
 	}

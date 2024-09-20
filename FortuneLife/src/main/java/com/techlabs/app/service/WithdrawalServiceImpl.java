@@ -112,22 +112,24 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 	}
 
 	@Override
-	public String approveWithdrawal(Long id) {
+	public String approveWithdrawal(Long id, String remarks) {
 		Withdrawal withdrawal=withdrawalRepository.findById(id)
 				.orElseThrow(()-> new FortuneLifeException("No Request Found For WithDrawal!."));
 		withdrawal.setStatus("APPROVED");
+		withdrawal.setRemarks(remarks);
 		withdrawalRepository.save(withdrawal);
 		return "WithDrawal Approved";
 	}
 
 	@Override
-	public String rejectWithdrawal(Long id) {
+	public String rejectWithdrawal(Long id, String remarks) {
 		Withdrawal withdrawal=withdrawalRepository.findById(id)
 				.orElseThrow(()-> new FortuneLifeException("No Request Found For WithDrawal!."));
 		withdrawal.setStatus("REJECTED");
 		Agent agent=withdrawal.getAgent();
 		agent.setTotalCommission(agent.getTotalCommission()+withdrawal.getAmount());
 		withdrawal.setLeftCommission(agent.getTotalCommission());
+		withdrawal.setRemarks(remarks);
 		withdrawalRepository.save(withdrawal);
 		agentRepository.save(agent);
 		return "WithDrawal Rejected";
