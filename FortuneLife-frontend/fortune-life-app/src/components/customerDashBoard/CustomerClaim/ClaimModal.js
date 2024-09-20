@@ -81,15 +81,17 @@ const ClaimModal = ({ policyId, onClose }) => {
     getDeductionTax();
   }, []);
 
-  // Calculate claim amount based on policy status and deduction tax
   useEffect(() => {
     if (currentPolicy && deductionTax !== null) {
-      if (currentPolicy.policyStatus === "ACTIVE") {
+      const maturityDate = new Date(currentPolicy.maturityDate);
+      const today = new Date();
+
+      if (currentPolicy.totalAmountPaidTillDate === currentPolicy.totalPolicyAmount && maturityDate <= today) {
+        setClaimAmount(currentPolicy.sumAssured);
+      } else if (currentPolicy.policyStatus === "ACTIVE") {
         const finalAmount = currentPolicy.totalAmountPaidTillDate * (deductionTax / 100);
         const claimableAmount = currentPolicy.totalAmountPaidTillDate - finalAmount;
         setClaimAmount(claimableAmount);
-      } else if (currentPolicy.policyStatus === "COMPLETE") {
-        setClaimAmount(currentPolicy.sumAssured);
       } else {
         setClaimAmount(0);
       }

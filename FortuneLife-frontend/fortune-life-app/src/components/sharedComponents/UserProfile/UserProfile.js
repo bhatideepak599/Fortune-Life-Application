@@ -125,7 +125,7 @@ const UserProfile = ({ isUpdate,  updateProfile }) => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>; // Show loading spinner
+    return <div>Loading...</div>;
   }
 
   return (

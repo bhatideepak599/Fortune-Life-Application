@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -74,13 +75,15 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         policy.setPaidPolicyAmountTillDate(totalAmountPaidTillDate);
 
 
-        if(policy.getTotalPolicyAmount()<policy.getPaidPolicyAmountTillDate()){
+        if (policy.getTotalPolicyAmount() < policy.getPaidPolicyAmountTillDate()) {
             throw new FortuneLifeException("Paid amount till date exceeds total policy amount");
         }
 
-        if(Objects.equals(policy.getTotalPolicyAmount(), policy.getPaidPolicyAmountTillDate())){
+        if (Objects.equals(policy.getTotalPolicyAmount(), policy.getPaidPolicyAmountTillDate()) &&
+                (policy.getMaturityDate().isEqual(LocalDate.now()) || policy.getMaturityDate().isBefore(LocalDate.now()))) {
             policy.setPolicyStatus(PolicyStatus.COMPLETE.name());
         }
+
 
         policy.getPayments().add(payment);
 

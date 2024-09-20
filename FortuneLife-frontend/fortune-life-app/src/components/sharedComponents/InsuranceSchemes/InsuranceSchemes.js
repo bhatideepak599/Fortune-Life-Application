@@ -28,7 +28,7 @@ const InsuranceSchemes = () => {
         // If customer is logged in, filter schemes by customer's pincode
         if (customerPincode) {
           const filteredSchemes = activeSchemes.filter((scheme) => scheme.citiesDto.some((city) => city.pincode === customerPincode));
-          if(filteredSchemes.length==0){
+          if(filteredSchemes.length===0){
             setSchemes([])
           }
           else 

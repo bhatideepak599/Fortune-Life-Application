@@ -35,6 +35,7 @@ const SharedTable = ({ data, actions }) => {
                         backgroundColor: "hsl(245, 67%, 59%)",
                         color: "white",
                       }}
+                      disabled={!(row.verified)}
                     >
                       Payment
                     </button>
@@ -65,9 +66,9 @@ const formatHeader = (header) => {
   if (header === "verified") return "Verification Status";
   if (header === "totalAmountPaidTillDate") return "Amount Paid";
   return header
-    .replace(/([a-z])([A-Z])/g, "$1 $2") // Convert camelCase to words
-    .replace(/_/g, " ") // Replace underscores with spaces
-    .replace(/(^\w|\s\w)/g, (match) => match.toUpperCase()); // Capitalize the first letter
+    .replace(/([a-z])([A-Z])/g, "$1 $2") 
+    .replace(/_/g, " ")
+    .replace(/(^\w|\s\w)/g, (match) => match.toUpperCase());
 };
 
 export default SharedTable;
