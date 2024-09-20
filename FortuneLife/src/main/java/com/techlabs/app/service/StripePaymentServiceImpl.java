@@ -114,7 +114,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
     }
 
     @Override
-    public List<PaymentDto> getPaymentsByPolicyId(Long policyId) {
+    public List<PaymentDto> getPaymentsByPolicyId(String policyId) {
 
         InsurancePolicy policy = policyRepository.findById(policyId)
                 .orElseThrow(() -> new FortuneLifeException("No Policy Found With ID: " + policyId));

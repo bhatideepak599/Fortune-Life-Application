@@ -12,7 +12,7 @@ public class CommissionDto {
 
 	private Double amount;
 
-	private Long policyId;
+	private String policyId;
 
 	private Long agentId;
 	private String agentName;

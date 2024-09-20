@@ -15,9 +15,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy, Long> {
+public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy, String> {
     @Query("SELECT ip.insuranceScheme FROM InsurancePolicy ip WHERE ip.id = :policyId")
-    InsuranceScheme findInsuranceSchemeByPolicyId(@Param("policyId") Long policyId);
+    InsuranceScheme findInsuranceSchemeByPolicyId(@Param("policyId") String policyId);
 
     @Query("SELECT i FROM InsurancePolicy i " +
             "JOIN i.customer c " +
@@ -51,7 +51,7 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
             "AND (:schemeName IS NULL OR LOWER(s.schemeName) LIKE LOWER(CONCAT('%', :schemeName, '%'))) " +
             "AND (:policyStatus IS NULL OR i.policyStatus = :policyStatus) " +
             "AND (:verified IS NULL OR i.verified = :verified)")
-    Page<InsurancePolicy> findAllPoliciesBasedOnCritaria(@Param("id") Long id,
+    Page<InsurancePolicy> findAllPoliciesBasedOnCritaria(@Param("id") String id,
                                                        @Param("customerId") Long customerId,
                                                        @Param("agentId") Long agentId,
                                                        @Param("schemeId") Long schemeId,

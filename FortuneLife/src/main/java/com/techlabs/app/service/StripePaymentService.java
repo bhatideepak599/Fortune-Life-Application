@@ -11,7 +11,7 @@ import java.util.List;
 public interface StripePaymentService {
     PaymentIntent createPaymentIntent(PaymentDto paymentDto, Payment payment) throws StripeException;
 
-    List<PaymentDto> getPaymentsByPolicyId(Long policyId);
+    List<PaymentDto> getPaymentsByPolicyId(String policyId);
 
     public Double calculateTotalRevenue(LocalDateTime startDate, LocalDateTime endDate) ;
     public List<Payment> getPaymentsWithinDateRange(

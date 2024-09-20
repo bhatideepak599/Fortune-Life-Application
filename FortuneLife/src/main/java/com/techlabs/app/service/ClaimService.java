@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 
 public interface ClaimService {
 
-	ClaimDto applyForPolicyClaim(Long customerId, Long policyId, @Valid ClaimDto claimDto);
+	ClaimDto applyForPolicyClaim(Long customerId, String policyId, @Valid ClaimDto claimDto);
 
 	PageResponse<ClaimDto> getAllClaims(Long id, String bankAccountNumber,String claimStatus,int page, int size);
 

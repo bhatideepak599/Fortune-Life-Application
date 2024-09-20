@@ -64,7 +64,7 @@ public class PaymentController {
 
     @Operation(summary = "Get All Payments By Policy ID")
     @GetMapping("/policies/{policyId}")
-    public ResponseEntity<List<PaymentDto>> getPaymentsByPolicyId(@PathVariable Long policyId) {
+    public ResponseEntity<List<PaymentDto>> getPaymentsByPolicyId(@PathVariable String policyId) {
         logger.info("Fetching all payments for policy with ID: {}", policyId);
         List<PaymentDto> paymentDtos = paymentService.getPaymentsByPolicyId(policyId);
         return new ResponseEntity<>(paymentDtos, HttpStatus.OK);

@@ -92,7 +92,7 @@ const CustomerRegister = ({ id, onClose }) => {
             <div className="col-md-6 mb-3">
               <label>Password</label>
               <div className="input-group">
-                <input type={showPassword ? "text" : "password"} className="form-control" name="password" value={userDto.password} onChange={handleInputChange} placeholder="Enter Password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$" title="Password must be 6-15 characters long and contain at least one letter and one number" required />
+                <input type={showPassword ? "text" : "password"} className="form-control" name="password" value={userDto.password} onChange={handleInputChange} placeholder="Enter Password"  />
                 <button type="button" className="btn btn-outline-secondary" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? "Hide" : "Show"}
                 </button>

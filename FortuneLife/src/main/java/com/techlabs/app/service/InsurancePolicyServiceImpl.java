@@ -227,14 +227,14 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
     }
 
     @Override
-    public InsurancePolicyResponseDto getPolicyById(Long policyId) {
+    public InsurancePolicyResponseDto getPolicyById(String policyId) {
         InsurancePolicy insurancePolicy = insurancePolicyRepository.findById(policyId)
                 .orElseThrow(() -> new FortuneLifeException("No Policy Found With ID: " + policyId));
         return insurancePolicyMapper.entityToDto(insurancePolicy);
     }
 
     @Override
-    public PageResponse<InsurancePolicyResponseDto> getAllPolicies(Long id, Long customerId, Long agentId,
+    public PageResponse<InsurancePolicyResponseDto> getAllPolicies(String id, Long customerId, Long agentId,
                                                                    Long schemeId, String schemeName, String customerName,
                                                                    String policyStatus, Boolean verified, int page, int size, String sortBy, String direction) {
         Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
@@ -258,7 +258,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
 
     @Override
-    public PageResponse<CommissionDto> getAllCommissions(Long id, Long policyId, Long agentId, String commissionType,
+    public PageResponse<CommissionDto> getAllCommissions(Long id, String policyId, Long agentId, String commissionType,
                                                          String customerName, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Commission> commissions = commissionRepository.findByCriteria(id, policyId, agentId, commissionType,
@@ -275,7 +275,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
     }
 
     @Override
-    public PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, Long policyId, String commissionType, int page, int size, HttpServletRequest request) {
+    public PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, String policyId, String commissionType, int page, int size, HttpServletRequest request) {
         Pageable pageable = PageRequest.of(page, size);
         UserDto user = authService.getLoggedUser(request);
         Long agentId = user.getId();
@@ -321,7 +321,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
     @Transactional
     @Override
-    public InsurancePolicyResponseDto updateSubmittedDocuments(Long policyId, List<SubmittedDocumentDto> documentDtos) {
+    public InsurancePolicyResponseDto updateSubmittedDocuments(String policyId, List<SubmittedDocumentDto> documentDtos) {
 
         InsurancePolicy insurancePolicy = insurancePolicyRepository.findById(policyId)
                 .orElseThrow(() -> new FortuneLifeException("No Policy Found With ID: " + policyId));
@@ -363,7 +363,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
     }
 
     @Override
-    public InsurancePolicyResponseDto verifyPolicyDocuments(Long policyId, List<SubmittedDocumentDto> documentDtos) {
+    public InsurancePolicyResponseDto verifyPolicyDocuments(String policyId, List<SubmittedDocumentDto> documentDtos) {
         InsurancePolicy insurancePolicy = insurancePolicyRepository.findById(policyId)
                 .orElseThrow(() -> new FortuneLifeException("No Policy Found With ID: " + policyId));
 

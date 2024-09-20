@@ -141,6 +141,7 @@ const ClaimApproval = () => {
       });
       toast.success(`Claim ${operation.toLowerCase()} successfully`);
       fetchClaims();
+     
       handleModalClose();
     } catch (error) {
       console.error(error);

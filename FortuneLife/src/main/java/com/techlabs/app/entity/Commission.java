@@ -42,7 +42,7 @@ public class Commission {
 	private Double amount;
 	
 	@Column(nullable=false)
-	private Long policyId;
+	private String policyId;
 
 	@ManyToOne(cascade = { CascadeType.ALL})
 	@JoinColumn(name = "agentId")

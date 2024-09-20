@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class PaymentDto {
     private String policyHolderName;
     private String paymentMethodId;
-    private Long policyId;
+    private String policyId;
     private Long paymentId;
     private LocalDateTime dateOfPayment;
     private String paymentType;

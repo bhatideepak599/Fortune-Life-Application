@@ -23,7 +23,7 @@ const AddScheme = ({ id, change, setChange, onClose }) => {
   const [minAge, setMinAge] = useState();
   const [maxAge, setMaxAge] = useState();
   const [profitRatio, setProfitRatio] = useState();
-  const navigate = useNavigate();
+
 
   const [registrationCommissionRatio, setRegistrationCommissionRatio] =
     useState();

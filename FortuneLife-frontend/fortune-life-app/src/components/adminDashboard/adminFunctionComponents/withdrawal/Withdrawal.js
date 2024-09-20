@@ -21,10 +21,13 @@ export const Withdrawal = () => {
   const [withdrawals, setWithdrawals] = useState([]);
   const [withdrawalsList, setWithdrawalsList] = useState([]);
   const [flag, setFlag] = useState(false);
+  const [id, setId] = useState("");
+
   const [searchType, setSearchType] = useState("");
   const [pageSize, setPageSize] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [approveClick,setApproveClick]=useState(false)
 
   const [selectedClaim, setSelectedClaim] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -141,29 +144,33 @@ export const Withdrawal = () => {
   };
 
   const handleApproveClick = async (id) => {
+     setId(id)
+    setApproveClick(true)
     setModalOpen(true);
-    try {
-      const response = await approveWithdrawal(id, remarks);
-      if (response) {
-        successToast("Withdrawal Approved");
-        setFlag(!flag);
-      }
-    } catch (error) {
-      errorToast(error.response?.data?.message);
-    }
+   
+    // try {
+    //   const response = await approveWithdrawal(id, remarks);
+    //   if (response) {
+    //     successToast("Withdrawal Approved");
+    //     setFlag(!flag);
+    //   }
+    // } catch (error) {
+    //   errorToast(error.response?.data?.message);
+    // }
   };
 
   const handleRejectClick = async (id) => {
+    setId(id)
     setModalOpen(true);
-    try {
-      const response = await rejectWithdrawal(id, remarks);
-      if (response) {
-        setFlag(!flag);
-        warnToast("Withdrawal Rejected");
-      }
-    } catch (error) {
-      errorToast(error.response?.data?.message);
-    }
+    // try {
+    //   const response = await rejectWithdrawal(id, remarks);
+    //   if (response) {
+    //     setFlag(!flag);
+    //     warnToast("Withdrawal Rejected");
+    //   }
+    // } catch (error) {
+    //   errorToast(error.response?.data?.message);
+    // }
   };
 
   const handleView = (claim) => {
@@ -185,14 +192,20 @@ export const Withdrawal = () => {
   };
   const handleSubmit = async () => {
     try {
-      // const operation = modalMode === "approve" ? "APPROVED" : "REJECT";
-      // await claimApproval({
-      //   claimId: selectedClaim.id,
-      //   claimReply: operation,
-      //   remarks,
-      // });
-      //toast.success(`Claim ${operation.toLowerCase()} successfully`);
-     // fetchClaims();
+     if(approveClick){
+      const response = await approveWithdrawal(id, remarks);
+      if (response) {
+        successToast("Withdrawal Approved");
+        
+      }
+     }else {
+      const response = await rejectWithdrawal(id, remarks);
+      if (response) {
+        
+        warnToast("Withdrawal Rejected");
+      }
+     }
+     fetchWithdrawals();
       handleModalClose();
     } catch (error) {
       //console.error(error);

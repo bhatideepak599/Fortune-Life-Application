@@ -4,6 +4,7 @@ const API_BASE_URL = `http://localhost:8082`;
 const token = `Bearer ${localStorage.getItem("accessToken")}`;
 
 export const getCustomerById = async ({ id }) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/customer/${id}`, {
       headers: {
@@ -18,6 +19,7 @@ export const getCustomerById = async ({ id }) => {
 };
 
 export const buyNewPolicy = async ({ customerId, schemeId, dataToSend }) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const response = await axios.post(
       `${API_BASE_URL}/fortuneLife/customer/${customerId}/Insurance-Scheme/${schemeId}/policy`,
@@ -44,6 +46,7 @@ export const buyNewPolicy = async ({ customerId, schemeId, dataToSend }) => {
 };
 
 export const buyNewPolicyByAgent = async ({ customerId, schemeId, agentId, dataToSend }) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const response = await axios.post(
       `${API_BASE_URL}/fortuneLife/customer/${customerId}/Insurance-Scheme/${schemeId}/agent/${agentId}/policy`,
@@ -116,6 +119,7 @@ export const updateCustomerByAdmin = async (customer) => {
   }
 };
 export const getAllCustomers = async (pageSize, pageNumber, searchParams) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/customer`, {
       headers: {
@@ -142,6 +146,7 @@ export const getAllCustomers = async (pageSize, pageNumber, searchParams) => {
 };
 
 export const deleteCustomer = async (id) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const response = await axios.delete(`${API_BASE_URL}/fortuneLife/customer/${id}`, {
       headers: {
@@ -157,6 +162,7 @@ export const deleteCustomer = async (id) => {
 };
 
 export const activateCustomer = async (id) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const response = await axios.put(
       `${API_BASE_URL}/fortuneLife/customer/activate/${id}`,
@@ -176,6 +182,7 @@ export const activateCustomer = async (id) => {
 };
 
 export const getPoliciesByCustomerId = async ({ policyId, schemeName, policyStatus, customerId, page, size }) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const response = await axios.get(`${API_BASE_URL}/fortuneLife/policy`, {
       headers: {
@@ -200,6 +207,7 @@ export const getPoliciesByCustomerId = async ({ policyId, schemeName, policyStat
 };
 
 export const getClaimByClaimId = async (claimId) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const respnse = await axios.get(`${API_BASE_URL}/fortuneLife/claim/${claimId}`, {
       headers: {
@@ -214,9 +222,9 @@ export const getClaimByClaimId = async (claimId) => {
 };
 
 export const applyForClaim = async (customerId, policyId, payload, claimAmount) => {
-  console.log(claimAmount);
-  console.log(payload);
-
+  // console.log(claimAmount);
+  // console.log(payload);
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const response = await axios.post(
       `${API_BASE_URL}/fortuneLife/claim/customer/${customerId}/Insurance-policy/${policyId}`,
@@ -245,6 +253,7 @@ export const applyForClaim = async (customerId, policyId, payload, claimAmount) 
 };
 
 export const addnewCustomer = async (userDto, addressDto) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     console.log(userDto);
     console.log(addressDto);
@@ -301,6 +310,7 @@ export const getQueriesByCustomerEmail = async (params) => {
 };
 
 export const addNewQuery = async (queryData) => {
+  
   const accessToken = localStorage.getItem("accessToken");
 
   try {
@@ -317,6 +327,7 @@ export const addNewQuery = async (queryData) => {
 };
 
 export const updateSubmittedDocuments = async (policyId, documentDtos) => {
+  const token = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const response = await axios.put(`${API_BASE_URL}/fortuneLife/policy/${policyId}/update-document`, documentDtos, {
       headers: {

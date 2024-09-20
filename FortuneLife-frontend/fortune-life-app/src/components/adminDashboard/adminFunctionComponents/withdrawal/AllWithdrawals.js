@@ -69,6 +69,7 @@ export const AllWithdrawals = () => {
         "withdrawalDate",
         "amount",
         "status",
+        "remarks"
       ];
 
       const newSanitizedData = sanitizedData({

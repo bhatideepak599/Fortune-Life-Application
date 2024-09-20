@@ -15,15 +15,15 @@ public interface InsurancePolicyService {
     InsurancePolicyResponseDto addNewPolicyByAgentForCustomer(Long customerId, Long schemeId, Long agentId,
                                                               @Valid InsurancePolicyDto insurancePolicyDto);
 
-    InsurancePolicyResponseDto getPolicyById(Long policyId);
+    InsurancePolicyResponseDto getPolicyById(String policyId);
 
-    PageResponse<InsurancePolicyResponseDto> getAllPolicies(Long id, Long customerId, Long agentId, Long schemeId,
+    PageResponse<InsurancePolicyResponseDto> getAllPolicies(String id, Long customerId, Long agentId, Long schemeId,
                                                             String schemeName, String customerName, String policyStatus, Boolean verified, int page, int size, String sortBy, String direction);
 
-    PageResponse<CommissionDto> getAllCommissions(Long id, Long policyId, Long agentId, String commissionType,
+    PageResponse<CommissionDto> getAllCommissions(Long id, String policyId, Long agentId, String commissionType,
                                                   String customerName, int page, int size);
 
-    PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, Long policyId, String commissionType, int page, int size, HttpServletRequest
+    PageResponse<CommissionDto> getAllCommissionsOfAnAgent(Long id, String policyId, String commissionType, int page, int size, HttpServletRequest
             request);
 
     PageResponse<InsurancePolicyResponseDto> getAllPoliciesUnderAnAgent(Long id, Long customerId, String name,
@@ -32,7 +32,7 @@ public interface InsurancePolicyService {
 	 List<PolicyReport> getPolicyReport();
 
 
-    InsurancePolicyResponseDto updateSubmittedDocuments(Long policyId, List<SubmittedDocumentDto> documentDtos);
+    InsurancePolicyResponseDto updateSubmittedDocuments(String policyId, List<SubmittedDocumentDto> documentDtos);
 
-    InsurancePolicyResponseDto verifyPolicyDocuments(Long policyId, List<SubmittedDocumentDto> documentDtos);
+    InsurancePolicyResponseDto verifyPolicyDocuments(String policyId, List<SubmittedDocumentDto> documentDtos);
 }

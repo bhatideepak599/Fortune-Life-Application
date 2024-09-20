@@ -36,10 +36,7 @@ const API_BASE_URL = `http://localhost:8082`;
 // };
 
 export const addEmployee = async (employeeDto) => {
-  if (!accessToken) {
-    return null;
-  }
-
+  const accessToken = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
       `${API_BASE_URL}/fortuneLife/employee`,

@@ -19,7 +19,7 @@ public interface CommissionRepository extends JpaRepository<Commission, Long> {
 
 			"AND (:agentFirstName IS NULL OR LOWER(CONCAT(u.firstName, ' ', u.lastName)) LIKE LOWER(CONCAT('%', :agentFirstName, '%'))) "
 			+ "AND (:commissionType IS NULL OR LOWER(c.commissionType) LIKE LOWER(CONCAT('%', :commissionType, '%'))) ")
-	Page<Commission> findByCriteria(@Param("id") Long id, @Param("policyId") Long policyId,
+	Page<Commission> findByCriteria(@Param("id") Long id, @Param("policyId") String policyId,
 			@Param("agentId") Long agentId, @Param("commissionType") String commissionType,
 			@Param("agentFirstName") String agentFirstName, Pageable pageable);
 

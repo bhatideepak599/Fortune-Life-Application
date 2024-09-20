@@ -10,7 +10,7 @@ import lombok.Data;
 public class ClaimDto {
     private Long id;
 
-    private Long policyId;
+    private String policyId;
     private int totalInstallments;
 
     private int paidInstallments;

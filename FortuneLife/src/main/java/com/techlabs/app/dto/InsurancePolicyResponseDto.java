@@ -14,7 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 public class InsurancePolicyResponseDto {
 
-    private Long id;
+    private String id;
     private LocalDate issueDate;
     private LocalDate maturityDate;
     private String premiumType;

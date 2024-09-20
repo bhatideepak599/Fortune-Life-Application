@@ -88,10 +88,10 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
 		}
 
-		if(schemeDto.getMinInvestmentTime()>0 && schemeDto.getMinInvestmentTime() <schemeDto.getMaxInvestmentTime()){
+		if(schemeDto.getMinInvestmentTime()<0 && schemeDto.getMinInvestmentTime() >schemeDto.getMaxInvestmentTime()){
 			throw new InsurancePlanException("Minimum time should be less than Maximum Time!");
 		}
-		if(schemeDto.getMinAmount()>0 && schemeDto.getMinAmount() <schemeDto.getMaxAmount()){
+		if(schemeDto.getMinAmount()<0 && schemeDto.getMinAmount() >schemeDto.getMaxAmount()){
 			throw new InsurancePlanException("Minimum Amount should be less than Maximum Amount!");
 		}
 

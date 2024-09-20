@@ -1,10 +1,12 @@
 package com.techlabs.app.entity;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.techlabs.app.enums.PolicyStatus;
@@ -34,8 +36,8 @@ import lombok.Setter;
 public class InsurancePolicy {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false, unique = true)
+    private String id = generatePolicyId();
 
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -71,26 +73,34 @@ public class InsurancePolicy {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "schemeId")
-    private InsuranceScheme insuranceScheme;// scheme name
+    private InsuranceScheme insuranceScheme; // scheme name
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "agentId")
-    private Agent agent; //agent
+    private Agent agent; // agent
 
     @OneToMany(cascade = {CascadeType.ALL})
-    private List<Nominee> nominees; //
+    private List<Nominee> nominees; // nominees
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insurancePolicy")
-    private List<Payment> payments = new ArrayList<>(); //
+    private List<Payment> payments = new ArrayList<>(); // payments
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "claimId")
-    private Claim claims; //
+    private Claim claims; // claims
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "customerId")
-    private Customer customer;
+    private Customer customer; // customer
 
     @OneToMany(cascade = {CascadeType.ALL})
-    private Set<SubmittedDocument> submittedDocuments = new HashSet<>();//
+    private Set<SubmittedDocument> submittedDocuments = new HashSet<>(); // documents
+
+    // Utility method to generate a meaningful policy ID
+    private String generatePolicyId() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String datePart = LocalDate.now().format(formatter);
+        String randomPart = UUID.randomUUID().toString().substring(0, 8).toUpperCase(); // Unique identifier part
+        return "POL-" + datePart + "-" + randomPart;
+    }
 }

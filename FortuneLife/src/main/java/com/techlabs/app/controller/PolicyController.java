@@ -31,7 +31,7 @@ public class PolicyController {
 
 	@Operation(summary = "Get Policy By ID")
 	@GetMapping("/{policyId}")
-	public ResponseEntity<InsurancePolicyResponseDto> getPolicyById(@PathVariable Long policyId) {
+	public ResponseEntity<InsurancePolicyResponseDto> getPolicyById(@PathVariable String policyId) {
 		logger.info("Fetching Policy with ID: {}", policyId);
 		InsurancePolicyResponseDto policyDto = policyService.getPolicyById(policyId);
 		return new ResponseEntity<>(policyDto, HttpStatus.OK);
@@ -40,7 +40,7 @@ public class PolicyController {
 	@Operation(summary = "Get All Policies based on Search Criteria")
 	@GetMapping
 	public ResponseEntity<PageResponse<InsurancePolicyResponseDto>> getAllPolicies(
-			@RequestParam(required = false) Long id,
+			@RequestParam(required = false) String id,
 			@RequestParam(required = false) Long customerId,
 			@RequestParam(required = false) Long agentId,
 			@RequestParam(required = false) Long schemeId,
@@ -66,7 +66,7 @@ public class PolicyController {
 	@Operation(summary = "Get All Commission based on Search Criteria")
 	@GetMapping("/commission")
 	public ResponseEntity<PageResponse<CommissionDto>> getAllCommissions(@RequestParam(required = false) Long id,
-			@RequestParam(required = false) Long policyId, @RequestParam(required = false) Long agentId,
+			@RequestParam(required = false) String policyId, @RequestParam(required = false) Long agentId,
 			@RequestParam(required = false) String commissionType, @RequestParam(required = false) String customerName,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
@@ -81,7 +81,7 @@ public class PolicyController {
 	@Operation(summary = "Get All Commission of An Agent")
 	@GetMapping("/all-commission")
 	public ResponseEntity<PageResponse<CommissionDto>> getAllCommissionsOfAnAgent(
-			@RequestParam(required = false) Long id, @RequestParam(required = false) Long policyId,
+			@RequestParam(required = false) Long id, @RequestParam(required = false) String policyId,
 			@RequestParam(required = false) String commissionType,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size, HttpServletRequest request) {
@@ -119,7 +119,7 @@ public class PolicyController {
 
 	@Operation(summary = "Update documents by customer")
 	@PutMapping("/{id}/update-document")
-	public ResponseEntity<InsurancePolicyResponseDto> updateDocumnets(@PathVariable(name = "id")Long policyId,
+	public ResponseEntity<InsurancePolicyResponseDto> updateDocumnets(@PathVariable(name = "id")String policyId,
 																	  @RequestBody List<SubmittedDocumentDto> documentDtos){
 		InsurancePolicyResponseDto response = policyService.updateSubmittedDocuments(policyId, documentDtos);
 		return ResponseEntity.ok(response);
@@ -127,7 +127,7 @@ public class PolicyController {
 
 	@Operation(summary = "Verify Policy by Employee")
 	@PutMapping("/{id}/verify-policy")
-	public ResponseEntity<InsurancePolicyResponseDto> verifyPolicy(@PathVariable(name = "id")Long policyId,
+	public ResponseEntity<InsurancePolicyResponseDto> verifyPolicy(@PathVariable(name = "id")String policyId,
 																	  @RequestBody List<SubmittedDocumentDto> documentDtos){
 		InsurancePolicyResponseDto response = policyService.verifyPolicyDocuments(policyId, documentDtos);
 		return ResponseEntity.ok(response);

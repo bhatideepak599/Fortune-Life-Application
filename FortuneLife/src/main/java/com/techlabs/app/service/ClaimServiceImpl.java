@@ -44,7 +44,7 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     @Override
-    public ClaimDto applyForPolicyClaim(Long customerId, Long policyId, ClaimDto claimDto) {
+    public ClaimDto applyForPolicyClaim(Long customerId, String policyId, ClaimDto claimDto) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerRelatedException("No Customer Found With  Customer Id: " + customerId));
         InsurancePolicy insurancePolicy = insurancePolicyRepository.findById(policyId)

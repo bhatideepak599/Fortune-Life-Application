@@ -25,7 +25,6 @@ const InsuranceSchemes = () => {
         const response = await getSchemesByPlanId(planId);
         const activeSchemes = response.filter((scheme) => scheme.active);
 
-        // If customer is logged in, filter schemes by customer's pincode
         if (customerPincode) {
           const filteredSchemes = activeSchemes.filter((scheme) => scheme.citiesDto.some((city) => city.pincode === customerPincode));
           if(filteredSchemes.length===0){
@@ -33,7 +32,8 @@ const InsuranceSchemes = () => {
           }
           else 
             setSchemes(filteredSchemes);
-        } 
+        }
+        else setSchemes(response) 
 
         // Fetch images for each scheme
         const images = {};

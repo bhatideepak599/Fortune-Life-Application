@@ -22,7 +22,7 @@ public class ClaimController {
     @Operation(summary = "Apply For Policy Claim ")
     @PostMapping("/customer/{customerId}/Insurance-policy/{policyId}")
     public ResponseEntity<ClaimDto> applyForPolicyClaim(@PathVariable(name = "customerId") Long customerId,
-                                                        @PathVariable(name = "policyId") Long policyId, @Valid @RequestBody ClaimDto claimDto) {
+                                                        @PathVariable(name = "policyId") String policyId, @Valid @RequestBody ClaimDto claimDto) {
         logger.info("Claiming the Policy>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println(claimDto.toString());
 
