@@ -354,7 +354,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
             updatedDocuments.add(document);
         }
 
-
+        insurancePolicy.setPolicyStatus(PolicyStatus.PENDING.name());
         insurancePolicy.setSubmittedDocuments(updatedDocuments);
         insurancePolicy = insurancePolicyRepository.save(insurancePolicy);
 
@@ -400,7 +400,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
         if (insurancePolicy.getVerified()) {
             insurancePolicy.setPolicyStatus(PolicyStatus.ACTIVE.name());
         } else {
-            insurancePolicy.setPolicyStatus(PolicyStatus.PENDING.name());
+            insurancePolicy.setPolicyStatus(PolicyStatus.REJECT.name());
         }
 
 

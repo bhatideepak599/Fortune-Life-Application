@@ -13,8 +13,9 @@ const VerifyDocuments = ({ policyId, onClose }) => {
       try {
         const response = await getPolicyByPolicyId(policyId);
         if (response) {
+          console.log(response.submittedDocumentsDto);
+
           setSubmittedDocuments(response.submittedDocumentsDto || []);
-          // Initialize the documentStatus state with current statuses
           const statusMap = {};
           response.submittedDocumentsDto.forEach((doc) => {
             statusMap[doc.id] = doc.documentStatus;
