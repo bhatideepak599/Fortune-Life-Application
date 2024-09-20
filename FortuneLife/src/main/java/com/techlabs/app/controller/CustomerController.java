@@ -43,12 +43,19 @@ public class CustomerController {
 	public ResponseEntity<PageResponse<CustomerDto>> getAllCustomers(@RequestParam(required = false) Long id,
 			@RequestParam(required = false) String userName, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String mobileNumber, @RequestParam(required = false) String email,
-			@RequestParam(required = false) Boolean active,
+			@RequestParam(required = false) String active,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
 		logger.info("Fetching All The Customers");
+		Boolean bool=null;
+		if(active!=null){
+			if(active.startsWith("a")){
+				bool=true;
+			}
+			else bool=false;
+		}
 		PageResponse<CustomerDto> customers = customerService.getAllCustomers(id, userName, name, mobileNumber, email,
-				active, page, size);
+				bool, page, size);
 
 		return new ResponseEntity<>(customers, HttpStatus.OK);
 	}

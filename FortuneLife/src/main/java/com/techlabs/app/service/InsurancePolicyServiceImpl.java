@@ -90,6 +90,8 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
         insuranceSchemeAllPolicies.add(insurancePolicy);
         schemeRepository.save(insuranceScheme);
 
+
+
         List<InsurancePolicy> policies = customer.getPolicies();
         policies.add(insurancePolicy);
         customer.setPolicies(policies);

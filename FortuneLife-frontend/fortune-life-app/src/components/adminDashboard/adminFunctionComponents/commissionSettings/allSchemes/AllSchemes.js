@@ -104,23 +104,23 @@ const AllSchemes = () => {
                     <Card.Body>
                       <Card.Title
                         style={{
-                          fontSize: "1.8rem",
+                          fontSize: "1.2rem",
                           color: "#1abc9c",
                           fontWeight: "bold",
                         }}
                       >
                         {scheme.schemeName} <span>📋</span>
                       </Card.Title>
-                      <Card.Text style={{ fontSize: "1.1rem", color: "#444" }}>
+                      {/* <Card.Text style={{ fontSize: "1.1rem", color: "#444" }}>
                         Description: {scheme.schemeDetails.description}
-                      </Card.Text>
+                      </Card.Text> */}
                       <Card.Text style={{ fontSize: "1.1rem", display: "flex", gap: "10px" }}>
                         <strong>Investment Time:</strong> {scheme.schemeDetails.minInvestmentTime} to {scheme.schemeDetails.maxInvestmentTime} Years
                       </Card.Text>
                       <Card.Text style={{ fontSize: "1.1rem", display: "flex", gap: "10px" }}>
                         <strong>Status:</strong> {scheme.active ? <span style={{ color: "green" }}>Active ✅</span> : <span style={{ color: "red" }}>Inactive ❌</span>}
                       </Card.Text>
-                      <div style={{ display: "flex", gap: "15px", marginTop: "15px" }}>
+                      <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
                         <Button
                           variant="primary"
                           onClick={() => handleView(scheme)}

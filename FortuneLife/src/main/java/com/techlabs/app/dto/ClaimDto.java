@@ -9,6 +9,11 @@ import lombok.Data;
 @Data
 public class ClaimDto {
     private Long id;
+
+    private Long policyId;
+    private int totalInstallments;
+
+    private int paidInstallments;
     @PositiveOrZero(message = "Amount Should be Greater than Zero")
     private Double claimAmount;
     @NotBlank

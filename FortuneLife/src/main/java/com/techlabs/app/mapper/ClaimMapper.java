@@ -37,6 +37,10 @@ public class ClaimMapper {
 		claimDto.setDate(claim.getDate());
 		claimDto.setRemarks(claim.getRemarks());
 		claimDto.setClaimStatus(claim.getClaimStatus());
+		claimDto.setPolicyId(claim.getPolicy().getId());
+		claimDto.setTotalInstallments((int)(claim.getPolicy().getTotalPolicyAmount()/claim.getPolicy().getPremiumAmount()));
+		claimDto.setPaidInstallments((int)(claim.getPolicy().getPaidPolicyAmountTillDate()/claim.getPolicy().getPremiumAmount()));
+
 		claimDto.setPolicy(insurancePolicyMapper.entityToDto(claim.getPolicy()));
 		return claimDto;
 	}

@@ -52,7 +52,7 @@ const ClaimApproval = () => {
       console.log(response.content);
       
       if (response.content) {
-        const keysToSelect = ["id", "policy.id","claimAmount", "bankAccountNumber", "claimStatus", "remarks"];
+        const keysToSelect = ["id", "policyId","policy.totalPolicyAmount","policy.totalAmountPaidTillDate","totalInstallments","paidInstallments","claimAmount", "bankAccountNumber", "remarks"];
         const sanitized = sanitizedData({ data: response.content, keysTobeSelected: keysToSelect });
         setClaims(sanitized);
         setTotalPages(response.totalPages);

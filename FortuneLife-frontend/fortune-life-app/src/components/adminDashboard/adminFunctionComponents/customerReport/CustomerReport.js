@@ -16,13 +16,6 @@ import { toast } from "react-toastify";
 const CustomerReport = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [id, setId] = useState();
-  const [userName, setUserName] = useState();
-  const [name, setName] = useState();
-  const [mobileNumber, setMobileNumber] = useState();
-  const [email, setEmail] = useState();
-  const [active, setActive] = useState();
-  const [verified, setVerified] = useState();
   const [customers, setCustomers] = useState([]);
   const [customerToUpdate, setCustomerToUpdate] = useState(null);
   const [updateCustomerModal, setUpdateCustomerModal] = useState(false);
@@ -41,7 +34,7 @@ const CustomerReport = () => {
     mobileNumber: "",
     email: "",
     active: "",
-    verified: "",
+
   });
 
   useEffect(() => {
@@ -56,7 +49,7 @@ const CustomerReport = () => {
       mobileNumber: queryParams.get("mobileNumber") || "",
       email: queryParams.get("email") || "",
       active: queryParams.get("active") || "",
-      verified: queryParams.get("verified") || "",
+     
     };
     setPageSize(initialPageSize);
     setPageNumber(initialPageNumber);
@@ -64,6 +57,7 @@ const CustomerReport = () => {
     setSearchParams(initialSearchParams);
   }, []);
   useEffect(() => {
+    setCustomers([])
     fetchCustomers();
   }, [pageSize, pageNumber, searchParams, flag]);
 
@@ -93,6 +87,7 @@ const CustomerReport = () => {
 
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
+      if(error.response.status!==404)
       toast.error(error.response?.data?.message);
     }
   };
@@ -109,17 +104,15 @@ const CustomerReport = () => {
   const handleReset = () => {
     setSearchParams({
       id: "",
-      userName: "",
+      username: "",
       name: "",
       mobileNumber: "",
       email: "",
       active: "",
-      verified: "",
     });
-    setSearchType("");
+    setSearchType("Search By:");
     setPageNumber(0);
     setPageSize(5);
-
     fetchCustomers();
   };
 

@@ -26,7 +26,8 @@ public class Withdrawal {
     private Double amount;
     private Double leftCommission;
     @Column(nullable = false)
-    private String status; 
+    private String status;
+    private String remarks;
 
     @ManyToOne
     @JoinColumn(name = "agent_id", nullable = false)

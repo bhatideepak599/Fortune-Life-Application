@@ -76,6 +76,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 		withdrawalDto.setAmount(withdrawal.getAmount());
 		withdrawalDto.setWithdrawalId(withdrawal.getId());
 		withdrawalDto.setStatus(withdrawal.getStatus());
+		withdrawalDto.setRemarks(withdrawal.getRemarks()!=null?withdrawal.getRemarks():"N/A");
 		withdrawalDto.setLeftCommission(withdrawal.getLeftCommission());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 

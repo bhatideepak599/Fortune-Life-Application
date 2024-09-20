@@ -60,7 +60,7 @@ export const PlanCards = ({ plans, change, setChange, handleClick }) => {
                 <Card.Body>
                   <Card.Title
                     style={{
-                      fontSize: "1.8rem",
+                      fontSize: "1rem",
                       color: "#1abc9c",
                       fontWeight: "bold",
                       display: "flex",
@@ -140,7 +140,7 @@ export const PlanCards = ({ plans, change, setChange, handleClick }) => {
           <Card style={{ width: "100%", border: "2px dashed #007bff" }}>
             <Card.Body>
               <Card.Title  style={{
-                      fontSize: "1.8rem",
+                      fontSize: "1rem",
                       color: "#1abc9c",
                       fontWeight: "bold",
                       display: "flex",

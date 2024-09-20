@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { errorToast, warnToast } from "../../../../utils/Toast";
-import { getAllStates } from "../../../../services/stateAndCityService";
 import { getAllSchemes } from "../../../../services/schemeService";
 import { Table, Button, Modal } from "react-bootstrap";
 

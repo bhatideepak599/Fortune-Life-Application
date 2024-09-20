@@ -110,7 +110,7 @@ const Navbar = () => {
                 Claims For Approval
               </a>
               <a href="/all-claims">All Claims</a>
-              <a href="#">Rejected Claims</a>
+             
             </div>
           </li>
           <li>

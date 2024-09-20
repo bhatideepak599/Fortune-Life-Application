@@ -4,19 +4,16 @@ import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
 import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
-import { Dropdown } from "react-bootstrap";
-import { FaDownload } from "react-icons/fa";
 import {
   approveWithdrawal,
   getAllWithdrawals,
   rejectWithdrawal,
 } from "../../../../services/withdrawalService";
-import {
-  getWithdrawalsExcelReport,
-  getWithdrawalsPdfReport,
-} from "../../../../services/reportsService";
 import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Loader from "../../../sharedComponents/loader/Loader"; 
+import Modal from "../../../../utils/Modals/Modal";
+import styles from "../claimApproval/ClaimApproval.module.css";
+import { toast } from "react-toastify";
 
 export const Withdrawal = () => {
   const location = useLocation();
@@ -24,11 +21,15 @@ export const Withdrawal = () => {
   const [withdrawals, setWithdrawals] = useState([]);
   const [withdrawalsList, setWithdrawalsList] = useState([]);
   const [flag, setFlag] = useState(false);
-  const [format, setFormat] = useState("pdf");
   const [searchType, setSearchType] = useState("");
   const [pageSize, setPageSize] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+
+  const [selectedClaim, setSelectedClaim] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState("");
+  const [remarks, setRemarks] = useState("");
   const [searchParams, setSearchParams] = useState({
     id: "",
     agentId: "",
@@ -44,7 +45,7 @@ export const Withdrawal = () => {
     const initialSearchParams = {
       id: queryParams.get("id"),
       agentId: queryParams.get("agentId") || "",
-      status: "PENDING", // Always ensure status is PENDING
+      status: "PENDING", 
     };
     setPageSize(initialPageSize);
     setPageNumber(initialPageNumber);
@@ -71,6 +72,7 @@ export const Withdrawal = () => {
         "withdrawalDate",
         "amount",
         "status",
+        "remarks"
       ];
 
       const newSanitizedData = sanitizedData({
@@ -102,49 +104,6 @@ export const Withdrawal = () => {
     setWithdrawals([]);
     setPageNumber(0);
     fetchWithdrawals();
-  };
-
-  const handleFormatChange = (eventKey) => {
-    setFormat(eventKey);
-  };
-
-  const handleDownload = async () => {
-    try {
-      let response;
-      let blob;
-      let fileName;
-
-      if (format === "pdf") {
-        response = await getWithdrawalsPdfReport();
-        if (!response || !response.data) {
-          throw new Error("Failed to fetch PDF data");
-        }
-        blob = new Blob([response.data], { type: "application/pdf" });
-        fileName = "Withdrawals_report.pdf";
-      } else {
-        response = await getWithdrawalsExcelReport();
-        if (!response || !response.data) {
-          throw new Error("Failed to fetch Excel data");
-        }
-        blob = new Blob([response.data], {
-          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        });
-        fileName = "Withdrawals_report.xlsx";
-      }
-
-      if (response.data.byteLength === 0) {
-        throw new Error("The downloaded file is empty");
-      }
-
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = fileName;
-      link.click();
-
-      window.URL.revokeObjectURL(link.href);
-    } catch (error) {
-      errorToast(error.message || "Error downloading the file");
-    }
   };
 
   const handleSearchTypeChange = (type) => {
@@ -205,15 +164,43 @@ export const Withdrawal = () => {
     }
   };
 
+  const handleView = (claim) => {
+    setSelectedClaim(claim);
+    setModalMode("view");
+    setRemarks(claim.remarks || "No remarks available.");
+    setModalOpen(true);
+  };
   const actions = {
     approve: handleApproveClick,
     reject: handleRejectClick,
+    view: handleView,
   };
-
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setSelectedClaim(null);
+    setRemarks("");
+    setModalMode("");
+  };
+  const handleSubmit = async () => {
+    try {
+      // const operation = modalMode === "approve" ? "APPROVED" : "REJECT";
+      // await claimApproval({
+      //   claimId: selectedClaim.id,
+      //   claimReply: operation,
+      //   remarks,
+      // });
+      //toast.success(`Claim ${operation.toLowerCase()} successfully`);
+     // fetchClaims();
+      handleModalClose();
+    } catch (error) {
+      //console.error(error);
+      toast.error("Error processing claim");
+    }
+  };
   return (
-    <div>
-      <h2 className="text-center mb-4">Withdrawals For Approval</h2>
-      <div className="d-flex justify-content-between align-items-center mb-4">
+    <div className={` ${styles.withdrawalContainer}`}>
+      <h2 className="text-center">Withdrawals For Approval</h2>
+      <div className="d-flex justify-content-between align-items-center  mb-4">
         <SearchComponent
           searchType={searchType}
           searchParams={searchParams}
@@ -222,19 +209,7 @@ export const Withdrawal = () => {
           handleSearch={handleSearch}
           handleReset={handleReset}
         />
-        <div className="d-flex align-items-center">
-          <Dropdown onSelect={handleFormatChange}>
-            <Dropdown.Toggle id="dropdown-basic">
-              Export as {format.toUpperCase()}
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
-              <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <FaDownload size={18} className="ms-2" onClick={handleDownload} />
-        </div>
+        
       </div>
 
       {/* Show loader while data is being fetched */}
@@ -252,6 +227,38 @@ export const Withdrawal = () => {
           onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
         />
       </div>
+
+      {modalOpen && (
+          <Modal isOpen={modalOpen} onClose={handleModalClose}>
+            {modalMode === "view" ? (
+              <div className={styles.viewRemarks}>
+                <h4>View Remarks</h4>
+                <p>{remarks}</p>
+              </div>
+            ) : (
+              <div className={styles.claimDecision}>
+                <h4>{modalMode === "approve" ? "Approve Claim" : "Reject Claim"}</h4>
+                <textarea
+                  className="form-control"
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                  placeholder="Enter remarks"
+                  rows={4}
+                ></textarea>
+                <button
+                  className="btn btn-primary mt-2"
+                  onClick={handleSubmit}
+                  style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}
+                >
+                  OK
+                </button>
+                <button className="btn btn-secondary mt-2 ms-2" onClick={handleModalClose}>
+                  Cancel
+                </button>
+              </div>
+            )}
+          </Modal>
+        )}
     </div>
   );
 };

@@ -16,7 +16,7 @@ public class WithdrawalDto {
 	@NotNull
 	@PositiveOrZero(message = "Amount Should be Greater than Zero")
 	private Double amount;
-
+	private String remarks;
 	private String status;
 	private Double leftCommission;
 	private AgentDto agentDto;
