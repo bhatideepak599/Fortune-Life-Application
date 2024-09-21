@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
-import fortunelife from "../../../../images/fortunelife-high-resolution-logo-white-transparent.png";
-import Modal from "../../../sharedComponents/modal/Modal";
-import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
+import fortunelife from "../../../../assets/images/fortunelife-high-resolution-logo-white-transparent.png";
+import Modal from "../../../../sharedComponents/modal/Modal";
+import ChangePassword from "../../../../sharedComponents/changePassword/ChangePassword";
 import { useNavigate } from "react-router-dom";
 import { getEmployee, updateEmployee, validateEmployee } from "../../../../services/employeeService";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import { logout } from "../../../../services/authService";
-import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
+import UserProfile from "../../../../sharedComponents/UserProfile/UserProfile";
 import { toast } from "react-toastify";
 
 const Navbar = () => {

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
-import logoImg from "../../../../images/fortunelife-high-resolution-logo-black-transparent.png";
+import logoImg from "../../../../assets/images/fortunelife-high-resolution-logo-black-transparent.png";
 import { useNavigate } from "react-router-dom";
 import { getAllInsurancePlans } from "../../../../services/commonService";
 import { errorToast } from "../../../../utils/Toast";
 import Modal from "../../../../utils/Modals/Modal";
-import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
+import UserProfile from "../../../../sharedComponents/UserProfile/UserProfile";
 import { getLoggedInUser, logout } from "../../../../services/authService";
-import maleAvatar from "../../../../images/undraw_male_avatar_g98d.svg";
+import maleAvatar from "../../../../assets/images/undraw_male_avatar_g98d.svg";
 import { toast } from "react-toastify";
 import QueryModal from "../../CustomerQueries/QueryModal";
-import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
+import ChangePassword from "../../../../sharedComponents/changePassword/ChangePassword";
 
 const Navbar = () => {
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState } from "react";
 import AddPlan from "../addPlan/AddPlan";
-import Modal from "../../../../sharedComponents/modal/Modal";
+import Modal from "../../../../../sharedComponents/modal/Modal";
 import { activatePlan, deleteAPlan } from "../../../../../services/schemeService";
 import { errorToast, successToast, warnToast } from "../../../../../utils/Toast";
 

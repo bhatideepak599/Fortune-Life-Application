@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { activateCustomer, deleteCustomer, getAllCustomers } from "../../../../services/CustomerService";
 import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
-import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
+import CommonTable from "../../../../sharedComponents/commomTables/CommonTable";
 import UpdateCustomer from "./updateCustomer/UpdateCustomer";
-import Modal from "../../../sharedComponents/modal/Modal";
+import Modal from "../../../../sharedComponents/modal/Modal";
 import { Button, Dropdown } from "react-bootstrap";
 import { FaDownload } from "react-icons/fa";
 import { getCustomersExcelReport, getCustomersPdfReport } from "../../../../services/reportsService";
 import { useLocation, useNavigate } from "react-router-dom";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
-import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
+import Pagination from "../../../../sharedComponents/Pagination/Pagination";
+import SearchComponent from "../../../../sharedComponents/searchComponent/SearchComponent";
 import { toast } from "react-toastify";
 
 const CustomerReport = () => {

@@ -3,10 +3,10 @@ import { getAllCommissionsOfLoggedAdmin } from "../../../../services/policyServi
 import { Table } from "react-bootstrap";
 import Navbar from "../Navbar/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
-import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
+import SearchComponent from "../../../../sharedComponents/searchComponent/SearchComponent";
+import Pagination from "../../../../sharedComponents/Pagination/Pagination";
 import { toast } from "react-toastify";
-import Loader from "../../../sharedComponents/loader/Loader"; 
+import Loader from "../../../../sharedComponents/loader/Loader";
 
 const CommissionHistory = () => {
   const location = useLocation();

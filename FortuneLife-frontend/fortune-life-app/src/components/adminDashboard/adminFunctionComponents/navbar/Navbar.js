@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 import { useNavigate } from "react-router-dom";
 import { getAdmin, logout } from "../../../../services/authService";
-import fortunelife from "../../../../images/fortunelife-high-resolution-logo-white-transparent.png";
+import fortunelife from "../../../../assets/images/fortunelife-high-resolution-logo-white-transparent.png";
 import { successToast, errorToast } from "../../../../utils/Toast";
 import ManageTaxAndDeductions from "../manageTaxAndDeduction/ManageTaxAndDeductions";
-import Modal from "../../../sharedComponents/modal/Modal";
-import ChangePassword from "../../../sharedComponents/changePassword/ChangePassword";
+import Modal from "../../../../sharedComponents/modal/Modal";
+import ChangePassword from "../../../../sharedComponents/changePassword/ChangePassword";
 import AdminProfile from "../adminprofile/AdminProfile";
 import { toast } from "react-toastify";
 

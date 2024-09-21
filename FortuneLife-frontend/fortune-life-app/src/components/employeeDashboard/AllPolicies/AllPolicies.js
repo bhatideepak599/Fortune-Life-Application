@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { useSearchParams } from "react-router-dom";
-import Pagination from "../../sharedComponents/Pagination/Pagination";
+import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../utils/Modals/Modal";
 import Navbar from "../employeeHomeDashboard/navbar/Navbar";
 import { getAllPoliciesByEmployee } from "../../../services/policyService";

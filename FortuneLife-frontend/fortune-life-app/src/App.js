@@ -8,8 +8,8 @@ import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 import AdminProfile from "./components/adminDashboard/adminFunctionComponents/adminprofile/AdminProfile";
 import AllSchemes from "./components/adminDashboard/adminFunctionComponents/commissionSettings/allSchemes/AllSchemes";
 import CustomerHome from "./components/customerDashBoard/CustomerHome/CustomerHome";
-import InsuranceSchemes from "./components/sharedComponents/InsuranceSchemes/InsuranceSchemes";
-import InsuranceSchemeDetails from "./components/sharedComponents/InsuranceSchemes/InsuranceSchemeDetails";
+import InsuranceSchemes from "./sharedComponents/InsuranceSchemes/InsuranceSchemes";
+import InsuranceSchemeDetails from "./sharedComponents/InsuranceSchemes/InsuranceSchemeDetails";
 import ViewAndUpdateScheme from "./components/adminDashboard/adminFunctionComponents/commissionSettings/viewAndUpdateScheme/ViewAndUpdateScheme";
 import { Withdrawal } from "./components/adminDashboard/adminFunctionComponents/withdrawal/Withdrawal";
 import CustomerPolicies from "./components/customerDashBoard/CustomerPolicies/CustomerPolicies";
@@ -32,7 +32,7 @@ import AllClaims from "./components/adminDashboard/adminFunctionComponents/claim
 import { AllQueries } from "./components/adminDashboard/adminFunctionComponents/allQueries/AllQueries";
 import { AllQueriesForEmployee } from "./components/employeeDashboard/allQueries/AllQueriesForEmployee";
 import { ViewClients } from "./components/agentDashboard/landingPage/viewClients/ViewClients";
-import ForgotPassword from "./components/sharedComponents/ForgotPassword/ForgotPassword";
+import ForgotPassword from "./sharedComponents/ForgotPassword/ForgotPassword";
 import AllPolicies from "./components/employeeDashboard/AllPolicies/AllPolicies";
 
 function App() {

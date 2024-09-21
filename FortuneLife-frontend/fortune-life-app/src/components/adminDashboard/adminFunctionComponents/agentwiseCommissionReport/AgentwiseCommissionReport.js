@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
-import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
+import CommonTable from "../../../../sharedComponents/commomTables/CommonTable";
 import {Dropdown } from "react-bootstrap";
 import { FaDownload } from 'react-icons/fa';
 import { getAgentsExcelReport, getAgentsPdfReport } from "../../../../services/reportsService";
-import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
+import SearchComponent from "../../../../sharedComponents/searchComponent/SearchComponent";
+import Pagination from "../../../../sharedComponents/Pagination/Pagination";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAllAgents } from "../../../../services/agentService";
 

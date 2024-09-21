@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logoImg from "../../../images/fortunelife.png";
+import logoImg from "../../../assets/images/fortunelife.png";
 import { getAllInsurancePlans } from "../../../services/commonService";
 import { errorToast } from "../../../utils/Toast";
 import { useNavigate } from "react-router-dom";

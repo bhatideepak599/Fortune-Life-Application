@@ -7,11 +7,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { errorToast, successToast, warnToast } from "../../../../../utils/Toast";
 import { activateScheme, deleteASchemeUnderAPlan, getAllSchemesOfUnderAPlan } from "../../../../../services/schemeService";
-import Modal from "../../../../sharedComponents/modal/Modal";
+import Modal from "../../../../../sharedComponents/modal/Modal";
 import ManageCommission from "./manageCommission/ManageCommission";
 import { logout } from "../../../../../services/authService";
 import AddScheme from "../addScheme/AddScheme";
 import Navbar from "../../navbar/Navbar";
+import { toast } from "react-toastify";
 
 const AllSchemes = () => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const AllSchemes = () => {
       const response = await getAllSchemesOfUnderAPlan(id);
       setSchemes(response.data);
     } catch (error) {
-      errorToast(error.response?.data?.message || "An error occurred");
+      toast.error(error);
     }
   };
 
@@ -202,11 +203,7 @@ const AllSchemes = () => {
             </Col>
           </Row>
         </Container>
-        <Modal
-          title="Commission and Profit Details"
-          isOpen={commissionModal}
-          onClose={() => setCommissionModal(false)}
-        >
+        <Modal title="Commission and Profit Details" isOpen={commissionModal} onClose={() => setCommissionModal(false)}>
           <ManageCommission scheme={schemeForUpdate} onClose={() => setCommissionModal(false)} setModeloff={setCommissionModal} />
         </Modal>
         <Modal isOpen={addSchemeModal} onClose={() => setAddSchemeModal(false)}>

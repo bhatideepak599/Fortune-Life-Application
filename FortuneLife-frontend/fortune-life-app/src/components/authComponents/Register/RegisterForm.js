@@ -4,7 +4,7 @@ import styles from "./RegisterForm.module.css";
 import { registerUser } from "../../../services/authService";
 import { toast } from "react-toastify";
 import { uploadCustomerFile } from "../../../services/fileServices";
-import registerImg from "../../../images/undraw_security_re_a2rk.svg";
+import registerImg from "../../../assets/images/undraw_security_re_a2rk.svg";
 
 const RegisterForm = () => {
   const navigate = useNavigate();

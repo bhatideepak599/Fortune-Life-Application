@@ -1,10 +1,10 @@
 import React from "react";
-import family2 from "../../../images/undraw_family_vg76.svg";
+import family2 from "../../../assets/images/undraw_family_vg76.svg";
 import "./Main.module.css";
-import family from "../../../images/undraw_play_time_-7-k7b.svg";
-import hospital from "../../../images/undraw_medical_care_movn.svg";
-import maleAvatar from "../../../images/undraw_male_avatar_g98d.svg";
-import femaleAvatar from "../../../images/undraw_female_avatar_efig.svg";
+import family from "../../../assets/images/undraw_play_time_-7-k7b.svg";
+import hospital from "../../../assets/images/undraw_medical_care_movn.svg";
+import maleAvatar from "../../../assets/images/undraw_male_avatar_g98d.svg";
+import femaleAvatar from "../../../assets/images/undraw_female_avatar_efig.svg";
 
 const Main = () => {
   return (

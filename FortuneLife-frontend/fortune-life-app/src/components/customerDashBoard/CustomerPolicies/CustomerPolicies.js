@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { getLoggedInUser, verifyUser } from "../../../services/authService";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { sanitizedData } from "../../../utils/SanitizeData";
-import Pagination from "../../sharedComponents/Pagination/Pagination";
+import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../utils/Modals/Modal";
 import ClaimModal from "../CustomerClaim/ClaimModal";
 import SharedTable from "../SharedTable/SharedTable";

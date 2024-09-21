@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Main.module.css"; // Ensure the path is correct
 import { FaLightbulb, FaHandsHelping, FaBullhorn, FaSmileBeam, FaRocket, FaHeadset, FaMailBulk, FaUsers } from "react-icons/fa";
 import Modal from "../../../../utils/Modals/Modal";
-import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
+import UserProfile from "../../../../sharedComponents/UserProfile/UserProfile";
 import Navbar from "../Navbar/Navbar";
 import { getLoggedInUser } from "../../../../services/authService";
 

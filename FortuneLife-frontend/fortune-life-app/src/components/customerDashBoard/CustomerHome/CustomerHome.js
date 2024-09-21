@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CustomerHome.css";
 import Main from "../LandingPage/Main/Main";
-import Footer from "../../sharedComponents/CommonNavbarFooter/Footer";
+import Footer from "../../../sharedComponents/CommonNavbarFooter/Footer";
 import Navbar from "../LandingPage/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { verifyUser } from "../../../services/authService";

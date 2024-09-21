@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
-import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
-import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
+import SearchComponent from "../../../../sharedComponents/searchComponent/SearchComponent";
+import CommonTable from "../../../../sharedComponents/commomTables/CommonTable";
 import { Dropdown } from "react-bootstrap";
 import { FaDownload } from "react-icons/fa";
 import {
@@ -15,7 +15,7 @@ import {
   getWithdrawalsExcelReport,
   getWithdrawalsPdfReport,
 } from "../../../../services/reportsService";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
+import Pagination from "../../../../sharedComponents/Pagination/Pagination";
 
 export const AllWithdrawals = () => {
   const location = useLocation();

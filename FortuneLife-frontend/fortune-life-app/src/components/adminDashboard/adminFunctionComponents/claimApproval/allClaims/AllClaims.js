@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useSearchParams } from "react-router-dom";
 import {  getAllClaims } from "../../../../../services/adminService";
 import { sanitizedData } from "../../../../../utils/SanitizeData";
-import Pagination from "../../../../sharedComponents/Pagination/Pagination";
+import Pagination from "../../../../../sharedComponents/Pagination/Pagination";
 import ClaimTable from "../ClaimTable";
 import Navbar from "../../navbar/Navbar";
 ;

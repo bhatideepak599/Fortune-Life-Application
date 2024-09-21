@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import Loader from '../../../../sharedComponents/loader/Loader';
+import Loader from '../../../../../sharedComponents/loader/Loader';
 import { answerQuery } from '../../../../../services/queryService';
 
 

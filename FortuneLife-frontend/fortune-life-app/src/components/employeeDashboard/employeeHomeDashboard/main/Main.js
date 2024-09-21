@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Main.module.css"; // Ensure this import path is correct
 import { FaUserPlus, FaShoppingCart, FaMoneyCheckAlt } from "react-icons/fa";
 import Modal from "../../../../utils/Modals/Modal";
-import UserProfile from "../../../sharedComponents/UserProfile/UserProfile";
+import UserProfile from "../../../../sharedComponents/UserProfile/UserProfile";
 import { useNavigate } from "react-router-dom";
 import { getEmployee, updateEmployee, validateEmployee } from "../../../../services/employeeService";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";

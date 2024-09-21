@@ -4,7 +4,7 @@ import { getQueriesByCustomerEmail } from "../../../services/CustomerService";
 import { toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { sanitizedData } from "../../../utils/SanitizeData";
-import Pagination from "../../sharedComponents/Pagination/Pagination";
+import Pagination from "../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../utils/Modals/Modal";
 import Navbar from "../LandingPage/Navbar/Navbar";
 import styles from "./CustomerQueries.module.css";

@@ -4,8 +4,8 @@ import { verifyUser } from "../../../../services/authService";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAllClient } from "../../../../services/policyService";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
-import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
+import Pagination from "../../../../sharedComponents/Pagination/Pagination";
+import SearchComponent from "../../../../sharedComponents/searchComponent/SearchComponent";
 
 export const ViewClients = () => {
   const navigate = useNavigate();

@@ -4,8 +4,8 @@ import { validateEmployee } from "../../../services/employeeService";
 import { errorToast, warnToast } from "../../../utils/Toast";
 import { getAllCommissions } from "../../../services/policyService";
 import { Table, Form, Button, Row, Col } from "react-bootstrap";
-import Pagination from "../../sharedComponents/Pagination/Pagination";
-import SearchComponent from "../../sharedComponents/searchComponent/SearchComponent";
+import Pagination from "../../../sharedComponents/Pagination/Pagination";
+import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
 
 const CommissionReport = () => {
   const location = useLocation();

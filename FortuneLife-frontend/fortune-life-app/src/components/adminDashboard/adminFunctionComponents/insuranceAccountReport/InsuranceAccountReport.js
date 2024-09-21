@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
-import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
-import CommonTable from "../../../sharedComponents/commomTables/CommonTable";
+import SearchComponent from "../../../../sharedComponents/searchComponent/SearchComponent";
+import CommonTable from "../../../../sharedComponents/commomTables/CommonTable";
 import { Dropdown } from "react-bootstrap";
 import { FaDownload } from "react-icons/fa";
 import { approveWithdrawal, getAllWithdrawals, rejectWithdrawal } from "../../../../services/withdrawalService";
 import { getWithdrawalsExcelReport, getWithdrawalsPdfReport } from "../../../../services/reportsService";
 import { getAllPolicies } from "../../../../services/policyService";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
-import Modal from "../../../sharedComponents/modal/Modal";
+import Pagination from "../../../../sharedComponents/Pagination/Pagination";
+import Modal from "../../../../sharedComponents/modal/Modal";
 import { ViewPayment } from "./viewPayment/ViewPayment";
 import Navbar from "../navbar/Navbar";
-import Loader from "../../../sharedComponents/loader/Loader";
+import Loader from "../../../../sharedComponents/loader/Loader";
 
 const InsuranceAccountReport = () => {
   const location = useLocation();

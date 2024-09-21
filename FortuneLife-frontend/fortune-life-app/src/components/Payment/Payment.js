@@ -6,7 +6,7 @@ import { createPaymentIntent } from "../../services/commonService";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getGlobalTax, getPolicyByPolicyId } from "../../services/commonService";
-import payment from "../../images/undraw_Mobile_pay_re_copy.png";
+import payment from "../../assets/images/undraw_Mobile_pay_re_copy.png";
 
 const stripePromise = loadStripe("pk_test_51Puzcj2MY7JIifoyC6FTDIlzNncUaOmYkXtV5lKLTh7kkHhQe37YMWF9pbndceIKKYws4IQqwyWTIzYhZkgZ393v00oozKhdhP");
 

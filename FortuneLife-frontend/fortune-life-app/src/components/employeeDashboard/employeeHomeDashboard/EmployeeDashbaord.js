@@ -4,7 +4,7 @@ import { getEmployee, validateEmployee } from "../../../services/employeeService
 import { errorToast, warnToast } from "../../../utils/Toast";
 import "./EmployeeDashboard.module.css";
 
-import Footer from "../../sharedComponents/CommonNavbarFooter/Footer";
+import Footer from "../../../sharedComponents/CommonNavbarFooter/Footer";
 import Main from "./main/Main";
 import Navbar from "./navbar/Navbar";
 

@@ -3,12 +3,12 @@ import { getAllClaims, claimApproval } from "../../../../services/adminService";
 import { toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { sanitizedData } from "../../../../utils/SanitizeData";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
+import Pagination from "../../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../../utils/Modals/Modal";
 import ClaimTable from "./ClaimTable";
 import Navbar from "../navbar/Navbar";
 import styles from "./ClaimApproval.module.css";
-import Loader from "../../../sharedComponents/loader/Loader"; 
+import Loader from "../../../../sharedComponents/loader/Loader";
 
 const ClaimApproval = () => {
   const [claims, setClaims] = useState([]);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../../sharedComponents/CommonNavbarFooter/Footer";
+import Footer from "../../../sharedComponents/CommonNavbarFooter/Footer";
 import Main from "../landingPage/Main/Main";
 import { verifyUser } from "../../../services/authService";
 import { useNavigate } from "react-router-dom";

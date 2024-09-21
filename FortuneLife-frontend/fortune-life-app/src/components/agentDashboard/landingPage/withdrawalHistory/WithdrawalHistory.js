@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import Navbar from "../Navbar/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
-import SearchComponent from "../../../sharedComponents/searchComponent/SearchComponent";
-import Pagination from "../../../sharedComponents/Pagination/Pagination";
+import SearchComponent from "../../../../sharedComponents/searchComponent/SearchComponent";
+import Pagination from "../../../../sharedComponents/Pagination/Pagination";
 import { toast } from "react-toastify";
 import { getAllWithdrawalOfAnAgent } from "../../../../services/withdrawalService";
-import Loader from "../../../sharedComponents/loader/Loader"; 
+import Loader from "../../../../sharedComponents/loader/Loader";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
