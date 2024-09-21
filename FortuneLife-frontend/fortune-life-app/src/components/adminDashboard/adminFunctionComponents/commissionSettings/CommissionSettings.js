@@ -5,6 +5,7 @@ import { getAllPlans } from "../../../../services/schemeService";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Col } from "react-bootstrap";
 import Navbar from "../navbar/Navbar";
+import { toast } from "react-toastify";
 
 const CommissionSettings = ({ setActiveItem }) => {
   const [plans, setPlans] = useState([]);
@@ -19,7 +20,8 @@ const CommissionSettings = ({ setActiveItem }) => {
       const response = await getAllPlans();
       setPlans(response.data);
     } catch (error) {
-      errorToast(error.response?.data?.message || "Failed to fetch plans");
+      console.log(error);
+      toast.error(error.response?.data?.message || "Failed to fetch plans");
     }
   };
   const handleClick = (id) => {

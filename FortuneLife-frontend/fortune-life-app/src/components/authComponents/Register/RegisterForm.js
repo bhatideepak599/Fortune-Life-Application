@@ -5,6 +5,7 @@ import { registerUser } from "../../../services/authService";
 import { toast } from "react-toastify";
 import { uploadCustomerFile } from "../../../services/fileServices";
 import registerImg from "../../../assets/images/undraw_security_re_a2rk.svg";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -27,51 +28,42 @@ const RegisterForm = () => {
 
   const [errors, setErrors] = useState({});
   const [file, setFile] = useState(null);
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
   const validateForm = () => {
     let tempErrors = {};
-  
 
     const alphabeticRegex = /^[A-Za-z]+$/;
     tempErrors.firstName = alphabeticRegex.test(formData.firstName) ? "" : "First name must contain only alphabetic characters.";
     tempErrors.lastName = alphabeticRegex.test(formData.lastName) ? "" : "Last name must contain only alphabetic characters.";
-  
 
     tempErrors.username = /^(?=.*[A-Za-z0-9@._-]{6,})/.test(formData.username) ? "" : "Username must be at least 6 characters long and can include letters, numbers, and special characters @, ., -, _";
-  
-    
-    tempErrors.password = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,15}$/.test(formData.password)
-      ? ""
-      : "Password must be between 8-15 characters, include at least one uppercase letter, one number, and one special symbol.";
-  
+
+    tempErrors.password = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,15}$/.test(formData.password) ? "" : "Password must be between 8-15 characters, include at least one uppercase letter, one number, and one special symbol.";
+
     // Email validation
     tempErrors.email = /^\S+@\S+\.\S+$/.test(formData.email) ? "" : "Email is not valid.";
-  
-    
+
     tempErrors.mobileNumber = /^[0-9]{10}$/.test(formData.mobileNumber) ? "" : "Mobile number must be a 10-digit number.";
-  
-   
+
     tempErrors.gender = formData.gender ? "" : "Gender is required.";
-  
-    const today = new Date().toISOString().split("T")[0]; 
+
+    const today = new Date().toISOString().split("T")[0];
     tempErrors.dateOfBirth = formData.dateOfBirth && formData.dateOfBirth <= today ? "" : "Date of birth cannot be in the future.";
-  
 
     tempErrors.role = formData.role ? "" : "Role is required.";
- 
+
     if (formData.role === "Agent") {
       tempErrors.agentImage = file ? "" : "Document upload is required for agents.";
     }
-  
-   
+
     if (formData.salary !== undefined) {
       tempErrors.salary = formData.salary >= 0 ? "" : "Salary must be a non-negative value.";
     }
-  
+
     setErrors(tempErrors);
     return Object.values(tempErrors).every((x) => x === "");
   };
-  
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
@@ -121,7 +113,12 @@ const RegisterForm = () => {
         const role = formData.role === "Agent" ? "agent" : "customer";
         await registerUser(registrationData, role);
         toast.success("Registration successful!");
-        navigate(-1);
+
+        if (role === "agent") {
+          navigate("/login?role=Agent");
+        } else {
+          navigate("/login?role=Customer");
+        }
       } catch (error) {
         console.error("Registration failed: ", error.response);
         toast.error(error.response?.data?.message || "Registration failed. Please check your input.");
@@ -145,6 +142,10 @@ const RegisterForm = () => {
         [name]: value,
       }));
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
   return (
@@ -192,8 +193,14 @@ const RegisterForm = () => {
                   <label htmlFor="password" className="form-label">
                     Password
                   </label>
-                  <input type="password" className={`form-control ${errors.password ? "is-invalid" : ""}`} id="password" name="password" value={formData.password} onChange={handleChange} />
-                  {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                  {/* Password Input with Visibility Toggle */}
+                  <div className="input-group">
+                    <input type={showPassword ? "text" : "password"} className={`form-control ${errors.password ? "is-invalid" : ""}`} id="password" name="password" value={formData.password} onChange={handleChange} />
+                    <span className="input-group-text" onClick={togglePasswordVisibility} style={{ cursor: "pointer" }}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                    {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                  </div>
                 </div>
               </div>
 

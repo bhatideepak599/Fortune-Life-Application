@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.techlabs.app.config.EmailSender;
 import com.techlabs.app.dto.*;
 import com.techlabs.app.enums.PremiumType;
 import com.techlabs.app.exception.FortuneLifeException;
@@ -53,6 +54,9 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private EmailSender emailSender;
+
     public InsurancePolicyServiceImpl(SchemeRepository schemeRepository, CustomerRepository customerRepository,
                                       InsurancePolicyRepository insurancePolicyRepository, NomineeRepository nomineeRepository,
                                       SubmittedDocumentRepository documentRepository, InsurancePolicyMapper insurancePolicyMapper,
@@ -96,6 +100,38 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
         policies.add(insurancePolicy);
         customer.setPolicies(policies);
         customer = customerRepository.save(customer);
+
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setTo(customer.getUser().getEmail());
+        emailDTO.setSubject("Your FortuneLife Insurance Policy Has Been Successfully Created");
+
+        String emailBody = "Dear " + customer.getUser().getFirstName() + ",\n\n" +
+                "We are delighted to inform you that your new insurance policy has been successfully added to your FortuneLife account. Below are the details of your newly activated policy:\n\n" +
+                "---\n\n" +
+                "**Policy Details:**\n\n" +
+                "- **Policy Number:** " + insurancePolicy.getId() + "\n" +
+                "- **Insurance Scheme:** " + insurancePolicy.getInsuranceScheme().getSchemeName() + "\n" +
+                "- **Coverage Amount:** ₹" + insurancePolicy.getSumAssured() + "\n" +
+                "- **Premium Amount:** ₹" + insurancePolicy.getPremiumAmount() + "\n" +
+                "- **Premium Period:** ₹" + insurancePolicy.getPremiumType() + "\n" +
+                "- **Issue Date:** " + insurancePolicy.getIssueDate() + "\n" +
+                "- **Maturity Date:** " + insurancePolicy.getMaturityDate() + "\n" +
+                "---\n\n" +
+
+                "1. **Review Your Policy:** Please log in to your FortuneLife account to view the full details of your policy.\n" +
+                "2. **Contact Support:** If you have any questions or need further assistance, feel free to reach out to our support team.\n\n" +
+                "**Contact Information:**\n\n" +
+                "- **Email:** support@fortunelifeservices.com\n" +
+                "- **Phone:** +91-123-456-7890\n" +
+                "- **Website:** [www.fortunelife.com](http://localhost:3000)\n\n" +
+                "---\n\n" +
+                "Thank you for choosing FortuneLife Insurance. We are committed to providing you with the best service and support.\n\n" +
+                "Best regards,\n\n" +
+                "**FortuneLife Insurance Team**\n\n" +
+                "*Your trusted partner in securing a better future.*";
+
+        emailDTO.setBody(emailBody);
+        emailSender.sendMailWithAttachement(emailDTO);
 
         return insurancePolicyMapper.entityToDto(insurancePolicy);
     }
@@ -173,6 +209,40 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
         customer.setPolicies(policies);
         customer = customerRepository.save(customer);
 
+
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setTo(customer.getUser().getEmail());
+        emailDTO.setSubject("Your FortuneLife Insurance Policy Has Been Successfully Created");
+
+        String emailBody = "Dear " + customer.getUser().getFirstName() + ",\n\n" +
+                "We are delighted to inform you that your new insurance policy has been successfully added to your FortuneLife account. Below are the details of your newly activated policy:\n\n" +
+                "---\n\n" +
+                "**Policy Details:**\n\n" +
+                "- **Policy Number:** " + insurancePolicy.getId() + "\n" +
+                "- **Insurance Scheme:** " + insurancePolicy.getInsuranceScheme().getSchemeName() + "\n" +
+                "- **Coverage Amount:** ₹" + insurancePolicy.getSumAssured() + "\n" +
+                "- **Premium Amount:** ₹" + insurancePolicy.getPremiumAmount() + "\n" +
+                "- **Premium Period:** ₹" + insurancePolicy.getPremiumType() + "\n" +
+                "- **Issue Date:** " + insurancePolicy.getIssueDate() + "\n" +
+                "- **Maturity Date:** " + insurancePolicy.getMaturityDate() + "\n" +
+                "---\n\n" +
+
+                "1. **Review Your Policy:** Please log in to your FortuneLife account to view the full details of your policy.\n" +
+                "2. **Contact Support:** If you have any questions or need further assistance, feel free to reach out to our support team.\n\n" +
+                "**Contact Information:**\n\n" +
+                "- **Email:** support@fortunelifeservices.com\n" +
+                "- **Phone:** +91-123-456-7890\n" +
+                "- **Website:** [www.fortunelife.com](http://localhost:3000)\n\n" +
+                "---\n\n" +
+                "Thank you for choosing FortuneLife Insurance. We are committed to providing you with the best service and support.\n\n" +
+                "Best regards,\n\n" +
+                "**FortuneLife Insurance Team**\n\n" +
+                "*Your trusted partner in securing a better future.*";
+
+        emailDTO.setBody(emailBody);
+        emailSender.sendMailWithAttachement(emailDTO);
+
+
         return insurancePolicyMapper.entityToDto(insurancePolicy);
     }
 
@@ -213,15 +283,17 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
             documents.add(submittedDocument);
         }
 
-        Nominee nominee = new Nominee();
-        nominee.setNomineeName(insurancePolicyDto.getNomineeName());
-        nominee.setRelationStatus(insurancePolicyDto.getRelationStatusWithNominee());
+        if(insurancePolicyDto.getNomineeName()!=null){
+            Nominee nominee = new Nominee();
+            nominee.setNomineeName(insurancePolicyDto.getNomineeName());
+            nominee.setRelationStatus(insurancePolicyDto.getRelationStatusWithNominee());
 
-        nominee = nomineeRepository.save(nominee);
+            nominee = nomineeRepository.save(nominee);
 
-        List<Nominee> nominees = new ArrayList<>();
-        nominees.add(nominee);
-        insurancePolicy.setNominees(nominees);
+            List<Nominee> nominees = new ArrayList<>();
+            nominees.add(nominee);
+            insurancePolicy.setNominees(nominees);
+        }
         insurancePolicy.setSubmittedDocuments(documents);
         return insurancePolicy;
     }
@@ -391,6 +463,7 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
         insurancePolicy.setSubmittedDocuments(updatedDocuments);
 
 
+
         boolean allApproved = updatedDocuments.stream()
                 .allMatch(doc -> "APPROVED".equalsIgnoreCase(doc.getDocumentStatus()));
 
@@ -399,8 +472,51 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
         if (insurancePolicy.getVerified()) {
             insurancePolicy.setPolicyStatus(PolicyStatus.ACTIVE.name());
+
+
+            EmailDTO emailDTO = new EmailDTO();
+            emailDTO.setTo(insurancePolicy.getCustomer().getUser().getEmail());
+            emailDTO.setSubject("Your FortuneLife Insurance Policy Has Been Successfully Verified, Pay your first installment!");
+
+            String emailBody = "Dear " + insurancePolicy.getCustomer().getUser().getFirstName() + ",\n\n" +
+                    "We are delighted to inform you that your new insurance policy has been successfully added to your FortuneLife account. Below are the details of your newly activated policy:\n\n" +
+                    "---\n\n" +
+                    "**Policy Details:**\n\n" +
+                    "- **Policy Number:** " + insurancePolicy.getId() + "\n" +
+                    "- **Insurance Scheme:** " + insurancePolicy.getInsuranceScheme().getSchemeName() + "\n" +
+                    "- **Coverage Amount:** ₹" + insurancePolicy.getSumAssured() + "\n" +
+                    "- **Premium Amount:** ₹" + insurancePolicy.getPremiumAmount() + "\n" +
+                    "- **Premium Period:** ₹" + insurancePolicy.getPremiumType() + "\n" +
+                    "- **Issue Date:** " + insurancePolicy.getIssueDate() + "\n" +
+                    "- **Maturity Date:** " + insurancePolicy.getMaturityDate() + "\n" +
+                    "---\n\n" +
+
+                    "1. **Review Your Policy:** Please log in to your FortuneLife account to view the full details of your policy.\n" +
+                    "2. **Contact Support:** If you have any questions or need further assistance, feel free to reach out to our support team.\n\n" +
+                    "**Contact Information:**\n\n" +
+                    "- **Email:** support@fortunelifeservices.com\n" +
+                    "- **Phone:** +91-123-456-7890\n" +
+                    "- **Website:** [www.fortunelife.com](http://localhost:3000)\n\n" +
+                    "---\n\n" +
+                    "Thank you for choosing FortuneLife Insurance. We are committed to providing you with the best service and support.\n\n" +
+                    "Best regards,\n\n" +
+                    "**FortuneLife Insurance Team**\n\n" +
+                    "*Your trusted partner in securing a better future.*";
+
+            emailDTO.setBody(emailBody);
+            emailSender.sendMailWithAttachement(emailDTO);
+
         } else {
             insurancePolicy.setPolicyStatus(PolicyStatus.REJECT.name());
+
+            EmailDTO emailDTO = new EmailDTO();
+            emailDTO.setTo(insurancePolicy.getCustomer().getUser().getEmail());
+            emailDTO.setSubject("Urgent !!! : FortuneLife - Requires uploading correct documents");
+
+            String emailBody = "Please Login to your FortuneLife account and re-upload rejected documents";
+
+            emailDTO.setBody(emailBody);
+            emailSender.sendMailWithAttachement(emailDTO);
         }
 
 

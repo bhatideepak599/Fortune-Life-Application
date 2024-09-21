@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 function AddPlan({ change, setChange, onClose }) {
   const [planName, setPlanName] = useState("");
   const [active, setActive] = useState(true);
-  const [nameError, setNameError] = useState(""); // for validation error
+  const [nameError, setNameError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validate if planName is alphanumeric
+
     const alphaNumericRegex = /^[a-zA-Z0-9\s]+$/;
     if (!alphaNumericRegex.test(planName)) {
       setNameError("Plan name should be alphanumeric only.");

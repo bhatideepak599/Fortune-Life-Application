@@ -3,6 +3,7 @@ package com.techlabs.app.service;
 import com.techlabs.app.dto.PlanDto;
 import com.techlabs.app.entity.InsurancePlan;
 import com.techlabs.app.entity.InsuranceScheme;
+import com.techlabs.app.exception.FortuneLifeException;
 import com.techlabs.app.exception.InsurancePlanException;
 import com.techlabs.app.mapper.PlanMapper;
 import com.techlabs.app.repository.InsurancePlanRepository;
@@ -26,7 +27,7 @@ public class InsurancePlanServiceImpl implements InsurancePlanService {
     public List<PlanDto> getAllPlans() {
         List<InsurancePlan> insurancePlans = planRepository.findAll();
         if (insurancePlans.isEmpty()) {
-            throw new InsurancePlanException("There are no insurance plans to be found");
+            throw new FortuneLifeException("There are no insurance plans to be found");
         }
 
         return planMapper.getDtoList(insurancePlans);

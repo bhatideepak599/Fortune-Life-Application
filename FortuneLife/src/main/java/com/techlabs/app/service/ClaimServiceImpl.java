@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.techlabs.app.config.EmailSender;
+import com.techlabs.app.dto.EmailDTO;
 import com.techlabs.app.enums.ClaimStatus;
 import com.techlabs.app.enums.PolicyStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +36,9 @@ public class ClaimServiceImpl implements ClaimService {
 
     private ClaimMapper claimMapper;
     private ClaimDto claimDto;
+
+    @Autowired
+    private EmailSender emailSender;
 
     public ClaimServiceImpl(CustomerRepository customerRepository, InsurancePolicyRepository insurancePolicyRepository,
                             ClaimRepository claimRepository, ClaimMapper claimMapper) {
@@ -77,6 +83,17 @@ public class ClaimServiceImpl implements ClaimService {
         claim = claimRepository.save(claim);
         insurancePolicy.setClaims(claim);
         insurancePolicyRepository.save(insurancePolicy);
+
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setTo(customer.getUser().getEmail());
+        emailDTO.setSubject("FortuneLife : Claim process for Insurance Policy with ID : "+insurancePolicy.getId()+" has been initiated");
+
+        String emailBody = "Dear " + customer.getUser().getFirstName() + ",\n\n"+" you have successfully applied for " +
+                "claim of your insurance policy with ID : "+insurancePolicy.getId();
+
+        emailDTO.setBody(emailBody);
+        emailSender.sendMailWithAttachement(emailDTO);
+
         return claimDto;
     }
 
@@ -88,7 +105,7 @@ public class ClaimServiceImpl implements ClaimService {
                 claimStatus, pageable);
         if (claims.getContent().isEmpty()) {
 
-            throw new FortuneLifeException(" No Calims  Found! ");
+            throw new FortuneLifeException(" No Claims  Found! ");
         }
         List<ClaimDto> response = new ArrayList<>();
         claims.getContent().forEach((claim) -> response.add(claimMapper.entityToDto(claim)));
@@ -109,6 +126,19 @@ public class ClaimServiceImpl implements ClaimService {
             claim.setClaimStatus(ClaimStatus.REJECT.name());
             claim.setRemarks(message);
             claimRepository.save(claim);
+
+            EmailDTO emailDTO = new EmailDTO();
+            emailDTO.setTo(claim.getPolicy().getCustomer().getUser().getEmail());
+            emailDTO.setSubject("FortuneLife : Claim for the Insurance Policy with ID : "+claim.getPolicy().getId()+
+                    " has been Rejected");
+
+            String emailBody = "Dear " + claim.getPolicy().getCustomer().getUser().getFirstName() + ",\n\n"+" your " +
+                    "request for claim of policy with ID "+claim.getPolicy().getId()+" has been rejected." +
+                    "Please re-apply";
+
+            emailDTO.setBody(emailBody);
+            emailSender.sendMailWithAttachement(emailDTO);
+
             return "Claim Rejected";
         }
         claim.setClaimStatus(ClaimStatus.APPROVED.name());
@@ -122,6 +152,19 @@ public class ClaimServiceImpl implements ClaimService {
 
         claim.setRemarks(message);
         claimRepository.save(claim);
+
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setTo(claim.getPolicy().getCustomer().getUser().getEmail());
+        emailDTO.setSubject("FortuneLife : Claim for the Insurance Policy with ID : "+claim.getPolicy().getId()+
+                " has been Approved");
+
+        String emailBody = "Dear " + claim.getPolicy().getCustomer().getUser().getFirstName() + ",\n\n"+" your " +
+                "request for claim of policy with ID "+claim.getPolicy().getId()+" has been approved." +
+                "\n\n your claim amount will ne deposited into your provided bank account number";
+
+        emailDTO.setBody(emailBody);
+        emailSender.sendMailWithAttachement(emailDTO);
+
         return "Claim Approved";
 
     }

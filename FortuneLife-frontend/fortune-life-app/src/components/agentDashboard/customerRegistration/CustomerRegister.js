@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { addnewCustomer } from "../../../services/CustomerService";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { toast } from "react-toastify";
@@ -23,6 +23,18 @@ const CustomerRegister = ({ id, onClose }) => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+
+  // useEffect to automatically set the password based on firstName and dateOfBirth
+  useEffect(() => {
+    if (userDto.firstName && userDto.dateOfBirth) {
+      const yearOfBirth = new Date(userDto.dateOfBirth).getFullYear();
+      const generatedPassword = `${userDto.firstName}@${yearOfBirth}`;
+      setUserDto((prevState) => ({
+        ...prevState,
+        password: generatedPassword,
+      }));
+    }
+  }, [userDto.firstName, userDto.dateOfBirth]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,6 +69,7 @@ const CustomerRegister = ({ id, onClose }) => {
       console.log(response);
     } catch (error) {
       console.error(error);
+      toast.error("Registration failed. Please try again.");
     }
   };
 
@@ -89,15 +102,7 @@ const CustomerRegister = ({ id, onClose }) => {
             </div>
 
             {/* Password */}
-            <div className="col-md-6 mb-3">
-              <label>Password</label>
-              <div className="input-group">
-                <input type={showPassword ? "text" : "password"} className="form-control" name="password" value={userDto.password} onChange={handleInputChange} placeholder="Enter Password"  />
-                <button type="button" className="btn btn-outline-secondary" onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? "Hide" : "Show"}
-                </button>
-              </div>
-            </div>
+            {/* Password field is removed as it is auto-generated */}
 
             {/* Email */}
             <div className="col-md-6 mb-3">
@@ -131,7 +136,7 @@ const CustomerRegister = ({ id, onClose }) => {
             {/* Date of Birth */}
             <div className="col-md-6 mb-3">
               <label>Date of Birth</label>
-              <input type="date" className="form-control" name="dateOfBirth" value={userDto.dateOfBirth} onChange={handleInputChange} />
+              <input type="date" className="form-control" name="dateOfBirth" value={userDto.dateOfBirth} onChange={handleInputChange} required />
             </div>
 
             {/* Address Section */}

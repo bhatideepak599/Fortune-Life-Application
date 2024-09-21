@@ -5,6 +5,7 @@ import com.techlabs.app.dto.RequestSchemeDto;
 import com.techlabs.app.dto.SchemeDocumentDto;
 import com.techlabs.app.dto.SchemeDto;
 import com.techlabs.app.entity.*;
+import com.techlabs.app.exception.FortuneLifeException;
 import com.techlabs.app.exception.InsurancePlanException;
 import com.techlabs.app.exception.SchemeRelatedException;
 import com.techlabs.app.mapper.SchemeDocumentMapper;
@@ -44,15 +45,15 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	@Override
 	public List<SchemeDto> getAllSchemesByPlanId(Long planId) {
 		InsurancePlan insurancePlan = planRepository.findById(planId).orElseThrow(
-				() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+				() -> new FortuneLifeException("Insurance plan with ID : " + planId + " cannot be found"));
 
 		if (!insurancePlan.getActive()) {
-			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+			throw new FortuneLifeException("Insurance plan with ID : " + planId + " is not active");
 		}
 
 		List<InsuranceScheme> schemes = insurancePlan.getSchemes();
 		if (schemes.isEmpty()) {
-			throw new SchemeRelatedException("Insurance schemes cannot be found");
+			throw new FortuneLifeException("Insurance schemes cannot be found");
 		}
 
 		return schemeMapper.getDtoList(schemes);
@@ -61,10 +62,10 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	@Override
 	public SchemeDto getSchemeByPlanId(Long planId, Long id) {
 		InsurancePlan insurancePlan = planRepository.findById(planId).orElseThrow(
-				() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+				() -> new FortuneLifeException("Insurance plan with ID : " + planId + " cannot be found"));
 
 		if (!insurancePlan.getActive()) {
-			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+			throw new FortuneLifeException("Insurance plan with ID : " + planId + " is not active");
 		}
 
 		InsuranceScheme insuranceScheme = planRepository.findSchemeByPlanIdAndSchemeId(planId, id)
@@ -77,22 +78,22 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	@Override
 	public SchemeDto createScheme(RequestSchemeDto schemeDto, Long planId) {
 		InsurancePlan insurancePlan = planRepository.findById(planId).orElseThrow(
-				() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+				() -> new FortuneLifeException("Insurance plan with ID : " + planId + " cannot be found"));
 		Optional<InsuranceScheme> check=schemeRepository.findBySchemeName(schemeDto.getSchemeName());
 
 		if(check.isPresent()){
-			throw  new SchemeRelatedException("Scheme with name : " + schemeDto.getSchemeName() + " already exists");
+			throw  new FortuneLifeException("Scheme with name : " + schemeDto.getSchemeName() + " already exists");
 		}
 
 		if (!insurancePlan.getActive()) {
-			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+			throw new FortuneLifeException("Insurance plan with ID : " + planId + " is not active");
 		}
 
 		if(schemeDto.getMinInvestmentTime()<0 && schemeDto.getMinInvestmentTime() >schemeDto.getMaxInvestmentTime()){
-			throw new InsurancePlanException("Minimum time should be less than Maximum Time!");
+			throw new FortuneLifeException("Minimum time should be less than Maximum Time!");
 		}
 		if(schemeDto.getMinAmount()<0 && schemeDto.getMinAmount() >schemeDto.getMaxAmount()){
-			throw new InsurancePlanException("Minimum Amount should be less than Maximum Amount!");
+			throw new FortuneLifeException("Minimum Amount should be less than Maximum Amount!");
 		}
 
 
@@ -136,18 +137,18 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	@Override
 	public SchemeDto updateScheme(RequestSchemeDto schemeDto, Long planId) {
 		InsurancePlan insurancePlan = planRepository.findById(planId).orElseThrow(
-				() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+				() -> new FortuneLifeException("Insurance plan with ID : " + planId + " cannot be found"));
 
 		if (!insurancePlan.getActive()) {
-			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+			throw new FortuneLifeException("Insurance plan with ID : " + planId + " is not active");
 		}
 
 		InsuranceScheme insuranceScheme = schemeRepository.findById(schemeDto.getSchemeId())
-				.orElseThrow(() -> new SchemeRelatedException(
+				.orElseThrow(() -> new FortuneLifeException(
 						"Insurance Scheme with ID : " + schemeDto.getSchemeId() + " cannot be found"));
 
 		if (!insuranceScheme.getActive()) {
-			throw new SchemeRelatedException(
+			throw new FortuneLifeException(
 					"Insurance Scheme with ID : " + schemeDto.getSchemeId() + " is not active");
 		}
 
@@ -184,7 +185,7 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 
 		for (SchemeDocumentDto documentDto : schemeDto.getDocuments()) {
 			SchemeDocument existingDocument = documentRepository.findById(documentDto.getId())
-					.orElseThrow(() -> new SchemeRelatedException(
+					.orElseThrow(() -> new FortuneLifeException(
 							"Scheme document with ID : " + documentDto.getId() + " " + "cannot be found"));
 
 			existingDocument.setDocumentName(documentDto.getDocumentName());
@@ -197,17 +198,17 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	@Override
 	public String deleteScheme(Long planId, Long id) {
 		InsurancePlan insurancePlan = planRepository.findById(planId).orElseThrow(
-				() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+				() -> new FortuneLifeException("Insurance plan with ID : " + planId + " cannot be found"));
 
 		if (!insurancePlan.getActive()) {
-			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+			throw new FortuneLifeException("Insurance plan with ID : " + planId + " is not active");
 		}
 
 		InsuranceScheme insuranceScheme = schemeRepository.findById(id)
-				.orElseThrow(() -> new SchemeRelatedException("Insurance Scheme with ID : " + id + " cannot be found"));
+				.orElseThrow(() -> new FortuneLifeException("Insurance Scheme with ID : " + id + " cannot be found"));
 
 		if (!insuranceScheme.getActive()) {
-			throw new SchemeRelatedException("Insurance Scheme with ID : " + id + " is not active");
+			throw new FortuneLifeException("Insurance Scheme with ID : " + id + " is not active");
 		}
 
 		insuranceScheme.setActive(false);
@@ -219,17 +220,17 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	@Override
 	public String activateScheme(Long planId, Long id) {
 		InsurancePlan insurancePlan = planRepository.findById(planId).orElseThrow(
-				() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+				() -> new FortuneLifeException("Insurance plan with ID : " + planId + " cannot be found"));
 
 		if (!insurancePlan.getActive()) {
-			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+			throw new FortuneLifeException("Insurance plan with ID : " + planId + " is not active");
 		}
 
 		InsuranceScheme insuranceScheme = schemeRepository.findById(id)
-				.orElseThrow(() -> new SchemeRelatedException("Insurance Scheme with ID : " + id + " cannot be found"));
+				.orElseThrow(() -> new FortuneLifeException("Insurance Scheme with ID : " + id + " cannot be found"));
 
 		if (insuranceScheme.getActive()) {
-			throw new SchemeRelatedException("Insurance Scheme with ID : " + id + " is already active");
+			throw new FortuneLifeException("Insurance Scheme with ID : " + id + " is already active");
 		}
 
 		insuranceScheme.setActive(true);
@@ -242,17 +243,17 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	public SchemeDto updateCommission(Long planId, Long id, Double installmentRatio, Double registrationAmount,
 			Double profitRatio) {
 		InsurancePlan insurancePlan = planRepository.findById(planId).orElseThrow(
-				() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+				() -> new FortuneLifeException("Insurance plan with ID : " + planId + " cannot be found"));
 
 		if (!insurancePlan.getActive()) {
-			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+			throw new FortuneLifeException("Insurance plan with ID : " + planId + " is not active");
 		}
 
 		InsuranceScheme insuranceScheme = schemeRepository.findById(id)
-				.orElseThrow(() -> new SchemeRelatedException("Insurance Scheme with ID : " + id + " cannot be found"));
+				.orElseThrow(() -> new FortuneLifeException("Insurance Scheme with ID : " + id + " cannot be found"));
 
 		if (!insuranceScheme.getActive()) {
-			throw new SchemeRelatedException("Insurance Scheme with ID : " + id + " is not active");
+			throw new FortuneLifeException("Insurance Scheme with ID : " + id + " is not active");
 		}
 
 		SchemeDetails schemeDetails = insuranceScheme.getSchemeDetails();
@@ -268,14 +269,14 @@ public class InsuranceSchemeServiceImpl implements InsuranceSchemeService {
 	@Override
 	public SchemeDto updateSchemeImage(Long planId, Long id, String schemeImage) {
 		InsurancePlan insurancePlan = planRepository.findById(planId).orElseThrow(
-				() -> new InsurancePlanException("Insurance plan with ID : " + planId + " cannot be found"));
+				() -> new FortuneLifeException("Insurance plan with ID : " + planId + " cannot be found"));
 
 		if (!insurancePlan.getActive()) {
-			throw new InsurancePlanException("Insurance plan with ID : " + planId + " is not active");
+			throw new FortuneLifeException("Insurance plan with ID : " + planId + " is not active");
 		}
 
 		InsuranceScheme insuranceScheme = schemeRepository.findById(id)
-				.orElseThrow(() -> new SchemeRelatedException("Insurance Scheme with ID : " + id + " cannot be found"));
+				.orElseThrow(() -> new FortuneLifeException("Insurance Scheme with ID : " + id + " cannot be found"));
 
 		SchemeDetails schemeDetails = insuranceScheme.getSchemeDetails();
 		schemeDetails.setSchemeImage(schemeImage);

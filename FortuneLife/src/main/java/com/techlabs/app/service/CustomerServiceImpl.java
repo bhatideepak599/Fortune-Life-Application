@@ -1,6 +1,8 @@
 package com.techlabs.app.service;
 
+import com.techlabs.app.config.EmailSender;
 import com.techlabs.app.dto.CustomerDto;
+import com.techlabs.app.dto.EmailDTO;
 import com.techlabs.app.dto.UserDto;
 import com.techlabs.app.entity.Address;
 import com.techlabs.app.entity.Customer;
@@ -19,6 +21,7 @@ import com.techlabs.app.security.JwtTokenProvider;
 import com.techlabs.app.util.PageResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +41,9 @@ public class CustomerServiceImpl implements CustomerService {
     private AddressRepository addressRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private EmailSender emailSender;
 
 
     public CustomerServiceImpl(CustomerRepository customerRepository, UserRepository userRepository,
@@ -63,14 +69,13 @@ public class CustomerServiceImpl implements CustomerService {
 
         Optional<User> checkUser =
                 userRepository
-                        .findUserByUsernameOrEmail(userDto.getUsername(),userDto.getEmail());
+                        .findUserByUsernameOrEmail(userDto.getUsername(), userDto.getEmail());
 
-        if (checkUser.isPresent()){
+        if (checkUser.isPresent()) {
             CustomerDto customerDto = new CustomerDto();
             customerDto.setId(checkUser.get().getId());
             return customerDto;
         }
-
 
 
         if (userRepository.existsUserByEmail(userDto.getEmail()))
@@ -96,6 +101,18 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerMapper.getCustomer(savedUser);
         customer.setActive(true);
         Customer savedCustomer = customerRepository.save(customer);
+
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setTo(userDto.getEmail());
+        emailDTO.setSubject("FortuneLife : Account Creation");
+
+        String emailBody = "Your account for FortuneLife insurance has been created successfully!\n Customer " +
+                "Credentials : \n username : " + userDto.getUsername() + "\n password : FirstName@yearOfBirth\n For ex : " +
+                "If your First Name is Alex and your date of birth is 23-04-1992 \n Then your password should look " +
+                "like\n password: Alex@1992\n You can login at FortuneLife website with your credentials";
+
+        emailDTO.setBody(emailBody);
+        emailSender.sendMailWithAttachement(emailDTO);
 
         return customerMapper.entityToDto(savedCustomer);
 
@@ -150,13 +167,13 @@ public class CustomerServiceImpl implements CustomerService {
         if (customerById.isEmpty() || !customerById.get().getActive()) {
             throw new CustomerRelatedException("No Customer Found for Id " + userDto.getId());
         }
-        Customer customer=customerById.get();
-        User user=customerById.get().getUser();
+        Customer customer = customerById.get();
+        User user = customerById.get().getUser();
         User updatedUser = userMapper.dtoToEntity(userDto);
 
         if (userDto.getAddressDto() != null && userDto.getAddressDto().getId() != null) {
-            Address address=user.getAddress();
-            if (address==null) {
+            Address address = user.getAddress();
+            if (address == null) {
                 throw new CustomerRelatedException("No Address Found for Address Id " + userDto.getAddressDto().getId());
             }
             address.setHouseNumber(userDto.getAddressDto().getHouseNumber());

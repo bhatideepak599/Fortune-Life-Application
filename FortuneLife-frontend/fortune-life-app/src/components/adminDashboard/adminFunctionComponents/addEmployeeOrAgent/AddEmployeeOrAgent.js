@@ -57,7 +57,7 @@ const AddEmployeeOrAgent = ({ onlyAgent }) => {
       return false;
     }
 
-    if (dob > today || joiningDate > today) {
+    if (dob > today) {
       errorToast("Date of birth and joining date cannot be in the future.");
       return false;
     }

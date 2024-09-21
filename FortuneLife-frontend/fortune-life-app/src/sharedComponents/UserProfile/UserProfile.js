@@ -77,6 +77,18 @@ const UserProfile = ({ isUpdate,  updateProfile }) => {
     fetchUserData();
   }, [flag]);
 
+  const fetchUserData = async () => {
+    try {
+      const response = await getLoggedInUser();
+      setUserDto(response || {});
+      setAddressDto(response?.addressDto || {});
+      setIsLoading(false);
+    } catch (error) {
+      toast.error("Failed to fetch user details.");
+      setIsLoading(false);
+    }
+  };
+
   const handleUserChange = (e) => {
     const { name, value } = e.target;
     setUserDto((prev) => ({ ...prev, [name]: value }));
@@ -118,6 +130,7 @@ const UserProfile = ({ isUpdate,  updateProfile }) => {
           await updateCustomer({ userDto, addressDto });
         }
         toast.success("Profile updated successfully!");
+        fetchUserData();
       } catch (error) {
         toast.error(error.message);
       }

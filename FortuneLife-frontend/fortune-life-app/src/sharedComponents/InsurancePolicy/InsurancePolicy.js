@@ -246,7 +246,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
 
   const handleLogin = () => {
     setIsModalOpen(false);
-    setIsLoginModalOpen(true);
+    navigate("/login?role=Customer")
   };
 
   const handleRegister = () => {
