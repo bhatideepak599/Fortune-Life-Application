@@ -190,6 +190,11 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
     console.log(dataToSend);
 
     if (localStorage.getItem("role") === "ROLE_CUSTOMER") {
+      
+      console.log(currentUser.id);
+      console.log(usedScheme.id);
+      
+      
       const response = await buyNewPolicy({ customerId: currentUser.id, schemeId: usedScheme.id, dataToSend });
       if (response) {
         toast.success("Policy Created Successfully");

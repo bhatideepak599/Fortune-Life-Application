@@ -37,17 +37,6 @@ const AllSchemes = () => {
   };
 
   const handleAddScheme = () => setAddSchemeModal(true);
-  const handleHome = () => navigate("/admin-dashboard");
-  const handleLogout = () => {
-    logout();
-    successToast("Logged Out.");
-    navigate("/");
-  };
-  const handleClick = (schemeId) => console.log("Manage Scheme ID:", schemeId);
-  const handleCommission = (scheme) => {
-    setSchemeForUpdate(scheme);
-    setCommissionModal(true);
-  };
 
   const handleView = (scheme) => navigate(`/view-update-scheme/${id}`, { state: { scheme } });
 

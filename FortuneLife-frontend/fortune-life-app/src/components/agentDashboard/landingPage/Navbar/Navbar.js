@@ -6,11 +6,21 @@ import { getAllInsurancePlans } from "../../../../services/commonService";
 import { toast } from "react-toastify";
 import Modal from "../../../../utils/Modals/Modal";
 import UserProfile from "../../../../sharedComponents/UserProfile/UserProfile";
-import {  logout } from "../../../../services/authService";
-import { getLoggedAgent, updateAgentByAdmin } from "../../../../services/agentService";
+import { logout } from "../../../../services/authService";
+import {
+  getLoggedAgent,
+  updateAgentByAdmin,
+} from "../../../../services/agentService";
 import Amount from "../amount/Amount";
 import WithDrawAmount from "../withDrawAmount/WithDrawAmount";
 import ChangePassword from "../../../../sharedComponents/changePassword/ChangePassword";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faKey,
+  faSignOutAlt,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -18,7 +28,7 @@ const Navbar = () => {
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [agent, setAgent] = useState(null);
   const [name, setName] = useState("");
-  const[isUpdate,setIsUpdate]=useState(false)
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const [totalModal, setTotalModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState(false);
@@ -26,7 +36,7 @@ const Navbar = () => {
 
   useEffect(() => {
     fetchAgent();
-  }, []);
+  }, [withdrawAmount]);
 
   useEffect(() => {
     const fetchInsurancePlans = async () => {
@@ -41,7 +51,7 @@ const Navbar = () => {
   }, []);
 
   const handleEditProfile = () => {
-    setIsUpdate(true)
+    setIsUpdate(true);
     setShowCustomerModal(true);
   };
 
@@ -80,36 +90,39 @@ const Navbar = () => {
   const handleTotalClick = () => {
     setTotalModal(true);
   };
-const updateProfile=async(userDto,addressDto)=>{
-  const updatedAddressDto = {
-    ...agent.userDto.addressDto, 
-    ...addressDto, 
-  };
-  const updatedUserDto = {
-    ...agent.userDto, 
-    ...userDto, 
-    addressDto: updatedAddressDto, 
-  };
-  const updatedAgentDto = {
-    ...agent, 
-    userDto: updatedUserDto, 
-  };
-  
+  const updateProfile = async (userDto, addressDto) => {
+    const updatedAddressDto = {
+      ...agent.userDto.addressDto,
+      ...addressDto,
+    };
+    const updatedUserDto = {
+      ...agent.userDto,
+      ...userDto,
+      addressDto: updatedAddressDto,
+    };
+    const updatedAgentDto = {
+      ...agent,
+      userDto: updatedUserDto,
+    };
 
-  try{
-      const response=await updateAgentByAdmin(updatedAgentDto);
-      if(response){
+    try {
+      const response = await updateAgentByAdmin(updatedAgentDto);
+      if (response) {
         //toast.success("Details Updated.")
       }
-  }catch(error){
-      toast.error(error.response?.data?.message)
-  }
-}
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
+  };
   return (
     <>
       <nav className={styles.agentNavbar}>
         <div className={styles.navLogo}>
-          <img src={fortunelife} alt="company-logo" className={styles.logoImage} />
+          <img
+            src={fortunelife}
+            alt="company-logo"
+            className={styles.logoImage}
+          />
         </div>
         <ul className={styles.navLinks}>
           <li>
@@ -149,37 +162,61 @@ const updateProfile=async(userDto,addressDto)=>{
             </div>
           </li>
           <li className={styles.dropdown}>
-            <button className={styles.dropbtn}>{name}</button>
+            <button className={styles.dropbtn}>
+              {" "}
+              <FontAwesomeIcon icon={faUserCircle} /> {name}
+            </button>
             <div className={styles.dropdownContent}>
               <a href="#" onClick={handleEditProfile}>
-                Profile
+                <FontAwesomeIcon icon={faUser} /> Profile
               </a>
               <a href="#" onClick={handleChangePassword}>
-                Change password
+                <FontAwesomeIcon icon={faKey} /> Change password
               </a>
               <a href="#" onClick={handleLogout}>
-                Logout
+                <FontAwesomeIcon icon={faSignOutAlt} /> Logout
               </a>
             </div>
           </li>
         </ul>
       </nav>
 
-      <Modal isOpen={showCustomerModal} onClose={() => setShowCustomerModal(false)}>
-        <UserProfile 
-        isUpdate={isUpdate}
-        updateProfile={updateProfile}
-        onClose={() => setShowCustomerModal(false)} />
+      <Modal
+        isOpen={showCustomerModal}
+        onClose={() => setShowCustomerModal(false)}
+      >
+        <UserProfile
+          isUpdate={isUpdate}
+          updateProfile={updateProfile}
+          onClose={() => setShowCustomerModal(false)}
+        />
       </Modal>
 
-      <Modal isOpen={totalModal} onClose={() => setTotalModal(false)} width={"30%"}>
-        <Amount agent={agent} setWithdrawAmount={setWithdrawAmount} onClose={() => setTotalModal(false)} />
+      <Modal
+        isOpen={totalModal}
+        onClose={() => setTotalModal(false)}
+        width={"30%"}
+      >
+        <Amount
+          agent={agent}
+          setWithdrawAmount={setWithdrawAmount}
+          onClose={() => setTotalModal(false)}
+        />
       </Modal>
       <Modal isOpen={withdrawAmount} onClose={() => setWithdrawAmount(false)}>
-        <WithDrawAmount agent={agent} onClose={() => setWithdrawAmount(false)} />
+        <WithDrawAmount
+          agent={agent}
+          onClose={() => setWithdrawAmount(false)}
+        />
       </Modal>
-      <Modal isOpen={changePasswordModal} onClose={() => setChangePasswordModal(false)}>
-        <ChangePassword user={agent} onClose={() => setChangePasswordModal(false)} />
+      <Modal
+        isOpen={changePasswordModal}
+        onClose={() => setChangePasswordModal(false)}
+      >
+        <ChangePassword
+          user={agent}
+          onClose={() => setChangePasswordModal(false)}
+        />
       </Modal>
     </>
   );

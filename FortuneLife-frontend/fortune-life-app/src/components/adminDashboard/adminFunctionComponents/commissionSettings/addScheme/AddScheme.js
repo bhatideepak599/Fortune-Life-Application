@@ -130,17 +130,16 @@ const AddScheme = ({ id, change, setChange, onClose }) => {
     };
 
     try {
-      const response = addNewSchemeUnderAPlan(id, newScheme);
-      if (response) {
-        successToast("Scheme Added Successfully.");
-       
-
+      const response = await addNewSchemeUnderAPlan(id, newScheme);
+      if (response) { 
+        setChange(!change);
+        successToast("Scheme Added.");
         onClose();
       }
     } catch (error) {
       errorToast(error.response?.data?.message);
     }
-    setChange(!change);
+    
   };
   const [documents, setDocuments] = useState([]);
 

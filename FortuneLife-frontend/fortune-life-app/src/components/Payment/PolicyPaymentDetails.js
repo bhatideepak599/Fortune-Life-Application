@@ -7,13 +7,13 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import "./PolicyPaymentDetails.css"; // Add this for custom styles if needed
 import Navbar from "../customerDashBoard/LandingPage/Navbar/Navbar";
+import { downloadReciet } from "../../services/policyService";
 
 const PolicyPaymentDetails = () => {
   const { policyId } = useParams();
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
   const [policy, setPolicy] = useState(null);
-  console.log(policyId);
 
   const [isVerified, setIsVerified] = useState(false);
 
@@ -51,7 +51,7 @@ const PolicyPaymentDetails = () => {
           toast.error("Please login to access this resource");
           navigate("/");
         }
-        console.log(response);
+        //console.log(response);
 
         setCurrentUser(response);
       } catch (error) {
@@ -70,7 +70,7 @@ const PolicyPaymentDetails = () => {
     try {
       const response = await getPolicyByPolicyId(policyId);
       console.log(response);
-      
+
       setPolicy(response);
     } catch (error) {
       toast.error(error.message || "Failed to load policy.");
@@ -95,7 +95,14 @@ const PolicyPaymentDetails = () => {
     return <div>Loading...</div>;
   }
 
-  const { issueDate, maturityDate, premiumType, premiumAmount, paymentList ,policyStatus} = policy;
+  const {
+    issueDate,
+    maturityDate,
+    premiumType,
+    premiumAmount,
+    paymentList,
+    policyStatus,
+  } = policy;
 
   const calculateInstallments = () => {
     const installments = [];
@@ -109,7 +116,9 @@ const PolicyPaymentDetails = () => {
       const dueDate = new Date(startDate);
       dueDate.setMonth(dueDate.getMonth() + i * (12 / intervalMonths));
 
-      const isPaid = paymentList.some((payment) => new Date(payment.paymentDate) <= dueDate);
+      const isPaid = paymentList.some(
+        (payment) => new Date(payment.paymentDate) <= dueDate
+      );
 
       installments.push({
         serialNo: i + 1,
@@ -118,17 +127,19 @@ const PolicyPaymentDetails = () => {
         isPaid,
       });
     }
-    const countPaid = paymentList.filter((payment) => payment.paymentStatus === "PAID").length;
+    const countPaid = paymentList.filter(
+      (payment) => payment.paymentStatus === "PAID"
+    ).length;
 
     for (let i = 0; i < countPaid; i++) {
       installments[i].isPaid = "Paid";
     }
 
-    if(policyStatus!=="ACTIVE" && countPaid!==0){
+    if (policyStatus !== "ACTIVE" && countPaid !== 0) {
       if (countPaid > 0 && countPaid <= installments.length) {
         return installments.slice(0, countPaid);
-    }
-    return [];
+      }
+      return [];
     }
 
     for (let i = countPaid + 1; i < numberOfInstallments * time; i++) {
@@ -185,7 +196,13 @@ const PolicyPaymentDetails = () => {
       pdf.save("payments.pdf");
     });
   };
-
+  const handleReciet = (e) => {
+    let paymentDetails= policy.paymentList[e-1];
+    //console.log(paymentDetails);
+    downloadReciet(e,paymentDetails)
+    
+    
+  };
   if (!isVerified) {
     return <div>Loading...</div>;
   }
@@ -201,10 +218,15 @@ const PolicyPaymentDetails = () => {
           </button>
         </div>
 
-        <div className="policy-details-container d-flex justify-content-center" id="policy-details">
+        <div
+          className="policy-details-container d-flex justify-content-center"
+          id="policy-details"
+        >
           <div className="card w-75 shadow-lg border-0">
             <div className="card-body p-5">
-              <h4 className="card-title text-center mb-4 text-dark">Policy Details</h4>
+              <h4 className="card-title text-center mb-4 text-dark">
+                Policy Details
+              </h4>
               <ul className="list-group mb-4">
                 <li className="list-group-item d-flex justify-content-between lh-sm">
                   <div>
@@ -274,7 +296,9 @@ const PolicyPaymentDetails = () => {
                 </li>
               </ul>
 
-              <h4 className="card-title text-center mb-4 text-dark">Installments</h4>
+              <h4 className="card-title text-center mb-4 text-dark">
+                Installments
+              </h4>
 
               <div className="table-responsive">
                 <table className="table table-striped table-bordered">
@@ -293,17 +317,47 @@ const PolicyPaymentDetails = () => {
                         <th scope="row">{installment.serialNo}</th>
                         <td>{installment.premiumAmount.toFixed(2)}</td>
                         <td>{installment.dueDate}</td>
-                        <td>{installment.isPaid === "Paid" ? "Paid" : "Unpaid"}</td>
+                        <td>
+                          {installment.isPaid === "Paid" ? "Paid" : "Unpaid"}
+                        </td>
                         <td>
                           {!installment.isPaid && (
-                            <button className="btn btn-primary px-4" onClick={handlePayment} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
+                            <button
+                            className="btn btn-primary px-4"
+                            onClick={handlePayment}
+                            style={{
+                              backgroundColor: "hsl(245, 67%, 59%)",
+                              color: "white",
+                              marginRight: "15px", // space between button and receipt
+                              }}
+                            >
                               Pay
                             </button>
                           )}
                           {installment.isPaid && (
-                            <button className="btn btn-secondary px-4" disabled>
-                              {installment.isPaid === "Paid" ? "Paid" : "Pay"}
-                            </button>
+                            <>
+                              <button
+                                className="btn btn-secondary px-4"
+                                disabled
+                              >
+                                {installment.isPaid === "Paid" ? "Paid" : "Pay"}
+                              </button>
+
+                             
+                              {installment.isPaid === "Paid" && (
+                                <a
+                                onClick={() => handleReciet(installment.serialNo)}
+                                style={{
+                                  marginLeft: "15px", 
+                                  textDecoration: "underline",
+                                  color: "hsl(245, 67%, 59%)",
+                                  cursor: "pointer",
+                                }}
+                                >
+                                  Receipt
+                                </a>
+                              )}
+                            </>
                           )}
                         </td>
                       </tr>

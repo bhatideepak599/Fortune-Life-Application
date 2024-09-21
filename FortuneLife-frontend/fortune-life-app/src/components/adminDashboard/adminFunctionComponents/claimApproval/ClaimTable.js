@@ -30,9 +30,9 @@ const ClaimTable = ({ data, actions }) => {
                   <button className="btn btn-sm me-1" onClick={() => actions.reject(row)} style={{ backgroundColor: "#FF597B", color: "white" }}>
                     Reject
                   </button>
-                  <button className="btn btn-sm mt-1" onClick={() => actions.view(row)} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
+                 {row.remarks!=="N/A" && <button className="btn btn-sm mt-1" onClick={() => actions.view(row)} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
                     Remarks
-                  </button>
+                  </button>}
                 </td>
               )}
             </tr>

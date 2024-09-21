@@ -60,7 +60,7 @@ const CommonTable = ({ data, actions, viewPayments }) => {
                       <button className="btn  me-2" onClick={() => actions.reject(row[primaryKey])} style={{ backgroundColor: "#FF597B", color: "white" }}>
                         Reject
                       </button>
-                     {row.remarks && <button className="btn btn-sm mt-1" onClick={() => actions.view(row)} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
+                     {row.remarks!=="N/A" && <button className="btn btn-sm mt-1" onClick={() => actions.view(row)} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
                     Remarks
                   </button>}
                     </>

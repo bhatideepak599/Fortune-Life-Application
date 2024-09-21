@@ -9,6 +9,8 @@ import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import { logout } from "../../../../services/authService";
 import UserProfile from "../../../../sharedComponents/UserProfile/UserProfile";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faKey, faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -94,16 +96,16 @@ const Navbar = () => {
             </a>
           </li>
           <li className={styles.dropdown}>
-            <a href="#">{name}</a>
+            <a href="#"><FontAwesomeIcon icon={faUserCircle} /> {name}</a>
             <div className={styles.dropdownContent}>
               <a href="#" onClick={handleProfileClick}>
-                Profile
+              <FontAwesomeIcon icon={faUser} />  Profile
               </a>
               <a href="#" onClick={handleChangePassword}>
-                Change password
+              <FontAwesomeIcon icon={faKey} /> Change Password
               </a>
               <a href="#" onClick={handleLogout}>
-                Logout
+              <FontAwesomeIcon icon={faSignOutAlt} /> Logout
               </a>
             </div>
           </li>

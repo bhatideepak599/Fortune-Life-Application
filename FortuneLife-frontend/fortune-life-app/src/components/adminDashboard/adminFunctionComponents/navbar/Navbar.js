@@ -9,6 +9,9 @@ import Modal from "../../../../sharedComponents/modal/Modal";
 import ChangePassword from "../../../../sharedComponents/changePassword/ChangePassword";
 import AdminProfile from "../adminprofile/AdminProfile";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faKey, faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 const Navbar = () => {
   const [adminDetails, setAdminDetails] = useState(null);
@@ -119,21 +122,21 @@ const Navbar = () => {
             </a>
           </li>
           <li className={`dropdown ${styles.dropdown}`}>
-            <a href="#" className={styles.dropbtn}>
-              {name}
-            </a>
-            <div className={styles.dropdownContent}>
-              <a href="#" onClick={handleProfile}>
-                Profile
-              </a>
-              <a href="#" onClick={handleChangePassword}>
-                Change password
-              </a>
-              <a href="#" onClick={handleLogout}>
-                Logout
-              </a>
-            </div>
-          </li>
+  <a href="#" className={styles.dropbtn}>
+    <FontAwesomeIcon icon={faUserCircle} /> {name}
+  </a>
+  <div className={styles.dropdownContent}>
+    <a href="#" onClick={handleProfile}>
+      <FontAwesomeIcon icon={faUser} /> Profile
+    </a>
+    <a href="#" onClick={handleChangePassword}>
+      <FontAwesomeIcon icon={faKey} /> Change password
+    </a>
+    <a href="#" onClick={handleLogout}>
+      <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+    </a>
+  </div>
+</li>
         </ul>
       </nav>
 

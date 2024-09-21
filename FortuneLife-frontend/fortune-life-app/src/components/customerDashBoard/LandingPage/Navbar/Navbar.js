@@ -11,6 +11,8 @@ import maleAvatar from "../../../../assets/images/undraw_male_avatar_g98d.svg";
 import { toast } from "react-toastify";
 import QueryModal from "../../CustomerQueries/QueryModal";
 import ChangePassword from "../../../../sharedComponents/changePassword/ChangePassword";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faKey, faSignOutAlt, faQuestionCircle  } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -174,23 +176,23 @@ if( !pincodeInfo){
               <ul className="dropdown-menu text-small">
                 <li>
                   <a href="#" className="dropdown-item edit-profile" onClick={handleEditProfile}>
-                    My profile
+                  <FontAwesomeIcon icon={faUser} />  My profile
                   </a>
                 </li>
                 <li>
                   <a className="dropdown-item" href="#" onClick={handleChangePassword}>
-                    Change Password
+                  <FontAwesomeIcon icon={faKey} /> Change Password
                   </a>
                 </li>
                 <li>
                   <a className="dropdown-item" href="#" onClick={handleCreateQuery}>
-                    Query
+                  <FontAwesomeIcon icon={faQuestionCircle} /> Query
                   </a>
                 </li>
                 <hr className="dropdown-divider" />
                 <li>
                   <a className="dropdown-item" href="#" onClick={handleSignOut}>
-                    Sign out
+                  <FontAwesomeIcon icon={faSignOutAlt} />  Sign out
                   </a>
                 </li>
               </ul>
