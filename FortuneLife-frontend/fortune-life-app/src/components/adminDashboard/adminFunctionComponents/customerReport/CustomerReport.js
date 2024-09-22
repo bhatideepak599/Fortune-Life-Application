@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { activateCustomer, deleteCustomer, getAllCustomers } from "../../../../services/CustomerService";
+import {
+  activateCustomer,
+  deleteCustomer,
+  getAllCustomers,
+} from "../../../../services/CustomerService";
 import { sanitizedData } from "../../../../utils/SanitizeData";
 import { errorToast, successToast, warnToast } from "../../../../utils/Toast";
 import CommonTable from "../../../../sharedComponents/commomTables/CommonTable";
@@ -7,7 +11,10 @@ import UpdateCustomer from "./updateCustomer/UpdateCustomer";
 import Modal from "../../../../sharedComponents/modal/Modal";
 import { Button, Dropdown } from "react-bootstrap";
 import { FaDownload } from "react-icons/fa";
-import { getCustomersExcelReport, getCustomersPdfReport } from "../../../../services/reportsService";
+import {
+  getCustomersExcelReport,
+  getCustomersPdfReport,
+} from "../../../../services/reportsService";
 import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../../../../sharedComponents/Pagination/Pagination";
 import SearchComponent from "../../../../sharedComponents/searchComponent/SearchComponent";
@@ -34,7 +41,6 @@ const CustomerReport = () => {
     mobileNumber: "",
     email: "",
     active: "",
-
   });
 
   useEffect(() => {
@@ -49,7 +55,6 @@ const CustomerReport = () => {
       mobileNumber: queryParams.get("mobileNumber") || "",
       email: queryParams.get("email") || "",
       active: queryParams.get("active") || "",
-     
     };
     setPageSize(initialPageSize);
     setPageNumber(initialPageNumber);
@@ -57,17 +62,29 @@ const CustomerReport = () => {
     setSearchParams(initialSearchParams);
   }, []);
   useEffect(() => {
-    setCustomers([])
+    setCustomers([]);
     fetchCustomers();
   }, [pageSize, pageNumber, searchParams, flag]);
 
   const fetchCustomers = async () => {
     try {
-      const response = await getAllCustomers(pageSize, pageNumber, searchParams);
+      const response = await getAllCustomers(
+        pageSize,
+        pageNumber,
+        searchParams
+      );
       setCustomersList(response.content); // Set the response content to customersList
       setTotalPages(response.totalPages);
 
-      const keys = ["id", "userDto.firstName", "userDto.lastName", "userDto.mobileNumber", "active", "userDto.email", "userDto.username"];
+      const keys = [
+        "id",
+        "userDto.firstName",
+        "userDto.lastName",
+        "userDto.mobileNumber",
+        "active",
+        "userDto.email",
+        "userDto.username",
+      ];
 
       const newSanitizedData = sanitizedData({
         data: response.content,
@@ -87,8 +104,8 @@ const CustomerReport = () => {
 
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
-      if(error.response.status!==404)
-      toast.error(error.response?.data?.message);
+      if (error.response.status !== 404)
+        toast.error(error.response?.data?.message);
     }
   };
   const handleSearchTypeChange = (type) => {
@@ -185,7 +202,9 @@ const CustomerReport = () => {
         if (!response || !response.data) {
           throw new Error("Failed to fetch Excel data");
         }
-        blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+        blob = new Blob([response.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
         fileName = "customers_report.xlsx";
       }
 
@@ -225,11 +244,20 @@ const CustomerReport = () => {
       <h2 className="text-center mb-4">Customers List</h2>
 
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <SearchComponent searchType={searchType} searchParams={searchParams} handleSearchTypeChange={handleSearchTypeChange} handleSearchChange={handleSearchChange} handleSearch={handleSearch} handleReset={handleReset} />
+        <SearchComponent
+          searchType={searchType}
+          searchParams={searchParams}
+          handleSearchTypeChange={handleSearchTypeChange}
+          handleSearchChange={handleSearchChange}
+          handleSearch={handleSearch}
+          handleReset={handleReset}
+        />
 
         <div className="d-flex align-items-center">
           <Dropdown onSelect={handleFormatChange}>
-            <Dropdown.Toggle id="dropdown-basic">{format.toUpperCase()}</Dropdown.Toggle>
+            <Dropdown.Toggle id="dropdown-basic">
+              {format.toUpperCase()}
+            </Dropdown.Toggle>
 
             <Dropdown.Menu>
               <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
@@ -243,7 +271,10 @@ const CustomerReport = () => {
       <CommonTable data={customers} actions={actions} />
 
       <div className="table-footer">
-        <Pagination pager={pageObject} onPageChange={(newPage) => pageObject.setPageNumber(newPage)} />
+        <Pagination
+          pager={pageObject}
+          onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
+        />
       </div>
 
       <div style={styles.container}>
@@ -252,8 +283,16 @@ const CustomerReport = () => {
         </Button>
       </div>
 
-      <Modal isOpen={updateCustomerModal} onClose={() => setUpdateCustomerModal(false)}>
-        <UpdateCustomer customer={customerToUpdate} flag={flag} setFlag={setFlag} onClose={() => setUpdateCustomerModal(false)} />
+      <Modal
+        isOpen={updateCustomerModal}
+        onClose={() => setUpdateCustomerModal(false)}
+      >
+        <UpdateCustomer
+          customer={customerToUpdate}
+          flag={flag}
+          setFlag={setFlag}
+          onClose={() => setUpdateCustomerModal(false)}
+        />
       </Modal>
     </div>
   );

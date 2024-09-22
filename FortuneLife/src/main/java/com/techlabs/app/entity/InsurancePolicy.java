@@ -100,7 +100,7 @@ public class InsurancePolicy {
     private String generatePolicyId() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String datePart = LocalDate.now().format(formatter);
-        String randomPart = UUID.randomUUID().toString().substring(0, 8).toUpperCase(); // Unique identifier part
+        String randomPart = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         return "POL-" + datePart + "-" + randomPart;
     }
 }

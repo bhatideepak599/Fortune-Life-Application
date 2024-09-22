@@ -188,7 +188,7 @@ export const AllWithdrawals = () => {
           handleSearch={handleSearch}
           handleReset={handleReset}
         />
-        <div className="d-flex align-items-center">
+        {/* <div className="d-flex align-items-center">
           <Dropdown onSelect={handleFormatChange}>
             <Dropdown.Toggle id="dropdown-basic">
               Export as {format.toUpperCase()}
@@ -200,7 +200,7 @@ export const AllWithdrawals = () => {
             </Dropdown.Menu>
           </Dropdown>
           <FaDownload size={18} className="ms-2" onClick={handleDownload} />
-        </div>
+        </div> */}
       </div>
 
       

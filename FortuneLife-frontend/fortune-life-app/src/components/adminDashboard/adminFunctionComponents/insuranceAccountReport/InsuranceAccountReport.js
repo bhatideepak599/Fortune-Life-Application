@@ -202,7 +202,7 @@ const InsuranceAccountReport = () => {
             <SearchComponent searchType={searchType} searchParams={searchParams} handleSearchTypeChange={handleSearchTypeChange} handleSearchChange={handleSearchChange} handleSearch={handleSearch} handleReset={handleReset} />
           </div>
 
-          <div className="d-flex align-items-center">
+          {/* <div className="d-flex align-items-center">
             <Dropdown onSelect={handleFormatChange}>
               <Dropdown.Toggle id="dropdown-basic"></Dropdown.Toggle>
               <Dropdown.Menu>
@@ -211,7 +211,7 @@ const InsuranceAccountReport = () => {
               </Dropdown.Menu>
             </Dropdown>
             <FaDownload size={18} className="ms-2" onClick={handleDownload} />
-          </div>
+          </div> */}
         </div>
 
         <div className="container mt-0">

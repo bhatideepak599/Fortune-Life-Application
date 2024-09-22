@@ -83,7 +83,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 		String formattedDate = withdrawal.getWithdrawalDate().format(formatter);
 
 		LocalDateTime dateTime = LocalDateTime.parse(formattedDate, formatter);
-		withdrawalDto.setWithdrawalDate(dateTime);
+		withdrawalDto.setWithdrawalRequestDate(dateTime);
 		withdrawalDto.setAgentDto(agentMapper.entityToDto(withdrawal.getAgent()));
 
 		return withdrawalDto;

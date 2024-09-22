@@ -209,19 +209,7 @@ const AgentwiseCommissionReport = () => {
           />
         </div>
   
-        <div className="d-flex align-items-center">
-          <Dropdown onSelect={handleFormatChange}>
-            <Dropdown.Toggle id="dropdown-basic">
-              {format.toUpperCase()}
-            </Dropdown.Toggle>
-  
-            <Dropdown.Menu>
-              <Dropdown.Item eventKey="pdf">PDF</Dropdown.Item>
-              <Dropdown.Item eventKey="excel">Excel</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <FaDownload size={18} className="ms-2" onClick={handleDownload} />
-        </div>
+      
       </div>
   
       <div className="mt-0">

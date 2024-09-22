@@ -11,7 +11,7 @@ public class WithdrawalDto {
 
 	private Long withdrawalId;
 	
-	private LocalDateTime withdrawalDate;
+	private LocalDateTime withdrawalRequestDate;
 	
 	@NotNull
 	@PositiveOrZero(message = "Amount Should be Greater than Zero")

@@ -130,15 +130,15 @@ public class ExcelReportServiceImpl implements ExcelReportService {
 		if (agents == null || agents.isEmpty())
 			throw new AgentRelatedException("No Agents Found!.");
 
-		try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); Workbook workbook = new XSSFWorkbook()) {
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			 Workbook workbook = new XSSFWorkbook()) {
 
 			Sheet sheet = workbook.createSheet("Customer Report");
 
 			// Create header row
 			Row headerRow = sheet.createRow(0);
 			String[] headers = { "Agent ID", "Active", "Verified", "Username", "First Name", "Last Name", "Email",
-					"Gender", "Mobile Number", "House Number", "Apartment", "City", "State", "Pin Code", "Commision ID",
-					"Commission Issue Date", "Commission Type", "Commission Amount"};
+					"Gender", "Mobile Number", "House Number", "Apartment", "City", "State", "Pin Code"};
 			for (int i = 0; i < headers.length; i++) {
 				Cell cell = headerRow.createCell(i);
 				cell.setCellValue(headers[i]);
@@ -157,7 +157,7 @@ public class ExcelReportServiceImpl implements ExcelReportService {
 					address.setHouseNumber("N/A");
 					address.setState("N/A");
 					user.setAddress(address);
-					
+
 				}
 				Address address = user.getAddress();
 
@@ -170,27 +170,27 @@ public class ExcelReportServiceImpl implements ExcelReportService {
 				row.createCell(6).setCellValue(user.getEmail());
 				row.createCell(7).setCellValue(user.getGender());
 				row.createCell(8).setCellValue(user.getMobileNumber());
-				
+
 				row.createCell(9).setCellValue(address.getHouseNumber());
 				row.createCell(10).setCellValue(address.getApartment());
 				row.createCell(11).setCellValue(address.getCity());
 				row.createCell(12).setCellValue(address.getState());
 				row.createCell(13).setCellValue(address.getPinCode());
 
-				int policyColumn = 13;
-				int cnt = 1;
-				for (Commission commision : agent.getCommissions()) {
-					if (cnt > 1) {
-						row = sheet.createRow(rowNum++);
-						policyColumn = 13;
-					}
-					cnt++;
-					row.createCell(policyColumn++).setCellValue(commision.getId());
-					row.createCell(policyColumn++).setCellValue(commision.getIssueDate().toString());
-					row.createCell(policyColumn++).setCellValue(commision.getCommissionType().toString());
-					row.createCell(policyColumn++).setCellValue(commision.getAmount());
-
-				}
+//				int policyColumn = 13;
+//				int cnt = 1;
+//				for (Commission commision : agent.getCommissions()) {
+//					if (cnt > 1) {
+//						row = sheet.createRow(rowNum++);
+//						policyColumn = 13;
+//					}
+//					cnt++;
+//					row.createCell(policyColumn++).setCellValue(commision.getId());
+//					row.createCell(policyColumn++).setCellValue(commision.getIssueDate().toString());
+//					row.createCell(policyColumn++).setCellValue(commision.getCommissionType().toString());
+//					row.createCell(policyColumn++).setCellValue(commision.getAmount());
+//
+//				}
 			}
 
 			workbook.write(baos);

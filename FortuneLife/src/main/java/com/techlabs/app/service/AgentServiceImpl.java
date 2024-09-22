@@ -145,8 +145,8 @@ public class AgentServiceImpl implements AgentService {
         User user = agent.getUser();
         User updatedUser = userMapper.dtoToEntity(agentDto.getUserDto());
         Address address = updatedUser.getAddress();
-        if(user.getAddress().getId()!=null)
-        address.setId(user.getAddress().getId());
+        if(user.getAddress()!=null)
+            address.setId(user.getAddress().getId());
         address = addressRepository.save(address);
         user.setAddress(address);
         user.setFirstName(updatedUser.getFirstName());

@@ -20,9 +20,16 @@ const ForgotPassword = () => {
   const [otpSent, setOtpSent] = useState(false);
 
   const handleChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
 
-    if (e.target.name === "sourceType") {
+    // Restrict OTP input to numeric only and limit length to 6
+    if (name === "otpReceived" && (!/^\d*$/.test(value) || value.length > 6)) {
+      return;
+    }
+
+    setState({ ...state, [name]: value });
+
+    if (name === "sourceType") {
       setOtpSent(false);
       setState((prevState) => ({
         ...prevState,
@@ -57,6 +64,11 @@ const ForgotPassword = () => {
   };
 
   const handleVerifyOtpAndResetPassword = async () => {
+    if (state.otpReceived.length !== 6) {
+      toast.error("OTP must be 6 digits!");
+      return;
+    }
+
     if (state.password !== state.confirmPassword) {
       toast.error("Passwords do not match!");
       return;
@@ -94,10 +106,9 @@ const ForgotPassword = () => {
             value={state.countryCode}
             onChange={handleChange}
           >
-             <option value="+91">+91 (India)</option>
+            <option value="+91">+91 (India)</option>
             <option value="+1">+1 (USA)</option>
             <option value="+44">+44 (UK)</option>
-           
           </select>
         )}
         <input
@@ -142,15 +153,6 @@ const ForgotPassword = () => {
             <option value="email">Email</option>
             <option value="phoneNumber">Mobile Number</option>
           </select>
-          {/* <input
-          type="text"
-          className={styles.input}
-          name="sourceValue"
-          placeholder={state.sourceType === "phoneNumber" ? "Mobile Number" : "Email"}
-          value={state.sourceValue}
-          disabled
-          //onChange={handleChange}
-        /> */}
         </div>
         {state.sourceType && !otpSent && renderSourceInput()}
         {step === 2 && (
@@ -160,9 +162,9 @@ const ForgotPassword = () => {
               type="text"
               className={styles.input}
               name="otpReceived"
-              required
               value={state.otpReceived}
               onChange={handleChange}
+              maxLength={6} // Set maxLength to 6 digits
             />
             <label className={styles.label}>New Password:</label>
             <input
@@ -178,13 +180,11 @@ const ForgotPassword = () => {
               className={styles.input}
               name="confirmPassword"
               value={state.confirmPassword}
-              required
               onChange={handleChange}
             />
             <button
               className={styles.button}
               onClick={handleVerifyOtpAndResetPassword}
-              required
               style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}
             >
               Reset Password

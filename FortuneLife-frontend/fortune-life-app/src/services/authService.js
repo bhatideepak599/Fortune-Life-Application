@@ -66,7 +66,7 @@ export const getAdmin = async () => {
 
     if (response) return response;
   } catch (error) {
-    // throw error;
+    throw error;
   }
 };
 
@@ -81,13 +81,13 @@ export const verifyUser = async (accessToken, userRole) => {
       },
     });
 
-    if (response.data === false) {
+    if (response?.data === false) {
       localStorage.clear();
     }
 
     return response.data;
   } catch (error) {
-    throw error;
+    //throw error;
   }
 };
 

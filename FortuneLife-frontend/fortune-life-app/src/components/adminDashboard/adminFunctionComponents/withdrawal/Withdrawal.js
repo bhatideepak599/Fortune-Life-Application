@@ -72,7 +72,7 @@ export const Withdrawal = () => {
         "agentDto.id",
         "agentDto.userDto.firstName",
         "leftCommission",
-        "withdrawalDate",
+        "withdrawalRequestDate",
         "amount",
         "status",
         "remarks"
@@ -118,7 +118,7 @@ export const Withdrawal = () => {
     await setSearchParams({
       id: "",
       agentId: "",
-      status: "PENDING", // Reset status to PENDING on reset
+      status: "PENDING",
     });
     setSearchType("");
     setPageNumber(0);
@@ -139,7 +139,7 @@ export const Withdrawal = () => {
     setSearchParams({
       ...searchParams,
       [e.target.name]: e.target.value,
-      status: "PENDING", // Ensure status stays PENDING on search
+      status: "PENDING", 
     });
   };
 
@@ -147,30 +147,11 @@ export const Withdrawal = () => {
      setId(id)
     setApproveClick(true)
     setModalOpen(true);
-   
-    // try {
-    //   const response = await approveWithdrawal(id, remarks);
-    //   if (response) {
-    //     successToast("Withdrawal Approved");
-    //     setFlag(!flag);
-    //   }
-    // } catch (error) {
-    //   errorToast(error.response?.data?.message);
-    // }
   };
 
   const handleRejectClick = async (id) => {
     setId(id)
     setModalOpen(true);
-    // try {
-    //   const response = await rejectWithdrawal(id, remarks);
-    //   if (response) {
-    //     setFlag(!flag);
-    //     warnToast("Withdrawal Rejected");
-    //   }
-    // } catch (error) {
-    //   errorToast(error.response?.data?.message);
-    // }
   };
 
   const handleView = (claim) => {

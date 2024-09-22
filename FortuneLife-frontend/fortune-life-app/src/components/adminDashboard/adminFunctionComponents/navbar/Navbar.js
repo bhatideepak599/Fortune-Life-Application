@@ -29,8 +29,9 @@ const Navbar = () => {
   const fetchAdmin = async () => {
     try {
       const response = await getAdmin();
-      setAdminDetails(response.data);
-      setName(response.data.userDto.firstName);
+      if(response)
+     { setAdminDetails(response.data);
+      setName(response.data.userDto.firstName);}
     } catch (error) {
       errorToast("Failed to fetch admin details.");
     }

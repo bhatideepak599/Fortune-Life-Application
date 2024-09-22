@@ -234,11 +234,17 @@ export const downloadReciet = (installmentNumber, policy) => {
       ['Premium Amount', `INR ${policy.amount}`],
       ['Tax', `INR ${policy.tax}`],
       ['Total Payment', `INR ${policy.totalPayment}`],
-      ['Payment Method', policy.paymentType],
+      ['Payment Method', policy.paymentType.replace(/_/g, ' ')],
       ['Payment Status', policy.paymentStatus],
       ['Payment Date', new Date(policy.dateOfPayment).toLocaleDateString()],
     ],
+    didParseCell: function (data) {
+      if (data.section === 'body' && data.column.index === 1) {
+        data.cell.styles.fontStyle = 'bold';
+      }
+    },
   });
+  
 
   // Highlight the "Total Payment" and "Payment Status" with colored text
   const finalY = doc.lastAutoTable.finalY + 10; // Position after the table

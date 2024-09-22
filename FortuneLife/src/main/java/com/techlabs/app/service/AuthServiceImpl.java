@@ -271,7 +271,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String forgetPassWord(ForgetPassword forgetPassword) {
 
-        System.out.println(forgetPassword + "====================================");
+       // System.out.println(forgetPassword + "====================================");
         User user = userRepository
                 .findUserByUsernameOrEmail(forgetPassword.getUserName(), forgetPassword.getUserName())
                 .orElseThrow(() -> new UserRelatedException(
@@ -293,21 +293,24 @@ public class AuthServiceImpl implements AuthService {
         }
         Otp otp = otpRepository.findById(forgetPassword.getSourceValue())
                 .orElseThrow(() -> new FortuneLifeException("Invalid Email or Phone Number"));
+        otp.incrementAttemptCount();
+        otp=otpRepository.save(otp);
         boolean check = otp.getOtpCode().equalsIgnoreCase(forgetPassword.getOtpReceived());
-        if (!check) {
-            otp.incrementAttemptCount();
-            // otpRepository.delete(otp);
-            throw new FortuneLifeException("Invalid Otp");
-        }
+
         if (otp.hasExceededMaxAttempts()) {
             otpRepository.delete(otp);
             throw new FortuneLifeException("Limit Exceeded For Verification, Send Otp again");
         }
+        if (!check) {
+
+            throw new FortuneLifeException("Invalid Otp");
+        }
+
         if (otp.isExpired()) {
             otpRepository.delete(otp);
             throw new FortuneLifeException("Otp Expired");
         }
-        otp.incrementAttemptCount();
+
         otpRepository.delete(otp);
         user.setPassword(passwordEncoder.encode(forgetPassword.getPassword()));
         userRepository.save(user);

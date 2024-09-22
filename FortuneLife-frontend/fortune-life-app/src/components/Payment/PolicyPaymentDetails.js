@@ -14,7 +14,7 @@ const PolicyPaymentDetails = () => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
   const [policy, setPolicy] = useState(null);
-
+  const [yearDifference, setYeardifference] = useState(0);
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
@@ -70,7 +70,10 @@ const PolicyPaymentDetails = () => {
     try {
       const response = await getPolicyByPolicyId(policyId);
       console.log(response);
+      const maturityDate = new Date(response.maturityDate);
+      const issueDate = new Date(response.issueDate);
 
+      setYeardifference(maturityDate.getFullYear() - issueDate.getFullYear());
       setPolicy(response);
     } catch (error) {
       toast.error(error.message || "Failed to load policy.");
@@ -174,6 +177,12 @@ const PolicyPaymentDetails = () => {
   };
 
   const downloadPDF = () => {
+    // Get the element with the actions column
+    const actionColumns = document.querySelectorAll(".exclude-from-pdf");
+  
+    // Hide the action column by setting display to 'none'
+    actionColumns.forEach(col => col.style.display = 'none');
+  
     const input = document.getElementById("policy-details");
     html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -183,25 +192,28 @@ const PolicyPaymentDetails = () => {
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
       let position = 0;
-
+  
       pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
-
+  
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
+  
+      // Show the action column again after PDF is generated
+      actionColumns.forEach(col => col.style.display = '');
+  
       pdf.save("payments.pdf");
     });
   };
+  
   const handleReciet = (e) => {
-    let paymentDetails= policy.paymentList[e-1];
+    let paymentDetails = policy.paymentList[e - 1];
     //console.log(paymentDetails);
-    downloadReciet(e,paymentDetails)
-    
-    
+    downloadReciet(e, paymentDetails);
   };
   if (!isVerified) {
     return <div>Loading...</div>;
@@ -242,6 +254,14 @@ const PolicyPaymentDetails = () => {
                 </li>
                 <li className="list-group-item d-flex justify-content-between lh-sm">
                   <div>
+                    <h6 className="my-0">Policy Period</h6>
+                  </div>
+                  <span>
+                    {yearDifference} Years
+                  </span>
+                </li>
+                <li className="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
                     <h6 className="my-0">Maturity Date</h6>
                   </div>
                   <span>{policy.maturityDate}</span>
@@ -250,7 +270,7 @@ const PolicyPaymentDetails = () => {
                   <div>
                     <h6 className="my-0">Premium Type</h6>
                   </div>
-                  <span>{policy.premiumType}</span>
+                  <span>{policy.premiumType.replace(/_/g, " ")}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between lh-sm">
                   <div>
@@ -308,7 +328,7 @@ const PolicyPaymentDetails = () => {
                       <th scope="col">Premium Amount</th>
                       <th scope="col">Due Date</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Action</th>
+                      <th scope="col" class="exclude-from-pdf">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -320,15 +340,15 @@ const PolicyPaymentDetails = () => {
                         <td>
                           {installment.isPaid === "Paid" ? "Paid" : "Unpaid"}
                         </td>
-                        <td>
+                        <td class="exclude-from-pdf">
                           {!installment.isPaid && (
                             <button
-                            className="btn btn-primary px-4"
-                            onClick={handlePayment}
-                            style={{
-                              backgroundColor: "hsl(245, 67%, 59%)",
-                              color: "white",
-                              marginRight: "15px", // space between button and receipt
+                              className="btn btn-primary px-4"
+                              onClick={handlePayment}
+                              style={{
+                                backgroundColor: "hsl(245, 67%, 59%)",
+                                color: "white",
+                                marginRight: "15px", // space between button and receipt
                               }}
                             >
                               Pay
@@ -343,16 +363,17 @@ const PolicyPaymentDetails = () => {
                                 {installment.isPaid === "Paid" ? "Paid" : "Pay"}
                               </button>
 
-                             
                               {installment.isPaid === "Paid" && (
                                 <a
-                                onClick={() => handleReciet(installment.serialNo)}
-                                style={{
-                                  marginLeft: "15px", 
-                                  textDecoration: "underline",
-                                  color: "hsl(245, 67%, 59%)",
-                                  cursor: "pointer",
-                                }}
+                                  onClick={() =>
+                                    handleReciet(installment.serialNo)
+                                  }
+                                  style={{
+                                    marginLeft: "15px",
+                                    textDecoration: "underline",
+                                    color: "hsl(245, 67%, 59%)",
+                                    cursor: "pointer",
+                                  }}
                                 >
                                   Receipt
                                 </a>
