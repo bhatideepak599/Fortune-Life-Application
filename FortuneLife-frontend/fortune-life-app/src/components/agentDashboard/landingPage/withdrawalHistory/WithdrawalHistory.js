@@ -175,7 +175,7 @@ const WithdrawalHistory = () => {
                 {withdrawals.map((withdrawal) => (
                   <tr key={withdrawal.withdrawalId}>
                     <td>{withdrawal.withdrawalId}</td>
-                    <td>{withdrawal.withdrawalDate}</td>
+                    <td>{withdrawal.withdrawalRequestDate}</td>
                     <td
                       style={{
                         color:

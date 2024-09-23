@@ -9,9 +9,7 @@ import Navbar from "./adminFunctionComponents/navbar/Navbar";
 import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
-  const [activeItem, setActiveItem] = useState("Manage City/State");
-  const [adminDetails, setAdminDetails] = useState(null);
-  const [name, setName] = useState("");
+  const [activeItem, setActiveItem] = useState("");
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();

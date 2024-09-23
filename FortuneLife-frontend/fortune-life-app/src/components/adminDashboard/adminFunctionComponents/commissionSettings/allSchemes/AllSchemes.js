@@ -32,6 +32,7 @@ const AllSchemes = () => {
       const response = await getAllSchemesOfUnderAPlan(id);
       setSchemes(response.data);
     } catch (error) {
+      if(error.status!=404)
       toast.error(error.response?.data?.message);
     }
   };

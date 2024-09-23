@@ -153,7 +153,7 @@ public class CityServiceImpl implements CityService {
 		InsuranceScheme insuranceScheme = schemeRepository.findById(schemeId)
 				.orElseThrow(() -> new SchemeRelatedException("No Scheme Found!."));
 		if (insuranceScheme.getActive() == false) {
-			new SchemeRelatedException("Scheme is Currently Inactive!.");
+			new FortuneLifeException("Scheme is Currently Inactive!.");
 		}
 
 		if (insuranceScheme.getCities() == null) {
@@ -164,7 +164,7 @@ public class CityServiceImpl implements CityService {
 		}
 
 		if (insuranceScheme.getCities().contains(city))
-			throw new SchemeRelatedException("Scheme Is Already Active in the Selected City");
+			throw new FortuneLifeException("Scheme Is Already Active in the Selected City");
 		Set<City> cities = insuranceScheme.getCities();
 		cities.add(city);
 		insuranceScheme.setCities(cities);
@@ -182,11 +182,11 @@ public class CityServiceImpl implements CityService {
 	@Override
 	public String removeSchemeFromCity(Long schemeId, Long pincode) {
 		City city = cityRepository.findByPincode(pincode)
-				.orElseThrow(() -> new SchemeRelatedException("City with ID : " + pincode + " is not present "));
+				.orElseThrow(() -> new FortuneLifeException("City with ID : " + pincode + " is not present "));
 
 		
 		InsuranceScheme insuranceScheme = schemeRepository.findById(schemeId)
-				.orElseThrow(() -> new SchemeRelatedException("No Scheme Found!."));
+				.orElseThrow(() -> new FortuneLifeException("No Scheme Found!."));
 		
 		
 		
@@ -197,7 +197,7 @@ public class CityServiceImpl implements CityService {
 			city.setSchemes(new HashSet<>());
 		}
 		if(!insuranceScheme.getCities().contains(city))
-			throw new SchemeRelatedException("Scheme Is Not Active in the Selected City");
+			throw new FortuneLifeException("Scheme Is Not Active in the Selected City");
 		
 		Set<City> cities = insuranceScheme.getCities();
 		cities.remove(city);

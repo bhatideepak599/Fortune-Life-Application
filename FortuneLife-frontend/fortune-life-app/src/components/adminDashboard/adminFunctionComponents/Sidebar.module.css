@@ -10,17 +10,21 @@
   top: 60px; /* Adjust this to match the height of the navbar */
   width: 250px; /* Set a fixed width for the sidebar */
   z-index: 900;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Add a shadow to the sidebar for a cleaner look */
 }
 
 .adminActionsTitle {
   color: #343a40; /* Equivalent to Bootstrap's text-dark */
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .listGroupItem {
   cursor: pointer;
   padding: 10px;
   transition: background-color 0.3s ease; /* Smooth transition for hover */
+  border: none; /* Remove borders from list items */
+  border-radius: 5px; /* Add rounded corners to each item */
 }
 
 .listGroupItem:hover {
@@ -28,12 +32,15 @@
 }
 
 .listGroupItemActive {
-  background-color: hsl(245, 67%, 59%); /* Set to the new color */
+  background-color: #007bff; /* Bootstrap primary blue color */
   color: white; /* Change text color to ensure visibility */
+  font-weight: bold; /* Make the active item stand out */
 }
 
 .reportsTitle {
   margin-top: 20px;
+  font-weight: bold;
+  color: #343a40;
 }
 
 .reportsCollapse {
@@ -41,11 +48,17 @@
   overflow-y: auto;
 }
 
+/* Responsive adjustments */
 @media screen and (max-width: 768px) {
   .sidebarContainer {
     width: 100%;
     height: auto;
     position: relative;
     top: 0;
+    padding: 10px;
+    box-shadow: none; /* Remove shadow for mobile */
+  }
+  .listGroupItem {
+    padding: 15px; /* Increase padding for mobile */
   }
 }

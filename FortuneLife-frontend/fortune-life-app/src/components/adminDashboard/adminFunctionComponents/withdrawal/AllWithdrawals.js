@@ -66,7 +66,7 @@ export const AllWithdrawals = () => {
         "agentDto.id",
         "agentDto.userDto.firstName",
         "leftCommission",
-        "withdrawalDate",
+        "withdrawalRequestDate",
         "amount",
         "status",
         "remarks"
