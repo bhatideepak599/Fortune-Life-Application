@@ -32,7 +32,7 @@ public class InsuranceSchemeController {
 
         return new ResponseEntity<>(schemeDtoList, HttpStatus.OK);
     }
-    
+
     @PreAuthorize("permitAll()")
     @Operation(summary = "Fetch all schemes")
     @GetMapping()
@@ -48,7 +48,7 @@ public class InsuranceSchemeController {
     @GetMapping("/{planId}/{id}")
     public ResponseEntity<SchemeDto> getSchemeByPlanId(@PathVariable(name = "planId") Long planId,
                                                        @PathVariable(name = "id") Long id) {
-        logger.info("Fetching scheme by ID");
+        logger.info("Fetching scheme with ID : {} and plan ID : {}", id, planId);
         SchemeDto schemeDto = schemeService.getSchemeByPlanId(planId, id);
 
         return new ResponseEntity<>(schemeDto, HttpStatus.OK);
@@ -68,7 +68,7 @@ public class InsuranceSchemeController {
     @PutMapping("/{planId}")
     public ResponseEntity<SchemeDto> updateScheme(@PathVariable(name = "planId") Long planId,
                                                   @Valid @RequestBody RequestSchemeDto schemeDto) {
-        logger.info("Updating existing scheme");
+        logger.info("Updating existing scheme with ID : {} for the plan with ID : {}", schemeDto.getSchemeId(), planId);
         SchemeDto updatedScheme = schemeService.updateScheme(schemeDto, planId);
 
         return new ResponseEntity<>(updatedScheme, HttpStatus.OK);
@@ -78,7 +78,7 @@ public class InsuranceSchemeController {
     @DeleteMapping("/{planId}/{id}")
     public ResponseEntity<Object> deleteScheme(@PathVariable(name = "planId") Long planId,
                                                @PathVariable(name = "id") Long id) {
-        logger.info("Deleting existing scheme");
+        logger.info("Deleting existing scheme with ID : {} for the plan with ID : {}", id, planId);
         String message = schemeService.deleteScheme(planId, id);
 
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -88,7 +88,7 @@ public class InsuranceSchemeController {
     @PutMapping("/activate/{planId}/{id}")
     public ResponseEntity<Object> activateScheme(@PathVariable(name = "planId") Long planId,
                                                  @PathVariable(name = "id") Long id) {
-        logger.info("Activating existing scheme");
+        logger.info("Activating existing scheme with ID : {} for the plan with ID : {}", id, planId);
         String message = schemeService.activateScheme(planId, id);
 
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -101,6 +101,7 @@ public class InsuranceSchemeController {
                                                       @RequestParam(name = "installmentRatio") Double installmentRatio,
                                                       @RequestParam(name = "registrationAmount") Double registrationAmount,
                                                       @RequestParam(name = "profitRatio") Double profitRatio) {
+        logger.info("Update commission with ID : {}", id);
         SchemeDto schemeDto = schemeService.updateCommission(planId, id, installmentRatio, registrationAmount, profitRatio);
 
         return new ResponseEntity<>(schemeDto, HttpStatus.OK);

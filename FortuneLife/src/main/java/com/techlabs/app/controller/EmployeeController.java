@@ -60,7 +60,7 @@ public class EmployeeController {
 	@Operation(summary = "Fetch Employee By Id")
 	@GetMapping("/{id}")
 	public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long id) {
-		logger.info("Fetching A employee");
+		logger.info("Fetching A employee with ID : {}",id);
 		EmployeeDto employeeDto = employeeService.getEmployeeById(id);
 		return new ResponseEntity<>(employeeDto, HttpStatus.OK);
 	}
@@ -68,8 +68,8 @@ public class EmployeeController {
 	@Operation(summary = "Update An  Employee")
 	@PutMapping
 	public ResponseEntity<EmployeeDto> updateEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
-		logger.info("Updating An Employee");
-		System.out.println(employeeDto+"  ===========================================================================================");
+		logger.info("Updating An Employee with ID : {}",employeeDto.getId());
+
 		EmployeeDto updatedEmployeeDto = employeeService.updateEmployee(employeeDto);
 		return new ResponseEntity<>(updatedEmployeeDto, HttpStatus.OK);
 	}
@@ -77,7 +77,7 @@ public class EmployeeController {
 	@Operation(summary = "Activate An Employee")
 	@PutMapping("/activate/{id}")
 	public ResponseEntity<String> activateEmployee(@PathVariable("id") Long id) {
-		logger.info("Activating An employee");
+		logger.info("Activating An employee with ID : {}",id);
 		String activatedMessage = employeeService.activateEmployee(id);
 		return new ResponseEntity<>(activatedMessage, HttpStatus.OK);
 	}
@@ -85,7 +85,7 @@ public class EmployeeController {
 	@Operation(summary = "Delete Employee By Id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteEmployeeById(@PathVariable("id") Long id) {
-		logger.info("Deleting A employee with employee Id");
+		logger.info("Deleting A employee with employee Id : {}",id);
 		String message = employeeService.deleteEmployeeById(id);
 
 		return new ResponseEntity<>(message, HttpStatus.OK);
@@ -95,7 +95,7 @@ public class EmployeeController {
 	@Operation(summary = "Fetch Logged Employee By Token")
 	@GetMapping("/logged")
 	public ResponseEntity<EmployeeDto> getEmployeeByToken(HttpServletRequest request) {
-		logger.info("Fetching An Employee");
+		logger.info("Fetching An Employee by token");
 		EmployeeDto employee = employeeService.getEmployeeByToken(request);
 		return new ResponseEntity<>(employee, HttpStatus.OK);
 	}

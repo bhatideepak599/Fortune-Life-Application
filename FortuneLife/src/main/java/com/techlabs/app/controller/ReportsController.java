@@ -1,4 +1,8 @@
-package com.techlabs.app.controller;import org.springframework.core.io.ByteArrayResource;
+package com.techlabs.app.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,17 +22,23 @@ import java.io.IOException;
 @RequestMapping("/fortuneLife/reports")
 public class ReportsController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ReportsController.class);
+
     private final ExcelReportService excelReportService;
     private final PdfReportService pdfReportService;
 
     public ReportsController(ExcelReportService excelReportService, PdfReportService pdfReportService) {
-		super();
-		this.excelReportService = excelReportService;
-		this.pdfReportService = pdfReportService;
-	}
+        super();
+        this.excelReportService = excelReportService;
+        this.pdfReportService = pdfReportService;
+    }
+
     @Operation(summary = "Download Customer Report in Excel Sheet")
-	@GetMapping("/customer/excel-report/download")
+    @GetMapping("/customer/excel-report/download")
     public ResponseEntity<ByteArrayResource> downloadExcelFileForCustomer() {
+
+        logger.info("Customer Report in excel sheet");
+
         try {
             ByteArrayResource file = excelReportService.downloadExcelFileForCustomer();
             return ResponseEntity.ok()
@@ -40,22 +50,27 @@ public class ReportsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Download Customer Report in pdf")
-	@GetMapping("/customer/pdf-report/download")
-	public ResponseEntity<byte[]> downloadPdfFileForCustomer() throws IOException {
-		// Fetch customer data
-		byte[] pdfBytes = pdfReportService.downloadPdfFileForCustomer();
+    @GetMapping("/customer/pdf-report/download")
+    public ResponseEntity<byte[]> downloadPdfFileForCustomer() throws IOException {
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_PDF);
-		headers.setContentDispositionFormData("attachment", "CustomerReport.pdf");
+        logger.info("Customer Report in pdf format");
 
-		return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
-	}
-	@Operation(summary = "Download Agent Report in Excel Sheet")
-	@GetMapping("/agent/excel-report/download")
+        byte[] pdfBytes = pdfReportService.downloadPdfFileForCustomer();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "CustomerReport.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Download Agent Report in Excel Sheet")
+    @GetMapping("/agent/excel-report/download")
     public ResponseEntity<ByteArrayResource> downloadExcelFileForAgent() {
+        logger.info("Agent Report in excel sheet");
+
         try {
             ByteArrayResource file = excelReportService.downloadExcelFileForAgent();
             return ResponseEntity.ok()
@@ -67,17 +82,19 @@ public class ReportsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Download Agent Report in pdf")
-	@GetMapping("/agent/pdf-report/download")
-	public ResponseEntity<byte[]> downloadPdfFileForAgent() throws IOException {
-		// Fetch customer data
-		byte[] pdfBytes = pdfReportService.downloadPdfFileForAgent();
+    @GetMapping("/agent/pdf-report/download")
+    public ResponseEntity<byte[]> downloadPdfFileForAgent() throws IOException {
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_PDF);
-		headers.setContentDispositionFormData("attachment", "AgentReport.pdf");
+        logger.info("Agent Report in pdf format");
 
-		return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
-	}
+        byte[] pdfBytes = pdfReportService.downloadPdfFileForAgent();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "AgentReport.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+    }
 }

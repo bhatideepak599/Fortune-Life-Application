@@ -63,7 +63,7 @@ public class CustomerController {
 	@Operation(summary = "Fetch Customer By Id")
 	@GetMapping("/{id}")
 	public ResponseEntity<CustomerDto> getCustomerById(@PathVariable("id") Long id) {
-		logger.info("Fetching A Customer");
+		logger.info("Fetching A Customer with ID : {}",id);
 		CustomerDto customerDto = customerService.getCustomerById(id);
 		return new ResponseEntity<>(customerDto, HttpStatus.OK);
 	}
@@ -71,7 +71,7 @@ public class CustomerController {
 	@Operation(summary = "Update A  Customer")
 	@PutMapping
 	public ResponseEntity<CustomerDto> updateCustomer(@Valid @RequestBody UserDto userDto) {
-		logger.info("Updating A Customer");
+		logger.info("Updating A Customer with ID : {}",userDto.getId());
 		CustomerDto customerDto = customerService.updateCustomer(userDto);
 		return new ResponseEntity<>(customerDto, HttpStatus.OK);
 	}
@@ -79,7 +79,7 @@ public class CustomerController {
 	@Operation(summary = "Activate A Customer")
 	@PutMapping("/activate/{id}")
 	public ResponseEntity<String> activateCustomer(@PathVariable("id") Long id) {
-		logger.info("Activating A Customer");
+		logger.info("Activating A Customer with ID : {}",id);
 		String activatedMessage = customerService.activateCustomer(id);
 		return new ResponseEntity<>(activatedMessage, HttpStatus.OK);
 	}
@@ -87,7 +87,7 @@ public class CustomerController {
 	@Operation(summary = "Delete Customer By Id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteCustomerById(@PathVariable("id") Long id) {
-		logger.info("Deleting A Customer with Customer Id");
+		logger.info("Deleting A Customer with Customer Id : {}",id);
 		String message = customerService.deleteCustomerById(id);
 
 		return new ResponseEntity<>(message, HttpStatus.OK);
@@ -99,7 +99,7 @@ public class CustomerController {
 	public ResponseEntity<InsurancePolicyResponseDto> addNewPolicy(@PathVariable(name = "customerId") Long customerId,
 			@PathVariable(name = "schemeId") Long schemeId, @Valid @RequestBody InsurancePolicyDto insurancePolicyDto) {
 		
-		 logger.info("New Policy For The Customer ");
+		 logger.info("New Policy For The Customer with ID : {} scheme ID : {}",customerId, schemeId);
 		 InsurancePolicyResponseDto addedPolicy=insurancePolicyService.addNewPolicy(customerId,schemeId,insurancePolicyDto);
 		 return new ResponseEntity<>(addedPolicy, HttpStatus.OK);
 	}
@@ -110,7 +110,7 @@ public class CustomerController {
 			@PathVariable(name = "schemeId") Long schemeId, @PathVariable(name = "agentId") Long agentId,
 			@Valid @RequestBody InsurancePolicyDto insurancePolicyDto) {
 		
-		 logger.info("New Policy For The Customer ");
+		 logger.info("New Policy For The Customer with ID : {}, by Agent with ID : {}, scheme ID : {}",customerId,agentId, schemeId);
 		 InsurancePolicyResponseDto addedPolicy=insurancePolicyService.addNewPolicyByAgentForCustomer(customerId,schemeId,agentId,insurancePolicyDto);
 		 return new ResponseEntity<>(addedPolicy, HttpStatus.OK);
 	}
@@ -119,7 +119,7 @@ public class CustomerController {
 	   @Operation(summary = "Fetch Logged Customer By Token")
 	    @GetMapping("/logged")
 	    public ResponseEntity<CustomerDto> getCustomerByToken(HttpServletRequest request) {
-	        logger.info("Fetching A Customer");
+	        logger.info("Fetching A Customer by a token");
 	        CustomerDto admin = customerService.getCustomerByToken(request);
 	        return new ResponseEntity<>(admin, HttpStatus.OK);
 	    }

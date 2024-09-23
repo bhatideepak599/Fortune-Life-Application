@@ -72,12 +72,6 @@ const HomePageNavbar = () => {
                   </ul>
                 )}
               </li>
-
-              <li className="customer-nav-item">
-                <a href="/" className="fs-5 customer-nav-link">
-                  Contact
-                </a>
-              </li>
             </ul>
           </div>
 

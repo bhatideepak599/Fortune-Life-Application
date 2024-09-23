@@ -25,21 +25,17 @@ public class StripeWebhookController {
         String payload = request.getReader().lines().collect(Collectors.joining());
         String sigHeader = request.getHeader("Stripe-Signature");
 
-//        System.out.println(payload);
-//        System.out.println(sigHeader);
-
-        //System.out.println("Its getting inside");
 
         try {
             Event event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
 
             System.out.println(event);
-            
+
             // Handle the event
             if ("payment_intent.succeeded".equals(event.getType())) {
                 PaymentIntent paymentIntent = (PaymentIntent) event.getDataObjectDeserializer()
                         .getObject().orElseThrow();
-                System.out.println(paymentIntent+"Web Hook activated");
+                System.out.println(paymentIntent + "Web Hook activated");
                 // Fulfill the purchase, e.g., update your database
             } else if ("payment_intent.payment_failed".equals(event.getType())) {
                 PaymentIntent paymentIntent = (PaymentIntent) event.getDataObjectDeserializer()

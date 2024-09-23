@@ -67,7 +67,7 @@ public class AgentController {
 	@Operation(summary = "Fetch Agent By Id")
 	@GetMapping("/{id}")
 	public ResponseEntity<AgentDto> getAgentById(@PathVariable("id") Long id) {
-		logger.info("Fetching An Agent By Id");
+		logger.info("Fetching An Agent By Id : {}",id);
 		AgentDto agentDto = agentService.getAgentById(id);
 		return new ResponseEntity<>(agentDto, HttpStatus.OK);
 	}
@@ -76,7 +76,7 @@ public class AgentController {
 	@PutMapping
 	public ResponseEntity<AgentDto> updateAgent(@RequestBody AgentDto agentDto) {
 		
-		logger.info("Updating An Agent");
+		logger.info("Updating An Agent by ID : {}",agentDto.getId());
 		AgentDto updatedAgentDto = agentService.updateAgent(agentDto);
 		return new ResponseEntity<>(updatedAgentDto, HttpStatus.OK);
 	}
@@ -84,7 +84,7 @@ public class AgentController {
 	@Operation(summary = "Activate An Agent")
 	@PutMapping("/activate/{id}")
 	public ResponseEntity<String> activateAgent(@PathVariable("id") Long id) {
-		logger.info("Activating An Agent");
+		logger.info("Activating An Agent by ID : {}",id);
 		String activatedMessage = agentService.activateAgent(id);
 		return new ResponseEntity<>(activatedMessage, HttpStatus.OK);
 	}
@@ -92,7 +92,7 @@ public class AgentController {
 	@Operation(summary = "Delete Agent By Id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteAgentById(@PathVariable("id") Long id) {
-		logger.info("Deleting An Agent with Agent Id");
+		logger.info("Deleting An Agent with Agent Id : {}",id);
 		String message = agentService.deleteAgentById(id);
 
 		return new ResponseEntity<>(message, HttpStatus.OK);
@@ -102,9 +102,8 @@ public class AgentController {
 	@PutMapping("/withdrawal/{agentId}")
 	public ResponseEntity<WithdrawalDto> claimWithdrawal(@PathVariable("agentId") Long id,
 			@RequestParam(name = "amount") Double amount, @RequestBody AgentDto agentDto) {
-		System.out.println(agentDto+"===========================================");
 		
-		logger.info("Claiming For Withdrawal");
+		logger.info("Claiming For Withdrawal by agent with ID : {}",agentDto.getId());
 
 		WithdrawalDto withdrawalDto = withdrawalService.claimWithdrawal(id, amount,agentDto);
 
@@ -114,7 +113,7 @@ public class AgentController {
 	@Operation(summary = "Approve Withdrawal ")
 	@PutMapping("/withdrawal/approve/{id}")
 	public ResponseEntity<Object> approveWithdrawal(@PathVariable("id") Long id, @RequestParam String remarks) {
-		logger.info("Approving  Withdrawal");
+		logger.info("Approving  Withdrawal with ID : {}",id);
 
 		String approve = withdrawalService.approveWithdrawal(id, remarks);
 
@@ -124,7 +123,7 @@ public class AgentController {
 	@Operation(summary = "Reject Withdrawal ")
 	@PutMapping("/withdrawal/reject/{id}")
 	public ResponseEntity<Object> rejectWithdrawal(@PathVariable("id") Long id, @RequestParam String remarks) {
-		logger.info("Rejecting  Withdrawal");
+		logger.info("Rejecting  Withdrawal with ID : {}",id);
 
 		String reject = withdrawalService.rejectWithdrawal(id, remarks);
 
@@ -137,7 +136,7 @@ public class AgentController {
 			@RequestParam(required = false) Long agentId, @RequestParam(required = false) String status,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
-		logger.info("Fetching All The Agents Withdrawal Requests");
+		logger.info("Fetching All the Agents' Withdrawal Requests");
 		if (status != null) {
 			status = status.toUpperCase();
 			if (status.charAt(0) == 'A')
@@ -181,7 +180,7 @@ public class AgentController {
 	@Operation(summary = "Fetch Logged Agent  ")
 	@GetMapping("/loggedAgent")
 	public ResponseEntity<AgentDto> getLoggedAgent(HttpServletRequest request) {
-		logger.info("Fetching A Logged Agent");
+		logger.info("Fetching A Logged Agent by Token");
 		AgentDto agentDto = agentService.getLoggedAgent(request);
 		return new ResponseEntity<>(agentDto, HttpStatus.OK);
 	}

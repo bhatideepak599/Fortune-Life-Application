@@ -84,7 +84,7 @@ public class CityController {
     @PutMapping("/{pincode}/scheme/{schemeId}")
     public ResponseEntity<Object> addSchemeToCity(@PathVariable(name = "pincode") Long pincode,
                                                @PathVariable(name = "schemeId") Long schemeId) {
-        logger.info("Adding A Scheme Into A City");
+        logger.info("Adding A Scheme with ID : {} into A city with pincode : {}",schemeId, pincode);
 
         String message = cityService.addSchemeToCity(schemeId, pincode);
         return ResponseEntity.ok(message);
@@ -95,7 +95,7 @@ public class CityController {
     @DeleteMapping("/{pincode}/scheme/{schemeId}")
     public ResponseEntity<Object> removeSchemeFromCity(@PathVariable(name = "pincode") Long pincode,
                                                @PathVariable(name = "schemeId") Long schemeId) {
-        logger.info("Removing A Scheme from A City");
+        logger.info("Removing A Scheme with ID : {} into A city with pincode : {}",schemeId, pincode);
 
         String message = cityService.removeSchemeFromCity(schemeId, pincode);
         return ResponseEntity.ok(message);

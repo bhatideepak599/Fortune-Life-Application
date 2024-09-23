@@ -56,7 +56,7 @@ public class AdminController {
     @Operation(summary = "Fetch Admin By Id")
     @GetMapping("/{id}")
     public ResponseEntity<AdminDto> getAdminById(@PathVariable("id") Long id) {
-        logger.info("Fetching An Admin");
+        logger.info("Fetching An Admin with ID : {}",id);
         AdminDto admin = adminService.getAdminById(id);
         return new ResponseEntity<>(admin, HttpStatus.OK);
     }
@@ -64,7 +64,7 @@ public class AdminController {
     @Operation(summary = "Fetch Logged Admin By Token")
     @GetMapping("/logged")
     public ResponseEntity<AdminDto> getAdminByToken(HttpServletRequest request) {
-        logger.info("Fetching An Admin");
+        logger.info("Fetching An Admin by token");
         AdminDto admin = adminService.getAdminByToken(request);
         return new ResponseEntity<>(admin, HttpStatus.OK);
     }
@@ -72,7 +72,7 @@ public class AdminController {
     @Operation(summary = "Update An  Admin")
     @PutMapping
     public ResponseEntity<AdminDto> updateAdmin(@Valid @RequestBody UserDto userDto) {
-        logger.info("Updating An Admin");
+        logger.info("Updating An Admin with ID : {}",userDto.getId());
         AdminDto admin = adminService.updateAdmin(userDto);
         return new ResponseEntity<>(admin, HttpStatus.OK);
     }
@@ -80,7 +80,7 @@ public class AdminController {
     @Operation(summary = "Activate An  Admin")
     @PutMapping("/activate/{id}")
     public ResponseEntity<String> activateAdmin(@PathVariable("id") Long id) {
-        logger.info("Activating An Admin");
+        logger.info("Activating An Admin with ID : {}",id);
         String activatedMessage = adminService.activateAdmin(id);
         return new ResponseEntity<>(activatedMessage, HttpStatus.OK);
     }
@@ -88,7 +88,7 @@ public class AdminController {
     @Operation(summary = "Delete Admin By Id")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAdminById(@PathVariable("id") Long id) {
-        logger.info("Deleting An Admin with Admin Id");
+        logger.info("Deleting An Admin with Admin Id : {}",id);
         String message = adminService.deleteAdminById(id);
 
         return new ResponseEntity<>(message, HttpStatus.OK);

@@ -23,7 +23,7 @@ public class ClaimController {
     @PostMapping("/customer/{customerId}/Insurance-policy/{policyId}")
     public ResponseEntity<ClaimDto> applyForPolicyClaim(@PathVariable(name = "customerId") Long customerId,
                                                         @PathVariable(name = "policyId") String policyId, @Valid @RequestBody ClaimDto claimDto) {
-        logger.info("Claiming the Policy");
+        logger.info("Claiming the Policy with ID : {} by customer with ID : {}",policyId, customerId);
         System.out.println(claimDto.toString());
 
         ClaimDto claim = claimService.applyForPolicyClaim(customerId, policyId, claimDto);
@@ -48,7 +48,7 @@ public class ClaimController {
     @PutMapping("/approve/{id}")
     public ResponseEntity<String> approveOrRejectClaim(@PathVariable("id") Long id,
                                                        @RequestParam String operation, @RequestParam String message) {
-        logger.info("Approving Or Rejecting A claim");
+        logger.info("Approving Or Rejecting A claim with ID : {}",id);
         String activatedMessage = claimService.approveOrRejectClaim(id, operation, message);
         return new ResponseEntity<>(activatedMessage, HttpStatus.OK);
     }
@@ -56,7 +56,7 @@ public class ClaimController {
     @Operation(summary = "Get claim by ID")
     @GetMapping("/{id}")
     public ResponseEntity<ClaimDto> getClaimById(@PathVariable(name = "id") Long id) {
-        logger.info("Fetching The Claim by ID");
+        logger.info("Fetching The Claim by ID : {}",id);
         ClaimDto claim = claimService.getClaimById(id);
 
         return new ResponseEntity<>(claim, HttpStatus.OK);

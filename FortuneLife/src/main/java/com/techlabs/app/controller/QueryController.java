@@ -51,7 +51,7 @@ public class QueryController {
         return new ResponseEntity<>(newQuery, HttpStatus.OK);
     }
 
-        @Secured({"ADMIN","EMPLOYEE"})
+    @Secured({"ADMIN", "EMPLOYEE"})
     @Operation(summary = "Answer Query")
     @PutMapping("/answer")
     public ResponseEntity<QueryDto> answerQuery(@Valid @RequestBody QueryDto queryDto) {
@@ -73,7 +73,7 @@ public class QueryController {
     @Operation(summary = "Delete query")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteQuery(@PathVariable(name = "id") Long id) {
-        logger.info("Deleting query");
+        logger.info("Deleting query with ID : {}",id);
         String message = queryService.deleteQuery(id);
 
         return ResponseEntity.ok(message);
@@ -82,7 +82,7 @@ public class QueryController {
     @Operation(summary = "Activate Query")
     @PutMapping("/activate/{id}")
     public ResponseEntity<Object> activateQuery(@PathVariable(name = "id") Long id) {
-        logger.info("Activating query");
+        logger.info("Activating query with ID : {}",id);
         String message = queryService.activateQuery(id);
 
         return ResponseEntity.ok(message);

@@ -25,6 +25,7 @@ import org.springframework.security.core.Authentication;
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
     private OtpService otpService;
     private AuthService authService;
     private final LogoutHandler logoutHandler;
@@ -42,6 +43,7 @@ public class AuthController {
     public ResponseEntity<JWTAuthResponse> login(@Valid @RequestBody LoginDto loginDto) {
 
         String role = loginDto.getRole().toUpperCase();
+        logger.info("User login with role : {} and username or email : {}",role, loginDto.getUsernameOrEmail());
 
         if (role.equals("ADMIN") || role.equals("EMPLOYEE") || role.equals("CUSTOMER") || role.equals("AGENT")) {
             JWTAuthResponse jwtAuthResponse = authService.login(loginDto);
@@ -56,6 +58,8 @@ public class AuthController {
     public ResponseEntity<UserDto> register(@Valid @RequestBody RegisterDto registerDto,
                                            @RequestParam(name = "tempRole") String tempRole) {
         String role = "ROLE_" + tempRole.toUpperCase();
+
+        logger.info("Registering new user for role : {}", role);
         UserDto userDto = authService.register(registerDto, role);
 
         return ResponseEntity.ok(userDto);
@@ -65,6 +69,7 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
+        logger.info("Logging out user by token");
         logoutHandler.logout(request, response, authentication);
         return new ResponseEntity<>("Successfully logged out", HttpStatus.OK);
 
@@ -73,21 +78,23 @@ public class AuthController {
     @GetMapping("/user")
     public boolean validateUserToken(@RequestParam String role,HttpServletRequest request) {
     	 role = "ROLE_" + role.toUpperCase();
+         logger.info("User token validation");
         return authService.validateUserToken(request,role);
     }
 
     @Operation(summary = "Send OTP")
     @GetMapping("/send-otp")
     public String sendOtp(@RequestParam String sourceType,@RequestParam String sourceValue) throws MessagingException {
-
+        logger.info("OTP service initialized");
         otpService.sendOtp(sourceType,sourceValue);
-
         return "OTP has been sent.";
     }
 
     @Operation(summary = "Get Logged user")
     @GetMapping("/loggedUser")
     public ResponseEntity<UserDto> getLoggedUser(HttpServletRequest request){
+
+        logger.info("Fetching logged user by token");
         UserDto userDto = authService.getLoggedUser(request);
 
         return new ResponseEntity<>(userDto,HttpStatus.OK);
@@ -97,6 +104,7 @@ public class AuthController {
     @Operation(summary = "Forget Password")
     @PutMapping("/forget-Password")
     public ResponseEntity<String> forgetPassword(@RequestBody ForgetPassword forgetPassword){
+        logger.info("Initialized forgot password service");
         String message = authService.forgetPassWord(forgetPassword);
 
         return new ResponseEntity<>(message,HttpStatus.OK);
@@ -105,6 +113,7 @@ public class AuthController {
     @Operation(summary = "Change Password")
     @PutMapping("/change-Password")
     public ResponseEntity<JWTAuthResponse> changePassword(@RequestBody UserDto userDto){
+        logger.info("Initialized change password service");
     	JWTAuthResponse message = authService.changePassword(userDto);
 
         return new ResponseEntity<>(message,HttpStatus.OK);

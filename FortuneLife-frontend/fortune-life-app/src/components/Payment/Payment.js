@@ -18,6 +18,7 @@ const CheckoutForm = () => {
   const [taxPaid, setTaxPaid] = useState("");
   const [paymentError, setPaymentError] = useState(null);
   const { policyId } = useParams();
+  const [isPaying, setIsPaying] = useState(false);
 
   // Fetch Policy Data
   useEffect(() => {
@@ -78,6 +79,7 @@ const CheckoutForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsPaying(true);
 
     if (!stripe || !elements || !policy || !tax) {
       return; // Prevent submission if data is missing
@@ -129,12 +131,13 @@ const CheckoutForm = () => {
         return;
       }
 
+      setIsPaying(false);
       toast.success("Payment successful!");
 
       // Close the window after 5 seconds
       setTimeout(() => {
         window.close();
-      }, 5000);
+      }, 3000);
     } catch (error) {
       console.error("Payment failed:", error);
       setPaymentError("Payment failed!");
@@ -200,8 +203,8 @@ const CheckoutForm = () => {
 
                 {paymentError && <div className="alert alert-danger rounded">{paymentError}</div>}
 
-                <button type="submit" className="btn btn-primary btn-block payment-button" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} disabled={!stripe}>
-                  Pay Now
+                <button type="submit" className="btn btn-primary btn-block payment-button" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} disabled={!stripe || isPaying}>
+                  {isPaying ? "Processing..." : "Pay Now"}
                 </button>
               </form>
             </div>

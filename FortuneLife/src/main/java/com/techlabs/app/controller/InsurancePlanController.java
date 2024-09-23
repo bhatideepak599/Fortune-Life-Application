@@ -52,7 +52,7 @@ public class InsurancePlanController {
     @Operation(summary = "Edit Insurance Plan")
     @PutMapping
     public ResponseEntity<PlanDto> updateInsurancePlan(@Valid @RequestBody PlanDto planDto) {
-        logger.info("Updating Insurance Plan");
+        logger.info("Updating Insurance Plan with ID : {}",planDto.getId());
         PlanDto updatedPlanDto = planService.updateExistingPlan(planDto);
 
         return new ResponseEntity<>(updatedPlanDto, HttpStatus.OK);

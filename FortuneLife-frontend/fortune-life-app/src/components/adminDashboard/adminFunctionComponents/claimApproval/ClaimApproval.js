@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { getAllClaims, claimApproval } from "../../../../services/adminService";
 import { toast } from "react-toastify";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { sanitizedData } from "../../../../utils/SanitizeData";
 import Pagination from "../../../../sharedComponents/Pagination/Pagination";
 import Modal from "../../../../utils/Modals/Modal";
@@ -24,7 +24,7 @@ const ClaimApproval = () => {
   const [remarks, setRemarks] = useState("");
 
   const searchRef = useRef();
-  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [searchParams, setSearchParams] = useState({
     claimId: urlSearchParams.get("claimId") || "",
@@ -50,9 +50,9 @@ const ClaimApproval = () => {
     try {
       const response = await getAllClaims(updatedSearchParams);
       console.log(response.content);
-      
+
       if (response.content) {
-        const keysToSelect = ["id", "policyId","policy.totalPolicyAmount","policy.totalAmountPaidTillDate","totalInstallments","paidInstallments","claimAmount", "bankAccountNumber", "remarks"];
+        const keysToSelect = ["id", "policyId", "policy.totalPolicyAmount", "policy.totalAmountPaidTillDate", "totalInstallments", "paidInstallments", "claimAmount", "bankAccountNumber", "remarks"];
         const sanitized = sanitizedData({ data: response.content, keysTobeSelected: keysToSelect });
         setClaims(sanitized);
         setTotalPages(response.totalPages);
@@ -132,6 +132,7 @@ const ClaimApproval = () => {
   };
 
   const handleSubmit = async () => {
+    setIsSubmitting(true);
     try {
       const operation = modalMode === "approve" ? "APPROVED" : "REJECT";
       await claimApproval({
@@ -141,7 +142,8 @@ const ClaimApproval = () => {
       });
       toast.success(`Claim ${operation.toLowerCase()} successfully`);
       fetchClaims();
-     
+
+      setIsSubmitting(false);
       handleModalClose();
     } catch (error) {
       console.error(error);
@@ -163,32 +165,13 @@ const ClaimApproval = () => {
         <form className="mb-4" ref={searchRef} onSubmit={handleSearch}>
           <div className="row">
             <div className="col-md-3">
-              <input
-                id="claimId"
-                className="form-control"
-                type="text"
-                placeholder="Search by Claim ID"
-                value={searchParams.claimId || ""}
-                onChange={handleSearchChange}
-              />
+              <input id="claimId" className="form-control" type="text" placeholder="Search by Claim ID" value={searchParams.claimId || ""} onChange={handleSearchChange} />
             </div>
             <div className="col-md-3">
-              <input
-                id="bankAccountNumber"
-                className="form-control"
-                type="text"
-                placeholder="Search by Bank Account Number"
-                value={searchParams.bankAccountNumber || ""}
-                onChange={handleSearchChange}
-              />
+              <input id="bankAccountNumber" className="form-control" type="text" placeholder="Search by Bank Account Number" value={searchParams.bankAccountNumber || ""} onChange={handleSearchChange} />
             </div>
             <div className="col-md-3">
-              <select
-                id="claimStatus"
-                className="form-control"
-                value={searchParams.claimStatus}
-                onChange={handleSearchChange}
-              >
+              <select id="claimStatus" className="form-control" value={searchParams.claimStatus} onChange={handleSearchChange}>
                 <option value="">All Statuses</option>
                 <option value="PENDING">Pending</option>
                 <option value="APPROVED">Approved</option>
@@ -196,11 +179,7 @@ const ClaimApproval = () => {
               </select>
             </div>
             <div className="col-md-3">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}
-              >
+              <button type="submit" className="btn btn-primary" style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
                 Search
               </button>
               <button type="reset" className="btn btn-secondary ms-2" onClick={handleReset}>
@@ -216,10 +195,7 @@ const ClaimApproval = () => {
           <>
             <ClaimTable data={claims} actions={actions} />
             <div className="d-flex align-items-center justify-content-between mt-5">
-              <Pagination
-                pager={{ pageSize, pageNumber, setPageNumber, setPageSize, totalPages }}
-                onPageChange={onPageChange}
-              />
+              <Pagination pager={{ pageSize, pageNumber, setPageNumber, setPageSize, totalPages }} onPageChange={onPageChange} />
             </div>
           </>
         ) : (
@@ -236,21 +212,11 @@ const ClaimApproval = () => {
             ) : (
               <div className={styles.claimDecision}>
                 <h4>{modalMode === "approve" ? "Approve Claim" : "Reject Claim"}</h4>
-                <textarea
-                  className="form-control"
-                  value={remarks}
-                  onChange={(e) => setRemarks(e.target.value)}
-                  placeholder="Enter remarks"
-                  rows={4}
-                ></textarea>
-                <button
-                  className="btn btn-primary mt-2"
-                  onClick={handleSubmit}
-                  style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}
-                >
-                  OK
+                <textarea className="form-control" value={remarks} onChange={(e) => setRemarks(e.target.value)} placeholder="Enter remarks" rows={4}></textarea>
+                <button className="btn btn-primary mt-2" onClick={handleSubmit} style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }} disabled={isSubmitting}>
+                  {isSubmitting ? "Submitting..." : "OK"}
                 </button>
-                <button className="btn btn-secondary mt-2 ms-2" onClick={handleModalClose}>
+                <button className="btn btn-secondary mt-2 ms-2" onClick={handleModalClose} disabled={isSubmitting}>
                   Cancel
                 </button>
               </div>

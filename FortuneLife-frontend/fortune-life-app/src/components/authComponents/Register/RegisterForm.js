@@ -13,6 +13,8 @@ const RegisterForm = () => {
   const queryParams = new URLSearchParams(location.search);
   const role = queryParams.get("role");
 
+  const currentRole = role === "Agent" ? "Agent" : "Customer";
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -158,7 +160,7 @@ const RegisterForm = () => {
         <div className="col-md-6">
           <div className={`${styles.formContainer}`}>
             <form className={styles.registrationForm} onSubmit={handleSubmit}>
-              <h2 className="text-center mb-4">Register</h2>
+              <h2 className="text-center mb-4">Register {currentRole}</h2>
 
               {/* First Row: First Name and Last Name */}
               <div className="row">

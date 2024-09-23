@@ -16,19 +16,7 @@ const Main = () => {
               <div className="home-content">
                 <h1 className="h1 home-title">FORTUNE LIFE</h1>
 
-                <p className="home-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.2</p>
-
-                <p className="form-text">
-                  <span>🥳</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-
-                <form action="" className="home-form">
-                  <input type="email" name="email" required placeholder="Enter Your Email" className="email-field" />
-
-                  <button type="submit" className="btn btn-primary">
-                    Subscribe
-                  </button>
-                </form>
+                <p className="home-text">FortuneLife – Building Wealth, Protecting Dreams ✨</p>
               </div>
 
               <figure className="home-banner">

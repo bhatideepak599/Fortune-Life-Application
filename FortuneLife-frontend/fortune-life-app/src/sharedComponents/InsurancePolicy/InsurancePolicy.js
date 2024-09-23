@@ -23,6 +23,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
   const [isTouched, setIsTouched] = useState(true);
   const [newRegisterModal, setNewRegisterModal] = useState(false);
   const [exCustomerId, setExCustomerId] = useState("");
+  const [isBuying, setIsBuying] = useState(false);
 
   const interestFormRef = useRef();
   const nomineeFormRef = useRef();
@@ -132,9 +133,11 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
 
   const handleBuyNow = async (e) => {
     e.preventDefault();
+    setIsBuying(true);
 
     if (!(await getLoggedInUser())) {
       setIsModalOpen(true);
+      setIsBuying(false);
       return;
     } else if (await getLoggedInUser()) {
       if (localStorage.getItem("role") === "ROLE_CUSTOMER") {
@@ -145,33 +148,39 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
         if (ageInYears < usedScheme.schemeDetails.minAge || ageInYears > usedScheme.schemeDetails.maxAge) {
           toast.error("Person with your age group is not eligible for this scheme");
           onClose();
+          setIsBuying(false);
           return;
         }
       } else if (localStorage.getItem("role") === "ROLE_AGENT") {
         if (exCustomerId === "") {
           setNewRegisterModal(true);
+          setIsBuying(false);
           return;
         }
       } else if (localStorage.getItem("role") === "ROLE_EMPLOYEE") {
         toast.warn("Login with apprpriate credentials");
         await logout();
         navigate("/");
+        setIsBuying(false);
         return;
       } else {
         toast.warn("Login with apprpriate credentials");
         await logout();
         navigate("/");
+        setIsBuying(false);
         return;
       }
     }
 
     if (!formData.policyTerm || !formData.policyAmount || !formData.premiumType) {
       toast.error("Please enter all required fields.");
+      setIsBuying(false);
       return;
     }
 
     if (documentNames.length !== Object.keys(fileInputs).length || Object.values(fileInputs).includes(undefined)) {
       toast.error("Please select all the required documents.");
+      setIsBuying(false);
       return;
     }
 
@@ -214,6 +223,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
       }
     }
 
+    setIsBuying(false);
     onClose();
     if (localStorage.getItem("role") === "ROLE_CUSTOMER") {
       navigate("/customer-dashboard");
@@ -372,8 +382,8 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
           ))}
         </div>
         <div className="d-grid col-6 mx-auto">
-          <button type="button" className="btn btn-primary mt-2" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={handleBuyNow}>
-            Buy Now
+          <button type="button" className="btn btn-primary mt-2" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={handleBuyNow} disabled={isBuying}>
+             {isBuying ? "Buying..." : "Buy Now"}
           </button>
         </div>
       </form>

@@ -9,9 +9,8 @@ import Modal from "../../../../sharedComponents/modal/Modal";
 import ChangePassword from "../../../../sharedComponents/changePassword/ChangePassword";
 import AdminProfile from "../adminprofile/AdminProfile";
 import { toast } from "react-toastify";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faKey, faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faKey, faSignOutAlt, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const [adminDetails, setAdminDetails] = useState(null);
@@ -29,9 +28,10 @@ const Navbar = () => {
   const fetchAdmin = async () => {
     try {
       const response = await getAdmin();
-      if(response)
-     { setAdminDetails(response.data);
-      setName(response.data.userDto.firstName);}
+      if (response) {
+        setAdminDetails(response.data);
+        setName(response.data.userDto.firstName);
+      }
     } catch (error) {
       errorToast("Failed to fetch admin details.");
     }
@@ -79,12 +79,19 @@ const Navbar = () => {
   return (
     <>
       <nav className={styles.agentNavbar}>
-        <div className={styles.navLogo}>
+        <div className={styles.navLogo} onClick={() => navigate("/")}>
           <img src={fortunelife} alt="company-logo" />
         </div>
         <ul className={styles.navLinks}>
           <li>
-            <a href="/admin-dashboard" onClick={()=> {localStorage.setItem("activeItem","null")}}>Home</a>
+            <a
+              href="/admin-dashboard"
+              onClick={() => {
+                localStorage.setItem("activeItem", "null");
+              }}
+            >
+              Home
+            </a>
           </li>
           <li>
             <a href="/view-queries" onClick={handleViewQuries}>
@@ -114,7 +121,6 @@ const Navbar = () => {
                 Claims For Approval
               </a>
               <a href="/all-claims">All Claims</a>
-             
             </div>
           </li>
           <li>
@@ -123,21 +129,21 @@ const Navbar = () => {
             </a>
           </li>
           <li className={`dropdown ${styles.dropdown}`}>
-  <a href="#" className={styles.dropbtn}>
-    <FontAwesomeIcon icon={faUserCircle} /> {name}
-  </a>
-  <div className={styles.dropdownContent}>
-    <a href="#" onClick={handleProfile}>
-      <FontAwesomeIcon icon={faUser} /> Profile
-    </a>
-    <a href="#" onClick={handleChangePassword}>
-      <FontAwesomeIcon icon={faKey} /> Change password
-    </a>
-    <a href="#" onClick={handleLogout}>
-      <FontAwesomeIcon icon={faSignOutAlt} /> Logout
-    </a>
-  </div>
-</li>
+            <a href="#" className={styles.dropbtn}>
+              <FontAwesomeIcon icon={faUserCircle} /> {name}
+            </a>
+            <div className={styles.dropdownContent}>
+              <a href="#" onClick={handleProfile}>
+                <FontAwesomeIcon icon={faUser} /> Profile
+              </a>
+              <a href="#" onClick={handleChangePassword}>
+                <FontAwesomeIcon icon={faKey} /> Change password
+              </a>
+              <a href="#" onClick={handleLogout}>
+                <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+              </a>
+            </div>
+          </li>
         </ul>
       </nav>
 

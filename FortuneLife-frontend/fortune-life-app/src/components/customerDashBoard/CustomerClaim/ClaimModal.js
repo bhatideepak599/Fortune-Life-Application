@@ -13,6 +13,7 @@ const ClaimModal = ({ policyId, onClose }) => {
   const [claimId, setClaimId] = useState(null);
   const [currentClaim, setCurrentClaim] = useState(null);
   const [deductionTax, setDeductionTax] = useState(null);
+  const [isClaiming, setIsClaiming] = useState(false);
 
   // Fetch logged-in user
   useEffect(() => {
@@ -148,8 +149,10 @@ const ClaimModal = ({ policyId, onClose }) => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsClaiming(true);
     try {
       await claimApply();
+      setIsClaiming(false);
       onClose();
     } catch (error) {
       toast.error(error.message || "Submission failed.");
@@ -220,8 +223,8 @@ const ClaimModal = ({ policyId, onClose }) => {
             </div>
 
             <div className="d-flex justify-content-center mt-4">
-              <button type="submit" className="btn btn-lg rounded-pill px-5" style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }}>
-                Submit Claim
+              <button type="submit" className="btn btn-lg rounded-pill px-5" style={{ backgroundColor: "hsl(245, 67%, 59%)", color: "white" }} disabled={isClaiming}>
+                {isClaiming ? "Submitting..." : "Submit Claim"}
               </button>
             </div>
           </form>

@@ -35,7 +35,7 @@ public class PaymentController {
 
     @PostMapping("/charge")
     public ResponseEntity<Object> chargeCard(@Valid @RequestBody PaymentDto paymentDto) {
-      //  System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      logger.info("Initiating new Payment");
         Payment payment = new Payment();
         try {
 
@@ -73,6 +73,7 @@ public class PaymentController {
     @Secured("ADMIN")
     @GetMapping("/revenue")
     public Double getRevenue(@RequestParam("startDate") String startDateStr, @RequestParam("endDate") String endDateStr) {
+        logger.info("Generating revenue");
         LocalDateTime startDate = LocalDateTime.parse(startDateStr);
         LocalDateTime endDate = LocalDateTime.parse(endDateStr);
 
