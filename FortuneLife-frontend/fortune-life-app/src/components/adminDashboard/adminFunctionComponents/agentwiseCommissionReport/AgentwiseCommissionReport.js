@@ -98,6 +98,7 @@ const AgentwiseCommissionReport = () => {
 
       navigate({ search: queryParams.toString() }, { replace: true });
     } catch (error) {
+      if(error.status!=404)
       errorToast(error.response?.data?.message);
     }
   };

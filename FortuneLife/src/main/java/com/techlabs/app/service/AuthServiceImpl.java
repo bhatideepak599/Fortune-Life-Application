@@ -280,9 +280,9 @@ public class AuthServiceImpl implements AuthService {
         if (!user.getActive()) {
             throw new UserRelatedException("User is not active");
         }
-        if (forgetPassword.getSourceType().equalsIgnoreCase("mobileNumber")) {
+        if (forgetPassword.getSourceType().equalsIgnoreCase("phoneNumber")) {
             String mobileNumber = forgetPassword.getSourceValue();
-            if (!user.getMobileNumber().equalsIgnoreCase(mobileNumber))
+            if (!(user.getMobileNumber().equalsIgnoreCase(mobileNumber)))
                 throw new FortuneLifeException("No User Found With Mobile Number:" + mobileNumber);
         }
 

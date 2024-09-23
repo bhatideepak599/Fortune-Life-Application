@@ -67,7 +67,11 @@ public class ClaimServiceImpl implements ClaimService {
         if (claimDto.getId() != null) {
             Optional<Claim> existingClaim = claimRepository.findById(claimDto.getId());
             if (existingClaim.isPresent()) {
+
                 Claim changeClaim = existingClaim.get();
+                Double claimAmount = changeClaim.getClaimAmount();
+                claimAmount = Double.parseDouble(String.format("%.2f", claimAmount));
+                changeClaim.setClaimAmount(claimAmount);
                 changeClaim.setRemarks(claimDto.getRemarks());
                 changeClaim.setClaimStatus("PENDING");
                 changeClaim = claimRepository.save(changeClaim);
@@ -79,6 +83,10 @@ public class ClaimServiceImpl implements ClaimService {
         if (claim.getClaimAmount() > insurancePolicy.getSumAssured()) {
             throw new FortuneLifeException("Amount Should be less than Assured Amount!.");
         }
+        Double claimAmount = claim.getClaimAmount();
+        claimAmount = Double.parseDouble(String.format("%.2f", claimAmount));
+        claim.setClaimAmount(claimAmount);
+
         claim.setPolicy(insurancePolicy);
         claim = claimRepository.save(claim);
         insurancePolicy.setClaims(claim);

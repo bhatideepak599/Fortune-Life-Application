@@ -90,7 +90,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         InsuranceScheme insuranceScheme = policyRepository.findInsuranceSchemeByPolicyId(policy.getId());
         double installmentRatio = insuranceScheme.getSchemeDetails().getInstallmentCommissionRatio();
         double commissionAmount = (paymentDto.getAmount() * installmentRatio) / 100;
-
+        commissionAmount = Double.parseDouble(String.format("%.2f", commissionAmount));
         Agent agent = policy.getAgent();
         if (agent != null && agent.getActive() && agent.getVerified()) {
             List<Commission> commissions = agent.getCommissions();

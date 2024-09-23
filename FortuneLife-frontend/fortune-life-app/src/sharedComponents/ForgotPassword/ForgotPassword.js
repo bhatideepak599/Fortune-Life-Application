@@ -14,15 +14,13 @@ const ForgotPassword = () => {
     otpReceived: "",
     password: "",
     confirmPassword: "",
-    countryCode: "+1",
+    countryCode: "+91",
   });
   const [step, setStep] = useState(1);
   const [otpSent, setOtpSent] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Restrict OTP input to numeric only and limit length to 6
     if (name === "otpReceived" && (!/^\d*$/.test(value) || value.length > 6)) {
       return;
     }
@@ -75,7 +73,7 @@ const ForgotPassword = () => {
     }
     try {
       const message = await submitNewPassword(state);
-      toast.success(message);
+      toast.success("Pasword has been changed.");
       navigate(-1);
       setStep(1);
       setOtpSent(false);
@@ -120,7 +118,7 @@ const ForgotPassword = () => {
           onChange={handleChange}
         />
         <button className={styles.button} onClick={handleSendOtp}>
-          {otpSent ? "Resend OTP" : "Send OTP"}
+          {otpSent===true ? "Resend OTP" : "Send OTP"}
         </button>
       </div>
     </>
@@ -154,7 +152,7 @@ const ForgotPassword = () => {
             <option value="phoneNumber">Mobile Number</option>
           </select>
         </div>
-        {state.sourceType && !otpSent && renderSourceInput()}
+        {state.sourceType  && renderSourceInput()}
         {step === 2 && (
           <div className={styles.formGroup}>
             <label className={styles.label}>OTP:</label>
@@ -164,7 +162,7 @@ const ForgotPassword = () => {
               name="otpReceived"
               value={state.otpReceived}
               onChange={handleChange}
-              maxLength={6} // Set maxLength to 6 digits
+              maxLength={6} 
             />
             <label className={styles.label}>New Password:</label>
             <input
