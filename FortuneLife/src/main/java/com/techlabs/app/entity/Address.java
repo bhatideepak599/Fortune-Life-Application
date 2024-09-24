@@ -30,10 +30,12 @@ public class Address {
 	private String apartment;
 
 	@NotEmpty(message = "City is required")
+	@Pattern(regexp = "^[A-Za-z]+$", message = "City name must contain only alphabetic characters.")
 	@Column(nullable = false)
 	private String city;
 
 	@NotEmpty(message = "State is required")
+	@Pattern(regexp = "^[A-Za-z]+$", message = "State name must contain only alphabetic characters.")
 	@Column(nullable = false)
 	private String state;
 

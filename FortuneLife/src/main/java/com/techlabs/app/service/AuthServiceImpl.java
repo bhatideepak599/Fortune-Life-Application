@@ -235,6 +235,7 @@ public class AuthServiceImpl implements AuthService {
         Token tokenObject = tokenRepository.findByToken(token).get();
         if (tokenObject == null || tokenObject.getExpired() || tokenObject.getRevoked())
             return false;
+
         String username = jwtTokenProvider.getUsername(token);
         Optional<User> byUsername = userRepository.findUserByUsernameOrEmail(username, username);
         if (byUsername.isEmpty())

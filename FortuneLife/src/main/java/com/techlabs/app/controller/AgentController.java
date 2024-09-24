@@ -100,8 +100,8 @@ public class AgentController {
 
 	@Operation(summary = "Claim For Withdrawal ")
 	@PutMapping("/withdrawal/{agentId}")
-	public ResponseEntity<WithdrawalDto> claimWithdrawal(@PathVariable("agentId") Long id,
-			@RequestParam(name = "amount") Double amount, @RequestBody AgentDto agentDto) {
+	public ResponseEntity<WithdrawalDto> claimWithdrawal( @PathVariable("agentId") Long id,
+			@RequestParam(name = "amount") Double amount, @Valid @RequestBody AgentDto agentDto) {
 		
 		logger.info("Claiming For Withdrawal by agent with ID : {}",agentDto.getId());
 

@@ -151,6 +151,7 @@ export const Withdrawal = () => {
 
   const handleRejectClick = async (id) => {
     setId(id)
+    setApproveClick(false)
     setModalOpen(true);
   };
 
@@ -233,7 +234,7 @@ export const Withdrawal = () => {
               </div>
             ) : (
               <div className={styles.claimDecision}>
-                <h4>{modalMode === "approve" ? "Approve Claim" : "Reject Claim"}</h4>
+                <h4>{approveClick === true ? "Approve Withdrawal" : "Reject Withdrawal"}</h4>
                 <textarea
                   className="form-control"
                   value={remarks}

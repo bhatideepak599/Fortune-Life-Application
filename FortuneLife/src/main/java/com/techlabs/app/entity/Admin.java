@@ -16,8 +16,7 @@ import lombok.ToString;
 public class Admin {
     @Id
     private Long id;
-    
-    
+
     @Column(nullable = false)
 	private Boolean active = true;
     

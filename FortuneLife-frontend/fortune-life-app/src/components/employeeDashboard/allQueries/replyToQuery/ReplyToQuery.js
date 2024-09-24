@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { answerQuery } from '../../../../services/queryService';
 import Loader from '../../loader/Loader';
@@ -8,7 +8,14 @@ const ReplyToQuery = ({ query, setQuery, onClose }) => {
   const [response, setResponse] = useState(query.answer || '');
   const [loading, setLoading] = useState(false); // Loader state
 
+  useEffect(()=>{
+    console.log("response");
+    console.log(query);
+    
+  },[query])
   const handleChange = (e) => {
+    //console.log(query);
+    
     setResponse(e.target.value);
   };
 
@@ -114,7 +121,8 @@ const ReplyToQuery = ({ query, setQuery, onClose }) => {
               rows="6"
               placeholder="Type your answer here..."
             />
-            <div style={buttonGroupStyle}>
+            {query.queryResponse!="SOLVED" &&
+              <div style={buttonGroupStyle}>
               <button
                 onClick={handleSubmit}
                 style={btnPrimaryStyle}
@@ -123,7 +131,7 @@ const ReplyToQuery = ({ query, setQuery, onClose }) => {
               >
                 Send
               </button>
-            </div>
+            </div>}
           </div>
         </>
       )}

@@ -115,7 +115,6 @@ public class AuthController {
     public ResponseEntity<JWTAuthResponse> changePassword(@RequestBody UserDto userDto){
         logger.info("Initialized change password service");
     	JWTAuthResponse message = authService.changePassword(userDto);
-
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
 

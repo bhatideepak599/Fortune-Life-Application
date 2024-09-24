@@ -133,7 +133,6 @@ export const AllQueriesForEmployee = () => {
               <th>Email</th>
               <th>Title</th>
               <th>Query Response</th>
-              <th>Active</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -144,7 +143,7 @@ export const AllQueriesForEmployee = () => {
                 <td>{item.email}</td>
                 <td>{item.title}</td>
                 <td>{item.queryResponse}</td>
-                <td>{item.active ? "Yes" : "No"}</td>
+               
                 <td>
                   <a href="#!" onClick={() => handleViewQuery(item)} style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}>
                     View Query

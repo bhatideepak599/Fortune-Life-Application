@@ -70,7 +70,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/fortuneLife/agent/pdf-Report/download").hasRole("ADMIN")
 
                         // Admin Endpoints
-                        .requestMatchers(HttpMethod.POST, "/fortuneLife/admin").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/fortuneLife/admin").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/admin").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/fortuneLife/admin/activate/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/fortuneLife/admin/{id}").hasRole("ADMIN")

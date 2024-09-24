@@ -18,33 +18,31 @@ const WithDrawAmount = ({ agent, onClose }) => {
         let errors = {};
         let isValid = true;
 
-        // Bank Name Validation (Alphabetic only)
         if (!formData.bankName) {
             isValid = false;
-            errors['bankName'] = 'Bank Name is required';
+            errors.bankName = 'Bank Name is required';
         } else if (!/^[a-zA-Z\s]+$/.test(formData.bankName)) {
             isValid = false;
-            errors['bankName'] = 'Bank Name should contain alphabetic characters only';
+            errors.bankName = 'Bank Name should contain alphabetic characters only';
         }
-
-      
+    
+        // Account Number Validation
         if (!formData.accountNumber) {
             isValid = false;
-            errors['accountNumber'] = 'Account Number is required';
-        } else if (!/^\d{8,}$/.test(formData.accountNumber)) {
+            errors.accountNumber = 'Account Number is required';
+        } else if (!/^\d{10,15}$/.test(formData.accountNumber)) {
             isValid = false;
-            errors['accountNumber'] = 'Account Number should contain numbers only and be at least 8 digits long';
+            errors.accountNumber = 'Account Number should contain numbers only and be 10 to 15 digits long';
         }
-
-     
+    
+        // IFSC Code Validation
         if (!formData.ifscCode) {
             isValid = false;
-            errors['ifscCode'] = 'IFSC Code is required';
-        } else if (!/^[a-zA-Z0-9]+$/.test(formData.ifscCode)) {
+            errors.ifscCode = 'IFSC Code is required';
+        } else if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(formData.ifscCode)) {
             isValid = false;
-            errors['ifscCode'] = 'IFSC Code should be alphanumeric';
+            errors.ifscCode = 'IFSC Code must be 11 characters: first four letters, fifth character must be "0", followed by six alphanumeric characters';
         }
-
      
         if (!formData.amount || formData.amount <= 0) {
             isValid = false;
