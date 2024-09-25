@@ -1,4 +1,6 @@
 package com.techlabs.app.dto;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -31,6 +33,7 @@ public class AddressDto {
 	@Pattern(regexp = "^[A-Za-z]+$", message = "State name must contain only alphabetic characters.")
 	private String state;
 
-	@Pattern(regexp = "^[0-9]{6}$", message = "Pincode must be a 6-digit number")
+	@Min(value = 100000, message = "Pincode must be at least 6 digits")
+	@Max(value = 999999, message = "Pincode cannot be more than 6 digits")
 	private Integer pinCode;
 }

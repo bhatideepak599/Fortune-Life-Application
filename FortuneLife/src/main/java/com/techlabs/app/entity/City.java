@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,8 @@ public class City {
 
     @Id
     @Column(nullable = false, unique = true)
+    @Min(value = 100000, message = "Pincode must be at least 6 digits")
+    @Max(value = 999999, message = "Pincode cannot be more than 6 digits")
     private Long pincode;
 
     @Column(nullable = false)

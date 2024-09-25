@@ -24,7 +24,7 @@ public class RegisterDto {
     private String lastName;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*[A-Za-z0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{6}+$",
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{6,}+$",
             message = "Username must contain alphanumeric characters and at least one special character.")
     private String username;
 

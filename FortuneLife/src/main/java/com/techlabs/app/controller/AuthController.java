@@ -103,7 +103,7 @@ public class AuthController {
    
     @Operation(summary = "Forget Password")
     @PutMapping("/forget-Password")
-    public ResponseEntity<String> forgetPassword(@RequestBody ForgetPassword forgetPassword){
+    public ResponseEntity<String> forgetPassword(@Valid @RequestBody ForgetPassword forgetPassword){
         logger.info("Initialized forgot password service");
         String message = authService.forgetPassWord(forgetPassword);
 

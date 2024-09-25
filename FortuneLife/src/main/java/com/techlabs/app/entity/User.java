@@ -49,7 +49,7 @@ public class User {
     private String lastName;
 
     @NotBlank
-    @Pattern(regexp = "MALE|FEMALE|OTHERS", message = "Gender must be 'Male', 'Female', or 'Others'.")
+    @Pattern(regexp = "MALE|FEMALE|OTHERS", message = "Gender must be 'MALE', 'FEMALE', or 'OTHERS'.")
     @Column(nullable = false)
     private String gender;
 

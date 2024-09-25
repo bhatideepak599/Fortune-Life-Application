@@ -5,9 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +39,8 @@ public class Address {
 
 	//@Pattern(regexp = "^[0-9]{6}$", message = "Pincode must be a 6-digit number")
 	@Column(nullable = false)
+	@Min(value = 100000, message = "Pincode must be at least 6 digits")
+	@Max(value = 999999, message = "Pincode cannot be more than 6 digits")
 	private Integer pinCode;
 
 }
