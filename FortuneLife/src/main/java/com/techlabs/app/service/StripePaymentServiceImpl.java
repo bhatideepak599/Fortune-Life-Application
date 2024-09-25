@@ -52,7 +52,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         Stripe.apiKey = stripeSecretKey;
 
         Map<String, Object> params = new HashMap<>();
-        params.put("amount", (int) (paymentDto.getTotalPayment() * 100)); // Stripe expects amount in cents
+        params.put("amount", (int) (paymentDto.getTotalPayment() * 100));
         params.put("currency", "inr");
         params.put("payment_method", paymentDto.getPaymentMethodId());
 

@@ -79,7 +79,7 @@ const Navbar = () => {
   return (
     <>
       <nav className={styles.agentNavbar}>
-        <div className={styles.navLogo} onClick={() => navigate("/")}>
+        <div className={styles.navLogo} onClick={() => navigate("/admin-dashboard")}>
           <img src={fortunelife} alt="company-logo" />
         </div>
         <ul className={styles.navLinks}>

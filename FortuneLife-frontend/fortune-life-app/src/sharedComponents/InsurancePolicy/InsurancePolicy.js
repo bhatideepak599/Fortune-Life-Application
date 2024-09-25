@@ -92,11 +92,19 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
   };
 
   const handleFileChange = (documentName, event) => {
-    const files = event.target.files;
-    setFileInputs((prev) => ({
-      ...prev,
-      [documentName]: files[0],
-    }));
+    const file = event.target.files[0];
+    if (file) {
+      const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+      if (!allowedTypes.includes(file.type)) {
+        toast.error("Only .jpeg, .png, or .pdf files are allowed");
+        return;
+      }
+
+      setFileInputs((prev) => ({
+        ...prev,
+        [documentName]: file,
+      }));
+    }
   };
 
   const handleFileUpload = async () => {
@@ -199,11 +207,9 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
     console.log(dataToSend);
 
     if (localStorage.getItem("role") === "ROLE_CUSTOMER") {
-      
       console.log(currentUser.id);
       console.log(usedScheme.id);
-      
-      
+
       const response = await buyNewPolicy({ customerId: currentUser.id, schemeId: usedScheme.id, dataToSend });
       if (response) {
         toast.success("Policy Created Successfully");
@@ -256,7 +262,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
 
   const handleLogin = () => {
     setIsModalOpen(false);
-    navigate("/login?role=Customer")
+    navigate("/login?role=Customer");
   };
 
   const handleRegister = () => {
@@ -273,7 +279,7 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
     <>
       <h1 className="d-grid mx-auto mt-3">
         <span className="badge p-3" style={{ backgroundColor: "hsl(245, 67%, 59%)" }}>
-          Create Policy
+          Buy Policy
         </span>
       </h1>
 
@@ -377,13 +383,13 @@ const InsurancePolicy = ({ documentNames, onClose }) => {
           {documentNames.map((docName) => (
             <div key={docName} className="mb-3">
               <label className="form-label">{docName}</label>
-              <input type="file" className="form-control" onChange={(e) => handleFileChange(docName, e)} required />
+              <input type="file" className="form-control" onChange={(e) => handleFileChange(docName, e)} accept=".jpeg, .png, .pdf" required />
             </div>
           ))}
         </div>
         <div className="d-grid col-6 mx-auto">
           <button type="button" className="btn btn-primary mt-2" style={{ backgroundColor: "hsl(245, 67%, 59%)" }} onClick={handleBuyNow} disabled={isBuying}>
-             {isBuying ? "Buying..." : "Buy Now"}
+            {isBuying ? "Buying..." : "Buy Now"}
           </button>
         </div>
       </form>

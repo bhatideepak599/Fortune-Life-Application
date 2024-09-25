@@ -5,10 +5,10 @@ import { FaUsers, FaUserTie, FaBriefcase, FaFileAlt, FaBalanceScale } from "reac
 const RevenueCards = ({ report }) => {
   return (
     <div className="row mb-4">
-      <h1 className="text-center mt-4" style={headerStyle}>Reports and Revenue</h1>
+      <h1 className="text-center mt-5" style={headerStyle}>Reports and Revenue</h1>
 
       <div className="col-md-4 mt-4">
-        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #6a11cb, #2575fc)' }}>
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #FAF7F0, #EDE8DC)' }}>
           <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
               <FaUsers style={iconStyle} /> Customers
@@ -19,7 +19,7 @@ const RevenueCards = ({ report }) => {
       </div>
 
       <div className="col-md-4 mt-4">
-        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #ff6a00, #ee0979)' }}>
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #FAF7F0, #EDE8DC)' }}>
           <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
               <FaUserTie style={iconStyle} /> Agents
@@ -30,7 +30,7 @@ const RevenueCards = ({ report }) => {
       </div>
 
       <div className="col-md-4 mt-4">
-        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #11998e, #38ef7d)' }}>
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #FAF7F0, #EDE8DC)' }}>
           <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
               <FaBriefcase style={iconStyle} /> Employees
@@ -41,7 +41,7 @@ const RevenueCards = ({ report }) => {
       </div>
 
       <div className="col-md-4 mt-4">
-        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #f12711, #f5af19)' }}>
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #FAF7F0, #EDE8DC)' }}>
           <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
               <FaFileAlt style={iconStyle} /> Policies
@@ -52,7 +52,7 @@ const RevenueCards = ({ report }) => {
       </div>
 
       <div className="col-md-4 mt-4">
-        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #a18cd1, #fbc2eb)' }}>
+        <Card className="text-center shadow-lg" style={{ ...cardStyle, backgroundImage: 'linear-gradient(135deg, #FAF7F0, #EDE8DC)' }}>
           <Card.Body style={cardBodyStyle}>
             <Card.Title style={titleStyle}>
               <FaBalanceScale style={iconStyle} /> Policy per Customer
@@ -66,6 +66,7 @@ const RevenueCards = ({ report }) => {
 };
 
 const headerStyle = {
+
   color: '#333',
   fontWeight: 'bold',
   fontSize: '2rem',
@@ -94,13 +95,13 @@ const titleStyle = {
   fontSize: '1.25rem', 
   fontWeight: 'bold',
   marginBottom: '8px',
-  color: '#fff',
+  color: 'black',
 };
 
 const textStyle = {
   fontSize: '1.5rem', // Reduced font size
   fontWeight: '600',
-  color: '#fff',
+  color: 'black',
 };
 
 const iconStyle = {

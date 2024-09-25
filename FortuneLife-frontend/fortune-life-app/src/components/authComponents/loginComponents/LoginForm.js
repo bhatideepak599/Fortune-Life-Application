@@ -10,6 +10,7 @@ import admin from "../../../assets/images/undraw_segment_analysis_re_ocsl.svg";
 import customer from "../../../assets/images/undraw_personalization_re_grty.svg";
 import employee from "../../../assets/images/undraw_working_remotely_re_6b3a.svg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Navbar from "../../../sharedComponents/CommonNavbarFooter/Navbar";
 
 const LoginForm = () => {
   const location = useLocation();
@@ -118,56 +119,59 @@ const LoginForm = () => {
     Employee: employee,
   };
 
-  const imagePosition = role === "Agent" || role === "Admin" ? "right" : "left";
+  const imagePosition = role === "Agent" || role === "Admin" ? "left" : "left";
 
   return (
-    <Container className="login-container mt-5">
-      <Row className="justify-content-md-center">
-        <Col md={6} className={`my-auto border border-2 order-${imagePosition === "left" ? "1" : "2"}`} style={{ padding: "50px" }}>
-          <img src={images[role]} alt={`${role} Login Visual`} style={{ width: "100%", height: "auto", margin: "50px" }} />
-        </Col>
-        <Col md={6} className={`login-form-col order-${imagePosition === "right" ? "1" : "2"}`} style={{ padding: "50px" }}>
-          <h2 className="text-center mt-4">{role} Login</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form noValidate validated={validated} onSubmit={handleSubmit} className="login-form">
-            <Form.Group controlId="loginId">
-              <Form.Label>Email Or Username</Form.Label>
-              <Form.Control type="text" placeholder="Enter your Email or Username" value={loginId} onChange={(e) => setLoginId(e.target.value)} required className="input-field" />
-              <Form.Control.Feedback type="invalid">Please provide a login ID.</Form.Control.Feedback>
-            </Form.Group>
+    <>
+      <Navbar />
+      <Container className="login-container mt-5">
+        <Row className="justify-content-md-center">
+          <Col md={6} className={`my-auto border border-2 order-${imagePosition === "left" ? "1" : "2"}`} style={{ padding: "50px" }}>
+            <img src={images[role]} alt={`${role} Login Visual`} style={{ width: "100%", height: "auto", margin: "50px" }} />
+          </Col>
+          <Col md={6} className={`login-form-col order-${imagePosition === "right" ? "1" : "2"}`} style={{ padding: "50px" }}>
+            <h2 className="text-center mt-4">{role} Login</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form noValidate validated={validated} onSubmit={handleSubmit} className="login-form">
+              <Form.Group controlId="loginId">
+                <Form.Label>Email Or Username</Form.Label>
+                <Form.Control type="text" placeholder="Enter your Email or Username" value={loginId} onChange={(e) => setLoginId(e.target.value)} required className="input-field" />
+                <Form.Control.Feedback type="invalid">Please provide a login ID.</Form.Control.Feedback>
+              </Form.Group>
 
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <InputGroup>
-                <Form.Control type={showPassword ? "text" : "password"} placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required className="input-field" />
-                <InputGroup.Text onClick={togglePasswordVisibility} style={{ cursor: "pointer" }}>
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </InputGroup.Text>
-                <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <InputGroup>
+                  <Form.Control type={showPassword ? "text" : "password"} placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required className="input-field" />
+                  <InputGroup.Text onClick={togglePasswordVisibility} style={{ cursor: "pointer" }}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </InputGroup.Text>
+                  <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
 
-            <Button variant="primary" type="submit" className="w-100 mt-3 login-button" style={{ backgroundColor: "hsl(245, 67%, 59%)" }}>
-              Login
-            </Button>
-          </Form>
+              <Button variant="primary" type="submit" className="w-100 mt-3 login-button" style={{ backgroundColor: "hsl(245, 67%, 59%)" }}>
+                Login
+              </Button>
+            </Form>
 
-          <div className="d-flex justify-content-between mt-3">
-            <a href="/forgot-password" className="text-muted">
-              Forget Password?
-            </a>
-            {role !== "Admin" && role !== "Employee" && (
-              <a href={`/register?role=${role}`} className="text-muted" onClick={handleRegister}>
-                Register
+            <div className="d-flex justify-content-between mt-3">
+              <a href="/forgot-password" className="text-muted">
+                Forget Password?
               </a>
-            )}
-            <a href="/" className="text-muted">
-              Back To Homepage
-            </a>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+              {role !== "Admin" && role !== "Employee" && (
+                <a href={`/register?role=${role}`} className="text-muted" onClick={handleRegister}>
+                  Register
+                </a>
+              )}
+              <a href="/" className="text-muted">
+                Back To Homepage
+              </a>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

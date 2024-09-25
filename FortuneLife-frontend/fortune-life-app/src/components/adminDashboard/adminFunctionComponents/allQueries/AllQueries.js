@@ -17,8 +17,8 @@ export const AllQueries = () => {
   const [pageSize, setPageSize] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [query,setQuery]=useState()
-  const[showQueryModal,setShowQueryModal]=useState(false)
+  const [query, setQuery] = useState();
+  const [showQueryModal, setShowQueryModal] = useState(false);
 
   const [searchParams, setSearchParams] = useState({
     id: "",
@@ -50,7 +50,7 @@ export const AllQueries = () => {
 
   useEffect(() => {
     fetchAllQueries();
-  }, [pageSize, pageNumber, searchParams,query]);
+  }, [pageSize, pageNumber, searchParams, query]);
 
   const fetchAllQueries = async () => {
     try {
@@ -79,12 +79,12 @@ export const AllQueries = () => {
 
   const handleReset = () => {
     setSearchParams({
-        id: "",
-        title: "",
-        question: "",
-        answer: "",
-        queryResponse: "",
-        active: "",
+      id: "",
+      title: "",
+      question: "",
+      answer: "",
+      queryResponse: "",
+      active: "",
     });
     setSearchType("");
     setPageNumber(0);
@@ -105,8 +105,8 @@ export const AllQueries = () => {
   };
 
   const handleViewQuery = (queryId) => {
-    setQuery(queryId)
-    setShowQueryModal(true)
+    setQuery(queryId);
+    setShowQueryModal(true);
   };
 
   const pageObject = {
@@ -123,14 +123,7 @@ export const AllQueries = () => {
       <h2 className="text-center mb-4">Query List</h2>
 
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <SearchComponent
-          searchType={searchType}
-          searchParams={searchParams}
-          handleSearchTypeChange={handleSearchTypeChange}
-          handleSearchChange={handleSearchChange}
-          handleSearch={handleSearch}
-          handleReset={handleReset}
-        />
+        <SearchComponent searchType={searchType} searchParams={searchParams} handleSearchTypeChange={handleSearchTypeChange} handleSearchChange={handleSearchChange} handleSearch={handleSearch} handleReset={handleReset} />
       </div>
 
       <Table striped bordered hover>
@@ -140,7 +133,7 @@ export const AllQueries = () => {
             <th>Email</th>
             <th>Title</th>
             <th>Query Response</th>
-            <th>Active</th>
+
             <th>Actions</th>
           </tr>
         </thead>
@@ -151,13 +144,9 @@ export const AllQueries = () => {
               <td>{item.email}</td>
               <td>{item.title}</td>
               <td>{item.queryResponse}</td>
-              <td>{item.active ? "Yes" : "No"}</td>
+
               <td>
-              <a
-                  href="#!"
-                  onClick={() => handleViewQuery(item)}
-                  style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
-                >
+                <a href="#!" onClick={() => handleViewQuery(item)} style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}>
                   View Query
                 </a>
               </td>
@@ -167,20 +156,10 @@ export const AllQueries = () => {
       </Table>
 
       <div className="table-footer">
-        <Pagination
-          pager={pageObject}
-          onPageChange={(newPage) => pageObject.setPageNumber(newPage)}
-        />
+        <Pagination pager={pageObject} onPageChange={(newPage) => pageObject.setPageNumber(newPage)} />
       </div>
-      <Modal
-        isOpen={showQueryModal}
-        onClose={() => setShowQueryModal(false)}
-      >
-        <ReplyToQuery
-          query={query}
-          setQuery={setQuery}
-          onClose={() => setShowQueryModal(false)}
-        />
+      <Modal isOpen={showQueryModal} onClose={() => setShowQueryModal(false)}>
+        <ReplyToQuery query={query} setQuery={setQuery} onClose={() => setShowQueryModal(false)} />
       </Modal>
     </div>
   );

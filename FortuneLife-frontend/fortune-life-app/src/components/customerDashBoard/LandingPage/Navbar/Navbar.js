@@ -122,7 +122,7 @@ if( !pincodeInfo){
       <header className="mb-0" style={{ backgroundColor: "#E9EFEC" }}>
         <div className="container p-0">
           <div className="p-0 d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" className="me-5 d-flex align-items-center mb-0 link-body-emphasis text-decoration-none">
+            <a href="/customer-dashboard" className="me-5 d-flex align-items-center mb-0 link-body-emphasis text-decoration-none">
               <img src={logoImg} alt="Company Logo" style={{ width: "250px" }} />
             </a>
 

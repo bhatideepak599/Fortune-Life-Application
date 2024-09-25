@@ -13,7 +13,7 @@ public interface StripePaymentService {
 
     List<PaymentDto> getPaymentsByPolicyId(String policyId);
 
-    public Double calculateTotalRevenue(LocalDateTime startDate, LocalDateTime endDate) ;
-    public List<Payment> getPaymentsWithinDateRange(
+     Double calculateTotalRevenue(LocalDateTime startDate, LocalDateTime endDate) ;
+     List<Payment> getPaymentsWithinDateRange(
             LocalDateTime startDate, LocalDateTime endDate) ;
 }

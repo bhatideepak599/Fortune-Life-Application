@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import "./Payment.css"; // Assuming a CSS file exists for styling
+import "./Payment.css";
 import { createPaymentIntent } from "../../services/commonService";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -20,7 +20,7 @@ const CheckoutForm = () => {
   const { policyId } = useParams();
   const [isPaying, setIsPaying] = useState(false);
 
-  // Fetch Policy Data
+
   useEffect(() => {
     const fetchPolicyData = async () => {
       try {
@@ -33,7 +33,7 @@ const CheckoutForm = () => {
     fetchPolicyData();
   }, [policyId]);
 
-  // Fetch Tax Data
+
   useEffect(() => {
     const fetchTaxData = async () => {
       try {
@@ -48,7 +48,7 @@ const CheckoutForm = () => {
     fetchTaxData();
   }, []);
 
-  // Calculate Total Payment
+
   const getTotalPayment = (taxRate, installmentAmount) => {
     const taxAmount = (installmentAmount * taxRate) / 100;
     setTaxPaid(taxAmount);
@@ -63,7 +63,7 @@ const CheckoutForm = () => {
     totalPayment: "",
   });
 
-  // Update Payment Data when policy or tax changes
+
   useEffect(() => {
     if (policy && tax) {
       const totalPaymentAmount = getTotalPayment(tax.taxRate, policy.premiumAmount);
@@ -82,13 +82,13 @@ const CheckoutForm = () => {
     setIsPaying(true);
 
     if (!stripe || !elements || !policy || !tax) {
-      return; // Prevent submission if data is missing
+      return;
     }
 
     const cardElement = elements.getElement(CardElement);
 
     try {
-      setPaymentError(null); // Clear previous errors
+      setPaymentError(null); 
 
       const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
         type: "card",
@@ -98,11 +98,11 @@ const CheckoutForm = () => {
 
       if (paymentMethodError) {
         console.error(paymentMethodError.message);
-        setPaymentError(paymentMethodError.message); // Set error for display
+        setPaymentError(paymentMethodError.message);
         return;
       }
 
-      // Create PaymentIntent on the server
+
       const paymentIntentResponse = await createPaymentIntent({
         policyId: paymentData.policyId,
         paymentMethodId: paymentMethod.id,
@@ -114,13 +114,13 @@ const CheckoutForm = () => {
 
       if (paymentIntentResponse.error) {
         console.error("PaymentIntent Error:", paymentIntentResponse.error);
-        setPaymentError(paymentIntentResponse.error); // Set error for display
+        setPaymentError(paymentIntentResponse.error);
         return;
       }
 
       const { clientSecret } = paymentIntentResponse;
 
-      // Confirm the payment
+      
       const { error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: paymentMethod.id,
       });
@@ -134,7 +134,7 @@ const CheckoutForm = () => {
       setIsPaying(false);
       toast.success("Payment successful!");
 
-      // Close the window after 5 seconds
+      
       setTimeout(() => {
         window.close();
       }, 3000);
@@ -144,9 +144,9 @@ const CheckoutForm = () => {
     }
   };
 
-  // Render the form only if policy and tax are loaded
+  
   if (!policy || !tax) {
-    return <div>Loading...</div>; // Display loading state until data is ready
+    return <div>Loading...</div>; 
   }
 
   return (

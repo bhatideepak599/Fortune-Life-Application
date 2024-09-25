@@ -33,6 +33,7 @@ export const getAllPolicies = async (pageSize, pageNumber, searchParams) => {
 };
 
 export const getAllCommissions = async (pageSize, pageNumber, searchParams) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
   try {
     const params = {
       id: searchParams.id || undefined,
