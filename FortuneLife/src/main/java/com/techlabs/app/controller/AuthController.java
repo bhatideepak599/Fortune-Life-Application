@@ -4,7 +4,6 @@ import com.techlabs.app.dto.*;
 import com.techlabs.app.exception.UserRelatedException;
 import com.techlabs.app.service.AuthService;
 import com.techlabs.app.service.OtpService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 
 @RestController

@@ -29,7 +29,7 @@ public class CustomerController {
 
 	@Operation(summary = "Add A New Customer ")
 	@PostMapping
-	public ResponseEntity<CustomerDto> addCustomer(@Valid @RequestBody UserDto userDto,
+	public ResponseEntity<CustomerDto> addCustomer( @RequestBody UserDto userDto,
 			@RequestParam(name = "role") String name) {
 		logger.info("Adding A New Customer");
 		String role = "ROLE_" + name.toUpperCase();
