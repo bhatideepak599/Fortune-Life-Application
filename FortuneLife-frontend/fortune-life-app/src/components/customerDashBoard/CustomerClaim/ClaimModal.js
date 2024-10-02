@@ -179,7 +179,7 @@ const ClaimModal = ({ policyId, onClose }) => {
                 <label htmlFor="bankName" className="form-label fw-semibold text-black">
                   Beneficiary Bank
                 </label>
-                <input type="text" id="bankName" className="form-control rounded-3 p-3 text-black" onChange={handleOnChange} value={claimDto.bankName || ""} required />
+                <input type="text" id="bankName" className="form-control rounded-3 p-3 text-black" onChange={handleOnChange} value={claimDto.bankName || ""} required maxLength="50" pattern=".{1,50}" title="Bank name must not exceed 50 characters" />
               </div>
             </div>
 
@@ -188,13 +188,13 @@ const ClaimModal = ({ policyId, onClose }) => {
                 <label htmlFor="branchName" className="form-label fw-semibold text-black">
                   Branch
                 </label>
-                <input type="text" id="branchName" className="form-control rounded-3 p-3 text-black" onChange={handleOnChange} value={claimDto.branchName || ""} required />
+                <input type="text" id="branchName" className="form-control rounded-3 p-3 text-black" onChange={handleOnChange} value={claimDto.branchName || ""} required maxLength="50" pattern=".{1,50}" title="Branch name must not exceed 50 characters" />
               </div>
               <div className="col-md-6">
                 <label htmlFor="bankAccountNumber" className="form-label fw-semibold text-black">
                   Account Number
                 </label>
-                <input type="text" id="bankAccountNumber" className="form-control rounded-3 p-3 text-black" onChange={handleOnChange} value={claimDto.bankAccountNumber || ""} required />
+                <input type="text" id="bankAccountNumber" className="form-control rounded-3 p-3 text-black" onChange={handleOnChange} value={claimDto.bankAccountNumber || ""} required pattern="^[0-9]{10,15}$" title="Account number must be between 10 and 15 digits" />
               </div>
             </div>
 
@@ -203,7 +203,7 @@ const ClaimModal = ({ policyId, onClose }) => {
                 <label htmlFor="ifscCode" className="form-label fw-semibold text-black">
                   IFSC Code
                 </label>
-                <input type="text" id="ifscCode" className="form-control rounded-3 p-3 text-black" onChange={handleOnChange} value={claimDto.ifscCode || ""} required />
+                <input type="text" id="ifscCode" className="form-control rounded-3 p-3 text-black" onChange={handleOnChange} value={claimDto.ifscCode || ""} required pattern="^[A-Z]{4}0[A-Z0-9]{6}$" title="IFSC code must be 11 characters: first four letters, fifth character must be '0', followed by six alphanumeric characters" />
               </div>
               <div className="col-md-6">
                 <label htmlFor="fortuneLifeRemarks" className="form-label fw-semibold text-black">

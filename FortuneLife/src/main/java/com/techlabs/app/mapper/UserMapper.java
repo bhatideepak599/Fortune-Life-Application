@@ -49,7 +49,7 @@ public class UserMapper {
 		userDto.setMobileNumber(user.getMobileNumber());
 		userDto.setUsername(user.getUsername());
 		userDto.setActive(user.getActive());
-		userDto.setPassword("Not Available");
+		userDto.setPassword("TestPassword@1234");
 		if (user.getAddress() != null) {
 			AddressDto addressDto = addressMapper.entityToDto(user.getAddress());
 			userDto.setAddressDto(addressDto);

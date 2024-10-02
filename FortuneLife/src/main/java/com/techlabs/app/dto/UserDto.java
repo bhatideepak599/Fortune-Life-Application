@@ -30,7 +30,8 @@ public class UserDto {
 	private String firstName;
 
 
-	@Pattern(regexp = "Male|Female|Others", message = "Gender must be 'Male', 'Female', or 'Others'.")
+	@Pattern(regexp = "Male|Female|Others|MALE|FEMALE|OTHERS", message = "Gender must be 'Male', 'Female', or " +
+			"'Others'.")
 	private String gender;
 	private Boolean active;
 
